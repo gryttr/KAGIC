@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.entity.gem;
 
 public enum GemPlacements {
+	UNKNOWN(-1),
 	BACK_OF_HEAD(0),
 	FOREHEAD(1),
 	LEFT_EYE(2),
@@ -20,6 +21,7 @@ public enum GemPlacements {
 	RIGHT_THIGH(16),
 	LEFT_KNEE(17),
 	RIGHT_KNEE(18);
+	
 	public int id;
 	private GemPlacements(int id) {
 		this.id = id;

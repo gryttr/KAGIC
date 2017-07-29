@@ -42,6 +42,19 @@ public class EntityAquamarine extends EntityGem {
 		this.setSize(0.4F, 0.8F);
 		this.seePastDoors();
 		
+		//Define valid gem cuts and placements
+		this.setValidCut(GemCuts.TINY);
+		this.setValidCut(GemCuts.TEARDROP);
+		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
+		this.setValidPlacement(GemPlacements.FOREHEAD);
+		this.setValidPlacement(GemPlacements.LEFT_EYE);
+		this.setValidPlacement(GemPlacements.RIGHT_EYE);
+		this.setValidPlacement(GemPlacements.LEFT_CHEEK);
+		this.setValidPlacement(GemPlacements.RIGHT_CHEEK);
+		this.setValidPlacement(GemPlacements.BACK);
+		this.setValidPlacement(GemPlacements.CHEST);
+		this.setValidPlacement(GemPlacements.BELLY);
+
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
         this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
@@ -64,40 +77,7 @@ public class EntityAquamarine extends EntityGem {
 	protected PathNavigate createNavigator(World worldIn) {
         return new PathNavigateFlying(this, worldIn);
     }
-	public boolean isCorrectGemPlacement() {
-		switch (GemPlacements.values()[this.getGemPlacement()]) {
-		case NOSE:
-			return false;
-		case LEFT_SHOULDER:
-			return false;
-		case RIGHT_SHOULDER:
-			return false;
-		case LEFT_HAND:
-			return false;
-		case RIGHT_HAND:
-			return false;
-		case LEFT_THIGH:
-			return false;
-		case RIGHT_THIGH:
-			return false;
-		case LEFT_KNEE:
-			return false;
-		case RIGHT_KNEE:
-			return false;
-		default:
-			return true;
-		}
-	}
-	public boolean isCorrectGemCut() {
-    	switch (GemCuts.values()[this.getGemCut()]) {
-    	case BISMUTH:
-    		return false;
-    	case PERIDOT:
-    		return false;
-    	default:
-    		return true;
-    	}
-    }
+
 	public float[] getGemColor() {
     	return new float[] { 127F / 255F, 253F / 255F, 240F / 255F };
     }

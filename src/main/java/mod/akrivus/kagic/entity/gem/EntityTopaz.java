@@ -42,6 +42,27 @@ public class EntityTopaz extends EntityGem {
 		this.setSize(0.9F, 2.3F);
 		this.isSoldier = true;
 		
+		//Define valid gem cuts and placements
+		this.setValidCut(GemCuts.DRUM);
+		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
+		this.setValidPlacement(GemPlacements.FOREHEAD);
+		this.setValidPlacement(GemPlacements.LEFT_EYE);
+		this.setValidPlacement(GemPlacements.RIGHT_EYE);
+		this.setValidPlacement(GemPlacements.NOSE);
+		this.setValidPlacement(GemPlacements.LEFT_CHEEK);
+		this.setValidPlacement(GemPlacements.RIGHT_CHEEK);
+		this.setValidPlacement(GemPlacements.LEFT_SHOULDER);
+		this.setValidPlacement(GemPlacements.RIGHT_SHOULDER);
+		this.setValidPlacement(GemPlacements.LEFT_HAND);
+		this.setValidPlacement(GemPlacements.RIGHT_HAND);
+		this.setValidPlacement(GemPlacements.BACK);
+		this.setValidPlacement(GemPlacements.CHEST);
+		this.setValidPlacement(GemPlacements.BELLY);
+		this.setValidPlacement(GemPlacements.LEFT_THIGH);
+		this.setValidPlacement(GemPlacements.RIGHT_THIGH);
+		this.setValidPlacement(GemPlacements.LEFT_KNEE);
+		this.setValidPlacement(GemPlacements.RIGHT_KNEE);
+
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
 		this.tasks.addTask(1, new EntityAIAttackMelee(this, 1.0D, true));
@@ -67,16 +88,7 @@ public class EntityTopaz extends EntityGem {
         this.droppedGemItem = ModItems.TOPAZ_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_TOPAZ_GEM;
 	}
-	public boolean isCorrectGemCut() {
-    	switch (GemCuts.values()[this.getGemCut()]) {
-    	case BISMUTH:
-    		return false;
-    	case PERIDOT:
-    		return false;
-    	default:
-    		return true;
-    	}
-    }
+
 	public float[] getGemColor() {
 		if (this.getSpecial() == 1) {
 			return new float[] { 93F / 255F, 115F / 255F, 255F / 255F };

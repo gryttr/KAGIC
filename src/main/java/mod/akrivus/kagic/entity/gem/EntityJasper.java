@@ -57,7 +57,21 @@ public class EntityJasper extends EntityGem {
 		super(worldIn);
 		this.setSize(0.9F, 2.3F);
 		this.isSoldier = true;
-		
+
+		//Define valid gem cuts and placements
+		this.setValidCut(GemCuts.CABOCHON);
+		this.setValidCut(GemCuts.TINY);
+		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
+		this.setValidPlacement(GemPlacements.FOREHEAD);
+		this.setValidPlacement(GemPlacements.LEFT_EYE);
+		this.setValidPlacement(GemPlacements.RIGHT_EYE);
+		this.setValidPlacement(GemPlacements.NOSE);
+		this.setValidPlacement(GemPlacements.LEFT_CHEEK);
+		this.setValidPlacement(GemPlacements.RIGHT_CHEEK);
+		this.setValidPlacement(GemPlacements.BACK);
+		this.setValidPlacement(GemPlacements.CHEST);
+		this.setValidPlacement(GemPlacements.BELLY);
+
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
         this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
@@ -89,16 +103,7 @@ public class EntityJasper extends EntityGem {
         // Register entity data.
         this.dataManager.register(CHARGED, false);
 	}
-	public boolean isCorrectGemCut() {
-    	switch (GemCuts.values()[this.getGemCut()]) {
-    	case BISMUTH:
-    		return false;
-    	case PERIDOT:
-    		return false;
-    	default:
-    		return true;
-    	}
-    }
+
 	public float[] getGemColor() {
 		switch (this.getSpecial()) {
 		case 1:

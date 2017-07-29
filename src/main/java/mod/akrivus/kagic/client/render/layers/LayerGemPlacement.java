@@ -18,7 +18,7 @@ public class LayerGemPlacement implements LayerRenderer<EntityGem> {
 	}
 	public void doRenderLayer(EntityGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		if (!gem.isFusion()) {
-			this.gemRenderer.bindTexture(new ResourceLocation("kagic:textures/entities/" + this.getName(gem) + "/gems/" + gem.getGemPlacement() + "_" + gem.getGemCut() + ".png"));
+			this.gemRenderer.bindTexture(new ResourceLocation("kagic:textures/entities/" + this.getName(gem) + "/gems/" + gem.getGemPlacement().id + "_" + gem.getGemCut().id + ".png"));
 			float[] colors = gem.getGemColor();
 			GlStateManager.color(colors[0], colors[1], colors[2]);
 			this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());

@@ -57,6 +57,28 @@ public class EntityAmethyst extends EntityGem {
 		this.setSize(0.9F, 2.3F);
 		this.isSoldier = true;
 		
+		//Define valid gem cuts and placements
+		this.setValidCut(GemCuts.FACETED);
+		this.setValidCut(GemCuts.SQUARE);
+		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
+		this.setValidPlacement(GemPlacements.FOREHEAD);
+		this.setValidPlacement(GemPlacements.LEFT_EYE);
+		this.setValidPlacement(GemPlacements.RIGHT_EYE);
+		this.setValidPlacement(GemPlacements.NOSE);
+		this.setValidPlacement(GemPlacements.LEFT_CHEEK);
+		this.setValidPlacement(GemPlacements.RIGHT_CHEEK);
+		this.setValidPlacement(GemPlacements.LEFT_SHOULDER);
+		this.setValidPlacement(GemPlacements.RIGHT_SHOULDER);
+		this.setValidPlacement(GemPlacements.LEFT_HAND);
+		this.setValidPlacement(GemPlacements.RIGHT_HAND);
+		this.setValidPlacement(GemPlacements.BACK);
+		this.setValidPlacement(GemPlacements.CHEST);
+		this.setValidPlacement(GemPlacements.BELLY);
+		this.setValidPlacement(GemPlacements.LEFT_THIGH);
+		this.setValidPlacement(GemPlacements.RIGHT_THIGH);
+		this.setValidPlacement(GemPlacements.LEFT_KNEE);
+		this.setValidPlacement(GemPlacements.RIGHT_KNEE);
+
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
         this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
@@ -67,7 +89,7 @@ public class EntityAmethyst extends EntityGem {
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
         this.tasks.addTask(7, new EntityAILookIdle(this));
         
-        // Apply targetting.
+        // Apply targeting.
         this.targetTasks.addTask(1, new EntityAIDiamondHurtByTarget(this));
         this.targetTasks.addTask(2, new EntityAIDiamondHurtTarget(this));
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false, new Class[0]));
@@ -111,16 +133,7 @@ public class EntityAmethyst extends EntityGem {
         this.charge_ticks = compound.getInteger("charge_ticks");
         this.hit_count = compound.getInteger("hit_count");
     }
-    public boolean isCorrectGemCut() {
-    	switch (GemCuts.values()[this.getGemCut()]) {
-    	case BISMUTH:
-    		return false;
-    	case PERIDOT:
-    		return false;
-    	default:
-    		return true;
-    	}
-    }
+
     public float[] getGemColor() {
     	if (this.isCitrine()) {
     		return new float[] { 236F / 255F, 244F / 255F, 4F / 255F };

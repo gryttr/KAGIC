@@ -73,6 +73,14 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 		this.initGemStorage();
 		this.seePastDoors();
 		
+		//Define valid gem cuts and placements
+		this.setValidCut(GemCuts.CABOCHON);
+		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
+		this.setValidPlacement(GemPlacements.FOREHEAD);
+		this.setValidPlacement(GemPlacements.BACK);
+		this.setValidPlacement(GemPlacements.CHEST);
+		this.setValidPlacement(GemPlacements.BELLY);
+
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
 		this.tasks.addTask(1, new EntityAIAvoidEntity<EntityCreeper>(this, EntityCreeper.class, new Predicate<EntityCreeper>() {
@@ -100,40 +108,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
         this.dataManager.register(DRESS_STYLE, 1);
         this.dataManager.register(NAKED, false);
 	}
-	public boolean isCorrectGemPlacement() {
-		switch (GemPlacements.values()[this.getGemPlacement()]) {
-		case NOSE:
-			return false;
-		case MOUTH:
-			return false;
-		case LEFT_SHOULDER:
-			return false;
-		case RIGHT_SHOULDER:
-			return false;
-		case LEFT_HAND:
-			return false;
-		case RIGHT_HAND:
-			return false;
-		case LEFT_THIGH:
-			return false;
-		case RIGHT_THIGH:
-			return false;
-		case LEFT_KNEE:
-			return false;
-		case RIGHT_KNEE:
-			return false;
-		default:
-			return true;
-		}
-	}
-	public boolean isCorrectGemCut() {
-    	switch (GemCuts.values()[this.getGemCut()]) {
-    	case CABOCHON:
-    		return true;
-    	default:
-    		return false;
-    	}
-    }
+
 	public float[] getGemColor() {
 		return EntitySheep.getDyeRgb(EnumDyeColor.values()[this.getColor()]);
     }
@@ -566,7 +541,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
     }
 	public int getMaxInventorySlots() {
 		int slots = 36;
-		if (this.getGemPlacement() == GemPlacements.FOREHEAD.id) {
+		if (this.getGemPlacement() == GemPlacements.FOREHEAD) {
 			slots += 9;
 		}
 		if (this.isPrimary()) {

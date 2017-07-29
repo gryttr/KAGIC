@@ -66,7 +66,19 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		this.setSize(0.7F, 1.9F);
 		this.initGemStorage();
 		this.seePastDoors();
-		
+
+		//Define valid gem cuts and placements
+		this.setValidCut(GemCuts.PERIDOT);
+		this.setValidCut(GemCuts.TEARDROP);
+		this.setValidCut(GemCuts.TRIANGULAR);
+		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
+		this.setValidPlacement(GemPlacements.FOREHEAD);
+		this.setValidPlacement(GemPlacements.LEFT_EYE);
+		this.setValidPlacement(GemPlacements.RIGHT_EYE);
+		this.setValidPlacement(GemPlacements.BACK);
+		this.setValidPlacement(GemPlacements.CHEST);
+		this.setValidPlacement(GemPlacements.BELLY);
+
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
 		this.tasks.addTask(1, new EntityAIAvoidEntity<EntityCreeper>(this, EntityCreeper.class, new Predicate<EntityCreeper>() {
@@ -97,40 +109,13 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
         this.droppedGemItem = ModItems.PERIDOT_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_PERIDOT_GEM;
 	}
-	public boolean isCorrectGemPlacement() {
-		switch (GemPlacements.values()[this.getGemPlacement()]) {
-		case NOSE:
-			return false;
-		case LEFT_CHEEK:
-			return false;
-		case RIGHT_CHEEK:
-			return false;
-		case LEFT_SHOULDER:
-			return false;
-		case RIGHT_SHOULDER:
-			return false;
-		case LEFT_HAND:
-			return false;
-		case RIGHT_HAND:
-			return false;
-		case LEFT_THIGH:
-			return false;
-		case RIGHT_THIGH:
-			return false;
-		case LEFT_KNEE:
-			return false;
-		case RIGHT_KNEE:
-			return false;
-		default:
-			return true;
-		}
-	}
+
 	public boolean isCorrectGemCut() {
-    	switch (GemCuts.values()[this.getGemCut()]) {
+    	switch (this.getGemCut()) {
     	case BISMUTH:
     		return false;
     	case PERIDOT:
-    		switch (GemPlacements.values()[this.getGemPlacement()]) {
+    		switch (this.getGemPlacement()) {
 			case BACK_OF_HEAD:
 				return true;
 			case FOREHEAD:
@@ -140,12 +125,12 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 			case RIGHT_EYE:
 				return true;
 			case MOUTH:
-				return true;
+				return false;
 			default:
 				return false;
     		}
     	case TEARDROP:
-    		switch (GemPlacements.values()[this.getGemPlacement()]) {
+    		switch (this.getGemPlacement()) {
 			case BACK_OF_HEAD:
 				return false;
 			case FOREHEAD:
@@ -154,7 +139,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 				return true;
     		}
     	case TRIANGULAR:
-    		switch (GemPlacements.values()[this.getGemPlacement()]) {
+    		switch (this.getGemPlacement()) {
 			case BACK_OF_HEAD:
 				return false;
 			case FOREHEAD:
@@ -166,6 +151,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
     		return true;
     	}
     }
+	
 	public float[] getGemColor() {
     	return new float[] { 47F / 255F, 248F / 255F, 42F / 255F };
     }

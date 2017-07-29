@@ -55,6 +55,27 @@ public class EntityRoseQuartz extends EntityGem {
 		this.setSize(0.9F, 2.3F);
 		this.isSoldier = true;
 		
+		//Define valid gem cuts and placements
+		this.setValidCut(GemCuts.FACETED);
+		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
+		this.setValidPlacement(GemPlacements.FOREHEAD);
+		this.setValidPlacement(GemPlacements.LEFT_EYE);
+		this.setValidPlacement(GemPlacements.RIGHT_EYE);
+		this.setValidPlacement(GemPlacements.NOSE);
+		this.setValidPlacement(GemPlacements.LEFT_CHEEK);
+		this.setValidPlacement(GemPlacements.RIGHT_CHEEK);
+		this.setValidPlacement(GemPlacements.LEFT_SHOULDER);
+		this.setValidPlacement(GemPlacements.RIGHT_SHOULDER);
+		this.setValidPlacement(GemPlacements.LEFT_HAND);
+		this.setValidPlacement(GemPlacements.RIGHT_HAND);
+		this.setValidPlacement(GemPlacements.BACK);
+		this.setValidPlacement(GemPlacements.CHEST);
+		this.setValidPlacement(GemPlacements.BELLY);
+		this.setValidPlacement(GemPlacements.LEFT_THIGH);
+		this.setValidPlacement(GemPlacements.RIGHT_THIGH);
+		this.setValidPlacement(GemPlacements.LEFT_KNEE);
+		this.setValidPlacement(GemPlacements.RIGHT_KNEE);
+
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
         this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
@@ -83,16 +104,7 @@ public class EntityRoseQuartz extends EntityGem {
         this.droppedGemItem = ModItems.ROSE_QUARTZ_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_ROSE_QUARTZ_GEM;
 	}
-	public boolean isCorrectGemCut() {
-    	switch (GemCuts.values()[this.getGemCut()]) {
-    	case BISMUTH:
-    		return false;
-    	case PERIDOT:
-    		return false;
-    	default:
-    		return true;
-    	}
-    }
+
 	public float[] getGemColor() {
     	return new float[] { 255F / 255F, 162F / 255F, 230F / 255F };
     }

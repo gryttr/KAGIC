@@ -37,6 +37,27 @@ public class EntityZircon extends EntityGem {
 		this.setSize(0.6F, 1.9F);
 		this.seePastDoors();
 		
+		//Define valid gem cuts and placements
+		this.setValidCut(GemCuts.PILLOW);
+		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
+		this.setValidPlacement(GemPlacements.FOREHEAD);
+		this.setValidPlacement(GemPlacements.LEFT_EYE);
+		this.setValidPlacement(GemPlacements.RIGHT_EYE);
+		this.setValidPlacement(GemPlacements.NOSE);
+		this.setValidPlacement(GemPlacements.LEFT_CHEEK);
+		this.setValidPlacement(GemPlacements.RIGHT_CHEEK);
+		this.setValidPlacement(GemPlacements.LEFT_SHOULDER);
+		this.setValidPlacement(GemPlacements.RIGHT_SHOULDER);
+		this.setValidPlacement(GemPlacements.LEFT_HAND);
+		this.setValidPlacement(GemPlacements.RIGHT_HAND);
+		this.setValidPlacement(GemPlacements.BACK);
+		this.setValidPlacement(GemPlacements.CHEST);
+		this.setValidPlacement(GemPlacements.BELLY);
+		this.setValidPlacement(GemPlacements.LEFT_THIGH);
+		this.setValidPlacement(GemPlacements.RIGHT_THIGH);
+		this.setValidPlacement(GemPlacements.LEFT_KNEE);
+		this.setValidPlacement(GemPlacements.RIGHT_KNEE);
+
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
 		this.tasks.addTask(1, new EntityAIAvoidEntity<EntityCreeper>(this, EntityCreeper.class, new Predicate<EntityCreeper>() {
@@ -58,40 +79,7 @@ public class EntityZircon extends EntityGem {
         this.droppedGemItem = ModItems.ZIRCON_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_ZIRCON_GEM;
 	}
-	public boolean isCorrectGemPlacement() {
-		switch (GemPlacements.values()[this.getGemPlacement()]) {
-		case NOSE:
-			return false;
-		case LEFT_SHOULDER:
-			return false;
-		case RIGHT_SHOULDER:
-			return false;
-		case LEFT_HAND:
-			return false;
-		case RIGHT_HAND:
-			return false;
-		case LEFT_THIGH:
-			return false;
-		case RIGHT_THIGH:
-			return false;
-		case LEFT_KNEE:
-			return false;
-		case RIGHT_KNEE:
-			return false;
-		default:
-			return true;
-		}
-	}
-	public boolean isCorrectGemCut() {
-    	switch (GemCuts.values()[this.getGemCut()]) {
-    	case BISMUTH:
-    		return false;
-    	case PERIDOT:
-    		return false;
-    	default:
-    		return true;
-    	}
-    }
+
 	public float[] getGemColor() {
 		switch (this.getSpecial()) {
 		case 0:

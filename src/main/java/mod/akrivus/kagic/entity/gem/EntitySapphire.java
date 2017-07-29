@@ -47,6 +47,18 @@ public class EntitySapphire extends EntityGem {
 		this.setSize(0.7F, 1.6F);
 		this.seePastDoors();
 		
+		//Define valid gem cuts and placements
+		this.setValidCut(GemCuts.FACETED);
+		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
+		this.setValidPlacement(GemPlacements.FOREHEAD);
+		this.setValidPlacement(GemPlacements.LEFT_EYE);
+		this.setValidPlacement(GemPlacements.RIGHT_EYE);
+		this.setValidPlacement(GemPlacements.LEFT_CHEEK);
+		this.setValidPlacement(GemPlacements.RIGHT_CHEEK);
+		this.setValidPlacement(GemPlacements.BACK);
+		this.setValidPlacement(GemPlacements.CHEST);
+		this.setValidPlacement(GemPlacements.BELLY);
+
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
 		this.tasks.addTask(1, new EntityAIAvoidEntity<EntityCreeper>(this, EntityCreeper.class, new Predicate<EntityCreeper>() {
@@ -69,40 +81,7 @@ public class EntitySapphire extends EntityGem {
         this.droppedGemItem = ModItems.SAPPHIRE_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_SAPPHIRE_GEM;
 	}
-	public boolean isCorrectGemPlacement() {
-		switch (GemPlacements.values()[this.getGemPlacement()]) {
-		case NOSE:
-			return false;
-		case LEFT_SHOULDER:
-			return false;
-		case RIGHT_SHOULDER:
-			return false;
-		case LEFT_HAND:
-			return false;
-		case RIGHT_HAND:
-			return false;
-		case LEFT_THIGH:
-			return false;
-		case RIGHT_THIGH:
-			return false;
-		case LEFT_KNEE:
-			return false;
-		case RIGHT_KNEE:
-			return false;
-		default:
-			return true;
-		}
-	}
-	public boolean isCorrectGemCut() {
-    	switch (GemCuts.values()[this.getGemCut()]) {
-    	case BISMUTH:
-    		return false;
-    	case PERIDOT:
-    		return false;
-    	default:
-    		return true;
-    	}
-    }
+
 	public float[] getGemColor() {
     	return new float[] { 155F / 255F, 202F / 255F, 255F / 255F };
     }

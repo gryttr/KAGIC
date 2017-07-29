@@ -43,6 +43,13 @@ public class EntityBismuth extends EntityGem {
 		this.isImmuneToFire = true;
 		this.setSize(0.9F, 2.3F);
 		
+		//Define valid gem cuts and placements
+		this.setValidCut(GemCuts.BISMUTH);
+		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
+		this.setValidPlacement(GemPlacements.BACK);
+		this.setValidPlacement(GemPlacements.CHEST);
+		this.setValidPlacement(GemPlacements.BELLY);
+
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
         this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
@@ -64,28 +71,8 @@ public class EntityBismuth extends EntityGem {
         this.droppedGemItem = ModItems.BISMUTH_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_BISMUTH_GEM;
 	}
-	public boolean isCorrectGemPlacement() {
-		switch (GemPlacements.values()[this.getGemPlacement()]) {
-		case BACK_OF_HEAD:
-			return true;
-		case BACK:
-			return true;
-		case CHEST:
-			return true;
-		case BELLY:
-			return true;
-		default:
-			return false;
-		}
-	}
-	public boolean isCorrectGemCut() {
-    	switch (GemCuts.values()[this.getGemCut()]) {
-    	case BISMUTH:
-    		return true;
-    	default:
-    		return false;
-    	}
-    }
+
+
 	public void convertGems(int placement) {
     	this.setGemCut(GemCuts.BISMUTH.id);
     	switch (placement) {
