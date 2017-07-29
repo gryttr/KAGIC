@@ -1,0 +1,39 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+        	"glass": "kagic:blocks/injector_glass",
+            "metal": "kagic:blocks/injector_metal",
+            "particle": "kagic:blocks/injector_glass"
+        }
+    },
+    "variants": {
+        "facing=down": {
+            "model": "kagic:incubator",
+            "y": 90
+        },
+        "facing=up": {
+            "model": "kagic:incubator",
+            "y": 90
+        },
+        "facing=east": {
+            "model": "kagic:incubator"
+        },
+        "facing=west": {
+            "model": "kagic:incubator",
+            "y": 180
+        },
+        "facing=north": {
+            "model": "kagic:incubator",
+            "y": 270
+        },
+        "facing=south": {
+            "model": "kagic:incubator",
+            "y": 90
+        },
+        "inventory": {
+            "model": "kagic:incubator",
+            "y": 90
+        }
+    }
+}

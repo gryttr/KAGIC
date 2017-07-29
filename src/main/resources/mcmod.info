@@ -1,0 +1,16 @@
+[
+    {
+        "modid": "kagic",
+        "name": "KAGIC",
+        "description": "KAGIC is a Steven Universe mod that adds machines that let you harvest your very own gem servants from the ground!",
+        "version": "1.9p2r1",
+        "mcversion": "1.11.2",
+        "url": "http://akrivus.x10host.com/KAGIC.html",
+        "updateUrl": "",
+        "authorList": ["Akrivus", "HeimrArnadalr"],
+        "credits": "§7\"Steven Universe\" and all related characters and elements are trademarks of Cartoon Network.§f",
+        "logoFile": "logo.png",
+        "screenshots": [],
+        "dependencies": []
+    }
+]

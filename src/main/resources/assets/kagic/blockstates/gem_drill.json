@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "all": "kagic:blocks/gem_drill",
+            "particle": "kagic:blocks/gem_drill"
+        }
+    },
+    "variants": {
+        "normal": {
+            "model": "kagic:gem_drill"
+        }
+    }
+}

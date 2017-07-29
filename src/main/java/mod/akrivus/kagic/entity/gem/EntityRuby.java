@@ -1,0 +1,452 @@
+package mod.akrivus.kagic.entity.gem;
+
+import java.util.HashMap;
+
+import com.google.common.base.Predicate;
+
+import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
+import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
+import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
+import mod.akrivus.kagic.entity.ai.EntityAIPickUpItems;
+import mod.akrivus.kagic.entity.ai.EntityAIRubyFuse;
+import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.init.ModAchievements;
+import mod.akrivus.kagic.init.ModItems;
+import mod.akrivus.kagic.init.ModSounds;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
+import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityTippedArrow;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
+import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.World;
+
+public class EntityRuby extends EntityGem {
+	public static final HashMap<Block, Double> RUBY_YIELDS = new HashMap<Block, Double>();
+	private static final DataParameter<Integer> ANGER = EntityDataManager.<Integer>createKey(EntityRuby.class, DataSerializers.VARINT);
+	private int angerTicks = 0;
+	public EntityRuby(World worldIn) {
+		super(worldIn);
+		this.setSize(0.7F, 1.8F);
+		this.isImmuneToFire = true;
+		this.isSoldier = true;
+		
+		// Apply entity AI.
+		this.stayAI = new EntityAIStay(this);
+		this.tasks.addTask(1, new EntityAIAvoidEntity<EntityCreeper>(this, EntityCreeper.class, new Predicate<EntityCreeper>() {
+			public boolean apply(EntityCreeper input) {
+				return ((EntityCreeper)input).getCreeperState() == 1;
+			}
+        }, 6.0F, 1.0D, 1.2D));
+        
+        // Other entity AIs.
+		this.tasks.addTask(2, new EntityAIPickUpItems(this, 1.0D));
+        this.tasks.addTask(3, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
+        this.tasks.addTask(4, new EntityAIFollowDiamond(this, 1.0D));
+        this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
+        this.tasks.addTask(6, new EntityAIRubyFuse(this, 1.0D));
+        this.tasks.addTask(7, new EntityAIWander(this, 0.6D));
+        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
+        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
+        this.tasks.addTask(9, new EntityAILookIdle(this));
+        
+        // Apply targetting.
+        this.targetTasks.addTask(1, new EntityAIDiamondHurtByTarget(this));
+        this.targetTasks.addTask(2, new EntityAIDiamondHurtTarget(this));
+        this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false, new Class[0]));
+        this.targetTasks.addTask(4, new EntityAINearestAttackableTarget<EntityLiving>(this, EntityLiving.class, 10, true, false, new Predicate<EntityLiving>() {
+            public boolean apply(EntityLiving input) {
+                return input != null && IMob.VISIBLE_MOB_SELECTOR.apply(input);
+            }
+        }));
+        
+        // Apply entity attributes.
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
+        this.droppedGemItem = ModItems.RUBY_GEM;
+		this.droppedCrackedGemItem = ModItems.CRACKED_RUBY_GEM;
+        
+        // Register entity data.
+        this.dataManager.register(ANGER, 0);
+	}
+	public boolean isCorrectGemCut() {
+    	switch (GemCuts.values()[this.getGemCut()]) {
+    	case BISMUTH:
+    		return false;
+    	case PERIDOT:
+    		return false;
+    	default:
+    		return true;
+    	}
+    }
+    public float[] getGemColor() {
+    	return new float[] { 238F / 255F, 35F / 255F, 49F / 255F };
+    }
+    public void convertGems(int placement) {
+    	this.setGemCut(GemCuts.FACETED.id);
+    	switch (placement) {
+    	case 0:
+    		this.setGemPlacement(GemPlacements.LEFT_HAND.id);
+    		break;
+    	case 1:
+    		this.setGemPlacement(GemPlacements.RIGHT_HAND.id);
+    		break;
+    	case 2:
+    		this.setGemPlacement(GemPlacements.BACK.id);
+    		break;
+    	case 3:
+    		this.setGemPlacement(GemPlacements.LEFT_EYE.id);
+    		break;
+    	case 4:
+    		this.setGemPlacement(GemPlacements.RIGHT_EYE.id);
+    		break;
+    	case 5:
+    		this.setGemPlacement(GemPlacements.FOREHEAD.id);
+    		break;
+    	case 6:
+    		this.setGemPlacement(GemPlacements.BELLY.id);
+    		break;
+    	}
+    }
+	
+	/*********************************************************
+	 * Methods related to loading.                           *
+	 *********************************************************/
+	public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        compound.setInteger("anger", this.getAnger());
+    }
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+        this.setAnger(compound.getInteger("anger"));
+    }
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+    	this.setSpecial(this.rand.nextInt(6));
+        return super.onInitialSpawn(difficulty, livingdata);
+    }
+	
+    /*********************************************************
+	 * Methods related to interaction.                       *
+	 *********************************************************/
+    public void whenDefective() {
+    	this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0D);
+        this.setSize(0.7F, 0.9F);
+        this.stepHeight = 0.5F;
+    }
+    public void whenFused() {
+    	this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D * this.getFusionCount());
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D * this.getFusionCount());
+		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0F);
+    	this.setSize(0.7F * this.getFusionCount(), 1.8F * this.getFusionCount());
+    	this.stepHeight = this.getFusionCount();
+    }
+    public boolean canPickupItem(Item itemIn) {
+        return this.isDefective() && (itemIn instanceof ItemSword || itemIn instanceof ItemTool || itemIn instanceof ItemBow);
+    }
+	
+	/*********************************************************
+	 * Methods related to living.                            *
+	 *********************************************************/
+	public void onLivingUpdate() {
+		if (this.getAnger() > 2) {
+			if (!this.isInWater()) {
+				for (int k = 0; k < 8; ++k) {
+	                this.world.spawnParticle(EnumParticleTypes.FLAME, (double) this.posX - 0.5 + Math.random(), (double) this.posY + Math.random(), (double) this.posZ - 0.5 + Math.random(), 0.0D, 0.0D, 0.0D, new int[0]);
+	            }
+			}
+		}
+		else if (this.getAnger() > 3) {
+			if (this.isInWater()) {
+				this.world.setBlockToAir(this.getPosition());
+                this.world.playSound(null, this.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.8F);
+                for (int k = 0; k < 8; ++k) {
+                    this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, (double) this.posX - 0.5 + Math.random(), (double) this.posY + Math.random(), (double) this.posZ - 0.5 + Math.random(), 0.0D, 0.0D, 0.0D, new int[0]);
+                }
+			}
+			else if (this.onGround) {
+				this.world.setBlockState(this.getPosition(), Blocks.FIRE.getDefaultState());
+			}
+		}
+		else if (this.getAnger() > 4) {
+			this.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 60));
+			this.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 60));
+		}
+		else if (this.getAnger() > 6) {
+			this.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 60, 3));
+		}
+		if (this.world.getBlockState(this.getPosition()).getMaterial() == Material.LAVA) {
+			this.heal(1.0F);
+		}
+		this.angerTicks += 1;
+		if (this.angerTicks > 200 && this.getAnger() > 0) {
+			this.setAnger(this.getAnger() - 1);
+			this.angerTicks = 0;
+		}
+		if (this.ticksExisted % 10 + this.rand.nextInt(50) == 0) {
+			this.setSpecial(this.rand.nextInt(6));
+		}
+		if (this.isFusion()) {
+			if (this.canFuse()) {
+				this.whenFused();
+			}
+			else {
+				this.unfuse();
+			}
+		}
+		super.onLivingUpdate();
+	}
+	public boolean alternateInteract(EntityPlayer player) {
+    	this.wantsToFuse = true;
+    	return true;
+    }
+    public boolean onSpokenTo(EntityPlayer player, String message) {
+    	boolean spokenTo = super.onSpokenTo(player, message);
+    	if (!spokenTo) {
+    		message = message.toLowerCase();
+    		if (this.isBeingCalledBy(player, message)) {
+    			this.getLookHelper().setLookPositionWithEntity(player, 30.0F, 30.0F);
+    			if (this.isOwner(player)) {
+    				if (this.isMatching("regex.kagic.fuse", message)) {
+    					this.wantsToFuse = true;
+    					return true;
+    				}
+    				else if (this.isMatching("regex.kagic.unfuse", message)) {
+    					this.wantsToFuse = false;
+    					if (this.isFusion()) {
+    						this.unfuse();
+    					}
+    					return true;
+    				}
+    			}
+    		}
+    	}
+    	return spokenTo;
+    }
+	public boolean canFuseWith(EntityRuby other) {
+		if (this.canFuse() && other.canFuse() && this.getServitude() == other.getServitude() && this.getGemPlacement() != other.getGemPlacement()) {
+			if ((this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwnerId().equals(other.getOwnerId())) || this.getServitude() != EntityGem.SERVE_HUMAN) {
+				if (this.wantsToFuse && other.wantsToFuse) {
+					return true;
+				}
+				if ((this.getAITarget() != null && this.getAITarget().equals(other.getAITarget())) || (this.getAttackTarget() != null && this.getAttackTarget().equals(other.getAttackTarget()))) {
+					return true;
+				}
+				if (this.getHealth() / this.getMaxHealth() <= 0.5 || other.getHealth() / other.getMaxHealth() <= 0.5) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	public EntityRuby fuse(EntityRuby other) {
+		EntityRuby ruby = new EntityRuby(this.world);
+		if (this.isFusion()) {
+			for (NBTTagCompound compound : this.fusionMembers) {
+				ruby.fusionMembers.add(compound);
+			}
+		}
+		else {
+			NBTTagCompound primeCompound = new NBTTagCompound();
+			this.writeEntityToNBT(primeCompound);
+			ruby.fusionMembers.add(primeCompound);
+		}
+		if (other.isFusion()) {
+			for (NBTTagCompound compound : other.fusionMembers) {
+				ruby.fusionMembers.add(compound);
+			}
+		}
+		else {
+			NBTTagCompound otherCompound = new NBTTagCompound();
+			other.writeEntityToNBT(otherCompound);
+			ruby.fusionMembers.add(otherCompound);
+		}
+		if (this.getServitude() == EntityGem.SERVE_HUMAN) {
+			ruby.setOwnerId(this.getOwnerId());
+			ruby.setLeader(this.getOwner());
+		}
+		ruby.setServitude(this.getServitude());
+		ruby.setFusionCount(this.getFusionCount() + other.getFusionCount());
+		ruby.generateFusionPlacements();
+		ruby.setPosition((this.posX + other.posX) / 2, (this.posY + other.posY) / 2, (this.posZ + other.posZ) / 2);
+		ruby.setAnger(this.getAnger() + other.getAnger());
+		ruby.setHealth(ruby.getMaxHealth());
+		ruby.setAttackTarget(this.getAttackTarget());
+		ruby.setRevengeTarget(this.getAITarget());
+		return ruby;
+	}
+	public void unfuse() {
+		for (int i = 0; i < this.fusionMembers.size(); ++i) {
+			EntityRuby ruby = new EntityRuby(this.world);
+			ruby.readFromNBT(this.fusionMembers.get(i));
+			ruby.setUniqueId(MathHelper.getRandomUUID(this.world.rand));
+			ruby.setHealth(ruby.getMaxHealth());
+			ruby.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
+			ruby.setRevengeTarget(null);
+			ruby.setAttackTarget(null);
+			ruby.wantsToFuse = false;
+			if (ruby.isFusion()) {
+				ruby.unfuse();
+				this.world.removeEntity(ruby);
+			}
+			else {
+				this.world.spawnEntity(ruby);
+			}
+		}
+		this.world.removeEntity(this);
+	}
+	
+	/*********************************************************
+	 * Methods related to combat.                            *
+	 *********************************************************/
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (source.getEntity() instanceof EntityLivingBase && !this.isOwner((EntityLivingBase) source.getEntity())) {
+			if (source.isMagicDamage()) {
+				this.setAnger(this.getAnger() + 4 + (int)(amount / 2));
+			}
+			else {
+				this.setAnger(this.getAnger() + 1 + (int)(amount / 4));
+			}
+		}
+		else if (source.isProjectile()) {
+			this.setAnger(this.getAnger() + 2 + (int)(amount / 3));
+		}
+		if (this.getAnger() > 3) {
+			if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
+            	this.getOwner().addStat(ModAchievements.IM_AN_ETERNAL_FLAME);
+            }
+		}
+		if (this.isDefective()) {
+			this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
+			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
+		}
+		this.setSpecial(this.rand.nextInt(6));
+		return super.attackEntityFrom(source, amount);
+	}
+	public boolean attackEntityAsMob(Entity entityIn) {
+		int anger = this.getAnger();
+		if (anger > 7) {
+			anger = 7;
+		}
+		if (this.rand.nextInt(8 - anger) == 1) {
+			entityIn.setFire(anger * 2 + 4);
+		}
+		return super.attackEntityAsMob(entityIn);
+	}
+	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
+		EntityTippedArrow arrow = new EntityTippedArrow(this.world, this);
+		double distanceFromTargetX = target.posX - this.posX;
+        double distanceFromTargetY = target.getEntityBoundingBox().minY + (double)(target.height / 3.0F) - arrow.posY;
+        double distanceFromTargetZ = target.posZ - this.posZ;
+        double distanceFromTargetS = (double) MathHelper.sqrt(distanceFromTargetX * distanceFromTargetX + distanceFromTargetY * distanceFromTargetY);
+        arrow.setThrowableHeading(distanceFromTargetX, distanceFromTargetY + distanceFromTargetS * 0.20000000298023224D, distanceFromTargetZ, 1.6F, 2.0F);
+        arrow.setDamage((double)(distanceFactor * 2.0F) + this.rand.nextGaussian() * 0.25D + (double)((float)this.world.getDifficulty().getDifficultyId() * 0.11F));
+        
+        // Enchantments.
+        int power = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this);
+        int punch = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this);
+        boolean flame = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, this) > 0;
+        int anger = this.getAnger();
+        
+        if (anger > 7) {
+			anger = 7;
+		}
+        if (power > 0) {
+            arrow.setDamage(arrow.getDamage() + (double) power * 0.5D + 0.5D);
+        }
+        if (punch > 0) {
+            arrow.setKnockbackStrength(punch);
+        }
+        if (flame) {
+            arrow.setFire(100 + (anger * 100 + 40));
+        }
+        else if (this.rand.nextInt(8 - anger) == 1) {
+			arrow.setFire(anger * 100 + 40);
+		}
+        ItemStack itemstack = this.getHeldItem(EnumHand.OFF_HAND);
+        if (itemstack.getItem() == Items.TIPPED_ARROW) {
+            arrow.setPotionEffect(itemstack);
+        }
+        this.playSound(SoundEvents.ENTITY_ARROW_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+        this.world.spawnEntity(arrow);
+    }
+	public void jump() {
+		if (this.isDefective()) {
+			this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
+			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
+		}
+		super.jump();
+	}
+	public void fall(float distance, float damageMultiplier) {
+		if (this.isDefective()) {
+			this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
+			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
+		}
+		super.fall(distance, damageMultiplier);
+	}
+	public int getAnger() {
+		return this.dataManager.get(ANGER);
+	}
+	public void setAnger(int anger) {
+		this.dataManager.set(ANGER, anger);
+	}
+	public int getSpecialSkin() {
+		return this.getSpecial();
+	}
+	
+	/*********************************************************
+	 * Methods related to sounds.                            *
+	 *********************************************************/
+	public SoundEvent getAmbientSound() {
+		return ModSounds.RUBY_LIVING;
+	}
+	public SoundEvent getHurtSound() {
+		return ModSounds.RUBY_HURT;
+	}
+	public SoundEvent getObeySound() {
+		return ModSounds.RUBY_OBEY;
+	}
+	public SoundEvent getDeathSound() {
+		return ModSounds.RUBY_DEATH;
+	}
+}

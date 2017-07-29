@@ -1,0 +1,61 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+    	"model": "kagic:gem_seed",
+        "textures": {
+            "seed": "kagic:blocks/gem_seed_0",
+            "glow": "kagic:blocks/gem_glow",
+            "particle": "kagic:blocks/gem_seed_0"
+        }
+    },
+    "variants": {
+        "normal": {
+            "model": "kagic:gem_seed",
+            "textures": {
+            	"seed": "kagic:blocks/gem_seed_0",
+            	"glow": "kagic:blocks/gem_glow",
+            	"particle": "kagic:blocks/gem_seed_0"
+        	}
+        },
+        "inventory": {
+            "model": "kagic:gem_seed",
+            "textures": {
+            	"seed": "kagic:blocks/gem_seed_0",
+            	"glow": "kagic:blocks/gem_glow",
+            	"particle": "kagic:blocks/gem_seed_0"
+        	}
+        },
+        "age=0": {
+            "model": "kagic:gem_seed",
+            "textures": {
+            	"seed": "kagic:blocks/gem_seed_0",
+            	"glow": "kagic:blocks/gem_glow",
+            	"particle": "kagic:blocks/gem_seed_0"
+        	}
+        },
+        "age=1": {
+            "model": "kagic:gem_seed",
+            "textures": {
+            	"seed": "kagic:blocks/gem_seed_1",
+            	"glow": "kagic:blocks/gem_glow",
+            	"particle": "kagic:blocks/gem_seed_1"
+        	}
+        },
+        "age=2": {
+            "model": "kagic:gem_seed",
+            "textures": {
+            	"seed": "kagic:blocks/gem_seed_2",
+            	"glow": "kagic:blocks/gem_glow",
+            	"particle": "kagic:blocks/gem_seed_2"
+        	}
+        },
+        "age=3": {
+            "model": "kagic:gem_seed",
+            "textures": {
+            	"seed": "kagic:blocks/gem_seed_3",
+            	"glow": "kagic:blocks/gem_glow",
+            	"particle": "kagic:blocks/gem_seed_3"
+        	}
+        }
+    }
+}

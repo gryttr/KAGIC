@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "kagic:items/record_whats_the_use_of_feeling_blue"
+    }
+}

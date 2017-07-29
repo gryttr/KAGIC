@@ -1,0 +1,23 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+    	"model": "minecraft:cube",
+        "textures": {
+            "north": "kagic:blocks/chiseled_carbonite",
+            "south": "kagic:blocks/chiseled_carbonite",
+            "east": "kagic:blocks/chiseled_carbonite",
+            "west": "kagic:blocks/chiseled_carbonite",
+            "up": "kagic:blocks/smooth_carbonite",
+            "down": "kagic:blocks/smooth_carbonite",
+            "particle": "kagic:blocks/smooth_carbonite"
+        }
+    },
+    "variants": {
+        "normal": {
+            "model": "minecraft:cube"
+        },
+        "inventory": {
+            "model": "minecraft:cube"
+        }
+    }
+}
