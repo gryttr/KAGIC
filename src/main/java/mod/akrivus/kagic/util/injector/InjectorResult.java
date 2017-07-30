@@ -9,6 +9,8 @@ import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.material.Material;
@@ -151,16 +153,32 @@ public class InjectorResult {
 			for (int x = -4; x <= 4; ++x) {
 	            for (int y = -4; y <= 4; ++y) {
 	                for (int z = -4; z <= 4; ++z) {
-	                	BlockPos ore = pos.add(x, y, z);
-	                	IBlockState state = world.getBlockState(ore);
-	                	Block block = state.getBlock();
-	                	if (!(block instanceof BlockAir || block instanceof BlockLiquid || state.getBlockHardness(world, ore) < 0.0 || Injector.isInjectorBlock(block) || block == ModBlocks.GEM_SEED) && world.rand.nextBoolean()) {
-	        				world.setBlockState(ore, ModBlocks.DRAINED_BLOCK.getDefaultState());
+	                	if (world.rand.nextBoolean()) {
+		                	BlockPos ore = pos.add(x, y, z);
+	                		drainBlock(world, ore);
 	        			}
 	                }
 	            }
 			}
 		}
 		return new InjectorResult(gemSpawned, pos, gemSpawned == null ? 0.0 : defectivity.get(gemSpawned.getClass()), spawnlist.isEmpty(), exitHole);
+	}
+	
+	private static void drainBlock(World world, BlockPos ore) {
+    	IBlockState state = world.getBlockState(ore);
+    	Block block = state.getBlock();
+    	if (block instanceof BlockBush) {
+    		world.destroyBlock(ore, false);
+    	}
+    	//Dirt/grass -> coarse dirt
+    	//Coarse dirt -> gravel
+    	//Stone -> drained stone
+    	if (state == Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT)) {
+    		world.setBlockState(ore, Blocks.GRAVEL.getDefaultState());
+    	} else if (state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND) {
+    		world.setBlockState(ore, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT));
+    	} else if (state.getMaterial() == Material.ROCK && state.isFullCube()) {
+    		world.setBlockState(ore, ModBlocks.DRAINED_BLOCK.getDefaultState());
+    	}
 	}
 }

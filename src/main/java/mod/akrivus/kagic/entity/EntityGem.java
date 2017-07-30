@@ -322,7 +322,6 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
     }
     
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-    	KAGIC.instance.chatInfoMessage("onInitialSpawn called");
     	this.setHealth(this.getMaxHealth());
     	if (!this.isGemPlacementDefined() || !this.isCorrectGemPlacement()) {
     		int placementIndex = this.rand.nextInt(this.placements.size());
@@ -384,7 +383,6 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			if (hand == EnumHand.MAIN_HAND) {
 				ItemStack stack = player.getHeldItemMainhand();
 				if (stack.getItem() == ModItems.GEM_STAFF) {
-					KAGIC.instance.chatInfoMessage("Placement is " + this.getGemPlacement());
 			        if (this.isTamed()) {
 			        	if (player.isSneaking()) {
 			        		this.alternateInteract(player);
