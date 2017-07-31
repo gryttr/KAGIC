@@ -1144,7 +1144,6 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (!this.world.isRemote) {
-			KAGIC.instance.chatInfoMessage("attackEntityFrom called");
 			if (this.isDead || this.getHealth() <= 0.0F) {
 				return false;
 			}

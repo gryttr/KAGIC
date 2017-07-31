@@ -66,9 +66,11 @@ public class KAGIC {
     
     //Used for debugging
 	public void chatInfoMessage(String message) {
-		PlayerList list = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList();
-		logger.info(message);
-		list.sendMessage(new TextComponentString(message));
+		if (DEVELOPER) {
+			PlayerList list = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList();
+			logger.info(message);
+			list.sendMessage(new TextComponentString(message));
+		}
 	}
 	
     public static boolean isDayToday(int month, int day) {
