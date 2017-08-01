@@ -48,16 +48,15 @@ public class EntitySapphire extends EntityGem {
 		this.seePastDoors();
 		
 		//Define valid gem cuts and placements
-		this.setValidCut(GemCuts.FACETED);
-		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
-		this.setValidPlacement(GemPlacements.FOREHEAD);
-		this.setValidPlacement(GemPlacements.LEFT_EYE);
-		this.setValidPlacement(GemPlacements.RIGHT_EYE);
-		this.setValidPlacement(GemPlacements.LEFT_CHEEK);
-		this.setValidPlacement(GemPlacements.RIGHT_CHEEK);
-		this.setValidPlacement(GemPlacements.BACK);
-		this.setValidPlacement(GemPlacements.CHEST);
-		this.setValidPlacement(GemPlacements.BELLY);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BACK_OF_HEAD);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.FOREHEAD);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_EYE);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_EYE);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_CHEEK);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_CHEEK);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BACK);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.CHEST);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BELLY);
 
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);

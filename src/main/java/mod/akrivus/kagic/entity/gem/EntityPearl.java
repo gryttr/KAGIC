@@ -74,12 +74,11 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 		this.seePastDoors();
 		
 		//Define valid gem cuts and placements
-		this.setValidCut(GemCuts.CABOCHON);
-		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
-		this.setValidPlacement(GemPlacements.FOREHEAD);
-		this.setValidPlacement(GemPlacements.BACK);
-		this.setValidPlacement(GemPlacements.CHEST);
-		this.setValidPlacement(GemPlacements.BELLY);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.BACK_OF_HEAD);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.FOREHEAD);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.BACK);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.CHEST);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.BELLY);
 
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);

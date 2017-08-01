@@ -59,18 +59,16 @@ public class EntityJasper extends EntityGem {
 		this.isSoldier = true;
 
 		//Define valid gem cuts and placements
-		this.setValidCut(GemCuts.CABOCHON);
-		this.setValidCut(GemCuts.TINY);
-		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
-		this.setValidPlacement(GemPlacements.FOREHEAD);
-		this.setValidPlacement(GemPlacements.LEFT_EYE);
-		this.setValidPlacement(GemPlacements.RIGHT_EYE);
-		this.setValidPlacement(GemPlacements.NOSE);
-		this.setValidPlacement(GemPlacements.LEFT_CHEEK);
-		this.setValidPlacement(GemPlacements.RIGHT_CHEEK);
-		this.setValidPlacement(GemPlacements.BACK);
-		this.setValidPlacement(GemPlacements.CHEST);
-		this.setValidPlacement(GemPlacements.BELLY);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.BACK_OF_HEAD);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.FOREHEAD);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.LEFT_EYE);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.RIGHT_EYE);
+		this.setCutPlacement(GemCuts.TINY, GemPlacements.NOSE);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.LEFT_CHEEK);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.RIGHT_CHEEK);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.BACK);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.CHEST);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.BELLY);
 
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);

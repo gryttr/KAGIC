@@ -44,11 +44,10 @@ public class EntityBismuth extends EntityGem {
 		this.setSize(0.9F, 2.3F);
 		
 		//Define valid gem cuts and placements
-		this.setValidCut(GemCuts.BISMUTH);
-		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
-		this.setValidPlacement(GemPlacements.BACK);
-		this.setValidPlacement(GemPlacements.CHEST);
-		this.setValidPlacement(GemPlacements.BELLY);
+		this.setCutPlacement(GemCuts.BISMUTH, GemPlacements.BACK_OF_HEAD);
+		this.setCutPlacement(GemCuts.BISMUTH, GemPlacements.BACK);
+		this.setCutPlacement(GemCuts.BISMUTH, GemPlacements.CHEST);
+		this.setCutPlacement(GemCuts.BISMUTH, GemPlacements.BELLY);
 
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);

@@ -12,6 +12,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIHarvestFarmland;
 import mod.akrivus.kagic.entity.ai.EntityAIPickUpItems;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
@@ -68,16 +69,13 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		this.seePastDoors();
 
 		//Define valid gem cuts and placements
-		this.setValidCut(GemCuts.PERIDOT);
-		this.setValidCut(GemCuts.TEARDROP);
-		this.setValidCut(GemCuts.TRIANGULAR);
-		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
-		this.setValidPlacement(GemPlacements.FOREHEAD);
-		this.setValidPlacement(GemPlacements.LEFT_EYE);
-		this.setValidPlacement(GemPlacements.RIGHT_EYE);
-		this.setValidPlacement(GemPlacements.BACK);
-		this.setValidPlacement(GemPlacements.CHEST);
-		this.setValidPlacement(GemPlacements.BELLY);
+		this.setCutPlacement(GemCuts.PERIDOT, GemPlacements.BACK_OF_HEAD);
+		this.setCutPlacement(GemCuts.PERIDOT, GemPlacements.FOREHEAD);
+		this.setCutPlacement(GemCuts.PERIDOT, GemPlacements.LEFT_EYE);
+		this.setCutPlacement(GemCuts.PERIDOT, GemPlacements.RIGHT_EYE);
+		this.setCutPlacement(GemCuts.TRIANGULAR, GemPlacements.BACK);
+		this.setCutPlacement(GemCuts.TRIANGULAR, GemPlacements.CHEST);
+		this.setCutPlacement(GemCuts.TRIANGULAR, GemPlacements.BELLY);
 
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
@@ -109,48 +107,6 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
         this.droppedGemItem = ModItems.PERIDOT_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_PERIDOT_GEM;
 	}
-
-	public boolean isCorrectGemCut() {
-    	switch (this.getGemCut()) {
-    	case BISMUTH:
-    		return false;
-    	case PERIDOT:
-    		switch (this.getGemPlacement()) {
-			case BACK_OF_HEAD:
-				return true;
-			case FOREHEAD:
-				return true;
-			case LEFT_EYE:
-				return true;
-			case RIGHT_EYE:
-				return true;
-			case MOUTH:
-				return false;
-			default:
-				return false;
-    		}
-    	case TEARDROP:
-    		switch (this.getGemPlacement()) {
-			case BACK_OF_HEAD:
-				return false;
-			case FOREHEAD:
-				return false;
-			default:
-				return true;
-    		}
-    	case TRIANGULAR:
-    		switch (this.getGemPlacement()) {
-			case BACK_OF_HEAD:
-				return false;
-			case FOREHEAD:
-				return false;
-			default:
-				return true;
-    		}
-    	default:
-    		return true;
-    	}
-    }
 	
 	public float[] getGemColor() {
     	return new float[] { 47F / 255F, 248F / 255F, 42F / 255F };
@@ -162,7 +118,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
     		this.setGemCut(GemCuts.PERIDOT.id);
     		break;
     	case 1:
-    		this.setGemPlacement(GemPlacements.RIGHT_SHOULDER.id);
+    		this.setGemPlacement(GemPlacements.CHEST.id);
     		this.setGemCut(GemCuts.TRIANGULAR.id);
     		break;
     	}
@@ -331,7 +287,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		if (this.isFarmer()) {
 			++this.harvestTimer;
 		}
-		if (this.dropTimer < 40) {
+		if (this.dropTimer < 100) {
 			++this.dropTimer;
 		}
 		super.onLivingUpdate();

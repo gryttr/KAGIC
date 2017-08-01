@@ -32,16 +32,15 @@ public class EntityRutile extends EntityGem {
 		this.seePastDoors();
 		
 		//Define valid gem cuts and placements
-		this.setValidCut(GemCuts.TINY);
-		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
-		this.setValidPlacement(GemPlacements.FOREHEAD);
-		this.setValidPlacement(GemPlacements.LEFT_EYE);
-		this.setValidPlacement(GemPlacements.RIGHT_EYE);
-		this.setValidPlacement(GemPlacements.LEFT_CHEEK);
-		this.setValidPlacement(GemPlacements.RIGHT_CHEEK);
-		this.setValidPlacement(GemPlacements.BACK);
-		this.setValidPlacement(GemPlacements.CHEST);
-		this.setValidPlacement(GemPlacements.BELLY);
+		this.setCutPlacement(GemCuts.TINY, GemPlacements.BACK_OF_HEAD);
+		this.setCutPlacement(GemCuts.TINY, GemPlacements.FOREHEAD);
+		this.setCutPlacement(GemCuts.TINY, GemPlacements.LEFT_EYE);
+		this.setCutPlacement(GemCuts.TINY, GemPlacements.RIGHT_EYE);
+		this.setCutPlacement(GemCuts.TINY, GemPlacements.LEFT_CHEEK);
+		this.setCutPlacement(GemCuts.TINY, GemPlacements.RIGHT_CHEEK);
+		this.setCutPlacement(GemCuts.TINY, GemPlacements.BACK);
+		this.setCutPlacement(GemCuts.TINY, GemPlacements.CHEST);
+		this.setCutPlacement(GemCuts.TINY, GemPlacements.BELLY);
 
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);

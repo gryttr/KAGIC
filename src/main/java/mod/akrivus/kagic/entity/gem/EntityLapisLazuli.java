@@ -52,14 +52,13 @@ public class EntityLapisLazuli extends EntityGem {
 		this.setSize(0.6F, 1.9F);
 		
 		//Define valid gem cuts and placements
-		this.setValidCut(GemCuts.TEARDROP);
-		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
-		this.setValidPlacement(GemPlacements.FOREHEAD);
-		this.setValidPlacement(GemPlacements.LEFT_EYE);
-		this.setValidPlacement(GemPlacements.RIGHT_EYE);
-		this.setValidPlacement(GemPlacements.BACK);
-		this.setValidPlacement(GemPlacements.CHEST);
-		this.setValidPlacement(GemPlacements.BELLY);
+		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.BACK_OF_HEAD);
+		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.FOREHEAD);
+		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.LEFT_EYE);
+		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.RIGHT_EYE);
+		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.BACK);
+		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.CHEST);
+		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.BELLY);
 		
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);

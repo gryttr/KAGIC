@@ -43,25 +43,24 @@ public class EntityTopaz extends EntityGem {
 		this.isSoldier = true;
 		
 		//Define valid gem cuts and placements
-		this.setValidCut(GemCuts.DRUM);
-		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
-		this.setValidPlacement(GemPlacements.FOREHEAD);
-		this.setValidPlacement(GemPlacements.LEFT_EYE);
-		this.setValidPlacement(GemPlacements.RIGHT_EYE);
-		this.setValidPlacement(GemPlacements.NOSE);
-		this.setValidPlacement(GemPlacements.LEFT_CHEEK);
-		this.setValidPlacement(GemPlacements.RIGHT_CHEEK);
-		this.setValidPlacement(GemPlacements.LEFT_SHOULDER);
-		this.setValidPlacement(GemPlacements.RIGHT_SHOULDER);
-		this.setValidPlacement(GemPlacements.LEFT_HAND);
-		this.setValidPlacement(GemPlacements.RIGHT_HAND);
-		this.setValidPlacement(GemPlacements.BACK);
-		this.setValidPlacement(GemPlacements.CHEST);
-		this.setValidPlacement(GemPlacements.BELLY);
-		this.setValidPlacement(GemPlacements.LEFT_THIGH);
-		this.setValidPlacement(GemPlacements.RIGHT_THIGH);
-		this.setValidPlacement(GemPlacements.LEFT_KNEE);
-		this.setValidPlacement(GemPlacements.RIGHT_KNEE);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.BACK_OF_HEAD);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.FOREHEAD);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_EYE);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_EYE);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.NOSE);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_CHEEK);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_CHEEK);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_SHOULDER);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_SHOULDER);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_HAND);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_HAND);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.BACK);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.CHEST);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.BELLY);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_THIGH);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_THIGH);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_KNEE);
+		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_KNEE);
 
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);

@@ -56,25 +56,24 @@ public class EntityRoseQuartz extends EntityGem {
 		this.isSoldier = true;
 		
 		//Define valid gem cuts and placements
-		this.setValidCut(GemCuts.FACETED);
-		this.setValidPlacement(GemPlacements.BACK_OF_HEAD);
-		this.setValidPlacement(GemPlacements.FOREHEAD);
-		this.setValidPlacement(GemPlacements.LEFT_EYE);
-		this.setValidPlacement(GemPlacements.RIGHT_EYE);
-		this.setValidPlacement(GemPlacements.NOSE);
-		this.setValidPlacement(GemPlacements.LEFT_CHEEK);
-		this.setValidPlacement(GemPlacements.RIGHT_CHEEK);
-		this.setValidPlacement(GemPlacements.LEFT_SHOULDER);
-		this.setValidPlacement(GemPlacements.RIGHT_SHOULDER);
-		this.setValidPlacement(GemPlacements.LEFT_HAND);
-		this.setValidPlacement(GemPlacements.RIGHT_HAND);
-		this.setValidPlacement(GemPlacements.BACK);
-		this.setValidPlacement(GemPlacements.CHEST);
-		this.setValidPlacement(GemPlacements.BELLY);
-		this.setValidPlacement(GemPlacements.LEFT_THIGH);
-		this.setValidPlacement(GemPlacements.RIGHT_THIGH);
-		this.setValidPlacement(GemPlacements.LEFT_KNEE);
-		this.setValidPlacement(GemPlacements.RIGHT_KNEE);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BACK_OF_HEAD);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.FOREHEAD);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_EYE);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_EYE);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.NOSE);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_CHEEK);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_CHEEK);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_SHOULDER);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_SHOULDER);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_HAND);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_HAND);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BACK);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.CHEST);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BELLY);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_THIGH);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_THIGH);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_KNEE);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_KNEE);
 
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);

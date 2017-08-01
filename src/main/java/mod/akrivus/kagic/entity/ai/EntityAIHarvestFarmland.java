@@ -11,6 +11,7 @@ import net.minecraft.entity.ai.EntityAIMoveToBlock;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -26,7 +27,7 @@ public class EntityAIHarvestFarmland extends EntityAIMoveToBlock {
         this.world = gemIn.world;
     }
     public boolean shouldExecute() {
-        if (this.gem.isFarmer()) {
+    	if (this.gem.isFarmer()) {
         	if (delay > 20 + this.gem.getRNG().nextInt(20)) {
                 this.runDelay = 0;
                 return super.shouldExecute();
@@ -107,7 +108,30 @@ public class EntityAIHarvestFarmland extends EntityAIMoveToBlock {
             this.currentTask = -1;
         }
     }
-    protected boolean shouldMoveTo(World world, BlockPos pos) {
+
+	private boolean hasSeeds() {
+		InventoryBasic inventory = this.gem.gemStorage;
+		for (int i = 0; i < inventory.getSizeInventory(); ++i) {
+			Item item = inventory.getStackInSlot(i).getItem();
+			if (item == Items.WHEAT_SEEDS || item == Items.BEETROOT_SEEDS || item == Items.CARROT || item == Items.POTATO) {
+				return true;
+			}
+		}
+		return false;
+	}
+    
+	private boolean hasNetherWart() {
+		InventoryBasic inventory = this.gem.gemStorage;
+		for (int i = 0; i < inventory.getSizeInventory(); ++i) {
+			Item item = inventory.getStackInSlot(i).getItem();
+			if (item == Items.NETHER_WART) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected boolean shouldMoveTo(World world, BlockPos pos) {
         Block block = world.getBlockState(pos).getBlock();
         BlockPos cropPos = pos.up();
         IBlockState iblockstate = world.getBlockState(cropPos);
@@ -131,8 +155,13 @@ public class EntityAIHarvestFarmland extends EntityAIMoveToBlock {
             }
         }
         if (iblockstate.getMaterial() == Material.AIR && (this.currentTask == 1 || this.currentTask < 0)) {
-            this.currentTask = 1;
-            return true;
+        	if (block == Blocks.FARMLAND && this.hasSeeds()) {
+        		this.currentTask = 1;
+            	return true;
+            } else if (block == Blocks.SOUL_SAND && this.hasNetherWart()) {
+            	this.currentTask = 1;
+            	return true;
+            }
         }
         return false;
     }
