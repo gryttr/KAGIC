@@ -50,7 +50,6 @@ public class EntityAgate extends EntityGem {
 		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.FOREHEAD);
 		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.LEFT_EYE);
 		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.RIGHT_EYE);
-		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.NOSE);
 		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.LEFT_CHEEK);
 		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.RIGHT_CHEEK);
 		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.LEFT_SHOULDER);

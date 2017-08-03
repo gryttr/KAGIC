@@ -150,7 +150,6 @@ public class EntityBismuth extends EntityGem {
      * Methods related to entity death.                      *
      *********************************************************/
 	public void onDeath(DamageSource cause) {
-		KAGIC.instance.chatInfoMessage("Bismuth " + this.getUniqueID().toString() + " took fatal damage from " + cause.toString());
 		if (!this.world.isRemote) {
 			if (cause.getEntity() instanceof EntityLivingBase) {
 				ItemStack heldItem = ((EntityLivingBase)cause.getEntity()).getHeldItemMainhand();

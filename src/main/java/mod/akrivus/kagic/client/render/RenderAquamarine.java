@@ -18,7 +18,7 @@ public class RenderAquamarine extends RenderLivingBase<EntityAquamarine> {
         this.addLayer(new LayerGemPlacement(this));
     }
 	protected void preRenderCallback(EntityAquamarine entitylivingbaseIn, float partialTickTime) {
-		GlStateManager.scale(0.5F, 0.5F, 0.5F);
+		GlStateManager.scale(0.65F, 0.65F, 0.65F);
 	}
 	protected ResourceLocation getEntityTexture(EntityAquamarine entity) {
 		return new ResourceLocation("kagic:textures/entities/aquamarine/aquamarine.png");

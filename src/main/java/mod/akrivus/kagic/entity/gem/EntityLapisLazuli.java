@@ -8,6 +8,7 @@ import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
@@ -152,7 +153,7 @@ public class EntityLapisLazuli extends EntityGem {
     }
 	public void updatePassenger(Entity passenger) {
         super.updatePassenger(passenger);
-        passenger.setPosition(this.posX, this.posY + 1.5F, this.posZ);
+        passenger.setPosition(this.posX, this.posY - 1.25F, this.posZ);
     }
 	public boolean shouldDismountInWater(Entity rider) {
 		return false;
@@ -178,7 +179,7 @@ public class EntityLapisLazuli extends EntityGem {
         if (this.isBeingRidden() && this.canBeSteered()) {
         	this.rotationYaw = entity.rotationYaw;
             this.prevRotationYaw = this.rotationYaw;
-            this.rotationPitch = entity.rotationPitch * 0.5F;
+            this.rotationPitch = Math.max(-90f, -90f - entity.rotationPitch * 2f);
             this.setRotation(this.rotationYaw, this.rotationPitch);
             this.renderYawOffset = this.rotationYaw;
             this.rotationYawHead = this.rotationYaw;
@@ -221,7 +222,7 @@ public class EntityLapisLazuli extends EntityGem {
 	            this.motionY = 0.0D;
 	            this.motionZ = 0.0D;
 	        }
-	        this.prevLimbSwingAmount = this.limbSwingAmount;
+	        this.prevLimbSwingAmount = 0f;/*this.limbSwingAmount;
 	        double d1 = this.posX - this.prevPosX;
 	        double d0 = this.posZ - this.prevPosZ;
 	        float f2 = MathHelper.sqrt(d1 * d1 + d0 * d0) * 4.0F;
@@ -229,7 +230,8 @@ public class EntityLapisLazuli extends EntityGem {
 	            f2 = 1.0F;
 	        }
 	        this.limbSwingAmount += (f2 - this.limbSwingAmount) * 0.4F;
-	        this.limbSwing += this.limbSwingAmount;
+	        this.limbSwing += this.limbSwingAmount;*/
+            this.limbSwingAmount = 0f;
         }
         else {
             this.stepHeight = 1.0F;

@@ -14,7 +14,14 @@ public enum GemCuts {
 	TRIANGULAR(9);
 	
 	public int id;
+	
+	private static GemCuts[] vals = GemCuts.values();
+	
 	private GemCuts(int id) {
 		this.id = id;
+	}
+	
+	public static GemCuts getCut(int i) {
+		return vals[i + 1];
 	}
 }

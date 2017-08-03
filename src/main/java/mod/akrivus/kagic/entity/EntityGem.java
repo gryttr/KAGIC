@@ -621,6 +621,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	public boolean setAttackWeapon(EntityPlayer player, EnumHand hand, ItemStack stack) {
+		if (this.isFusion()) return false;
 		if (this.isTamed()) {
 			if (this.isOwner(player)) {
 				boolean toolChanged = true;
@@ -662,6 +663,19 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			}
 		}
 		return false;
+	}
+	
+	public void setFusionWeapon(ItemStack weapon) {
+		if (!this.isFusion()) return;
+		if (weapon.getItem() instanceof ItemSword || weapon.getItem() instanceof ItemTool || weapon.getItem() instanceof ItemBow) {
+			ItemStack heldItem = weapon.copy();
+			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, heldItem);
+		}
+		else if (weapon.getItem() instanceof ItemArrow || weapon.getItem() instanceof ItemShield) {
+			ItemStack heldItem = weapon.copy();
+			this.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, heldItem);
+		}
+		this.setAttackAI();
 	}
 	
 	public boolean onSpokenTo(EntityPlayer player, String message) {

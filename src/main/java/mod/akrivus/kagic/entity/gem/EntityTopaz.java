@@ -9,6 +9,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.entity.ai.EntityAITopazFuse;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
@@ -25,7 +26,9 @@ import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
@@ -37,9 +40,9 @@ import net.minecraft.world.World;
 
 public class EntityTopaz extends EntityGem {
 	public static final HashMap<Block, Double> TOPAZ_YIELDS = new HashMap<Block, Double>();
+		
 	public EntityTopaz(World worldIn) {
 		super(worldIn);
-		this.setSize(0.9F, 2.3F);
 		this.isSoldier = true;
 		
 		//Define valid gem cuts and placements
@@ -47,7 +50,6 @@ public class EntityTopaz extends EntityGem {
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.FOREHEAD);
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_EYE);
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_EYE);
-		this.setCutPlacement(GemCuts.DRUM, GemPlacements.NOSE);
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_CHEEK);
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_CHEEK);
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_SHOULDER);
@@ -80,9 +82,6 @@ public class EntityTopaz extends EntityGem {
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false, new Class[0]));
         
         // Apply entity attributes.
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(18.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.6D);
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0D);
         this.droppedGemItem = ModItems.TOPAZ_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_TOPAZ_GEM;
@@ -111,7 +110,7 @@ public class EntityTopaz extends EntityGem {
 		this.setSpecial(color);
 	}
 	public void convertGems(int placement) {
-    	this.setGemCut(GemCuts.FACETED.id);
+    	this.setGemCut(GemCuts.DRUM.id);
     	switch (placement) {
     	case 0:
     		this.setGemPlacement(GemPlacements.LEFT_CHEEK.id);
@@ -170,12 +169,7 @@ public class EntityTopaz extends EntityGem {
     	return spokenTo;
     }
     public void whenFused() {
-    	this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D * this.getFusionCount());
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(18.0D * this.getFusionCount());
-		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0F);
-    	this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3D);
 		this.setSize(0.9F * this.getFusionCount(), 2.3F * this.getFusionCount());
-    	this.stepHeight = this.getFusionCount();
     }
     
     /*********************************************************
@@ -214,10 +208,29 @@ public class EntityTopaz extends EntityGem {
 		topaz.setFusionCount(this.getFusionCount() + other.getFusionCount());
 		topaz.generateFusionPlacements();
 		topaz.setPosition((this.posX + other.posX) / 2, (this.posY + other.posY) / 2, (this.posZ + other.posZ) / 2);
-		topaz.setHealth(topaz.getMaxHealth());
 		topaz.setSpecial(this.getSpecial() == other.getSpecial() ? this.getSpecial() : 2);
 		topaz.setAttackTarget(this.getAttackTarget());
 		topaz.setRevengeTarget(this.getAITarget());
+		
+		topaz.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D * topaz.getFusionCount());
+		topaz.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(18.0D * topaz.getFusionCount());
+		topaz.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.6D / topaz.getFusionCount());
+		topaz.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0F);
+		topaz.stepHeight = topaz.getFusionCount();
+		topaz.setHealth(topaz.getMaxHealth());
+
+    	ItemStack weapon = this.getHeldItem(EnumHand.MAIN_HAND);
+    	if (weapon.getItem() == Items.AIR) {
+    		weapon = other.getHeldItem(EnumHand.MAIN_HAND);
+    	}
+    	ItemStack second = this.getHeldItem(EnumHand.OFF_HAND);
+    	if (second.getItem() == Items.AIR) {
+    		second = other.getHeldItem(EnumHand.OFF_HAND);
+    	}
+    	topaz.setFusionWeapon(weapon);
+    	topaz.setFusionWeapon(second);
+
+    	topaz.setSize(0.9F * topaz.getFusionCount(), 2.3F * topaz.getFusionCount());
 		return topaz;
 	}
 	public void unfuse() {

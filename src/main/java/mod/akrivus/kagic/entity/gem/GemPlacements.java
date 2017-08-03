@@ -23,7 +23,14 @@ public enum GemPlacements {
 	RIGHT_KNEE(18);
 	
 	public int id;
+	
+	private static GemPlacements[] vals = GemPlacements.values();
+	
 	private GemPlacements(int id) {
 		this.id = id;
+	}
+	
+	public static GemPlacements getPlacement(int i) {
+		return vals[i + 1];
 	}
 }

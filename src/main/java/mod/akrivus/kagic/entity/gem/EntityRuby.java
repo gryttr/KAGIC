@@ -2,6 +2,8 @@ package mod.akrivus.kagic.entity.gem;
 
 import java.util.HashMap;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
@@ -23,6 +25,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -57,6 +60,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
@@ -65,6 +69,7 @@ public class EntityRuby extends EntityGem {
 	public static final HashMap<Block, Double> RUBY_YIELDS = new HashMap<Block, Double>();
 	private static final DataParameter<Integer> ANGER = EntityDataManager.<Integer>createKey(EntityRuby.class, DataSerializers.VARINT);
 	private int angerTicks = 0;
+	
 	public EntityRuby(World worldIn) {
 		super(worldIn);
 		this.setSize(0.7F, 1.8F);
@@ -76,7 +81,6 @@ public class EntityRuby extends EntityGem {
 		this.setCutPlacement(GemCuts.SQUARE, GemPlacements.FOREHEAD);
 		this.setCutPlacement(GemCuts.SQUARE, GemPlacements.LEFT_EYE);
 		this.setCutPlacement(GemCuts.SQUARE, GemPlacements.RIGHT_EYE);
-		this.setCutPlacement(GemCuts.SQUARE, GemPlacements.NOSE);
 		this.setCutPlacement(GemCuts.SQUARE, GemPlacements.LEFT_CHEEK);
 		this.setCutPlacement(GemCuts.SQUARE, GemPlacements.RIGHT_CHEEK);
 		this.setCutPlacement(GemCuts.SQUARE, GemPlacements.LEFT_SHOULDER);
@@ -187,11 +191,9 @@ public class EntityRuby extends EntityGem {
         this.stepHeight = 0.5F;
     }
     public void whenFused() {
-    	this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D * this.getFusionCount());
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D * this.getFusionCount());
-		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0F);
+    	//Everything that used to be here was moved to EntityRuby#fuse()
+    	//because it doesn't need to be done 20 times a second
     	this.setSize(0.7F * this.getFusionCount(), 1.8F * this.getFusionCount());
-    	this.stepHeight = this.getFusionCount();
     }
     public boolean canPickupItem(Item itemIn) {
         return this.isDefective() && (itemIn instanceof ItemSword || itemIn instanceof ItemTool || itemIn instanceof ItemBow);
@@ -250,6 +252,7 @@ public class EntityRuby extends EntityGem {
 	}
 	public boolean alternateInteract(EntityPlayer player) {
     	this.wantsToFuse = true;
+    	super.alternateInteract(player);
     	return true;
     }
     public boolean onSpokenTo(EntityPlayer player, String message) {
@@ -322,11 +325,34 @@ public class EntityRuby extends EntityGem {
 		ruby.generateFusionPlacements();
 		ruby.setPosition((this.posX + other.posX) / 2, (this.posY + other.posY) / 2, (this.posZ + other.posZ) / 2);
 		ruby.setAnger(this.getAnger() + other.getAnger());
-		ruby.setHealth(ruby.getMaxHealth());
 		ruby.setAttackTarget(this.getAttackTarget());
 		ruby.setRevengeTarget(this.getAITarget());
-		return ruby;
+
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D * ruby.getFusionCount());
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D * ruby.getFusionCount());
+    	ruby.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0F);
+    	ruby.stepHeight = ruby.getFusionCount();
+    	ruby.setHealth(ruby.getMaxHealth());
+    	
+    	ItemStack weapon = this.getHeldItem(EnumHand.MAIN_HAND);
+    	if (weapon.getItem() == Items.AIR) {
+    		weapon = other.getHeldItem(EnumHand.MAIN_HAND);
+    	}
+    	ItemStack second = this.getHeldItem(EnumHand.OFF_HAND);
+    	if (second.getItem() == Items.AIR) {
+    		second = other.getHeldItem(EnumHand.OFF_HAND);
+    	}
+    	ruby.setFusionWeapon(weapon);
+    	ruby.setFusionWeapon(second);
+    	
+    	ruby.setSize(0.7F * ruby.getFusionCount(), 1.8F * ruby.getFusionCount());
+     	return ruby;
 	}
+	
+	public void setAttackTarget(@Nullable EntityLivingBase entitylivingbaseIn) {
+		super.setAttackTarget(entitylivingbaseIn);
+	}
+	
 	public void unfuse() {
 		for (int i = 0; i < this.fusionMembers.size(); ++i) {
 			EntityRuby ruby = new EntityRuby(this.world);

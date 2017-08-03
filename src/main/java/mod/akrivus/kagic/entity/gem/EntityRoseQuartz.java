@@ -60,7 +60,6 @@ public class EntityRoseQuartz extends EntityGem {
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.FOREHEAD);
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_EYE);
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_EYE);
-		this.setCutPlacement(GemCuts.FACETED, GemPlacements.NOSE);
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_CHEEK);
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_CHEEK);
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_SHOULDER);

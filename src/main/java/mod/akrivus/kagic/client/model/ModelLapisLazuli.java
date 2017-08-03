@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.client.model;
 
 import mod.akrivus.kagic.entity.gem.EntityLapisLazuli;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -52,7 +53,7 @@ public class ModelLapisLazuli extends ModelBiped {
 		this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
 		if (entityIn instanceof EntityLapisLazuli) {
 			EntityLapisLazuli lapis = (EntityLapisLazuli) entityIn;
-			if (!lapis.isDefective() || !lapis.isFarmer()) {
+			if (!lapis.isDefective()/* && !lapis.isFarmer()*/) {
 				this.bipedRightWing.render(scale);
 				this.bipedLeftWing.render(scale);
 			}
@@ -90,5 +91,9 @@ public class ModelLapisLazuli extends ModelBiped {
         this.bipedRightWing.rotateAngleX = this.bipedLeftWing.rotateAngleX;
         this.bipedRightWing.rotateAngleZ = -this.bipedLeftWing.rotateAngleZ;
         
+        if (entityIn.isBeingRidden()) {
+        	this.bipedLeftArm.rotateAngleX = (float)(-Math.PI / 2f);
+        	this.bipedRightArm.rotateAngleX = (float)(-Math.PI / 2f);
+        }
 	}
 }

@@ -61,7 +61,6 @@ public class EntityCarnelian extends EntityGem {
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.FOREHEAD);
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_EYE);
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_EYE);
-		this.setCutPlacement(GemCuts.FACETED, GemPlacements.NOSE);
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_CHEEK);
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_CHEEK);
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_SHOULDER);
@@ -80,7 +79,6 @@ public class EntityCarnelian extends EntityGem {
 		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.FOREHEAD);
 		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.LEFT_EYE);
 		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.RIGHT_EYE);
-		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.NOSE);
 		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.LEFT_CHEEK);
 		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.RIGHT_CHEEK);
 		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.LEFT_SHOULDER);
