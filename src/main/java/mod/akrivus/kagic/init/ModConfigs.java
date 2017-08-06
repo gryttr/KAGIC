@@ -18,6 +18,7 @@ public class ModConfigs {
 	public static boolean spawnMeteorRubies;
 	public static int meteorRubyRate;
 	public static boolean instructInjectors;
+	public static boolean canRebel;
 	public static void register(FMLPreInitializationEvent e) {
 		ModConfigs.file = e.getSuggestedConfigurationFile();
 		ModConfigs.settings = new Configuration(ModConfigs.file);
@@ -31,6 +32,7 @@ public class ModConfigs {
 		ModConfigs.canGemsMakeSounds = ModConfigs.settings.getBoolean("Make Gems talk:", "preferences", true, "Setting to true can make Gems very loud and annoying.");
 		ModConfigs.meteorRubyRate = ModConfigs.settings.getInt("Meteor Ruby spawn rate:", "preferences", 10, 0, 365, "Amount of days minimum between Meteor Rubies.");
 		ModConfigs.instructInjectors = ModConfigs.settings.getBoolean("Instruct Injector setup:", "preferences", true, "Instructs players on how to set up injectors.");
+		ModConfigs.canRebel = ModConfigs.settings.getBoolean("Gems can rebel: ", "preferences", false, "Whether or not navel gems and meteor rubies have a chance of rebelling after a short time serving you");
 		ModConfigs.settings.save();
 	}
 	public static void syncConfiguration() {

@@ -6,6 +6,7 @@ import mod.akrivus.kagic.blocks.BlockIncubator;
 import mod.akrivus.kagic.blocks.BlockInjector;
 import mod.akrivus.kagic.blocks.BlockRockMelt;
 import mod.akrivus.kagic.blocks.BlockVarying;
+import mod.akrivus.kagic.blocks.BlockWarpPadCore;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemBlock;
@@ -27,6 +28,8 @@ public class ModBlocks {
 	public static final BlockVarying CHISELED_CARBONITE = new BlockVarying("chiseled_carbonite", 2, 80, 1);
 	public static final BlockRockMelt ROCK_MELT = new BlockRockMelt(true);
 	public static final BlockRockMelt RUTILE_TRAIL = new BlockRockMelt(false);
+	public static final BlockWarpPadCore WARP_PAD_CORE = new BlockWarpPadCore();
+	
 	public static void register() {
 		registerBlock(GEM_SEED, new ResourceLocation("kagic:gem_seed"));
 		registerBlock(GEM_DRILL, new ResourceLocation("kagic:gem_drill"));
@@ -38,7 +41,9 @@ public class ModBlocks {
 		registerBlock(CHISELED_CARBONITE, new ResourceLocation("kagic:chiseled_carbonite"));
 		registerBlock(ROCK_MELT, new ResourceLocation("kagic:rock_melt"));
 		registerBlock(RUTILE_TRAIL, new ResourceLocation("kagic:rutile_trail"));
+		registerBlock(WARP_PAD_CORE, new ResourceLocation("kagic:warp_pad_core"));
 	}
+	
 	public static void registerBlock(Block block, ResourceLocation location) {
 		ItemBlock item = new ItemBlock(block);
 		GameRegistry.register(block, location);

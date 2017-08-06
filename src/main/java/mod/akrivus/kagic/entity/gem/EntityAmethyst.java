@@ -112,7 +112,7 @@ public class EntityAmethyst extends EntityGem {
 	 * Methods related to entity loading.                    *
 	 *********************************************************/
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-    	this.setSpecial(this.rand.nextInt(9) == 0 ? 1 : 0);
+    	this.setSpecial(/*this.rand.nextInt(9) == 0 ? 1 : */0);
 		if (this.isCitrine()) {
     		this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.citrine.name")).getUnformattedText());
     	}

@@ -2,9 +2,11 @@ package mod.akrivus.kagic.entity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.UUID;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
@@ -13,6 +15,7 @@ import java.util.regex.Pattern;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 
+import mod.akrivus.kagic.client.gui.GUIWarpPadList.PadListEntry;
 import mod.akrivus.kagic.entity.ai.EntityAIAttackRangedBow;
 import mod.akrivus.kagic.entity.ai.EntityAIPredictFights;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
@@ -31,9 +34,12 @@ import mod.akrivus.kagic.items.ItemGem;
 import mod.akrivus.kagic.items.ItemJointContract;
 import mod.akrivus.kagic.items.ItemLiberationContract;
 import mod.akrivus.kagic.items.ItemTransferContract;
+import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import mod.akrivus.kagic.util.PoofDamage;
 import mod.akrivus.kagic.util.ShatterDamage;
 import mod.akrivus.kagic.util.SlagDamage;
+import mod.heimrarnadalr.kagic.worlddata.WarpPadDataEntry;
+import mod.heimrarnadalr.kagic.worlddata.WorldDataWarpPad;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -80,6 +86,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
@@ -376,7 +383,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			this.whenDefective();
 		}
 
-		if (this.fallbackServitude > 0) {
+		if (this.fallbackServitude > 0 && ModConfigs.canRebel) {
 			if (this.timeUntilBetrayal > (this.rand.nextDouble() * 4) * 24000) {
 				this.servitude = this.fallbackServitude;
 			}
@@ -704,8 +711,12 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 						this.setLeader(player);
 					}
 					return true;
-				}
-				else if (this.isSoldier) {
+				} else if (this.isMatching("regex.kagic.warp", message)) {
+					ArrayList<String> args = this.getArgsFrom("regex.kagic.warp", message);
+					if (args.size() > 0) {
+						this.warp(player, args.get(0));
+					}
+				} else if (this.isSoldier) {
 					if (this.isMatching("regex.kagic.kill", message)) {
 						ArrayList<String> args = this.getArgsFrom("regex.kagic.kill", message);
 						if (args.size() > 0) {
@@ -777,6 +788,52 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		view = view.normalize();
 		double product = raycast.dotProduct(view);
 		return product > 1.0D - 0.025D / length ? player.canEntityBeSeen(this) : false;
+	}
+	
+	public void warp(EntityPlayer player, String destination) {
+		TileEntityWarpPadCore pad = TileEntityWarpPadCore.getEntityPad(this);
+		if (pad != null) {
+			if (!pad.isValid()) {
+				this.talkTo(player, new TextComponentTranslation("notify.kagic.padnotvalid").getUnformattedComponentText());
+				return;
+			}
+			if (!pad.isClear()) {
+				this.talkTo(player, new TextComponentTranslation("notify.kagic.padnotclear").getUnformattedComponentText());
+				return;
+			}
+			if (pad.name.toLowerCase() == destination) {
+				this.talkTo(player, new TextComponentTranslation("notify.kagic.alreadyhere").getUnformattedComponentText());
+				return;
+			}
+			
+			Map<BlockPos, WarpPadDataEntry> padData = WorldDataWarpPad.get(this.world).getWarpPadData();
+			SortedMap<Double, BlockPos> sortedPoses = WorldDataWarpPad.getSortedPositions(padData, pad.getPos());
+			Iterator it = sortedPoses.values().iterator();
+			while (it.hasNext()) {
+				BlockPos pos = (BlockPos) it.next();
+				WarpPadDataEntry data = padData.get(pos);
+				if (data.name.toLowerCase().equals(destination)) {
+					TileEntityWarpPadCore dest = (TileEntityWarpPadCore) this.getEntityWorld().getTileEntity(pos);
+					if (!dest.isValid()) {
+						this.talkTo(player, new TextComponentTranslation("notify.kagic.destnotvalid").getUnformattedComponentText());
+						return;
+					}
+					if (!dest.isClear()) {
+						this.talkTo(player, new TextComponentTranslation("notify.kagic.destnotclear").getUnformattedComponentText());
+						return;
+					}
+					this.talkTo(player, new TextComponentTranslation("notify.kagic.warping", data.name).getUnformattedComponentText());
+					this.playObeySound();
+					pad.beginWarp(pos);
+					return;
+				}
+			}
+			this.talkTo(player, new TextComponentTranslation("notify.kagic.nopad", destination).getUnformattedComponentText());
+		}
+	}
+	
+	public void talkTo(EntityPlayer player, String message) {
+		player.sendMessage(new TextComponentString("<" + this.getName() + "> " + message));
 	}
 	
 	public boolean canPickUpItem(Item itemIn) {
@@ -896,7 +953,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue() * 2.5D);
 			break;
 		case BELLY:
-			if (this.fallbackServitude == -1 && this.rand.nextInt(8) == 0) {
+			if (this.fallbackServitude == -1 && this.rand.nextInt(8) == 0 && ModConfigs.canRebel) {
 				this.fallbackServitude = EntityGem.SERVE_REBELLION;
 			}
 			else {
@@ -1319,7 +1376,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public void fall(float distance, float damageMultiplier) {
 		if (this.isSpaceBorn) {
-			if (this.rand.nextBoolean()) {
+			if (this.rand.nextBoolean() && ModConfigs.canRebel) {
 				this.fallbackServitude = EntityGem.SERVE_YELLOW_DIAMOND;
 			}
 			if (this.world.getGameRules().getBoolean("mobGriefing")) {
@@ -1406,7 +1463,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	public boolean isTraitor() {
-		return this.fallbackServitude != this.servitude && this.fallbackServitude > 0;
+		return this.fallbackServitude != this.servitude && this.fallbackServitude > 0 && ModConfigs.canRebel;
 	}
 	
 	public int getDimensionOfCreation() {

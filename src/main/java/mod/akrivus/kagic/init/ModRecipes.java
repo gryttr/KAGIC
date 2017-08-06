@@ -34,5 +34,7 @@ public class ModRecipes {
 		GameRegistry.addSmelting(new ItemStack(ModItems.LIBERATION_CONTRACT), new ItemStack(Items.DIAMOND), 200);
 		GameRegistry.addSmelting(new ItemStack(ModItems.AUTONOMY_CONTRACT), new ItemStack(Items.DIAMOND), 200);
 		GameRegistry.addSmelting(new ItemStack(ModBlocks.DRAINED_BLOCK, 3), new ItemStack(ModBlocks.SMOOTH_CARBONITE), 0);
+		GameRegistry.addShapedRecipe(new ItemStack(ModItems.WARP_WHISTLE), "  q", " q ", "n  ", 'q', Items.QUARTZ, 'n', Blocks.NOTEBLOCK);
+		GameRegistry.addShapedRecipe(new ItemStack(ModBlocks.WARP_PAD_CORE), " q ", "rer", " q ", 'q', new ItemStack(Blocks.STONE_SLAB, 1, 7), 'r', Items.REDSTONE, 'e', Items.ENDER_EYE);
 	}
 }

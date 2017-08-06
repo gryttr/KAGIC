@@ -12,6 +12,7 @@ import mod.akrivus.kagic.items.ItemJointContract;
 import mod.akrivus.kagic.items.ItemLiberationContract;
 import mod.akrivus.kagic.items.ItemTransferContract;
 import mod.akrivus.kagic.items.ItemVehicle;
+import mod.akrivus.kagic.items.ItemWarpWhistle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -22,6 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class ModItems {
 	public static final HashMap<ItemGem, ItemGem> GEM_TABLE = new HashMap<ItemGem, ItemGem>();
+
 	public static final ModRecord RECORD_LITTLE_PERIDOT = new ModRecord("little_peridot", ModSounds.RECORD_LITTLE_PERIDOT);
 	public static final ModRecord RECORD_ROSES_FOUNTAIN = new ModRecord("roses_fountain", ModSounds.RECORD_ROSES_FOUNTAIN);
 	public static final ModRecord RECORD_LAPIS_FLIGHT = new ModRecord("lapis_flight", ModSounds.RECORD_LAPIS_FLIGHT);
@@ -30,6 +32,7 @@ public class ModItems {
 	public static final ModRecord RECORD_YELLOW_DIAMOND = new ModRecord("yellow_diamond", ModSounds.RECORD_YELLOW_DIAMOND);
 	public static final ModRecord RECORD_BLUE_DIAMOND = new ModRecord("blue_diamond", ModSounds.RECORD_BLUE_DIAMOND);
 	public static final ModRecord RECORD_WHATS_THE_USE_OF_FEELING_BLUE = new ModRecord("whats_the_use_of_feeling_blue", ModSounds.RECORD_WHATS_THE_USE_OF_FEELING_BLUE);
+
 	public static final ItemActiveGemShard ACTIVATED_GEM_SHARD = new ItemActiveGemShard();
 	public static final ItemActiveGemBase ACTIVATED_GEM_BASE = new ItemActiveGemBase();
 	public static final ItemInactiveGemBase INACTIVE_GEM_BASE = new ItemInactiveGemBase();
@@ -40,6 +43,8 @@ public class ModItems {
 	public static final ItemGemStaff GEM_STAFF = new ItemGemStaff();
 	public static final ItemVehicle ROAMING_EYE = new ItemVehicle("roaming_eye");
 	public static final Item LASER_BEAM = new Item().setUnlocalizedName("laser_beam");
+	public static final ItemWarpWhistle WARP_WHISTLE = new ItemWarpWhistle();
+	
 	public static final ItemGem RUBY_GEM = new ItemGem("ruby");
 	public static final ItemGem SAPPHIRE_GEM = new ItemGem("sapphire");
 	public static final ItemGem PADPARADSCHA_GEM = new ItemGem("padparadscha");
@@ -160,6 +165,7 @@ public class ModItems {
 	public static final ItemGem CRACKED_CITRINE_GEM = new ItemGem("amethyst_1", true);
 	public static final ItemGem CRACKED_YELLOW_DIAMOND_GEM = new ItemGem("yellow_diamond", true);
 	public static final ItemGem CRACKED_BLUE_DIAMOND_GEM = new ItemGem("blue_diamond", true);
+	
 	public static void register() {
 		registerGem(RUBY_GEM, CRACKED_RUBY_GEM);
 		registerGem(SAPPHIRE_GEM, CRACKED_SAPPHIRE_GEM);
@@ -234,6 +240,7 @@ public class ModItems {
 		registerItem(GEM_STAFF);
 		registerItem(ROAMING_EYE);
 		registerItem(LASER_BEAM);
+		registerItem(WARP_WHISTLE);
 	}
 	public static void registerGem(ItemGem normal, ItemGem broken) {
 		GEM_TABLE.put(normal, broken);

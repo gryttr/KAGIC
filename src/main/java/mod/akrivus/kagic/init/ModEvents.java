@@ -12,6 +12,7 @@ import mod.akrivus.kagic.entity.gem.EntityRuby;
 import mod.akrivus.kagic.entity.gem.EntityRutile;
 import mod.akrivus.kagic.init.ModMetrics.Update;
 import mod.akrivus.kagic.server.SpaceStuff;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -22,6 +23,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.storage.loot.LootEntry;
@@ -104,19 +106,20 @@ public class ModEvents {
 						ruby.setPosition(newX, 256, newZ);
 						ruby.isSpaceBorn = true;
 						player.world.spawnEntity(ruby);
+						ruby.onInitialSpawn(ruby.world.getDifficultyForLocation(new BlockPos(ruby)), (IEntityLivingData)null);
 						player.world.playSound(player, player.getPosition(), ModSounds.RUBY_EXPLODE, SoundCategory.NEUTRAL, 10.0F, 1.0F);
 						SpaceStuff.get().setLastRubyImpactTime(player.world.getTotalWorldTime());
 					}
 				}
 			}
 		}
-	}
+	}/* Access to Homeworld REMOVED in 1.9p1r10 - will revisit at a later date
 	@SubscribeEvent
 	public void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.player.posY > 480 && !event.player.world.isRemote) {
 			event.player.world.getMinecraftServer().getPlayerList().transferPlayerToDimension((EntityPlayerMP) event.player, 2, new TeleporterHomeworld(event.player.world.getMinecraftServer().worldServerForDimension(event.player.dimension)));
 		}
-	}
+	}*/
 	@SubscribeEvent
 	public void onLootTableLoad(LootTableLoadEvent e) {
 		if (e.getName().equals(LootTableList.CHESTS_ABANDONED_MINESHAFT) || e.getName().equals(LootTableList.CHESTS_VILLAGE_BLACKSMITH)) {

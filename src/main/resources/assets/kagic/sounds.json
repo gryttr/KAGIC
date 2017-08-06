@@ -535,5 +535,10 @@
             { "name": "kagic:entities/topaz/death4" },
             { "name": "kagic:entities/topaz/death5" }
         ]
+    },
+    "warp_pad": {
+        "category": "block",
+        "subtitle": "kagic.subtitle.warp_pad",
+        "sounds": [ "kagic:blocks/warp_pad_1", "kagictech:blocks/warp_pad_2" ]
     }
 }

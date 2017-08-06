@@ -13,12 +13,14 @@ public class ModSounds {
 	public static final SoundEvent RECORD_YELLOW_DIAMOND = new SoundEvent(new ResourceLocation("kagic:records.yellow_diamond"));
 	public static final SoundEvent RECORD_BLUE_DIAMOND = new SoundEvent(new ResourceLocation("kagic:records.blue_diamond"));
 	public static final SoundEvent RECORD_WHATS_THE_USE_OF_FEELING_BLUE = new SoundEvent(new ResourceLocation("kagic:records.whats_the_use_of_feeling_blue"));
+
 	public static final SoundEvent BLOCK_GEM_SEED_HATCH = new SoundEvent(new ResourceLocation("kagic:blocks.gem_seed_hatch"));
 	public static final SoundEvent BLOCK_INJECTOR_OPEN = new SoundEvent(new ResourceLocation("kagic:blocks.injector_open"));
 	public static final SoundEvent BLOCK_INJECTOR_CLOSE = new SoundEvent(new ResourceLocation("kagic:blocks.injector_close"));
 	public static final SoundEvent BLOCK_INJECTOR_FIRE = new SoundEvent(new ResourceLocation("kagic:blocks.injector_fire"));
 	public static final SoundEvent GEM_POOF = new SoundEvent(new ResourceLocation("kagic:entities.gem.poof"));
 	public static final SoundEvent GEM_SHATTER = new SoundEvent(new ResourceLocation("kagic:entities.gem.shatter"));
+
 	public static final SoundEvent SLAG_EAT = new SoundEvent(new ResourceLocation("kagic:entities.slag.eat"));
 	public static final SoundEvent PEPO_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.pepo.living"));
 	public static final SoundEvent RUBY_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.ruby.living"));
@@ -74,6 +76,8 @@ public class ModSounds {
 	public static final SoundEvent TOPAZ_STEP = new SoundEvent(new ResourceLocation("kagic:entities.topaz.step"));
 	public static final SoundEvent TOPAZ_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.topaz.obey"));
 	public static final SoundEvent TOPAZ_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.topaz.death"));
+	public static final SoundEvent WARP_PAD = new SoundEvent(new ResourceLocation(KAGIC.MODID, "warp_pad"));
+	
 	public static void register() {
 		GameRegistry.register(RECORD_LITTLE_PERIDOT, new ResourceLocation("kagic:records.little_peridot"));
 		GameRegistry.register(RECORD_ROSES_FOUNTAIN, new ResourceLocation("kagic:records.roses_fountain"));
@@ -144,5 +148,6 @@ public class ModSounds {
 		GameRegistry.register(TOPAZ_STEP, new ResourceLocation("kagic:entities.topaz.step"));
 		GameRegistry.register(TOPAZ_OBEY, new ResourceLocation("kagic:entities.topaz.obey"));
 		GameRegistry.register(TOPAZ_DEATH, new ResourceLocation("kagic:entities.topaz.death"));
+		GameRegistry.register(WARP_PAD, new ResourceLocation(KAGIC.MODID, "warp_pad"));
 	}
 }

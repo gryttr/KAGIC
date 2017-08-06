@@ -4,11 +4,16 @@ import java.util.Calendar;
 
 import org.apache.logging.log4j.Logger;
 
+import mod.akrivus.kagic.client.gui.KTGUIProxy;
 import mod.akrivus.kagic.command.CommandMeteorRuby;
 import mod.akrivus.kagic.command.CommandSpawnGems;
 import mod.akrivus.kagic.server.SpaceStuff;
+import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
+import mod.akrivus.kagic.tileentity.WarpRenderer;
+import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -16,6 +21,7 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = KAGIC.MODID, version = KAGIC.VERSION, guiFactory = "mod.akrivus.kagic.client.gui.GuiFactory")
@@ -43,12 +49,14 @@ public class KAGIC {
     	ModItems.register();
     	ModRecipes.register();
     	ModSounds.register();
+		KTPacketHandler.registerMessages(KAGIC.MODID);
     }
     @EventHandler
     public void init(FMLInitializationEvent e) {
     	ModEntities.register();
     	ModEvents.register();
     	ModTileEntities.register();
+		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new KTGUIProxy());
     }
     @EventHandler
 	public void serverStarting(FMLServerStartingEvent e) {

@@ -76,8 +76,10 @@ item.autonomy_contract.signedname=%1$s's Autonomy Contract
 item.liberation_contract.name=Liberation Contract
 item.liberation_contract.signedname=%1$s's Liberation Contract
 item.gem_staff.name=Gem Staff
+item.warp_whistle.name=Warp Whistle
 item.roaming_eye.name=Roaming Eye
 item.laser_beam.name=Laser Beam
+
 item.ruby_gem.name=Ruby Gem
 item.sapphire_gem.name=Sapphire Gem
 item.padparadscha_gem.name=Padparadscha Gem
@@ -224,6 +226,7 @@ tile.smooth_carbonite.name=Carbonite
 tile.chiseled_carbonite.name=Chiseled Carbonite
 tile.rock_melt.name=Frictional Rock Melt
 tile.rutile_trail.name=Rutile Trail
+tile.warp_pad_core.name=Warp Pad Core
 
 command.kagic.will_follow_you=%1$s will follow you.
 command.kagic.will_not_follow_you=%1$s will not follow you.
@@ -319,6 +322,15 @@ regex.kagic.harvest=give me|bring me
 regex.kagic.fuse=fuse|combine
 regex.kagic.unfuse=unfuse|defuse
 regex.kagic.scan=scan|look around
+regex.kagic.warp=warp to (.+)|warp to (.+)
+
+notify.kagic.padnotclear=This warp pad doesn't have enough clearance!
+notify.kagic.padnotvalid=This warp pad is broken!
+notify.kagic.destnotclear=That warp pad doesn't have enough clearance!
+notify.kagic.destnotvalid=That warp pad is broken!
+notify.kagic.alreadyhere=We're already at that warp pad!
+notify.kagic.warping=Warping to %1$s!
+notify.kagic.nopad=I couldn't find a warp pad named %1$s!
 
 achievement.installed_kagic=Installed KAGIC
 achievement.installed_kagic.desc=Thank you!
