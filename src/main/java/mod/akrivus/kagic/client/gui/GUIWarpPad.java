@@ -37,15 +37,14 @@ public class GUIWarpPad extends GuiScreen {
 	public void initGui() {
 		this.buttonList.clear();
 		Keyboard.enableRepeatEvents(true);
-		this.nameTextField = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 150, 50, 300, 20);
+		this.nameTextField = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 150, 75, 300, 20);
 		this.nameTextField.setMaxStringLength(256);
 		this.nameTextField.setText(this.tilePad.name);
 		this.nameTextField.setFocused(true);
-		this.doneButton = this.addButton(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, I18n.format("gui.done", new Object[0])));
+		this.doneButton = this.addButton(new GuiButton(0, this.width / 2 - 100, 150, I18n.format("gui.done", new Object[0])));
 	}
 	
 	public void onGuiClosed() {
-		//KAGICTech.instance.chatInfoMessage("Closing GUI");
 		KTPacketHandler.INSTANCE.sendToServer(new TENameMessage(nameTextField.getText(), tilePad.getPos().getX(), tilePad.getPos().getY(), tilePad.getPos().getZ()));
 		Keyboard.enableRepeatEvents(false);
 	}

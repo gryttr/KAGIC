@@ -57,7 +57,6 @@ public class TENameMessage implements IMessage{
 			TileEntityWarpPadCore te = (TileEntityWarpPadCore) world.getTileEntity(new BlockPos(message.x, message.y, message.z));
 			if (te != null) {
 				te.setName(message.name);
-				KAGIC.instance.chatInfoMessage("TE name set to " + message.name);
 			} else {
 				KAGIC.instance.chatInfoMessage("TE was null!");				
 			}

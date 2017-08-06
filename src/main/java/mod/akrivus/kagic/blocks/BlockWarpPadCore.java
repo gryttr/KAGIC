@@ -52,14 +52,10 @@ public class BlockWarpPadCore extends Block implements ITileEntityProvider {
 			if (heldItem.getItem() == ModItems.GEM_STAFF) {
 				TileEntityWarpPadCore entityPad = this.getTE(worldIn, pos);
 				if (entityPad.isValidPad()) {
-						//KAGICTech.instance.chatInfoMessage("Valid pad at " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ() + " " + entityPad.name + " clicked with gem staff");
-						//KAGICTech.instance.chatInfoMessage("Opening GUI");
 						playerIn.openGui(KAGIC.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
 				 } else {
-					KAGIC.instance.chatInfoMessage("Non-pad " + entityPad.name + " clicked with gem staff");
 					entityPad.validateWarpPad();
 					if (entityPad.isValidPad()) {
-						//KAGICTech.instance.chatInfoMessage("Opening GUI");
 						playerIn.openGui(KAGIC.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
 					}
 				}
