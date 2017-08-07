@@ -248,8 +248,20 @@ public class ModItems {
 		registerItem(normal);
 		registerItem(broken);
 	}
+	public static void registerExternalGem(ItemGem normal, ItemGem broken, String prefix) {
+		GEM_TABLE.put(normal, broken);
+		GEM_TABLE.put(broken, normal);
+		registerExternalItem(normal, prefix);
+		registerExternalItem(broken, prefix);
+	}
 	public static void registerItem(Item item) {
 		GameRegistry.register(item, new ResourceLocation("kagic:" + item.getUnlocalizedName().replaceFirst("item\\.|tile\\.", "")));
+		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
+		}
+	}
+	public static void registerExternalItem(Item item, String prefix) {
+		GameRegistry.register(item, new ResourceLocation(prefix + ":" + item.getUnlocalizedName().replaceFirst("item\\.|tile\\.", "")));
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
