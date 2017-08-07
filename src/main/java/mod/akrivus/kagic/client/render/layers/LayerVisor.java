@@ -23,7 +23,7 @@ public class LayerVisor implements LayerRenderer<EntityGem> {
 			GlStateManager.enableNormalize();
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			this.gemRenderer.bindTexture(this.getTexture(entitylivingbaseIn)));
+			this.gemRenderer.bindTexture(this.getTexture(entitylivingbaseIn));
 			this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
 	        this.gemModel.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 	        GlStateManager.disableBlend();
