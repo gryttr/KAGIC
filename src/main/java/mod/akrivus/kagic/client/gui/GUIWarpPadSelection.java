@@ -18,6 +18,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.client.GuiScrollingList;
 
@@ -26,6 +27,8 @@ public class GUIWarpPadSelection extends GuiScreen {
 	private Map<BlockPos, WarpPadDataEntry> padData = null;
 	private SortedMap<Double, BlockPos> sortedPoses = new TreeMap<Double, BlockPos>();
 	private GUIWarpPadList padList;
+	private GuiButton buttonDone; 
+	protected String screenTitle = "Select Destination";
 	
 	public GUIWarpPadSelection(LinkedHashMap<BlockPos, WarpPadDataEntry> data, int x, int y, int z) {
 		//KAGICTech.instance.chatInfoMessage("Getting Warp Pad TE at " + x + ", " + y + ", " + z);
@@ -53,7 +56,8 @@ public class GUIWarpPadSelection extends GuiScreen {
 	}
 
 	public void initGui() {
-		this.padList = new GUIWarpPadList(this, this.tilePad.getPos(), this.sortedPoses, this.mc, this.width, this.height, 0, this.height, 50);	
+		this.padList = new GUIWarpPadList(this, this.tilePad.getPos(), this.sortedPoses, this.mc, this.width, this.height, 0, this.height, 50);
+		this.buttonDone = this.addButton(new GuiButton(618, this.width / 2 - 75, this.height - 25, 150, 20, I18n.format("gui.cancel", new Object[0])));
 	}
 	
 	public void onGuiClosed() {
@@ -63,8 +67,12 @@ public class GUIWarpPadSelection extends GuiScreen {
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException
 	{
-		this.padList.actionPerformed(button);
-		super.actionPerformed(button);
+		if (button.id == 618) {
+			Minecraft.getMinecraft().player.closeScreen();
+		} else {
+			this.padList.actionPerformed(button);
+			super.actionPerformed(button);
+		}
 	}
 
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
@@ -94,6 +102,7 @@ public class GUIWarpPadSelection extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		this.padList.drawScreen(mouseX, mouseY, partialTicks);
+		this.drawCenteredString(this.fontRendererObj, this.screenTitle, this.width / 2, 10, 16777215);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 }

@@ -37,11 +37,11 @@ public class GUIWarpPad extends GuiScreen {
 	public void initGui() {
 		this.buttonList.clear();
 		Keyboard.enableRepeatEvents(true);
-		this.nameTextField = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 150, 75, 300, 20);
+		this.nameTextField = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 100, this.height / 2 - 10, 200, 20);
 		this.nameTextField.setMaxStringLength(256);
 		this.nameTextField.setText(this.tilePad.name);
 		this.nameTextField.setFocused(true);
-		this.doneButton = this.addButton(new GuiButton(0, this.width / 2 - 100, 150, I18n.format("gui.done", new Object[0])));
+		this.doneButton = this.addButton(new GuiButton(0, this.width / 2 - 100, this.height / 2 + 30, I18n.format("gui.done", new Object[0])));
 	}
 	
 	public void onGuiClosed() {
@@ -78,6 +78,7 @@ public class GUIWarpPad extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		this.nameTextField.drawTextBox();
+        this.drawCenteredString(this.fontRendererObj, "Enter Warp Pad Name", this.width / 2, this.height / 2 - 30, 16777215);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 }

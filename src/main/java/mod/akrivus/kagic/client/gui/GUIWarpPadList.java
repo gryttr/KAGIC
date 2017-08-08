@@ -18,7 +18,7 @@ public class GUIWarpPadList extends GuiListExtended {
 	private final GuiListExtended.IGuiListEntry[] padListEntries;
 
 	public GUIWarpPadList(GUIWarpPadSelection parent, BlockPos sourcePos, SortedMap<Double, BlockPos> positions, Minecraft mcIn, int widthIn, int heightIn, int topIn, int bottomIn, int slotHeightIn) {
-		super(mcIn, widthIn, heightIn, topIn, bottomIn, slotHeightIn);
+		super(mcIn, widthIn, heightIn, topIn + 30, bottomIn - 30, slotHeightIn);
 		this.mc = mcIn;
 		this.selectionScreen = parent;
 		this.padListEntries = new GuiListExtended.IGuiListEntry[positions.size()];
@@ -66,7 +66,7 @@ public class GUIWarpPadList extends GuiListExtended {
 
 		@Override
 		public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected) {
-			this.padButton.xPosition = x;
+			this.padButton.xPosition = GUIWarpPadList.this.mc.currentScreen.width / 2 - this.padButton.width / 2;
 			this.padButton.yPosition = y + 10;
 			if (!this.padData.valid) {
 				this.padButton.displayString = TextFormatting.RED + this.padData.name;

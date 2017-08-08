@@ -16,6 +16,7 @@ import net.minecraft.block.BlockStairs.EnumShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -320,7 +321,13 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			double offsetX = entity.posX - this.pos.getX();
 			double offsetY = entity.posY - this.pos.getY();
 			double offsetZ = entity.posZ - this.pos.getZ();
-			entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
+			//entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
+			if (entity instanceof EntityPlayerMP) {
+				((EntityPlayerMP) entity).connection.setPlayerLocation(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
+			} else {
+				entity.setLocationAndAngles(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
+				entity.setRotationYawHead(entity.rotationYaw);
+			}
 		}
 		this.cooldownTicksLeft = this.warpCooldownTicks;
 	}
