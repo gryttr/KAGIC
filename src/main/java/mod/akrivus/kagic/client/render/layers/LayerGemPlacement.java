@@ -18,7 +18,7 @@ public class LayerGemPlacement implements LayerRenderer<EntityGem> {
 	}
 	public void doRenderLayer(EntityGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		if (!gem.isFusion()) {
-			this.gemRenderer.bindTexture(new ResourceLocation("kagic:textures/entities/" + this.getName(gem) + "/gems/" + gem.getGemPlacement().id + "_" + gem.getGemCut().id + ".png"));
+			this.gemRenderer.bindTexture(this.getTexture(gem));
 			float[] colors = gem.getGemColor();
 			GlStateManager.color(colors[0], colors[1], colors[2]);
 			this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
@@ -26,14 +26,18 @@ public class LayerGemPlacement implements LayerRenderer<EntityGem> {
 	        GlStateManager.disableBlend();
 		}
 	}
+	public ResourceLocation getTexture(EntityGem gem) {
+		ResourceLocation loc = EntityList.getKey(gem);
+		return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/gems/" + gem.getGemPlacement().id + "_" + gem.getGemCut().id + ".png");
+	}
 	public String getName(EntityGem gem) {
 		ResourceLocation loc = EntityList.getKey(gem);
-        if (loc != null) {
-        	return loc.toString().replaceFirst("kagic:kagic.", "");
-        }
-        else {
-        	return "gem";
-        }
+		if (loc.getResourceDomain().equals("kagic")) {
+	        return loc.getResourcePath().replaceFirst("kagic.", "");
+		}
+		else {
+	        return loc.getResourcePath();
+		}
 	}
 	public boolean shouldCombineTextures() {
 		return false;

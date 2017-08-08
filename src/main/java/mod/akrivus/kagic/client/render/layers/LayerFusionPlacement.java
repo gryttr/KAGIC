@@ -21,7 +21,7 @@ public class LayerFusionPlacement implements LayerRenderer<EntityGem> {
 		if (gem.isFusion()) {
 			String[] placements = gem.getFusionPlacements().split(" ");
 			for (String placement : placements) {
-				this.gemRenderer.bindTexture(new ResourceLocation("kagic:textures/entities/" + this.getName(gem) + "/gems/" + placement + ".png"));
+				this.gemRenderer.bindTexture(this.getTexture(gem, placement));
 				float[] colors = gem.getGemColor();
 				GlStateManager.color(colors[0], colors[1], colors[2]);
 				this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
@@ -30,16 +30,20 @@ public class LayerFusionPlacement implements LayerRenderer<EntityGem> {
 			}
 		}
 	}
-	public boolean shouldCombineTextures() {
-		return false;
+	public ResourceLocation getTexture(EntityGem gem, String placement) {
+		ResourceLocation loc = EntityList.getKey(gem);
+		return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/gems/" + placement + ".png");
 	}
 	public String getName(EntityGem gem) {
 		ResourceLocation loc = EntityList.getKey(gem);
-        if (loc != null) {
-        	return loc.toString().replaceFirst("kagic:kagic.", "");
-        }
-        else {
-        	return "gem";
-        }
+		if (loc.getResourceDomain().equals("kagic")) {
+	        return loc.getResourcePath().replaceFirst("kagic.", "");
+		}
+		else {
+	        return loc.getResourcePath();
+		}
+	}
+	public boolean shouldCombineTextures() {
+		return false;
 	}
 }

@@ -19,20 +19,24 @@ public class LayerInsignia implements LayerRenderer<EntityGem> {
 		this.gemModel = gemRendererIn.getMainModel();
 	}
 	public void doRenderLayer(EntityGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		this.gemRenderer.bindTexture(new ResourceLocation("kagic:textures/entities/" + this.getName(gem) + "/insignia.png"));
+		this.gemRenderer.bindTexture(this.getTexture(gem));
 		float[] afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[gem.getInsigniaColor()]);
 		GlStateManager.color(afloat[0], afloat[1], afloat[2]);
 		this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
         this.gemModel.render(gem, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 	}
+	public ResourceLocation getTexture(EntityGem gem) {
+		ResourceLocation loc = EntityList.getKey(gem);
+		return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/insignia.png");
+	}
 	public String getName(EntityGem gem) {
 		ResourceLocation loc = EntityList.getKey(gem);
-        if (loc != null) {
-        	return loc.toString().replaceFirst("kagic:kagic.", "");
-        }
-        else {
-        	return "gem";
-        }
+		if (loc.getResourceDomain().equals("kagic")) {
+	        return loc.getResourcePath().replaceFirst("kagic.", "");
+		}
+		else {
+	        return loc.getResourcePath();
+		}
 	}
 	public boolean shouldCombineTextures() {
 		return false;

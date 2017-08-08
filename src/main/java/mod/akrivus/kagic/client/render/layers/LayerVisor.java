@@ -23,23 +23,27 @@ public class LayerVisor implements LayerRenderer<EntityGem> {
 			GlStateManager.enableNormalize();
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			this.gemRenderer.bindTexture(new ResourceLocation("kagic:textures/entities/" + this.getName(entitylivingbaseIn) + "/visor.png"));
+			this.gemRenderer.bindTexture(this.getTexture(entitylivingbaseIn));
 			this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
 	        this.gemModel.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 	        GlStateManager.disableBlend();
             GlStateManager.disableNormalize();
 		}
 	}
-	public boolean shouldCombineTextures() {
-		return false;
+	public ResourceLocation getTexture(EntityGem gem) {
+		ResourceLocation loc = EntityList.getKey(gem);
+		return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/visor.png");
 	}
 	public String getName(EntityGem gem) {
 		ResourceLocation loc = EntityList.getKey(gem);
-        if (loc != null) {
-        	return loc.toString().replaceFirst("kagic:kagic.", "");
-        }
-        else {
-        	return "gem";
-        }
+		if (loc.getResourceDomain().equals("kagic")) {
+	        return loc.getResourcePath().replaceFirst("kagic.", "");
+		}
+		else {
+	        return loc.getResourcePath();
+		}
+	}
+	public boolean shouldCombineTextures() {
+		return false;
 	}
 }
