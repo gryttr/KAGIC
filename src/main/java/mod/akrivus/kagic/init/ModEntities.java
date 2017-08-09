@@ -192,20 +192,21 @@ public class ModEntities {
 		GEMS.put(name, entity);
 		++currentID;
 	}
-	@SuppressWarnings({ "deprecation" })
-	public static <T extends EntityGem> void registerExternalGem(String prefix, String name, Class<T> entity, Render<? extends T> renderer, int back, int fore) {
-		EntityRegistry.registerModEntity(new ResourceLocation(prefix + ":" + name), entity, name, currentID, KAGIC.instance, 256, 1, true, back, fore);
-		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-			try {
-				RenderingRegistry.registerEntityRenderingHandler(entity, renderer);
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		GEMS.put(name, entity);
-		++currentID;
-	}
+	@SuppressWarnings({ "deprecation", "unchecked" })
+    public static <T extends EntityGem> void registerExternalGem(String prefix, String name, Class<T> entity, String renderpath, int back, int fore) {
+        EntityRegistry.registerModEntity(new ResourceLocation(prefix + ":" + name), entity, name, currentID, KAGIC.instance, 256, 1, true, back, fore);
+        if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            try {
+                Class<Render<? extends T>> render = (Class<Render<? extends T>>) KAGIC.class.getClassLoader().loadClass(renderpath);
+                RenderingRegistry.registerEntityRenderingHandler(entity, render.newInstance());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        GEMS.put(name, entity);
+        ++currentID;
+    }
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	public static <T extends Entity> void registerMob(String name, Class<T> entity, int back, int fore) {
 		EntityRegistry.registerModEntity(new ResourceLocation("kagic:kagic." + name), entity, "kagic." + name, currentID, KAGIC.instance, 256, 1, true, back, fore);
