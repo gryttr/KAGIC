@@ -124,91 +124,57 @@ public class ModEvents {
 	public void onLootTableLoad(LootTableLoadEvent e) {
 		if (e.getName().equals(LootTableList.CHESTS_ABANDONED_MINESHAFT) || e.getName().equals(LootTableList.CHESTS_VILLAGE_BLACKSMITH)) {
 			e.getTable().addPool(new LootPool(new LootEntry[] {
-					new LootEntryItem(ModItems.BISMUTH_GEM, 2, 1, new LootFunction[] {
+					new LootEntryItem(ModItems.CRACKED_BISMUTH_GEM, 1, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.PERIDOT_GEM, 3, 1, new LootFunction[] {
+					new LootEntryItem(ModItems.CRACKED_PERIDOT_GEM, 3, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.PEARL_GEM, 4, 1, new LootFunction[] {
+					new LootEntryItem(ModItems.CRACKED_PEARL_GEM, 3, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
 					new LootEntryItem(ModItems.INACTIVE_GEM_BASE, 3, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(4))
-					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.ACTIVATED_GEM_BASE, 4, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(2))
 					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(Item.getItemFromBlock(ModBlocks.INJECTOR), 2, 1, new LootFunction[] {
+					new LootEntryItem(Item.getItemFromBlock(ModBlocks.INJECTOR), 3, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(Item.getItemFromBlock(ModBlocks.GEM_DRILL), 4, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(3))
+					new LootEntryItem(Item.getItemFromBlock(ModBlocks.GEM_DRILL), 3, 1, new LootFunction[] {
+							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
 					new LootEntryItem(Item.getItemFromBlock(ModBlocks.INCUBATOR), 3, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(3))
+							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic")
-			}, new LootCondition[0], new RandomValueRange(2), new RandomValueRange(4), "kagic"));
+			}, new LootCondition[0], new RandomValueRange(1), new RandomValueRange(2), "kagic"));
 		}
 		else if (e.getName().equals(LootTableList.CHESTS_DESERT_PYRAMID) || e.getName().equals(LootTableList.CHESTS_END_CITY_TREASURE) || e.getName().equals(LootTableList.CHESTS_JUNGLE_TEMPLE) || e.getName().equals(LootTableList.CHESTS_NETHER_BRIDGE)) {
 			e.getTable().addPool(new LootPool(new LootEntry[] {
-					new LootEntryItem(ModItems.RUBY_GEM, 8, 1, new LootFunction[] {
+					new LootEntryItem(ModItems.CRACKED_PERIDOT_GEM, 4, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.PERIDOT_GEM, 6, 1, new LootFunction[] {
+					new LootEntryItem(ModItems.CRACKED_AMETHYST_GEM, 2, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.PEARL_GEM, 12, 1, new LootFunction[] {
+					new LootEntryItem(ModItems.CRACKED_JASPER_GEM, 2, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.SAPPHIRE_GEM, 10, 1, new LootFunction[] {
+					new LootEntryItem(ModItems.CRACKED_CARNELIAN_GEM, 2, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.LAPIS_LAZULI_GEM, 8, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(1))
-					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.AMETHYST_GEM, 8, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(1))
-					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.JASPER_GEM, 8, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(1))
-					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.CARNELIAN_GEM, 8, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(1))
-					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.ROSE_QUARTZ_GEM, 2, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(1))
-					}, new LootCondition[0], "kagic")
-			}, new LootCondition[0], new RandomValueRange(3), new RandomValueRange(7), "kagic"));
+			}, new LootCondition[0], new RandomValueRange(1), new RandomValueRange(2), "kagic"));
 		}
-		else if (e.getName().equals(LootTableList.CHESTS_IGLOO_CHEST) || e.getName().equals(LootTableList.CHESTS_SIMPLE_DUNGEON) || e.getName().equals(LootTableList.CHESTS_STRONGHOLD_CORRIDOR)) {
+		else if (e.getName().equals(LootTableList.CHESTS_SIMPLE_DUNGEON) || e.getName().equals(LootTableList.CHESTS_STRONGHOLD_CORRIDOR)) {
 			e.getTable().addPool(new LootPool(new LootEntry[] {
-					new LootEntryItem(ModItems.RUBY_GEM, 12, 1, new LootFunction[] {
+					new LootEntryItem(ModItems.CRACKED_RUBY_GEM, 2, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.PEARL_GEM, 8, 1, new LootFunction[] {
+					new LootEntryItem(ModItems.CRACKED_PEARL_GEM, 2, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.INACTIVE_GEM_BASE, 8, 1, new LootFunction[] {
+					new LootEntryItem(ModItems.INACTIVE_GEM_BASE, 5, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(4))
-					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.ACTIVATED_GEM_BASE, 10, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(2))
 					}, new LootCondition[0], "kagic")
-			}, new LootCondition[0], new RandomValueRange(3), new RandomValueRange(7), "kagic"));
-		}
-		else if (e.getName().equals(LootTableList.CHESTS_SPAWN_BONUS_CHEST)) {
-			e.getTable().addPool(new LootPool(new LootEntry[] {
-					new LootEntryItem(ModItems.RUBY_GEM, 12, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(1))
-					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.PERIDOT_GEM, 12, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(1))
-					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(ModItems.PEARL_GEM, 12, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(1))
-					}, new LootCondition[0], "kagic")
-			}, new LootCondition[0], new RandomValueRange(3), new RandomValueRange(5), "kagic"));
+			}, new LootCondition[0], new RandomValueRange(1), new RandomValueRange(2), "kagic"));
 		}
 	}
 	@SubscribeEvent
