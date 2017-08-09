@@ -23,6 +23,8 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PadDataMessage implements IMessage {
 	private NBTTagCompound padDataCompound;
@@ -72,7 +74,7 @@ public class PadDataMessage implements IMessage {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public static class PadDataMessageHandler implements IMessageHandler<PadDataMessage, IMessage> {
 		@Override
 		public IMessage onMessage(PadDataMessage message, MessageContext ctx) {
@@ -93,10 +95,10 @@ public class PadDataMessage implements IMessage {
 			}
 			return padDataMap;
 		}
-		
+
 		private void handle(PadDataMessage message, MessageContext ctx) {
 			LinkedHashMap<BlockPos, WarpPadDataEntry> padData = this.decodePadData(message.padDataCompound);
-			Minecraft.getMinecraft().displayGuiScreen(new GUIWarpPadSelection(padData, message.x, message.y, message.z));
+			KAGIC.proxy.openWarpPadSelectionGUI(padData, message.x, message.y, message.z);
 		}
 	}
 }

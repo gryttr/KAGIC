@@ -48,12 +48,10 @@ public class ItemWarpWhistle extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer playerIn, EnumHand hand) {
     	ItemStack stack = playerIn.getHeldItem(hand);
-    	if (!world.isRemote) {
+    	if (world.isRemote) {
 	    	TileEntityWarpPadCore te = TileEntityWarpPadCore.getEntityPad(playerIn);//getPlayerPadTE(world, playerIn);
 	    	if (te != null) {
-	    		String name = WorldDataWarpPad.get(world).getNameFromPos(te.getPos());
-				//KAGICTech.instance.chatInfoMessage("Standing on valid pad "+ name + " at position " + playerIn.posX + ", " + (playerIn.posY - 1) + ", " + playerIn.posZ);
-				playerIn.openGui(KAGIC.instance, KTGUIProxy.GUIWARPPADSELECTIONID, world, te.getPos().getX(), te.getPos().getY(), te.getPos().getZ());
+				//playerIn.openGui(KAGIC.instance, KTGUIProxy.GUIWARPPADSELECTIONID, world, te.getPos().getX(), te.getPos().getY(), te.getPos().getZ());
 				KTPacketHandler.INSTANCE.sendToServer(new PadDataRequestMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ()));
 	    	}
     	}

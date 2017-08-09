@@ -1,11 +1,13 @@
 package mod.heimrarnadalr.kagic.networking;
 
 import io.netty.buffer.ByteBuf;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.heimrarnadalr.kagic.worlddata.WorldDataWarpPad;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -41,7 +43,7 @@ public class PadDataRequestMessage implements IMessage {
 	public static class PadDataRequestMessageHandler implements IMessageHandler<PadDataRequestMessage, IMessage> {
 		@Override
 		public IMessage onMessage(PadDataRequestMessage message, MessageContext ctx) {
-			FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
+			((WorldServer) ctx.getServerHandler().playerEntity.world).addScheduledTask(() -> handle(message, ctx));
 			return null;
 		}
 		

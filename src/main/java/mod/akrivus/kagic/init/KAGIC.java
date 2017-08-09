@@ -11,6 +11,7 @@ import mod.akrivus.kagic.server.SpaceStuff;
 import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import mod.akrivus.kagic.tileentity.WarpRenderer;
 import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
+import mod.heimrarnadalr.kagic.proxies.CommonProxy;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -18,6 +19,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -36,6 +38,9 @@ public class KAGIC {
     @Instance
     public static KAGIC instance;
     public static SpaceStuff spaceStuff;
+
+    @SidedProxy(clientSide = "mod.heimrarnadalr.kagic.proxies.ClientProxy", serverSide = "mod.heimrarnadalr.kagic.proxies.ServerProxy")
+    public static CommonProxy proxy;
     
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
@@ -57,7 +62,11 @@ public class KAGIC {
     	ModEvents.register();
     	ModTileEntities.register();
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new KTGUIProxy());
+		if (e.getSide() == Side.CLIENT) {
+			ModTESRs.register();
+		}
     }
+    
     @EventHandler
 	public void serverStarting(FMLServerStartingEvent e) {
     	if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
