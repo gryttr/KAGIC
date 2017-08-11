@@ -225,7 +225,7 @@ public class EntityCarnelian extends EntityGem {
 		            	}
 	            	}
 	            }
-	            if (this.getServitude() == EntityGem.SERVE_HUMAN) {
+	            if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
 	            	this.getOwner().addStat(ModAchievements.IM_NOT_THE_SHORTEST);
 	            }
 			}

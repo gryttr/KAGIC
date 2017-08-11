@@ -219,7 +219,7 @@ public class EntityJasper extends EntityGem {
 		            	}
 	            	}
 	            }
-	            if (this.getServitude() == EntityGem.SERVE_HUMAN) {
+	            if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
 	            	this.getOwner().addStat(ModAchievements.FIGHTING_IS_MY_LIFE);
 	            }
 			}

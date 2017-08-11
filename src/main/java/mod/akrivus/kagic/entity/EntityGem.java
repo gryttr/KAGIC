@@ -792,7 +792,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public void warp(EntityPlayer player, String destination) {
 		TileEntityWarpPadCore pad = TileEntityWarpPadCore.getEntityPad(this);
-		if (pad != null) {
+		if (pad != null && pad.isValidPad() && !pad.warping) {
 			if (!pad.isValid()) {
 				this.talkTo(player, new TextComponentTranslation("notify.kagic.padnotvalid").getUnformattedComponentText());
 				return;

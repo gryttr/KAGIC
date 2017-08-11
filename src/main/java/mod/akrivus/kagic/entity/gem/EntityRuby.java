@@ -287,7 +287,7 @@ public class EntityRuby extends EntityGem {
 				if ((this.getAITarget() != null && this.getAITarget().equals(other.getAITarget())) || (this.getAttackTarget() != null && this.getAttackTarget().equals(other.getAttackTarget()))) {
 					return true;
 				}
-				if (this.getHealth() / this.getMaxHealth() <= 0.5 || other.getHealth() / other.getMaxHealth() <= 0.5) {
+				if ((this.getHealth() / this.getMaxHealth() <= 0.5 || other.getHealth() / other.getMaxHealth() <= 0.5) && this.getHealth() > 0 && other.getHealth() > 0) {
 					return true;
 				}
 			}

@@ -49,7 +49,9 @@ public class EntityYellowDiamond extends EntityGem {
 		super(worldIn);
 		this.setSize(3.0F, 13.8F);
 		this.stepHeight = 2.0F;
-		
+
+		this.setCutPlacement(GemCuts.DIAMOND, GemPlacements.CHEST);
+
 		// Boss stuff.
 		this.experienceValue = 18000;
 		this.isImmuneToFire = true;
