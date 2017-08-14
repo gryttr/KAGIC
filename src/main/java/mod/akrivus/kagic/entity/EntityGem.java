@@ -246,7 +246,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			this.setNewCutPlacement();
 		}
 
-		this.applyGemPlacementBuffs();
+		this.applyGemPlacementBuffs(false);
 		
 		this.setHasVisor(compound.getBoolean("hasVisor"));
 		if (compound.hasKey("insigniaColor")) {
@@ -348,7 +348,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			this.setNewCutPlacement();
 		}
 
-		this.applyGemPlacementBuffs();
+		this.applyGemPlacementBuffs(true);
 		this.setHasVisor(this.rand.nextInt(visorChanceReciprocal) == 0);
 		this.setDimensionOfCreation(this.dimension);
 		this.setAttackAI();
@@ -933,7 +933,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	@SuppressWarnings("incomplete-switch")
-	public void applyGemPlacementBuffs() {
+	public void applyGemPlacementBuffs(boolean initialSpawn) {
 		switch (this.getGemPlacement()) {
 		case FOREHEAD:
 			this.tasks.addTask(2, new EntityAIPredictFights(this, 0.9D));
@@ -942,16 +942,22 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			this.canTalk = false;
 			break;
 		case LEFT_HAND:
-			this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue() * 2.0D);
+			if (initialSpawn) {
+				this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue() * 2.0D);
+			}
 			break;
 		case RIGHT_HAND:
-			this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue() * 2.0D);
+			if (initialSpawn) {
+				this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue() * 2.0D);
+			}
 			break;
 		case BACK:
 			this.tasks.addTask(2, new EntityAIPanic(this, 0.9D));
 			break;
 		case CHEST:
-			this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue() * 2.5D);
+			if (initialSpawn) {
+				this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue() * 2.5D);
+			}
 			break;
 		case BELLY:
 			if (this.fallbackServitude == -1 && this.rand.nextInt(8) == 0 && ModConfigs.canRebel) {
