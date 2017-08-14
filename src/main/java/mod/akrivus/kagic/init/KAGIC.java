@@ -31,7 +31,7 @@ public class KAGIC {
     public static final String MODID = "kagic";
     public static final String VERSION = "@version";
     public static final String MCVERSION = "@mcversion";
-    public static final boolean DEVELOPER = true;
+    public static final boolean DEVELOPER = false;
  
 	public static Logger logger;
 
