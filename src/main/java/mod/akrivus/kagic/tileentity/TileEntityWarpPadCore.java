@@ -5,6 +5,8 @@ import java.util.List;
 
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.heimrarnadalr.kagic.networking.EntityTeleportMessage;
+import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
 import mod.heimrarnadalr.kagic.networking.TENameMessage;
 import mod.heimrarnadalr.kagic.worlddata.WorldDataWarpPad;
 import net.minecraft.block.Block;
@@ -15,6 +17,7 @@ import net.minecraft.block.BlockStairs.EnumHalf;
 import net.minecraft.block.BlockStairs.EnumShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -27,6 +30,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.event.world.BlockEvent;
@@ -321,9 +325,14 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			double offsetX = entity.posX - this.pos.getX();
 			double offsetY = entity.posY - this.pos.getY();
 			double offsetZ = entity.posZ - this.pos.getZ();
-			//entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
+
 			if (entity instanceof EntityPlayerMP) {
 				((EntityPlayerMP) entity).connection.setPlayerLocation(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
+			} else if (entity instanceof EntityLivingBase) {
+				entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
+				for (EntityPlayer player : ((WorldServer) this.world).getEntityTracker().getTrackingPlayers(entity)) {
+					KTPacketHandler.INSTANCE.sendTo(new EntityTeleportMessage(entity.getEntityId(), this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ), (EntityPlayerMP) player);
+				}
 			} else {
 				entity.setLocationAndAngles(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
 				entity.setRotationYawHead(entity.rotationYaw);

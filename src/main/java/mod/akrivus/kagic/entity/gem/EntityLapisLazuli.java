@@ -51,6 +51,7 @@ public class EntityLapisLazuli extends EntityGem {
 	public EntityLapisLazuli(World worldIn) {
 		super(worldIn);
 		this.setSize(0.6F, 1.9F);
+		this.visorChanceReciprocal = 20;
 		
 		//Define valid gem cuts and placements
 		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.BACK_OF_HEAD);

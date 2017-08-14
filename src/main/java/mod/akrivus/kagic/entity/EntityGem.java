@@ -153,6 +153,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	private int timeUntilBetrayal;
 	private int servitude = 0;
 	private float pitch = 1.0F;
+	protected int visorChanceReciprocal = 3; // 1 in visorChanceReciprocal gems will have a visor
 	private Map<GemCuts, ArrayList<GemPlacements>> cutPlacements = new HashMap<GemCuts, ArrayList<GemPlacements>>();
 	
 	public EntityGem(World worldIn) {
@@ -337,8 +338,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		GemPlacements placement = placements.get(placementIndex);
 		
 		this.setGemCut(cut.id);
-		this.setGemPlacement(placement.id);
-		
+		this.setGemPlacement(placement.id);		
 	}
 	
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
@@ -349,7 +349,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		}
 
 		this.applyGemPlacementBuffs();
-		this.setHasVisor(this.rand.nextInt(3) == 0);
+		this.setHasVisor(this.rand.nextInt(visorChanceReciprocal) == 0);
 		this.setDimensionOfCreation(this.dimension);
 		this.setAttackAI();
 		if (this.fallbackServitude == -1) {
@@ -358,6 +358,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.pitch = 0.7F + (this.rand.nextFloat() / 2);
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
+	
 	public boolean canChangeInsigniaColorByDefault() {
 		return true;
 	}

@@ -73,9 +73,16 @@ public class ModSounds {
 	public static final SoundEvent AQUAMARINE_HURT = new SoundEvent(new ResourceLocation("kagic:entities.aquamarine.hurt"));
 	public static final SoundEvent AQUAMARINE_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.aquamarine.obey"));
 	public static final SoundEvent AQUAMARINE_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.aquamarine.death"));
+	public static final SoundEvent RUTILE_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.rutile.death"));
+	public static final SoundEvent RUTILE_HURT = new SoundEvent(new ResourceLocation("kagic:entities.rutile.hurt"));
+	public static final SoundEvent RUTILE_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.rutile.living"));
+	public static final SoundEvent RUTILE_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.rutile.obey"));
 	public static final SoundEvent TOPAZ_STEP = new SoundEvent(new ResourceLocation("kagic:entities.topaz.step"));
 	public static final SoundEvent TOPAZ_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.topaz.obey"));
 	public static final SoundEvent TOPAZ_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.topaz.death"));
+	public static final SoundEvent ZIRCON_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.zircon.death"));
+	public static final SoundEvent ZIRCON_HURT = new SoundEvent(new ResourceLocation("kagic:entities.zircon.hurt"));
+	public static final SoundEvent ZIRCON_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.zircon.obey"));
 	public static final SoundEvent WARP_PAD = new SoundEvent(new ResourceLocation(KAGIC.MODID, "warp_pad"));
 	
 	public static void register() {

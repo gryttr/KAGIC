@@ -8,6 +8,7 @@ import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
@@ -22,6 +23,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 
 public class EntityRutile extends EntityGem {
@@ -30,6 +32,7 @@ public class EntityRutile extends EntityGem {
 		super(worldIn);
 		this.setSize(0.6F, 1.9F);
 		this.seePastDoors();
+		this.visorChanceReciprocal = 20;
 		
 		//Define valid gem cuts and placements
 		this.setCutPlacement(GemCuts.TINY, GemPlacements.BACK_OF_HEAD);
@@ -68,23 +71,23 @@ public class EntityRutile extends EntityGem {
     	return new float[] { 174F / 255F, 29F / 255F, 72F / 255F };
     }
 	public SoundEvent getAmbientSound() {
-		return ModSounds.SAPPHIRE_LIVING;
+		return ModSounds.RUTILE_LIVING;
 	}
 	public SoundEvent getHurtSound() {
-		return ModSounds.SAPPHIRE_HURT;
+		return ModSounds.RUTILE_HURT;
 	}
 	public SoundEvent getObeySound() {
-		return ModSounds.SAPPHIRE_OBEY;
+		return ModSounds.RUTILE_OBEY;
 	}
 	public SoundEvent getDeathSound() {
-		return ModSounds.SAPPHIRE_DEATH;
+		return ModSounds.RUTILE_DEATH;
 	}
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		return super.processInteract(player, hand);
     }
 	public void onLivingUpdate() {
         if (this.isTamed() && !this.isSitting()) {	
-	        if (this.world.isAirBlock(this.getPosition())) {
+	        if (this.world.isAirBlock(this.getPosition()) && this.world.getLightFor(EnumSkyBlock.SKY, this.getPosition()) < 8) {
 	            this.world.setBlockState(this.getPosition(), ModBlocks.RUTILE_TRAIL.getDefaultState());
 	        }
 		}

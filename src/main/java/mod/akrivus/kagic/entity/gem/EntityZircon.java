@@ -86,17 +86,15 @@ public class EntityZircon extends EntityGem {
 		this.setHasVisor(true);
     	return livingdata;
 	}
-	public SoundEvent getAmbientSound() {
-		return ModSounds.SAPPHIRE_LIVING;
-	}
+
 	public SoundEvent getHurtSound() {
-		return ModSounds.SAPPHIRE_HURT;
+		return ModSounds.ZIRCON_HURT;
 	}
 	public SoundEvent getObeySound() {
-		return ModSounds.SAPPHIRE_OBEY;
+		return ModSounds.ZIRCON_OBEY;
 	}
 	public SoundEvent getDeathSound() {
-		return ModSounds.SAPPHIRE_DEATH;
+		return ModSounds.ZIRCON_DEATH;
 	}
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		return super.processInteract(player, hand);
