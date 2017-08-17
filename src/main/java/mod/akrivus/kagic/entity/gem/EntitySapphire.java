@@ -162,7 +162,7 @@ public class EntitySapphire extends EntityGem {
 	}
 	private void futureVision() {
         if (!this.world.isRemote) {
-            AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, (this.posX + 1), (this.posY + 1), (this.posZ + 1))).expandXyz(8.0).addCoord(0.0D, (double) this.world.getHeight(), 0.0D);
+            AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, (this.posX + 1), (this.posY + 1), (this.posZ + 1))).grow(8.0, (double) this.world.getHeight(), 8.0);
             List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
             for (EntityLivingBase entity : list) {
             	if (!entity.isDead || entity.getHealth() > 0.0F) {

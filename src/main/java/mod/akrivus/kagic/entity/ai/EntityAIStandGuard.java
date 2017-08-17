@@ -21,18 +21,18 @@ public class EntityAIStandGuard extends EntityAIBase {
 		return this.noNearbyAuthorities() && this.wanderAI.shouldExecute();
 	}
 	public boolean continueExecuting() {
-		return (this.gem.ticksExisted % 20 == 0 && this.noNearbyAuthorities() || true) && this.wanderAI.continueExecuting();
+		return (this.gem.ticksExisted % 20 == 0 && this.noNearbyAuthorities() || true) && this.wanderAI.shouldContinueExecuting();
 	}
 	public void startExecuting() {
 		this.wanderAI.startExecuting();
 	}
 	private boolean noNearbyAuthorities() {
-		List<EntityLivingBase> list = this.gem.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.gem.getEntityBoundingBox().expand(24.0D, 8.0D, 24.0D));
+		List<EntityLivingBase> list = this.gem.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.gem.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D));
 		for (EntityLivingBase entity : list) {
 			if (this.gem.isOwner(entity) || (entity instanceof EntityAgate && ((EntityAgate) entity).isOwner(this.gem.getOwner()))) {
-				if (this.gem.getServitude() == EntityGem.SERVE_HUMAN && this.gem.getOwner() != null && entity instanceof EntityAgate) {
+				/*if (this.gem.getServitude() == EntityGem.SERVE_HUMAN && this.gem.getOwner() != null && entity instanceof EntityAgate) {
 					this.gem.getOwner().addStat(ModAchievements.SHOULDERS_SQUARE);
-				}
+				}*/
 				this.gem.canTalk = false;
 				return false;
 			}

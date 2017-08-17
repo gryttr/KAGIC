@@ -135,7 +135,7 @@ public class EntitySlag extends EntityMob {
         this.healthBar.removePlayer(player);
     }
 	public boolean canFuse() {
-		return this.getCount() < 10 && (this.getHealth() / this.getMaxHealth() <= 0.9 || this.getAttackTarget() != null || this.getAITarget() != null);
+		return this.getCount() < 10 && (this.getHealth() / this.getMaxHealth() <= 0.9 || this.getAttackTarget() != null || this.getRevengeTarget() != null);
 	}
 	public EntitySlag fuse(EntitySlag other) {
 		EntitySlag newSlag = new EntitySlag(this.world);

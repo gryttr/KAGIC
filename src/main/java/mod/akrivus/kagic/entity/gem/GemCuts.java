@@ -11,7 +11,8 @@ public enum GemCuts {
 	SQUARE(6),
 	DRUM(7),
 	TEARDROP(8),
-	TRIANGULAR(9);
+	TRIANGULAR(9),
+	DIAMOND(10);
 	
 	public int id;
 	

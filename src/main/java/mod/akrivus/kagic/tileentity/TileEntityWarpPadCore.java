@@ -1,10 +1,16 @@
 package mod.akrivus.kagic.tileentity;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.heimrarnadalr.kagic.networking.EntityTeleportMessage;
+import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
 import mod.heimrarnadalr.kagic.networking.TENameMessage;
 import mod.heimrarnadalr.kagic.worlddata.WorldDataWarpPad;
 import net.minecraft.block.Block;
@@ -15,6 +21,8 @@ import net.minecraft.block.BlockStairs.EnumHalf;
 import net.minecraft.block.BlockStairs.EnumShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -27,6 +35,14 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.PlayerOrderedLoadingCallback;
+import net.minecraftforge.common.ForgeChunkManager.Ticket;
+import net.minecraftforge.common.ForgeChunkManager.Type;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.event.world.BlockEvent;
@@ -227,13 +243,13 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		}
 		if (this.warpTicksLeft > 0) {
 			--this.warpTicksLeft;
-			if (this.warpTicksLeft == 0) {
+			if (this.warpTicksLeft <= 0) {
 				this.WARP();
 			}
 		} 
-		if (this.cooldownTicksLeft > 0) {
+		if (this.cooldownTicksLeft >= 0) {
 			--this.cooldownTicksLeft;
-			if (this.cooldownTicksLeft == 0) {
+			if (this.cooldownTicksLeft <= 0) {
 				this.warping = false;
 				this.setDirty();
 			}
@@ -305,25 +321,32 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 	}
 	
 	public void WARP() {
-		//KAGICTech.instance.chatInfoMessage("Warping from " + this.pos+ " to " + this.destination);
 		BlockPos minorCorner = new BlockPos(this.pos.getX() - 1, this.pos.getY() + 1, this.pos.getZ() - 1);
 		BlockPos majorCorner = new BlockPos(this.pos.getX() + 2, this.pos.getY() + 5, this.pos.getZ() + 2);
 		AxisAlignedBB warpArea = new AxisAlignedBB(minorCorner, majorCorner);
 		List<Entity> entitiesToWarp = this.world.getEntitiesWithinAABB(Entity.class, warpArea);
 		Iterator it = entitiesToWarp.iterator();
 		TileEntityWarpPadCore destPad = (TileEntityWarpPadCore) this.world.getTileEntity(this.destination);
+		ChunkPos cPos = destPad.world.getChunkFromBlockCoords(destPad.pos).getPos();
 		if (!destPad.isValidPad()) {
 			this.cooldownTicksLeft = 1;
 			return;
 		}
+		
 		while (it.hasNext()) {
 			Entity entity = (Entity) it.next();
 			double offsetX = entity.posX - this.pos.getX();
 			double offsetY = entity.posY - this.pos.getY();
 			double offsetZ = entity.posZ - this.pos.getZ();
-			//entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
+			
 			if (entity instanceof EntityPlayerMP) {
 				((EntityPlayerMP) entity).connection.setPlayerLocation(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
+			} else if (entity instanceof EntityLivingBase){
+				entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
+				
+				for (EntityPlayer player : ((WorldServer) this.world).getEntityTracker().getTrackingPlayers(entity)) {
+					KTPacketHandler.INSTANCE.sendTo(new EntityTeleportMessage(entity.getEntityId(), this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ), (EntityPlayerMP) player);
+				}
 			} else {
 				entity.setLocationAndAngles(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
 				entity.setRotationYawHead(entity.rotationYaw);

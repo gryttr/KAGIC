@@ -57,17 +57,17 @@ public class GUIWarpPadList extends GuiListExtended {
 			this.padData = data;
 			this.padButton = new GuiButton(0, 0, 0, 200, 20, this.padData.name);
 		}
-		
+		/*
 		@Override
 		public void setSelected(int p_178011_1_, int p_178011_2_, int p_178011_3_) {
 			// TODO Auto-generated method stub
 			
 		}
-
+		*/
 		@Override
-		public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected) {
-			this.padButton.xPosition = GUIWarpPadList.this.mc.currentScreen.width / 2 - this.padButton.width / 2;
-			this.padButton.yPosition = y + 10;
+		public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected, float partialTicks) {
+			this.padButton.x = GUIWarpPadList.this.mc.currentScreen.width / 2 - this.padButton.width / 2;
+			this.padButton.y = y + 10;
 			if (!this.padData.valid) {
 				this.padButton.displayString = TextFormatting.RED + this.padData.name;
 				this.padButton.enabled = false;
@@ -77,7 +77,7 @@ public class GUIWarpPadList extends GuiListExtended {
 			} else {
 				this.padButton.displayString = TextFormatting.AQUA + this.padData.name;
 			}
-			this.padButton.drawButton(GUIWarpPadList.this.mc, mouseX, mouseY);
+			this.padButton.drawButton(GUIWarpPadList.this.mc, mouseX, mouseY, partialTicks);
 		}
 
 		@Override
@@ -94,6 +94,11 @@ public class GUIWarpPadList extends GuiListExtended {
 		public void mouseReleased(int slotIndex, int x, int y, int mouseEvent, int relativeX, int relativeY) {
 			this.padButton.mouseReleased(x, y);
 		}
-		
+
+		@Override
+		public void updatePosition(int p_192633_1_, int p_192633_2_, int p_192633_3_, float p_192633_4_) {
+			// TODO Auto-generated method stub
+			
+		}	
 	}
 }

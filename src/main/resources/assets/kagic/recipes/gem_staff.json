@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "kagic:gem_staff"
+  },
+  "pattern": [
+    "  b",
+    " b ",
+    "d  "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "b": {
+      "item": "minecraft:blaze_rod"
+    },
+    "d": {
+      "item": "minecraft:diamond"
+    }
+  }
+}

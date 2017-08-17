@@ -52,6 +52,8 @@ public class EntityBlueDiamond extends EntityGem {
 		super(worldIn);
 		this.setSize(3.0F, 13.8F);
 		this.stepHeight = 2.0F;
+
+		this.setCutPlacement(GemCuts.DIAMOND, GemPlacements.CHEST);
 		
 		// Boss stuff.
 		this.experienceValue = 12000;
@@ -175,11 +177,11 @@ public class EntityBlueDiamond extends EntityGem {
         this.healthBar.removePlayer(player);
     }
     public boolean attackEntityFrom(DamageSource source, float amount) {
-    	if (source.getEntity() instanceof EntityLivingBase && this.getHealth() / 20 < amount && this.rand.nextInt(4) == 0 && !this.world.isRemote) {
+    	if (source.getTrueSource() instanceof EntityLivingBase && this.getHealth() / 20 < amount && this.rand.nextInt(4) == 0 && !this.world.isRemote) {
 			EntityAmethyst amethyst = new EntityAmethyst(this.world);
 			amethyst.setPosition(this.posX, this.posY, this.posZ);
 			amethyst.setServitude(EntityGem.SERVE_BLUE_DIAMOND);
-			amethyst.setRevengeTarget(this.getAITarget());
+			amethyst.setRevengeTarget((EntityLivingBase) source.getTrueSource());
 			amethyst.onInitialSpawn(this.world.getDifficultyForLocation(this.getPosition()), null);
 			this.world.spawnEntity(amethyst);
 		}
@@ -207,9 +209,9 @@ public class EntityBlueDiamond extends EntityGem {
 	public void onDeath(DamageSource cause) {
 		if (!this.world.isRemote) {
 			this.dropItem(ModItems.RECORD_BLUE_DIAMOND, 1);
-			if (cause.getEntity() instanceof EntityPlayer) {
-				List<EntityGem> list = this.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, this.getEntityBoundingBox().expand(24.0D, 8.0D, 24.0D));
-				EntityPlayer player = (EntityPlayer)cause.getEntity();
+			if (cause.getTrueSource() instanceof EntityPlayer) {
+				List<EntityGem> list = this.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, this.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D));
+				EntityPlayer player = (EntityPlayer) cause.getTrueSource();
 				for(EntityGem gem : list) {
 					if (gem.getServitude() == EntityGem.SERVE_BLUE_DIAMOND && !gem.equals(this)) {
 			    		gem.setOwnerId(player.getUniqueID());

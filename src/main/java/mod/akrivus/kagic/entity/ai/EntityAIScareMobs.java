@@ -14,7 +14,7 @@ public class EntityAIScareMobs extends EntityAIBase {
 	}
 	public boolean shouldExecute() {
     	if (this.agate.ticksExisted % 20 == 0) {
-	    	List<EntityMob> list = this.agate.world.<EntityMob>getEntitiesWithinAABB(EntityMob.class, this.agate.getEntityBoundingBox().expand(24.0D, 8.0D, 24.0D));
+	    	List<EntityMob> list = this.agate.world.<EntityMob>getEntitiesWithinAABB(EntityMob.class, this.agate.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D));
 	        for (EntityMob mob : list) {
 	            if (this.agate.isTamed()) {
 	                mob.setAttackTarget(null);

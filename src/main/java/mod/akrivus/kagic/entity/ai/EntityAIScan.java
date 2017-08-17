@@ -37,7 +37,7 @@ public class EntityAIScan extends EntityAIBase {
 		if (wantsToScan) {
 			this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.aquamarine_scanning").getUnformattedComponentText()));
 		}
-		List<EntityLivingBase> list = this.gem.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.gem.getEntityBoundingBox().expand(24.0D, 16.0D, 24.0D));
+		List<EntityLivingBase> list = this.gem.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.gem.getEntityBoundingBox().grow(24.0D, 16.0D, 24.0D));
         double maxDistance = Double.MAX_VALUE;
         EntityLivingBase target = null;
         ArrayList<String> lastEntities = new ArrayList<String>();
@@ -99,7 +99,7 @@ public class EntityAIScan extends EntityAIBase {
 	}
 	private void sendMessage(String line, String formatting) {
 		this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.aquamarine_" + line, formatting).getUnformattedComponentText()));
-		this.gem.getOwner().addStat(ModAchievements.THE_BURDEN);
+		//this.gem.getOwner().addStat(ModAchievements.THE_BURDEN);
 		this.lastScan = this.gem.world.getTotalWorldTime();
 		this.scanned = true;
 	}

@@ -67,7 +67,7 @@ public class ModEvents {
 						player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§e§nDownload§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDownloadLink() + "\"}}, {\"text\":\" | \"}, {\"text\":\"§3§nDiscord§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDiscordLink() + "\"}}, {\"text\":\" | \"}, {\"text\":\"§6§nPatreon§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getPatreonLink() + "\"}}]"));
 					}
 				}
-				player.addStat(ModAchievements.INSTALLED_KAGIC);
+				//player.addStat(ModAchievements.INSTALLED_KAGIC);
 			}
 		}
 		if (e.getEntity() instanceof EntityMob) {
@@ -200,8 +200,8 @@ public class ModEvents {
 	}
 	@SubscribeEvent
 	public void onServerChat(ServerChatEvent e) {
-		List<EntityGem> list = e.getPlayer().world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, e.getPlayer().getEntityBoundingBox().expand(48.0D, 16.0D, 48.0D));
-        for (EntityGem gem : list) {
+		List<EntityGem> list = e.getPlayer().world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, e.getPlayer().getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
+       for (EntityGem gem : list) {
             boolean obeyed = gem.onSpokenTo(e.getPlayer(), e.getMessage());
             if (obeyed) {
             	gem.playObeySound();

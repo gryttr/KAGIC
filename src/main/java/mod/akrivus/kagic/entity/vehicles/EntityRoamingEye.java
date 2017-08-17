@@ -64,16 +64,16 @@ public class EntityRoamingEye extends EntityLiving {
 		return super.processInteract(player, hand);
     }
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (!this.world.isRemote && this.isBeingRidden() && source.getEntity() != null && source.getEntity().equals(this.getControllingPassenger())) {
-			Entity passenger = source.getEntity();
+		if (!this.world.isRemote && this.isBeingRidden() && source.getTrueSource() != null && source.getTrueSource().equals(this.getControllingPassenger())) {
+			Entity passenger = source.getTrueSource();
 			Vec3d vec3d = passenger.getLook(1.0F);
-            double x = passenger.posX - (passenger.posX + vec3d.xCoord * 1.711111111111D);
-            double y = passenger.posY - (passenger.posY + vec3d.yCoord * 1.711111111111D);
-            double z = passenger.posZ - (passenger.posZ + vec3d.zCoord * 1.711111111111D);
+            double x = passenger.posX - (passenger.posX + vec3d.x * 1.711111111111D);
+            double y = passenger.posY - (passenger.posY + vec3d.y * 1.711111111111D);
+            double z = passenger.posZ - (passenger.posZ + vec3d.z * 1.711111111111D);
             EntityLaser laser = new EntityLaser(this.world, (EntityLivingBase) passenger, -x, -y, -z, 8);
-            laser.posX = passenger.posX + vec3d.xCoord * 8.0D;
-            laser.posY = passenger.posY + vec3d.yCoord * 1.0D;
-            laser.posZ = passenger.posZ + vec3d.zCoord * 8.0D;
+            laser.posX = passenger.posX + vec3d.x * 8.0D;
+            laser.posY = passenger.posY + vec3d.y * 1.0D;
+            laser.posZ = passenger.posZ + vec3d.z * 8.0D;
             this.world.spawnEntity(laser);
 		}
 		return false;
@@ -107,7 +107,7 @@ public class EntityRoamingEye extends EntityLiving {
 	public boolean canBeSteered() {
 		return true;
     }
-	public void moveEntityWithHeading(float strafe, float forward) {
+	public void travel(float strafe, float up, float forward) {
 		Entity entity = this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
         if (this.isBeingRidden() && this.canBeSteered()) {
         	this.rotationYaw = entity.rotationYaw;
@@ -120,12 +120,12 @@ public class EntityRoamingEye extends EntityLiving {
             strafe = ((EntityLivingBase) entity).moveStrafing * 6;
             if (this.canPassengerSteer()) {
 				if (this.isHovering() || this.onGround) {
-		            super.moveEntityWithHeading(strafe, 0.0F);
-		            this.moveRelative(strafe, 0.0F, 0.0F);
-            	}
+					super.travel(strafe, up, 0.0F);
+		            this.moveRelative(strafe, 0.0F, 0.0F, 0.0f);
+		        }
             	else {
-            		super.moveEntityWithHeading(strafe, 1.0F);
-            		this.moveRelative(strafe, 1.0F, 0.1F);
+            		this.travel(strafe, up, 1.0F);
+            		this.moveRelative(strafe, up, 1.0f, 0.1f);
             	}
 				this.motionY = forward / 6;
 				this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
@@ -137,7 +137,7 @@ public class EntityRoamingEye extends EntityLiving {
 	        }
         }
         else {
-            super.moveEntityWithHeading(strafe, forward);
+            super.travel(strafe, up, forward);
         }
 	}
 	public void toggleHovering() {

@@ -101,7 +101,7 @@ public class EntityBismuth extends EntityGem {
 									List<EnchantmentData> list = EnchantmentHelper.buildEnchantmentList(this.rand, stack, damage / 10, true);
 									for (int i = 0; i < list.size(); ++i) {
 				                        EnchantmentData data = (EnchantmentData) list.get(i);
-				                        stack.addEnchantment(data.enchantmentobj, data.enchantmentLevel);
+				                        stack.addEnchantment(data.enchantment, data.enchantmentLevel);
 				                    }
 									if (list.size() > 1) {
 										if (this.rand.nextInt(30) == 0) {
@@ -125,13 +125,13 @@ public class EntityBismuth extends EntityGem {
 								else {
 									this.entityDropItem(result, 0.0F);
 								}
-								if (result.getItem() == ModItems.ACTIVATED_GEM_BASE) {
+								/*if (result.getItem() == ModItems.ACTIVATED_GEM_BASE) {
 									this.getOwner().addStat(ModAchievements.GEM_FORGER);
-								}
+								}*/
 								if (!player.capabilities.isCreativeMode) {
 									stack.shrink(1);
 								}
-								this.getOwner().addStat(ModAchievements.TO_THE_FORGE);
+								//this.getOwner().addStat(ModAchievements.TO_THE_FORGE);
 								return true;
 							}
 						}
@@ -151,8 +151,8 @@ public class EntityBismuth extends EntityGem {
      *********************************************************/
 	public void onDeath(DamageSource cause) {
 		if (!this.world.isRemote) {
-			if (cause.getEntity() instanceof EntityLivingBase) {
-				ItemStack heldItem = ((EntityLivingBase)cause.getEntity()).getHeldItemMainhand();
+			if (cause.getTrueSource() instanceof EntityLivingBase) {
+				ItemStack heldItem = ((EntityLivingBase)cause.getTrueSource()).getHeldItemMainhand();
 				if (heldItem.isItemEnchanted()) {
 					NBTTagList enchantments = heldItem.getEnchantmentTagList();
 					for (int i = 0; i < enchantments.tagCount(); i++) {

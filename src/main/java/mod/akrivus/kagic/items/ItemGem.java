@@ -121,8 +121,8 @@ public class ItemGem extends Item {
 		entity.setEntityInvulnerable(true);
 		entity.extinguish();
 		if (!this.isCracked && entity.ticksExisted > 1200 && !entity.world.isRemote) {
-			ItemGem gem = (ItemGem) entity.getEntityItem().getItem();
-			boolean spawned = gem.spawnGem(entity.world, null, entity.getPosition(), entity.getEntityItem());
+			ItemGem gem = (ItemGem) entity.getItem().getItem();
+			boolean spawned = gem.spawnGem(entity.world, null, entity.getPosition(), entity.getItem());
 			if (spawned) {
 				entity.setDead();
 			}

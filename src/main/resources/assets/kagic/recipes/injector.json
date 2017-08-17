@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "kagic:injector"
+  },
+  "pattern": [
+    "ihi",
+    "gcg",
+    "ipi"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "h": {
+      "item": "minecraft:hopper"
+    },
+    "g": {
+      "item": "minecraft:stained_glass",
+      "data": 2
+    },
+    "c": {
+      "item": "minecraft:comparator"
+    },
+    "p": {
+      "item": "minecraft:piston"
+    }
+  }
+}

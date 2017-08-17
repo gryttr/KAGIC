@@ -16,7 +16,7 @@ public class EntityAISlagFuse extends EntityAIBase {
     }
     public boolean shouldExecute() {
     	if (this.slag.canFuse()) {
-	    	List<EntitySlag> list = this.slag.world.<EntitySlag>getEntitiesWithinAABB(EntitySlag.class, this.slag.getEntityBoundingBox().expand(16.0D, 8.0D, 16.0D));
+	    	List<EntitySlag> list = this.slag.world.<EntitySlag>getEntitiesWithinAABB(EntitySlag.class, this.slag.getEntityBoundingBox().grow(16.0D, 8.0D, 16.0D));
 	        double distance = Double.MAX_VALUE;
 	        for (EntitySlag slag : list) {
 	            if (slag.canFuse() && slag.compatIndex != this.slag.compatIndex) {

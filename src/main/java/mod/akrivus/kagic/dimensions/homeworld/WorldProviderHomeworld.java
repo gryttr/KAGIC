@@ -9,7 +9,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
-import net.minecraft.world.chunk.IChunkGenerator;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -17,7 +17,7 @@ public class WorldProviderHomeworld extends WorldProvider {
 	public void createBiomeProvider() {
         this.biomeProvider = new BiomeProviderSingle(ModBiomes.HOMEWORLD);
         this.hasSkyLight = true;
-        this.hasNoSky = false;
+        //this.hasNoSky = false;
     }
     public IChunkGenerator createChunkGenerator() {
         return new ChunkProviderHomeworld(this.world, this.world.getSeed());

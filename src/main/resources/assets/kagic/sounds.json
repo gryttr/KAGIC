@@ -516,6 +516,29 @@
             { "name": "kagic:entities/aquamarine/death3" }
         ]
     },
+    "entities.rutile.death": {
+        "sounds": [
+            { "name": "kagic:entities/rutile/death1" }
+        ]
+    },
+    "entities.rutile.hurt": {
+        "sounds": [
+            { "name": "kagic:entities/rutile/hurt1" },
+            { "name": "kagic:entities/rutile/hurt2" }
+        ]
+    },
+    "entities.rutile.living": {
+        "sounds": [
+            { "name": "kagic:entities/rutile/living1" },
+            { "name": "kagic:entities/rutile/living2" }
+        ]
+    },
+    "entities.rutile.obey": {
+        "sounds": [
+            { "name": "kagic:entities/rutile/obey1" },
+            { "name": "kagic:entities/rutile/obey2" }
+        ]
+    },
     "entities.topaz.step": {
         "sounds": [
             { "name": "kagic:entities/topaz/step1" }
@@ -536,9 +559,33 @@
             { "name": "kagic:entities/topaz/death5" }
         ]
     },
+    "entities.zircon.death": {
+        "sounds": [
+            { "name": "kagic:entities/zircon/death1" },
+            { "name": "kagic:entities/zircon/death2" },
+            { "name": "kagic:entities/zircon/death3" }
+        ]
+    },
+    "entities.zircon.hurt": {
+        "sounds": [
+            { "name": "kagic:entities/zircon/hurt1" },
+            { "name": "kagic:entities/zircon/hurt2" },
+            { "name": "kagic:entities/zircon/hurt3" }
+        ]
+    },
+    "entities.zircon.obey": {
+        "sounds": [
+            { "name": "kagic:entities/zircon/obey1" },
+            { "name": "kagic:entities/zircon/obey2" },
+            { "name": "kagic:entities/zircon/obey3" }
+        ]
+    },
     "warp_pad": {
         "category": "block",
         "subtitle": "kagic.subtitle.warp_pad",
-        "sounds": [ "kagic:blocks/warp_pad_1", "kagictech:blocks/warp_pad_2" ]
+        "sounds": [ 
+            { "name": "kagic:blocks/warp_pad_1"},
+            { "name": "kagic:blocks/warp_pad_2"}
+        ]
     }
 }

@@ -184,7 +184,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 				ItemStack stack = player.getHeldItemMainhand();
 				if (this.isTamed()) {
 					if (this.isOwner(player)) {  
-						player.addStat(ModAchievements.THAT_WILL_BE_ALL);
+						//player.addStat(ModAchievements.THAT_WILL_BE_ALL);
 		    			if (stack.getItem() == Items.SHEARS) {
 		    				if (player.isSneaking()) {
 		    					if (!this.isNaked()) {
@@ -297,7 +297,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 					if (this.isMatching("regex.kagic.kill", message)) {
 						ArrayList<String> args = this.getArgsFrom("regex.kagic.kill", message);
 						if (args.size() > 0) {
-							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().expand(48.0D, 16.0D, 48.0D));
+							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
 							double distance = Double.MAX_VALUE;
 							for (EntityLivingBase base : list) {
 								double newDistance = this.getDistanceSqToEntity(base);
@@ -307,23 +307,23 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 				                }
 					        }
 						}
-						return this.getAITarget() != null;
+						return this.getRevengeTarget() != null;
 					}
 		    		else if (this.isMatching("regex.kagic.help", message)) {
 		    			ArrayList<String> args = this.getArgsFrom("regex.kagic.help", message);
 						if (args.size() > 0) {
-							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().expand(48.0D, 16.0D, 48.0D));
+							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
 							double distance = Double.MAX_VALUE;
 							for (EntityLivingBase base : list) {
 								double newDistance = this.getDistanceSqToEntity(base);
 				                if (newDistance <= distance && base.getName().toLowerCase().contains(args.get(0)) && this.shouldAttackEntity(this, base)) {
 				                	this.getNavigator().tryMoveToEntityLiving(base, 1.0);
-				                	this.setRevengeTarget(base.getAITarget());
+				                	this.setRevengeTarget(base.getAttackingEntity());
 				                    distance = newDistance;
 				                }
 					        }
 						}
-						return this.getAITarget() != null;
+						return this.getAttackTarget() != null;
 					}
 					else if (this.isMatching("regex.kagic.retreat", message)) {
 						boolean retreated = this.getAttackTarget() != null;
@@ -338,14 +338,14 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 	public void onInventoryChanged(IInventory inventory) {
 		ItemStack firstItem = this.gemStorage.getStackInSlot(0);
 		this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, firstItem);
-		if (firstItem.getItem() instanceof ItemSword) {
+		/*if (firstItem.getItem() instanceof ItemSword) {
 			if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
             	this.getOwner().addStat(ModAchievements.RENEGADE_PEARL);
             }
-		}
+		}*/
 	}
 	protected void updateEquipmentIfNeeded(EntityItem itementity) {
-        ItemStack itemstack = itementity.getEntityItem();
+        ItemStack itemstack = itementity.getItem();
         ItemStack itemstack1 = this.gemStorage.addItem(itemstack);
         if (itemstack1.isEmpty()) {
             itementity.setDead();

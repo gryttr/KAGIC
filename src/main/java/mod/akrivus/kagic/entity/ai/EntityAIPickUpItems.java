@@ -17,11 +17,11 @@ public class EntityAIPickUpItems extends EntityAIBase {
         this.setMutexBits(3);
     }
     public boolean shouldExecute() {
-    	List<EntityItem> list = this.gem.world.<EntityItem>getEntitiesWithinAABB(EntityItem.class, this.gem.getEntityBoundingBox().expand(8.0D, 8.0D, 8.0D));
+    	List<EntityItem> list = this.gem.world.<EntityItem>getEntitiesWithinAABB(EntityItem.class, this.gem.getEntityBoundingBox().grow(8.0D, 8.0D, 8.0D));
         double maxDistance = Double.MAX_VALUE;
         for (EntityItem item : list) {
             double newDistance = this.gem.getDistanceSqToEntity(item);
-            if (newDistance <= maxDistance && this.gem.canPickUpItem(item.getEntityItem().getItem()) && this.gem.canEntityBeSeen(item)) {
+            if (newDistance <= maxDistance && this.gem.canPickUpItem(item.getItem().getItem()) && this.gem.canEntityBeSeen(item)) {
                 maxDistance = newDistance;
                 this.item = item;
             }

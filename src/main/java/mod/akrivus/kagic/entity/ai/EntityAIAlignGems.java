@@ -16,7 +16,7 @@ public class EntityAIAlignGems extends EntityAIBase {
     }
     public boolean shouldExecute() {
     	if (this.alignedGem.ticksExisted % 20 == 0) {
-	    	List<EntityGem> list = this.alignedGem.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, this.alignedGem.getEntityBoundingBox().expand(24.0D, 8.0D, 24.0D));
+	    	List<EntityGem> list = this.alignedGem.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, this.alignedGem.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D));
 	        double distance = Double.MAX_VALUE;
 	        for (EntityGem gem : list) {
 	            if (this.alignedGem.isTamed() && !gem.isTamed()) {

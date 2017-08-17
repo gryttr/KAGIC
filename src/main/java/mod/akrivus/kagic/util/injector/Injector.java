@@ -85,7 +85,7 @@ public class Injector {
 	}
 	public static void tellNearbyPlayers(World worldIn, BlockPos pos, String key, boolean status, Object... params) {
 		if (ModConfigs.instructInjectors) {
-			List<EntityPlayer> list = worldIn.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos).expand(8.0, 4.0, 8.0));
+			List<EntityPlayer> list = worldIn.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos).grow(8.0, 4.0, 8.0));
 			for (EntityPlayer player : list) {
 				if (status) {
 					player.sendStatusMessage(new TextComponentTranslation("command.kagic." + key, params), true);
@@ -99,11 +99,12 @@ public class Injector {
 	public static void tellNearbyPlayers(World worldIn, BlockPos pos, String key, boolean status) {
 		Injector.tellNearbyPlayers(worldIn, pos, key, status, status);
 	}
+	
 	public static void awardNearbyPlayers(World worldIn, BlockPos pos) {
-		List<EntityPlayer> list = worldIn.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos).expand(8.0, 4.0, 8.0));
+		/*List<EntityPlayer> list = worldIn.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, new AxisAlignedBB(pos).expand(8.0, 4.0, 8.0));
 		for (EntityPlayer player : list) {
         	player.addStat(ModAchievements.KINDERGARTENER);
-		}
+		}*/
 	}
 	
 	public static boolean isInjectorBlock(Block block) {

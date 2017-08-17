@@ -88,7 +88,7 @@ public class EntityPadparadscha extends EntityGem {
 	}
 	private void futureVision() {
         if (!this.world.isRemote) {
-            AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, (this.posX + 1), (this.posY + 1), (this.posZ + 1))).expandXyz(8.0).addCoord(0.0D, (double) this.world.getHeight(), 0.0D);
+            AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, (this.posX + 1), (this.posY + 1), (this.posZ + 1))).grow(8.0, (double) this.world.getHeight(), 8.0);
             List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
             for (EntityLivingBase entity : list) {
             	if (!entity.isDead || entity.getHealth() > 0.0F) {
@@ -136,14 +136,14 @@ public class EntityPadparadscha extends EntityGem {
 						else {
 							if (this.playerLoves && this.lastLoveTime > this.rand.nextInt(1200)) {
 								player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.padparadscha_love").getUnformattedComponentText()));
-								player.addStat(ModAchievements.WHAT_A_MYSTERY);
+								//player.addStat(ModAchievements.WHAT_A_MYSTERY);
 								this.playLivingSound();
 								this.lastLoveTime = 0;
 								return true;
 							}
 							else {
 								player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.padparadscha_interact").getUnformattedComponentText()));
-								player.addStat(ModAchievements.WHAT_A_MYSTERY);
+								//player.addStat(ModAchievements.WHAT_A_MYSTERY);
 								this.playLivingSound();
 								return true;
 							}
@@ -155,9 +155,9 @@ public class EntityPadparadscha extends EntityGem {
 		return super.processInteract(player, hand);
     }
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.getEntity() != null && this.isOwner((EntityLivingBase) source.getEntity()) && this.playerLoves) {
+		if (source.getTrueSource() != null && this.isOwner((EntityLivingBase) source.getTrueSource()) && this.playerLoves) {
 			this.getOwner().sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.padparadscha_hate").getUnformattedComponentText()));
-			this.getOwner().addStat(ModAchievements.WHAT_A_MYSTERY);
+			//this.getOwner().addStat(ModAchievements.WHAT_A_MYSTERY);
 			this.playerLoves = false;
 			this.lastLoveTime = 0;
 		}

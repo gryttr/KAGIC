@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "kagic:incubator"
+  },
+  "pattern": [
+    "ggg",
+    "gdg",
+    "ghg"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "g": {
+      "item": "minecraft:stained_glass",
+      "data": 2
+    },
+    "d": {
+      "item": "minecraft:dispenser"
+    },
+    "h": {
+      "item": "minecraft:hopper"
+    }
+  }
+}

@@ -16,7 +16,7 @@ public class EntityAIRubyFuse extends EntityAIBase {
     }
     public boolean shouldExecute() {
     	if (this.ruby.canFuse()) {
-	    	List<EntityRuby> list = this.ruby.world.<EntityRuby>getEntitiesWithinAABB(EntityRuby.class, this.ruby.getEntityBoundingBox().expand(16.0D, 8.0D, 16.0D));
+	    	List<EntityRuby> list = this.ruby.world.<EntityRuby>getEntitiesWithinAABB(EntityRuby.class, this.ruby.getEntityBoundingBox().grow(16.0D, 8.0D, 16.0D));
 	        double distance = Double.MAX_VALUE;
 	        for (EntityRuby ruby : list) {
 	            if (ruby.canFuseWith(this.ruby) && ruby.compatIndex != this.ruby.compatIndex) {

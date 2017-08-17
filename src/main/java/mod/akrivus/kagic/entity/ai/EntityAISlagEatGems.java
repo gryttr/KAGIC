@@ -18,11 +18,11 @@ public class EntityAISlagEatGems extends EntityAIBase {
         this.setMutexBits(3);
     }
     public boolean shouldExecute() {
-    	List<EntityItem> list = this.slag.world.<EntityItem>getEntitiesWithinAABB(EntityItem.class, this.slag.getEntityBoundingBox().expand(8.0D, 8.0D, 8.0D));
+    	List<EntityItem> list = this.slag.world.<EntityItem>getEntitiesWithinAABB(EntityItem.class, this.slag.getEntityBoundingBox().grow(8.0D, 8.0D, 8.0D));
         double maxDistance = Double.MAX_VALUE;
         for (EntityItem item : list) {
             double newDistance = this.slag.getDistanceSqToEntity(item);
-            if (newDistance <= maxDistance && item.getEntityItem().getItem() instanceof ItemGem && this.slag.canEntityBeSeen(item)) {
+            if (newDistance <= maxDistance && item.getItem().getItem() instanceof ItemGem && this.slag.canEntityBeSeen(item)) {
                 maxDistance = newDistance;
                 this.item = item;
             }

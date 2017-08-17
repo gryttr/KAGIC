@@ -29,7 +29,7 @@ public class EntityAIFollowDiamond extends EntityAIBase {
             return true;
         }
     }
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return this.theOwner != null && !this.theGem.getNavigator().noPath() && !this.theGem.isSitting() && !this.theGem.isAttacking;
     }
     public void startExecuting() {
@@ -69,7 +69,7 @@ public class EntityAIFollowDiamond extends EntityAIBase {
     	}
     	else if (servitude == EntityGem.SERVE_YELLOW_DIAMOND) {
     		try {
-    			return this.theGem.world.<EntityYellowDiamond>getEntitiesWithinAABB(EntityYellowDiamond.class, this.theGem.getEntityBoundingBox().expand(24.0D, 8.0D, 24.0D)).get(0);
+    			return this.theGem.world.<EntityYellowDiamond>getEntitiesWithinAABB(EntityYellowDiamond.class, this.theGem.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D)).get(0);
     		}
     		catch (Exception e) {
     			return null;
@@ -77,7 +77,7 @@ public class EntityAIFollowDiamond extends EntityAIBase {
     	}
     	else if (servitude == EntityGem.SERVE_BLUE_DIAMOND) {
     		try {
-    			return this.theGem.world.<EntityBlueDiamond>getEntitiesWithinAABB(EntityBlueDiamond.class, this.theGem.getEntityBoundingBox().expand(24.0D, 8.0D, 24.0D)).get(0);
+    			return this.theGem.world.<EntityBlueDiamond>getEntitiesWithinAABB(EntityBlueDiamond.class, this.theGem.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D)).get(0);
     		}
     		catch (Exception e) {
     			return null;

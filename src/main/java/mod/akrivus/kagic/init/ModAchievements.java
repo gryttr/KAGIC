@@ -1,11 +1,9 @@
 package mod.akrivus.kagic.init;
 
 import net.minecraft.init.Items;
-import net.minecraft.stats.Achievement;
-import net.minecraftforge.common.AchievementPage;
 
 public class ModAchievements {
-	public static final Achievement INSTALLED_KAGIC = new Achievement("installed_kagic", "installed_kagic", 0, 0, ModItems.YELLOW_DIAMOND_GEM, null).initIndependentStat().registerStat();
+	/*public static final Achievement INSTALLED_KAGIC = new Achievement("installed_kagic", "installed_kagic", 0, 0, ModItems.YELLOW_DIAMOND_GEM, null).initIndependentStat().registerStat();
 	public static final Achievement GEM_FORGER = new Achievement("gem_forger", "gem_forger", 0, 2, ModItems.ACTIVATED_GEM_BASE, INSTALLED_KAGIC).registerStat();
 	public static final Achievement KINDERGARTENER = new Achievement("kindergartener", "kindergartener", 0, 4, ModBlocks.INJECTOR, GEM_FORGER).registerStat();
 	public static final Achievement GEM_COMMANDER = new Achievement("gem_commander", "gem_commander", 0, 6, ModItems.GEM_STAFF, KINDERGARTENER).registerStat();
@@ -55,5 +53,5 @@ public class ModAchievements {
 	);
 	public static void register() {
 		AchievementPage.registerAchievementPage(KAGIC);
-	}
+	}*/
 }

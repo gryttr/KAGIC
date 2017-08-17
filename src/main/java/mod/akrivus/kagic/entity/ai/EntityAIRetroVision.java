@@ -45,8 +45,8 @@ public class EntityAIRetroVision extends EntityAIBase {
 		else if (world.getTotalWorldTime() - world.getLastLightningBolt() > 20 && world.getTotalWorldTime() - world.getLastLightningBolt() < 200 && !this.lastMessage.equals("thunder")) {
 			this.sendMessage("thunder");
 		}
-		else if (this.gem.getOwner().getAITarget() != null && !this.lastMessage.equals(this.gem.getOwner().getAITarget().getName())) {
-			this.sendMessage("hurt_by", this.gem.getOwner().getAITarget().getName());
+		else if (this.gem.getOwner().getAttackingEntity() != null && !this.lastMessage.equals(this.gem.getOwner().getAttackingEntity().getName())) {
+			this.sendMessage("hurt_by", this.gem.getOwner().getAttackingEntity().getName());
 		}
 		else if (world.getWorldTime() < 600 && !this.lastMessage.equals("sunrise")) {
 			this.sendMessage("sunrise");
@@ -66,13 +66,13 @@ public class EntityAIRetroVision extends EntityAIBase {
 	}
 	private void sendMessage(String line, String formatting) {
 		this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.padparadscha_" + line, formatting).getUnformattedComponentText()));
-		this.gem.getOwner().addStat(ModAchievements.WHAT_A_MYSTERY);
+		//this.gem.getOwner().addStat(ModAchievements.WHAT_A_MYSTERY);
 		this.lastPrediction = this.gem.world.getTotalWorldTime();
 		this.lastMessage = formatting;
 	}
 	private void sendMessage(String line) {
 		this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.padparadscha_" + line).getUnformattedComponentText()));
-		this.gem.getOwner().addStat(ModAchievements.WHAT_A_MYSTERY);
+		//this.gem.getOwner().addStat(ModAchievements.WHAT_A_MYSTERY);
 		this.lastPrediction = this.gem.world.getTotalWorldTime();
 		this.lastMessage = line;
 	}

@@ -26,7 +26,7 @@ public class EntityAIFutureVision extends EntityAIBase {
 		return this.gem.getOwner() != null && this.gem.getOwner().getDistanceToEntity(this.gem) < 16 && this.gem.world.getTotalWorldTime() - this.lastPrediction > 100 + this.gem.world.rand.nextInt(100);
 	}
 	public void startExecuting() {
-		List<EntityLivingBase> list = this.gem.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.gem.getEntityBoundingBox().expand(24.0D, 8.0D, 24.0D));
+		List<EntityLivingBase> list = this.gem.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.gem.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D));
         double maxDistance = Double.MAX_VALUE;
         for (EntityLivingBase weirdo : list) {
             double newDistance = weirdo.getDistanceSqToEntity(this.gem);
@@ -60,7 +60,7 @@ public class EntityAIFutureVision extends EntityAIBase {
 	}
 	private void sendMessage(String line, String formatting) {
 		this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.sapphire_" + line, formatting).getUnformattedComponentText()));
-		this.gem.getOwner().addStat(ModAchievements.YOUR_CLARITY);
+		//this.gem.getOwner().addStat(ModAchievements.YOUR_CLARITY);
 		this.lastPrediction = this.gem.world.getTotalWorldTime();
 		this.lastMessage = formatting;
 	}

@@ -57,10 +57,10 @@ public class EntityPumpkin extends EntityPepo {
 		return KAGIC.isHalloween() || this.dataManager.get(IS_LIT);
 	}
 	@SideOnly(Side.CLIENT)
-    public int getBrightnessForRender(float partialTicks) {
-        return this.isLit() ? 15728880 : super.getBrightnessForRender(partialTicks);
+    public int getBrightnessForRender() {
+        return this.isLit() ? 15728880 : super.getBrightnessForRender();
 	}
-    public float getBrightness(float partialTicks) {
-        return this.isLit() ? 1.0F : super.getBrightness(partialTicks);
+    public float getBrightness() {
+        return this.isLit() ? 1.0F : super.getBrightness();
     }
 }

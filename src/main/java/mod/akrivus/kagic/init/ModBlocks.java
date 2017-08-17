@@ -9,9 +9,11 @@ import mod.akrivus.kagic.blocks.BlockVarying;
 import mod.akrivus.kagic.blocks.BlockWarpPadCore;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,24 +32,43 @@ public class ModBlocks {
 	public static final BlockRockMelt RUTILE_TRAIL = new BlockRockMelt(false);
 	public static final BlockWarpPadCore WARP_PAD_CORE = new BlockWarpPadCore();
 	
-	public static void register() {
-		registerBlock(GEM_SEED, new ResourceLocation("kagic:gem_seed"));
-		registerBlock(GEM_DRILL, new ResourceLocation("kagic:gem_drill"));
-		registerBlock(INJECTOR, new ResourceLocation("kagic:injector"));
-		registerBlock(EQUIPPED_INJECTOR, new ResourceLocation("kagic:equipped_injector"));
-		registerBlock(INCUBATOR, new ResourceLocation("kagic:incubator"));
-		registerBlock(DRAINED_BLOCK, new ResourceLocation("kagic:drained_block"));
-		registerBlock(SMOOTH_CARBONITE, new ResourceLocation("kagic:smooth_carbonite"));
-		registerBlock(CHISELED_CARBONITE, new ResourceLocation("kagic:chiseled_carbonite"));
-		registerBlock(ROCK_MELT, new ResourceLocation("kagic:rock_melt"));
-		registerBlock(RUTILE_TRAIL, new ResourceLocation("kagic:rutile_trail"));
-		registerBlock(WARP_PAD_CORE, new ResourceLocation("kagic:warp_pad_core"));
+	public static void registerBlocks(RegistryEvent.Register<Block> event) {
+		registerBlock(GEM_SEED, new ResourceLocation("kagic:gem_seed"), event);
+		registerBlock(GEM_DRILL, new ResourceLocation("kagic:gem_drill"), event);
+		registerBlock(INJECTOR, new ResourceLocation("kagic:injector"), event);
+		registerBlock(EQUIPPED_INJECTOR, new ResourceLocation("kagic:equipped_injector"), event);
+		registerBlock(INCUBATOR, new ResourceLocation("kagic:incubator"), event);
+		registerBlock(DRAINED_BLOCK, new ResourceLocation("kagic:drained_block"), event);
+		registerBlock(SMOOTH_CARBONITE, new ResourceLocation("kagic:smooth_carbonite"), event);
+		registerBlock(CHISELED_CARBONITE, new ResourceLocation("kagic:chiseled_carbonite"), event);
+		registerBlock(ROCK_MELT, new ResourceLocation("kagic:rock_melt"), event);
+		registerBlock(RUTILE_TRAIL, new ResourceLocation("kagic:rutile_trail"), event);
+		registerBlock(WARP_PAD_CORE, new ResourceLocation("kagic:warp_pad_core"), event);
 	}
 	
-	public static void registerBlock(Block block, ResourceLocation location) {
+	public static void registerBlock(Block block, ResourceLocation location, RegistryEvent.Register<Block> event) {
+		block.setRegistryName(location);
+		event.getRegistry().register(block);
+	}
+	
+	public static void registerBlockItems(RegistryEvent.Register<Item> event) {
+		registerBlockItem(GEM_SEED, new ResourceLocation("kagic:gem_seed"), event);
+		registerBlockItem(GEM_DRILL, new ResourceLocation("kagic:gem_drill"), event);
+		registerBlockItem(INJECTOR, new ResourceLocation("kagic:injector"), event);
+		registerBlockItem(EQUIPPED_INJECTOR, new ResourceLocation("kagic:equipped_injector"), event);
+		registerBlockItem(INCUBATOR, new ResourceLocation("kagic:incubator"), event);
+		registerBlockItem(DRAINED_BLOCK, new ResourceLocation("kagic:drained_block"), event);
+		registerBlockItem(SMOOTH_CARBONITE, new ResourceLocation("kagic:smooth_carbonite"), event);
+		registerBlockItem(CHISELED_CARBONITE, new ResourceLocation("kagic:chiseled_carbonite"), event);
+		registerBlockItem(ROCK_MELT, new ResourceLocation("kagic:rock_melt"), event);
+		registerBlockItem(RUTILE_TRAIL, new ResourceLocation("kagic:rutile_trail"), event);
+		registerBlockItem(WARP_PAD_CORE, new ResourceLocation("kagic:warp_pad_core"), event);		
+	}
+	
+	public static void registerBlockItem(Block block, ResourceLocation location, RegistryEvent.Register<Item> event) {
 		ItemBlock item = new ItemBlock(block);
-		GameRegistry.register(block, location);
-		GameRegistry.register(item, location);
+		item.setRegistryName(location);
+		event.getRegistry().register(item);
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}

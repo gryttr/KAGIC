@@ -204,25 +204,25 @@ public class EntityRoseQuartz extends EntityGem {
 	                }
 		        }
 			}
-			List<EntityPepo> list = this.world.<EntityPepo>getEntitiesWithinAABB(EntityPepo.class, this.getEntityBoundingBox().expand(16.0D, 4.0D, 16.0D));
+			List<EntityPepo> list = this.world.<EntityPepo>getEntitiesWithinAABB(EntityPepo.class, this.getEntityBoundingBox().grow(16.0D, 4.0D, 16.0D));
 	        for (EntityPepo pepo : list) {
 	        	if (pepo.getMaster() == null) {
 		            pepo.setMaster(this);
 	        	}
 	        }
-	        if (list.size() > 0) {
+	        /*if (list.size() > 0) {
 	        	if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
 	            	this.getOwner().addStat(ModAchievements.REVOLUTION);
 	            }
-	        }
+	        }*/
 			this.lastSurgeLocation = this.getPosition();
 		}
 		return super.attackEntityFrom(source, amount);
 	}
 	public void onDeath(DamageSource cause) {
 		if (!this.world.isRemote) {
-			if (cause.getEntity() != null) {
-				if (!this.isOwner((EntityLivingBase) cause.getEntity())) {
+			if (cause.getTrueSource() != null) {
+				if (!this.isOwner((EntityLivingBase) cause.getTrueSource())) {
 					this.dropItem(ModItems.RECORD_ROSES_FOUNTAIN, 1);
 				}
 			}
@@ -235,7 +235,7 @@ public class EntityRoseQuartz extends EntityGem {
 	 *********************************************************/
 	private void startCryingLikeAnEmo() {
         if (!this.world.isRemote) {
-            AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, (this.posX + 1), (this.posY + 1), (this.posZ + 1))).expandXyz(16.0).addCoord(0.0D, (double)this.world.getHeight(), 0.0D);
+            AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, (this.posX + 1), (this.posY + 1), (this.posZ + 1))).grow(16.0, (double) this.world.getHeight(), 16.0);
             List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
             for (EntityLivingBase entity : list) {
             	if (!entity.isDead || entity.getHealth() > 0.0F) {

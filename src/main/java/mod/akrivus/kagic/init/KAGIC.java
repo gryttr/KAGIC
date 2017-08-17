@@ -10,10 +10,13 @@ import mod.akrivus.kagic.command.CommandSpawnGems;
 import mod.akrivus.kagic.server.SpaceStuff;
 import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import mod.akrivus.kagic.tileentity.WarpRenderer;
+import mod.heimrarnadalr.kagic.chunk.KAGICChunkCallback;
+import mod.heimrarnadalr.kagic.crafting.KAGICSmeltingRecipes;
 import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
 import mod.heimrarnadalr.kagic.proxies.CommonProxy;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -45,16 +48,17 @@ public class KAGIC {
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
     	logger = e.getModLog();
-        ModAchievements.register();
+        //ModAchievements.register();
         ModBiomes.register();
-        ModBlocks.register();
+        //ModBlocks.register();
         ModConfigs.register(e);
         ModDimensions.register();
-    	ModEnchantments.register();
-    	ModItems.register();
-    	ModRecipes.register();
-    	ModSounds.register();
+    	//ModEnchantments.register();
+    	//ModItems.register();
+    	//ModSounds.register();
+        KAGICSmeltingRecipes.register();
 		KTPacketHandler.registerMessages(KAGIC.MODID);
+		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new KAGICChunkCallback());
     }
     @EventHandler
     public void init(FMLInitializationEvent e) {

@@ -51,6 +51,7 @@ public class EntityLapisLazuli extends EntityGem {
 	public EntityLapisLazuli(World worldIn) {
 		super(worldIn);
 		this.setSize(0.6F, 1.9F);
+		this.visorChanceReciprocal = 20;
 		
 		//Define valid gem cuts and placements
 		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.BACK_OF_HEAD);
@@ -141,7 +142,7 @@ public class EntityLapisLazuli extends EntityGem {
 							player.rotationYaw = this.rotationYaw;
 					        player.rotationPitch = this.rotationPitch;
 					        player.startRiding(this);
-					        player.addStat(ModAchievements.GIVE_ME_A_LIFT);
+					        //player.addStat(ModAchievements.GIVE_ME_A_LIFT);
 					        this.playObeySound();
 							return true;
 						}
@@ -174,7 +175,7 @@ public class EntityLapisLazuli extends EntityGem {
 	        return false;
         }
     }
-	public void moveEntityWithHeading(float strafe, float forward) {
+	public void travel(float strafe, float up, float forward) {
 		Entity entity = this.getPassengers().isEmpty() ? null : (Entity)this.getPassengers().get(0);
         if (this.isBeingRidden() && this.canBeSteered()) {
         	this.rotationYaw = entity.rotationYaw;
@@ -189,7 +190,7 @@ public class EntityLapisLazuli extends EntityGem {
             strafe = ((EntityLivingBase) entity).moveStrafing;
             if (this.canPassengerSteer()) {
                 if (this.isInWater()) {
-                	this.moveRelative(strafe, 0.91F, 0.02F);
+                	this.moveRelative(strafe, up, 0.91F, 0.02F);
                 	this.motionY = forward / 10;
                     this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
                     this.motionX *= 0.800000011920929D;
@@ -197,7 +198,7 @@ public class EntityLapisLazuli extends EntityGem {
                     this.motionZ *= 0.800000011920929D;
                 }
                 else if (this.isInLava()) {
-                	this.moveRelative(strafe, 0.91F, 0.02F);
+                	this.moveRelative(strafe, up, 0.91F, 0.02F);
                 	this.motionY = forward / 10;
                     this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
                     this.motionX *= 0.5D;
@@ -208,7 +209,7 @@ public class EntityLapisLazuli extends EntityGem {
 	                float f = 0.91F * (this.isPrimary() ? 2.0F : 1.0F);
 	                if (!this.onGround) {
 		                float f1 = 0.16277136F / (f * f * f);
-			            this.moveRelative(strafe, 0.91F, 0.2F * f1);
+			            this.moveRelative(strafe, up, 0.91F, 0.2F * f1);
 	                }
 	                this.motionY = forward / 10;
 		            this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
@@ -236,7 +237,7 @@ public class EntityLapisLazuli extends EntityGem {
         else {
             this.stepHeight = 1.0F;
             this.jumpMovementFactor = 0.02F;
-            super.moveEntityWithHeading(strafe, forward);
+            super.travel(strafe, up, forward);
         }
 	}
 	public boolean isFarmer() {
@@ -280,8 +281,8 @@ public class EntityLapisLazuli extends EntityGem {
 	 * Methods related to combat.                            *
 	 *********************************************************/
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (this.isBeingRidden() && source.getEntity() != null) {
-			if (this.getPassengers().get(0).equals(source.getEntity())) {
+		if (this.isBeingRidden() && source.getTrueSource() != null) {
+			if (this.getPassengers().get(0).equals(source.getTrueSource())) {
 				return false;
 			}
 		}
@@ -306,7 +307,7 @@ public class EntityLapisLazuli extends EntityGem {
 	 *********************************************************/
 	public void onDeath(DamageSource cause) {
 		if (!this.world.isRemote) {
-			if (cause.getEntity() instanceof EntitySkeleton) {
+			if (cause.getTrueSource() instanceof EntitySkeleton) {
 				this.dropItem(ModItems.RECORD_LAPIS_FLIGHT, 1);
 			}
 		}

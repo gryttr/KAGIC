@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "kagic:gem_drill"
+  },
+  "pattern": [
+    "iii",
+    "ihi",
+    " d "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "h": {
+      "item": "minecraft:hopper"
+    },
+    "d": {
+      "item": "minecraft:diamond"
+    }
+  }
+}

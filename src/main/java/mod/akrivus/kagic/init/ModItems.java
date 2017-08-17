@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -166,102 +167,106 @@ public class ModItems {
 	public static final ItemGem CRACKED_YELLOW_DIAMOND_GEM = new ItemGem("yellow_diamond", true);
 	public static final ItemGem CRACKED_BLUE_DIAMOND_GEM = new ItemGem("blue_diamond", true);
 	
-	public static void register() {
-		registerGem(RUBY_GEM, CRACKED_RUBY_GEM);
-		registerGem(SAPPHIRE_GEM, CRACKED_SAPPHIRE_GEM);
-		registerGem(PADPARADSCHA_GEM, CRACKED_PADPARADSCHA_GEM);
-		registerGem(WHITE_PEARL_GEM, CRACKED_WHITE_PEARL_GEM);
-		registerGem(ORANGE_PEARL_GEM, CRACKED_ORANGE_PEARL_GEM);
-		registerGem(MAGENTA_PEARL_GEM, CRACKED_MAGENTA_PEARL_GEM);
-		registerGem(LIGHT_BLUE_PEARL_GEM, CRACKED_LIGHT_BLUE_PEARL_GEM);
-		registerGem(YELLOW_PEARL_GEM, CRACKED_YELLOW_PEARL_GEM);
-		registerGem(LIME_PEARL_GEM, CRACKED_LIME_PEARL_GEM);
-		registerGem(PINK_PEARL_GEM, CRACKED_PINK_PEARL_GEM);
-		registerGem(GRAY_PEARL_GEM, CRACKED_GRAY_PEARL_GEM);
-		registerGem(LIGHT_GRAY_PEARL_GEM, CRACKED_LIGHT_GRAY_PEARL_GEM);
-		registerGem(CYAN_PEARL_GEM, CRACKED_CYAN_PEARL_GEM);
-		registerGem(PURPLE_PEARL_GEM, CRACKED_PURPLE_PEARL_GEM);
-		registerGem(BLUE_PEARL_GEM, CRACKED_BLUE_PEARL_GEM);
-		registerGem(BROWN_PEARL_GEM, CRACKED_BROWN_PEARL_GEM);
-		registerGem(GREEN_PEARL_GEM, CRACKED_GREEN_PEARL_GEM);
-		registerGem(RED_PEARL_GEM, CRACKED_RED_PEARL_GEM);
-		registerGem(BLACK_PEARL_GEM, CRACKED_BLACK_PEARL_GEM);
-		registerGem(PEARL_GEM, CRACKED_PEARL_GEM);
-		registerGem(BISMUTH_GEM, CRACKED_BISMUTH_GEM);
-		registerGem(PERIDOT_GEM, CRACKED_PERIDOT_GEM);
-		registerGem(JASPER_GEM, CRACKED_JASPER_GEM);
-		registerGem(OCEAN_JASPER_GEM, CRACKED_OCEAN_JASPER_GEM);
-		registerGem(BIGGS_JASPER_GEM, CRACKED_BIGGS_JASPER_GEM);
-		registerGem(AMETHYST_GEM, CRACKED_AMETHYST_GEM);
-		registerGem(ROSE_QUARTZ_GEM, CRACKED_ROSE_QUARTZ_GEM);
-		registerGem(LAPIS_LAZULI_GEM, CRACKED_LAPIS_LAZULI_GEM);
-		registerGem(CARNELIAN_GEM, CRACKED_CARNELIAN_GEM);
-		registerGem(WHITE_AGATE_GEM, CRACKED_WHITE_AGATE_GEM);
-		registerGem(ORANGE_AGATE_GEM, CRACKED_ORANGE_AGATE_GEM);
-		registerGem(MAGENTA_AGATE_GEM, CRACKED_MAGENTA_AGATE_GEM);
-		registerGem(LIGHT_BLUE_AGATE_GEM, CRACKED_LIGHT_BLUE_AGATE_GEM);
-		registerGem(YELLOW_AGATE_GEM, CRACKED_YELLOW_AGATE_GEM);
-		registerGem(LIME_AGATE_GEM, CRACKED_LIME_AGATE_GEM);
-		registerGem(PINK_AGATE_GEM, CRACKED_PINK_AGATE_GEM);
-		registerGem(GRAY_AGATE_GEM, CRACKED_GRAY_AGATE_GEM);
-		registerGem(LIGHT_GRAY_AGATE_GEM, CRACKED_LIGHT_GRAY_AGATE_GEM);
-		registerGem(CYAN_AGATE_GEM, CRACKED_CYAN_AGATE_GEM);
-		registerGem(PURPLE_AGATE_GEM, CRACKED_PURPLE_AGATE_GEM);
-		registerGem(BLUE_AGATE_GEM, CRACKED_BLUE_AGATE_GEM);
-		registerGem(BROWN_AGATE_GEM, CRACKED_BROWN_AGATE_GEM);
-		registerGem(GREEN_AGATE_GEM, CRACKED_GREEN_AGATE_GEM);
-		registerGem(RED_AGATE_GEM, CRACKED_RED_AGATE_GEM);
-		registerGem(BLACK_AGATE_GEM, CRACKED_BLACK_AGATE_GEM);
-		registerGem(HOLLY_BLUE_AGATE_GEM, CRACKED_HOLLY_BLUE_AGATE_GEM);
-		registerGem(AGATE_GEM, CRACKED_AGATE_GEM);
-		registerGem(AQUAMARINE_GEM, CRACKED_AQUAMARINE_GEM);
-		registerGem(TOPAZ_GEM, CRACKED_TOPAZ_GEM);
-		registerGem(BLUE_TOPAZ_GEM, CRACKED_BLUE_TOPAZ_GEM);
-		registerGem(ZIRCON_GEM, CRACKED_ZIRCON_GEM);
-		registerGem(RUTILE_GEM, CRACKED_RUTILE_GEM);
-		registerGem(CITRINE_GEM, CRACKED_CITRINE_GEM);
-		registerGem(YELLOW_DIAMOND_GEM, CRACKED_YELLOW_DIAMOND_GEM);
-		registerGem(BLUE_DIAMOND_GEM, CRACKED_BLUE_DIAMOND_GEM);
-		registerItem(RECORD_LITTLE_PERIDOT);
-		registerItem(RECORD_ROSES_FOUNTAIN);
-		registerItem(RECORD_LAPIS_FLIGHT);
-		registerItem(RECORD_THE_BREAKING_POINT);
-		registerItem(RECORD_DUEL_OF_THE_QUARTZ);
-		registerItem(RECORD_YELLOW_DIAMOND);
-		registerItem(RECORD_BLUE_DIAMOND);
-		registerItem(RECORD_WHATS_THE_USE_OF_FEELING_BLUE);
-		registerItem(ACTIVATED_GEM_SHARD);
-		registerItem(ACTIVATED_GEM_BASE);
-		registerItem(INACTIVE_GEM_BASE);
-		registerItem(TRANSFER_CONTRACT);
-		registerItem(JOINT_CONTRACT);
-		registerItem(LIBERATION_CONTRACT);
-		registerItem(AUTONOMY_CONTRACT);
-		registerItem(GEM_STAFF);
-		registerItem(ROAMING_EYE);
-		registerItem(LASER_BEAM);
-		registerItem(WARP_WHISTLE);
+	public static void registerItems(RegistryEvent.Register<Item> event) {
+		registerGem(RUBY_GEM, CRACKED_RUBY_GEM, event);
+		registerGem(SAPPHIRE_GEM, CRACKED_SAPPHIRE_GEM, event);
+		registerGem(PADPARADSCHA_GEM, CRACKED_PADPARADSCHA_GEM, event);
+		registerGem(WHITE_PEARL_GEM, CRACKED_WHITE_PEARL_GEM, event);
+		registerGem(ORANGE_PEARL_GEM, CRACKED_ORANGE_PEARL_GEM, event);
+		registerGem(MAGENTA_PEARL_GEM, CRACKED_MAGENTA_PEARL_GEM, event);
+		registerGem(LIGHT_BLUE_PEARL_GEM, CRACKED_LIGHT_BLUE_PEARL_GEM, event);
+		registerGem(YELLOW_PEARL_GEM, CRACKED_YELLOW_PEARL_GEM, event);
+		registerGem(LIME_PEARL_GEM, CRACKED_LIME_PEARL_GEM, event);
+		registerGem(PINK_PEARL_GEM, CRACKED_PINK_PEARL_GEM, event);
+		registerGem(GRAY_PEARL_GEM, CRACKED_GRAY_PEARL_GEM, event);
+		registerGem(LIGHT_GRAY_PEARL_GEM, CRACKED_LIGHT_GRAY_PEARL_GEM, event);
+		registerGem(CYAN_PEARL_GEM, CRACKED_CYAN_PEARL_GEM, event);
+		registerGem(PURPLE_PEARL_GEM, CRACKED_PURPLE_PEARL_GEM, event);
+		registerGem(BLUE_PEARL_GEM, CRACKED_BLUE_PEARL_GEM, event);
+		registerGem(BROWN_PEARL_GEM, CRACKED_BROWN_PEARL_GEM, event);
+		registerGem(GREEN_PEARL_GEM, CRACKED_GREEN_PEARL_GEM, event);
+		registerGem(RED_PEARL_GEM, CRACKED_RED_PEARL_GEM, event);
+		registerGem(BLACK_PEARL_GEM, CRACKED_BLACK_PEARL_GEM, event);
+		registerGem(PEARL_GEM, CRACKED_PEARL_GEM, event);
+		registerGem(BISMUTH_GEM, CRACKED_BISMUTH_GEM, event);
+		registerGem(PERIDOT_GEM, CRACKED_PERIDOT_GEM, event);
+		registerGem(JASPER_GEM, CRACKED_JASPER_GEM, event);
+		registerGem(OCEAN_JASPER_GEM, CRACKED_OCEAN_JASPER_GEM, event);
+		registerGem(BIGGS_JASPER_GEM, CRACKED_BIGGS_JASPER_GEM, event);
+		registerGem(AMETHYST_GEM, CRACKED_AMETHYST_GEM, event);
+		registerGem(ROSE_QUARTZ_GEM, CRACKED_ROSE_QUARTZ_GEM, event);
+		registerGem(LAPIS_LAZULI_GEM, CRACKED_LAPIS_LAZULI_GEM, event);
+		registerGem(CARNELIAN_GEM, CRACKED_CARNELIAN_GEM, event);
+		registerGem(WHITE_AGATE_GEM, CRACKED_WHITE_AGATE_GEM, event);
+		registerGem(ORANGE_AGATE_GEM, CRACKED_ORANGE_AGATE_GEM, event);
+		registerGem(MAGENTA_AGATE_GEM, CRACKED_MAGENTA_AGATE_GEM, event);
+		registerGem(LIGHT_BLUE_AGATE_GEM, CRACKED_LIGHT_BLUE_AGATE_GEM, event);
+		registerGem(YELLOW_AGATE_GEM, CRACKED_YELLOW_AGATE_GEM, event);
+		registerGem(LIME_AGATE_GEM, CRACKED_LIME_AGATE_GEM, event);
+		registerGem(PINK_AGATE_GEM, CRACKED_PINK_AGATE_GEM, event);
+		registerGem(GRAY_AGATE_GEM, CRACKED_GRAY_AGATE_GEM, event);
+		registerGem(LIGHT_GRAY_AGATE_GEM, CRACKED_LIGHT_GRAY_AGATE_GEM, event);
+		registerGem(CYAN_AGATE_GEM, CRACKED_CYAN_AGATE_GEM, event);
+		registerGem(PURPLE_AGATE_GEM, CRACKED_PURPLE_AGATE_GEM, event);
+		registerGem(BLUE_AGATE_GEM, CRACKED_BLUE_AGATE_GEM, event);
+		registerGem(BROWN_AGATE_GEM, CRACKED_BROWN_AGATE_GEM, event);
+		registerGem(GREEN_AGATE_GEM, CRACKED_GREEN_AGATE_GEM, event);
+		registerGem(RED_AGATE_GEM, CRACKED_RED_AGATE_GEM, event);
+		registerGem(BLACK_AGATE_GEM, CRACKED_BLACK_AGATE_GEM, event);
+		registerGem(HOLLY_BLUE_AGATE_GEM, CRACKED_HOLLY_BLUE_AGATE_GEM, event);
+		registerGem(AGATE_GEM, CRACKED_AGATE_GEM, event);
+		registerGem(AQUAMARINE_GEM, CRACKED_AQUAMARINE_GEM, event);
+		registerGem(TOPAZ_GEM, CRACKED_TOPAZ_GEM, event);
+		registerGem(BLUE_TOPAZ_GEM, CRACKED_BLUE_TOPAZ_GEM, event);
+		registerGem(ZIRCON_GEM, CRACKED_ZIRCON_GEM, event);
+		registerGem(RUTILE_GEM, CRACKED_RUTILE_GEM, event);
+		registerGem(CITRINE_GEM, CRACKED_CITRINE_GEM, event);
+		registerGem(YELLOW_DIAMOND_GEM, CRACKED_YELLOW_DIAMOND_GEM, event);
+		registerGem(BLUE_DIAMOND_GEM, CRACKED_BLUE_DIAMOND_GEM, event);
+		registerItem(RECORD_LITTLE_PERIDOT, event);
+		registerItem(RECORD_ROSES_FOUNTAIN, event);
+		registerItem(RECORD_LAPIS_FLIGHT, event);
+		registerItem(RECORD_THE_BREAKING_POINT, event);
+		registerItem(RECORD_DUEL_OF_THE_QUARTZ, event);
+		registerItem(RECORD_YELLOW_DIAMOND, event);
+		registerItem(RECORD_BLUE_DIAMOND, event);
+		registerItem(RECORD_WHATS_THE_USE_OF_FEELING_BLUE, event);
+		registerItem(ACTIVATED_GEM_SHARD, event);
+		registerItem(ACTIVATED_GEM_BASE, event);
+		registerItem(INACTIVE_GEM_BASE, event);
+		registerItem(TRANSFER_CONTRACT, event);
+		registerItem(JOINT_CONTRACT, event);
+		registerItem(LIBERATION_CONTRACT, event);
+		registerItem(AUTONOMY_CONTRACT, event);
+		registerItem(GEM_STAFF, event);
+		registerItem(ROAMING_EYE, event);
+		registerItem(LASER_BEAM, event);
+		registerItem(WARP_WHISTLE, event);
 	}
-	public static void registerGem(ItemGem normal, ItemGem broken) {
+	public static void registerGem(ItemGem normal, ItemGem broken, RegistryEvent.Register<Item> event) {
 		GEM_TABLE.put(normal, broken);
 		GEM_TABLE.put(broken, normal);
-		registerItem(normal);
-		registerItem(broken);
+		registerItem(normal, event);
+		registerItem(broken, event);
 	}
-	public static void registerExternalGem(ItemGem normal, ItemGem broken, String prefix) {
+	public static void registerExternalGem(ItemGem normal, ItemGem broken, String prefix, RegistryEvent.Register<Item> event) {
 		GEM_TABLE.put(normal, broken);
 		GEM_TABLE.put(broken, normal);
-		registerExternalItem(normal, prefix);
-		registerExternalItem(broken, prefix);
+		registerExternalItem(normal, prefix, event);
+		registerExternalItem(broken, prefix, event);
 	}
-	public static void registerItem(Item item) {
-		GameRegistry.register(item, new ResourceLocation("kagic:" + item.getUnlocalizedName().replaceFirst("item\\.|tile\\.", "")));
+	public static void registerItem(Item item, RegistryEvent.Register<Item> event) {
+		//GameRegistry.register(item, new ResourceLocation("kagic:" + item.getUnlocalizedName().replaceFirst("item\\.|tile\\.", "")));
+		item.setRegistryName( new ResourceLocation("kagic:" + item.getUnlocalizedName().replaceFirst("item\\.|tile\\.", "")));
+		event.getRegistry().register(item);
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
 	}
-	public static void registerExternalItem(Item item, String prefix) {
-		GameRegistry.register(item, new ResourceLocation(prefix + ":" + item.getUnlocalizedName().replaceFirst("item\\.|tile\\.", "")));
+	public static void registerExternalItem(Item item, String prefix, RegistryEvent.Register<Item> event) {
+		//GameRegistry.register(item, new ResourceLocation(prefix + ":" + item.getUnlocalizedName().replaceFirst("item\\.|tile\\.", "")));
+		item.setRegistryName(new ResourceLocation(prefix + ":" + item.getUnlocalizedName().replaceFirst("item\\.|tile\\.", "")));
+		event.getRegistry().register(item);
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}

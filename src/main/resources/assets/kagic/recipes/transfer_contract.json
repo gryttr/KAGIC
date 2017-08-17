@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "kagic:transfer_contract"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:diamond"
+    }
+  ]
+}

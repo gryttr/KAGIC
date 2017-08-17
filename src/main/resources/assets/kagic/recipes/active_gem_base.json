@@ -1,0 +1,16 @@
+{
+  "result": {
+    "item": "kagic:active_gem_base"
+  },
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "item": "kagic:active_gem_shard"
+    }
+  }
+}

@@ -43,17 +43,17 @@ public class PadDataRequestMessage implements IMessage {
 	public static class PadDataRequestMessageHandler implements IMessageHandler<PadDataRequestMessage, IMessage> {
 		@Override
 		public IMessage onMessage(PadDataRequestMessage message, MessageContext ctx) {
-			((WorldServer) ctx.getServerHandler().playerEntity.world).addScheduledTask(() -> handle(message, ctx));
+			((WorldServer) ctx.getServerHandler().player.world).addScheduledTask(() -> handle(message, ctx));
 			return null;
 		}
 		
 		private void handle(PadDataRequestMessage message, MessageContext ctx) {
-			EntityPlayerMP playerEntity = ctx.getServerHandler().playerEntity;
+			EntityPlayerMP playerEntity = ctx.getServerHandler().player;
 			World world = playerEntity.getEntityWorld();
 			NBTTagCompound data = new NBTTagCompound();
 			WorldDataWarpPad padData = WorldDataWarpPad.get(world);
 			data = padData.writeToNBT(data);
-			KTPacketHandler.INSTANCE.sendTo(new PadDataMessage(data, message.x, message.y, message.z), ctx.getServerHandler().playerEntity);
+			KTPacketHandler.INSTANCE.sendTo(new PadDataMessage(data, message.x, message.y, message.z), ctx.getServerHandler().player);
 		}
 	}
 }

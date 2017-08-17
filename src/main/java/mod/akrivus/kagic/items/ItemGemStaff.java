@@ -24,12 +24,12 @@ public class ItemGemStaff extends Item {
 	}
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 		super.onCreated(stack, worldIn, playerIn);
-		playerIn.addStat(ModAchievements.GEM_COMMANDER);
+		//playerIn.addStat(ModAchievements.GEM_COMMANDER);
 	}
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand hand) {
 		ItemStack stack = playerIn.getHeldItem(hand);
 		if (!worldIn.isRemote) {
-			List<EntityGem> list = playerIn.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, playerIn.getEntityBoundingBox().expand(24.0D, 8.0D, 24.0D));
+			List<EntityGem> list = playerIn.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, playerIn.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D));
 	        for (EntityGem gem : list) {
 	        	gem.setRevengeTarget(null);
 	        	gem.setAttackTarget(null);

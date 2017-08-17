@@ -181,7 +181,7 @@ public class EntityAmethyst extends EntityGem {
      * Methods related to entity combat.                     *
      *********************************************************/
     public boolean attackEntityFrom(DamageSource source, float amount) {
-    	if (source.getEntity() instanceof EntityLivingBase && !this.isOwner((EntityLivingBase) source.getEntity())) {
+    	if (source.getTrueSource() instanceof EntityLivingBase && !this.isOwner((EntityLivingBase) source.getTrueSource())) {
 			this.charge_ticks += 20;
 			this.hit_count += 1;
 		}
@@ -197,7 +197,7 @@ public class EntityAmethyst extends EntityGem {
 				this.isImmuneToFire = false;
 			}
 			if (this.isCharged()) {
-				AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, (this.posX + 1), (this.posY + 1), (this.posZ + 1))).expandXyz(12.0).addCoord(0.0D, (double)this.world.getHeight(), 0.0D);
+				AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, (this.posX + 1), (this.posY + 1), (this.posZ + 1))).grow(12.0, (double) this.world.getHeight(), 12.0);
 	            List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
 	            for (EntityLivingBase entity : list) {
 	            	if (!this.isOwner(entity)) {
@@ -225,9 +225,9 @@ public class EntityAmethyst extends EntityGem {
 		            	}
 	            	}
 	            }
-	            if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
+	            /*if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
 	            	this.getOwner().addStat(ModAchievements.STEP_OFF);
-	            }
+	            }*/
 	        }
 			else {
 				if (smite) {
@@ -294,10 +294,10 @@ public class EntityAmethyst extends EntityGem {
 	 * Methods related to rendering.                         *
 	 *********************************************************/
 	@SideOnly(Side.CLIENT)
-    public int getBrightnessForRender(float partialTicks) {
-        return isCharged() ? 15728880 : super.getBrightnessForRender(partialTicks);
+    public int getBrightnessForRender() {
+        return isCharged() ? 15728880 : super.getBrightnessForRender();
 	}
-    public float getBrightness(float partialTicks) {
-        return isCharged() ? 1.0F : super.getBrightness(partialTicks);
+    public float getBrightness() {
+        return isCharged() ? 1.0F : super.getBrightness();
     }
 }

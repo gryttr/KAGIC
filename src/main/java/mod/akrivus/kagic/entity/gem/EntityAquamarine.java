@@ -129,16 +129,16 @@ public class EntityAquamarine extends EntityGem {
     protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) {
     	super.updateFallState(y, onGroundIn, state, pos);
     }
-    public void moveEntityWithHeading(float strafe, float forward) {
+    public void travel(float strafe, float up, float forward) {
         if (this.isInWater()) {
-            this.moveRelative(strafe, forward, 0.02F);
+            this.moveRelative(strafe, up, forward, 0.02F);
             this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.800000011920929D;
             this.motionY *= 0.800000011920929D;
             this.motionZ *= 0.800000011920929D;
         }
         else if (this.isInLava()) {
-            this.moveRelative(strafe, forward, 0.02F);
+            this.moveRelative(strafe, up, forward, 0.02F);
             this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.5D;
             this.motionY *= 0.5D;
@@ -150,7 +150,7 @@ public class EntityAquamarine extends EntityGem {
             	friction = this.world.getBlockState(new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY) - 1, MathHelper.floor(this.posZ))).getBlock().slipperiness * 0.91F;
             }
             float factor = 0.16277136F / (friction * friction * friction);
-            this.moveRelative(strafe, forward, this.onGround ? 0.1F * factor : 0.02F);
+            this.moveRelative(strafe, up, forward, this.onGround ? 0.1F * factor : 0.02F);
             friction = 0.91F;
             if (this.onGround) {
             	friction = this.world.getBlockState(new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY) - 1, MathHelper.floor(this.posZ))).getBlock().slipperiness * 0.91F;

@@ -10,6 +10,7 @@ public class EntityAIDiamondHurtTarget extends EntityAITarget {
     private final EntityGem gem;
     private EntityLivingBase target;
     private int timestamp;
+    
     public EntityAIDiamondHurtTarget(EntityGem gemIn) {
         super(gemIn, false);
         this.gem = gemIn;
@@ -25,8 +26,8 @@ public class EntityAIDiamondHurtTarget extends EntityAITarget {
                 return false;
             }
             else {
-                this.target = entitylivingbase.getLastAttacker();
-                int i = entitylivingbase.getLastAttackerTime();
+                this.target = entitylivingbase.getLastAttackedEntity();
+                int i = entitylivingbase.getLastAttackedEntityTime();
                 
                 if (i != this.timestamp && this.isSuitableTarget(this.target, false) && this.gem.shouldAttackEntity(this.target, entitylivingbase)) {
                 	this.gem.isAttacking = true;
@@ -43,7 +44,7 @@ public class EntityAIDiamondHurtTarget extends EntityAITarget {
         EntityLivingBase entitylivingbase = this.getDiamond();
 
         if (entitylivingbase != null) {
-            this.timestamp = entitylivingbase.getLastAttackerTime();
+            this.timestamp = entitylivingbase.getLastAttackedEntityTime();
         }
 
         super.startExecuting();
@@ -69,7 +70,7 @@ public class EntityAIDiamondHurtTarget extends EntityAITarget {
     	}
     	else if (servitude == EntityGem.SERVE_YELLOW_DIAMOND) {
     		try {
-    			return this.gem.world.<EntityYellowDiamond>getEntitiesWithinAABB(EntityYellowDiamond.class, this.gem.getEntityBoundingBox().expand(24.0D, 8.0D, 24.0D)).get(0);
+    			return this.gem.world.<EntityYellowDiamond>getEntitiesWithinAABB(EntityYellowDiamond.class, this.gem.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D)).get(0);
     		}
     		catch (Exception e) {
     			return null;
@@ -77,7 +78,7 @@ public class EntityAIDiamondHurtTarget extends EntityAITarget {
     	}
     	else if (servitude == EntityGem.SERVE_BLUE_DIAMOND) {
     		try {
-    			return this.gem.world.<EntityBlueDiamond>getEntitiesWithinAABB(EntityBlueDiamond.class, this.gem.getEntityBoundingBox().expand(24.0D, 8.0D, 24.0D)).get(0);
+    			return this.gem.world.<EntityBlueDiamond>getEntitiesWithinAABB(EntityBlueDiamond.class, this.gem.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D)).get(0);
     		}
     		catch (Exception e) {
     			return null;

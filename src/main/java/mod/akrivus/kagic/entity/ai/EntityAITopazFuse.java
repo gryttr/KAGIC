@@ -16,7 +16,7 @@ public class EntityAITopazFuse extends EntityAIBase {
     }
     public boolean shouldExecute() {
     	if (this.topaz.canFuse()) {
-	    	List<EntityTopaz> list = this.topaz.world.<EntityTopaz>getEntitiesWithinAABB(EntityTopaz.class, this.topaz.getEntityBoundingBox().expand(16.0D, 8.0D, 16.0D));
+	    	List<EntityTopaz> list = this.topaz.world.<EntityTopaz>getEntitiesWithinAABB(EntityTopaz.class, this.topaz.getEntityBoundingBox().grow(16.0D, 8.0D, 16.0D));
 	        double distance = Double.MAX_VALUE;
 	        for (EntityTopaz topaz : list) {
 	            if (topaz.canFuseWith(this.topaz) && topaz.compatIndex != this.topaz.compatIndex) {

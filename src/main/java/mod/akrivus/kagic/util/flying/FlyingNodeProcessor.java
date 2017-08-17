@@ -67,12 +67,12 @@ public class FlyingNodeProcessor extends WalkNodeProcessor {
     }
     public int findPathOptions(PathPoint[] pathOptions, PathPoint currentPoint, PathPoint targetPoint, float maxDistance) {
         int i = 0;
-        PathPoint pathpoint = this.openPoint(currentPoint.xCoord, currentPoint.yCoord, currentPoint.zCoord + 1);
-        PathPoint pathpoint1 = this.openPoint(currentPoint.xCoord - 1, currentPoint.yCoord, currentPoint.zCoord);
-        PathPoint pathpoint2 = this.openPoint(currentPoint.xCoord + 1, currentPoint.yCoord, currentPoint.zCoord);
-        PathPoint pathpoint3 = this.openPoint(currentPoint.xCoord, currentPoint.yCoord, currentPoint.zCoord - 1);
-        PathPoint pathpoint4 = this.openPoint(currentPoint.xCoord, currentPoint.yCoord + 1, currentPoint.zCoord);
-        PathPoint pathpoint5 = this.openPoint(currentPoint.xCoord, currentPoint.yCoord - 1, currentPoint.zCoord);
+        PathPoint pathpoint = this.openPoint(currentPoint.x, currentPoint.y, currentPoint.z + 1);
+        PathPoint pathpoint1 = this.openPoint(currentPoint.x - 1, currentPoint.y, currentPoint.z);
+        PathPoint pathpoint2 = this.openPoint(currentPoint.x + 1, currentPoint.y, currentPoint.z);
+        PathPoint pathpoint3 = this.openPoint(currentPoint.x, currentPoint.y, currentPoint.z - 1);
+        PathPoint pathpoint4 = this.openPoint(currentPoint.x, currentPoint.y + 1, currentPoint.z);
+        PathPoint pathpoint5 = this.openPoint(currentPoint.x, currentPoint.y - 1, currentPoint.z);
         if (pathpoint != null && !pathpoint.visited && pathpoint.distanceTo(targetPoint) < maxDistance) {
             pathOptions[i++] = pathpoint;
         }
@@ -98,73 +98,73 @@ public class FlyingNodeProcessor extends WalkNodeProcessor {
         boolean flag4 = pathpoint4 == null || pathpoint4.costMalus != 0.0F;
         boolean flag5 = pathpoint5 == null || pathpoint5.costMalus != 0.0F;
         if (flag && flag3) {
-            PathPoint pathpoint6 = this.openPoint(currentPoint.xCoord - 1, currentPoint.yCoord, currentPoint.zCoord - 1);
+            PathPoint pathpoint6 = this.openPoint(currentPoint.x - 1, currentPoint.y, currentPoint.z - 1);
             if (pathpoint6 != null && !pathpoint6.visited && pathpoint6.distanceTo(targetPoint) < maxDistance) {
                 pathOptions[i++] = pathpoint6;
             }
         }
         if (flag && flag2) {
-            PathPoint pathpoint7 = this.openPoint(currentPoint.xCoord + 1, currentPoint.yCoord, currentPoint.zCoord - 1);
+            PathPoint pathpoint7 = this.openPoint(currentPoint.x + 1, currentPoint.y, currentPoint.z - 1);
             if (pathpoint7 != null && !pathpoint7.visited && pathpoint7.distanceTo(targetPoint) < maxDistance) {
                 pathOptions[i++] = pathpoint7;
             }
         }
         if (flag1 && flag3) {
-            PathPoint pathpoint8 = this.openPoint(currentPoint.xCoord - 1, currentPoint.yCoord, currentPoint.zCoord + 1);
+            PathPoint pathpoint8 = this.openPoint(currentPoint.x - 1, currentPoint.y, currentPoint.z + 1);
             if (pathpoint8 != null && !pathpoint8.visited && pathpoint8.distanceTo(targetPoint) < maxDistance) {
                 pathOptions[i++] = pathpoint8;
             }
         }
         if (flag1 && flag2) {
-            PathPoint pathpoint9 = this.openPoint(currentPoint.xCoord + 1, currentPoint.yCoord, currentPoint.zCoord + 1);
+            PathPoint pathpoint9 = this.openPoint(currentPoint.x + 1, currentPoint.y, currentPoint.z + 1);
             if (pathpoint9 != null && !pathpoint9.visited && pathpoint9.distanceTo(targetPoint) < maxDistance) {
                 pathOptions[i++] = pathpoint9;
             }
         }
         if (flag && flag4) {
-            PathPoint pathpoint10 = this.openPoint(currentPoint.xCoord, currentPoint.yCoord + 1, currentPoint.zCoord - 1);
+            PathPoint pathpoint10 = this.openPoint(currentPoint.x, currentPoint.y + 1, currentPoint.z - 1);
             if (pathpoint10 != null && !pathpoint10.visited && pathpoint10.distanceTo(targetPoint) < maxDistance) {
                 pathOptions[i++] = pathpoint10;
             }
         }
         if (flag1 && flag4) {
-            PathPoint pathpoint11 = this.openPoint(currentPoint.xCoord, currentPoint.yCoord + 1, currentPoint.zCoord + 1);
+            PathPoint pathpoint11 = this.openPoint(currentPoint.x, currentPoint.y + 1, currentPoint.z + 1);
             if (pathpoint11 != null && !pathpoint11.visited && pathpoint11.distanceTo(targetPoint) < maxDistance) {
                 pathOptions[i++] = pathpoint11;
             }
         }
         if (flag2 && flag4) {
-            PathPoint pathpoint12 = this.openPoint(currentPoint.xCoord + 1, currentPoint.yCoord + 1, currentPoint.zCoord);
+            PathPoint pathpoint12 = this.openPoint(currentPoint.x + 1, currentPoint.y + 1, currentPoint.z);
             if (pathpoint12 != null && !pathpoint12.visited && pathpoint12.distanceTo(targetPoint) < maxDistance) {
                 pathOptions[i++] = pathpoint12;
             }
         }
         if (flag3 && flag4) {
-            PathPoint pathpoint13 = this.openPoint(currentPoint.xCoord - 1, currentPoint.yCoord + 1, currentPoint.zCoord);
+            PathPoint pathpoint13 = this.openPoint(currentPoint.x - 1, currentPoint.y + 1, currentPoint.z);
             if (pathpoint13 != null && !pathpoint13.visited && pathpoint13.distanceTo(targetPoint) < maxDistance) {
                 pathOptions[i++] = pathpoint13;
             }
         }
         if (flag && flag5) {
-            PathPoint pathpoint14 = this.openPoint(currentPoint.xCoord, currentPoint.yCoord - 1, currentPoint.zCoord - 1);
+            PathPoint pathpoint14 = this.openPoint(currentPoint.x, currentPoint.y - 1, currentPoint.z - 1);
             if (pathpoint14 != null && !pathpoint14.visited && pathpoint14.distanceTo(targetPoint) < maxDistance) {
                 pathOptions[i++] = pathpoint14;
             }
         }
         if (flag1 && flag5) {
-            PathPoint pathpoint15 = this.openPoint(currentPoint.xCoord, currentPoint.yCoord - 1, currentPoint.zCoord + 1);
+            PathPoint pathpoint15 = this.openPoint(currentPoint.x, currentPoint.y - 1, currentPoint.z + 1);
             if (pathpoint15 != null && !pathpoint15.visited && pathpoint15.distanceTo(targetPoint) < maxDistance) {
                 pathOptions[i++] = pathpoint15;
             }
         }
         if (flag2 && flag5) {
-            PathPoint pathpoint16 = this.openPoint(currentPoint.xCoord + 1, currentPoint.yCoord - 1, currentPoint.zCoord);
+            PathPoint pathpoint16 = this.openPoint(currentPoint.x + 1, currentPoint.y - 1, currentPoint.z);
             if (pathpoint16 != null && !pathpoint16.visited && pathpoint16.distanceTo(targetPoint) < maxDistance) {
                 pathOptions[i++] = pathpoint16;
             }
         }
         if (flag3 && flag5) {
-            PathPoint pathpoint17 = this.openPoint(currentPoint.xCoord - 1, currentPoint.yCoord - 1, currentPoint.zCoord);
+            PathPoint pathpoint17 = this.openPoint(currentPoint.x - 1, currentPoint.y - 1, currentPoint.z);
             if (pathpoint17 != null && !pathpoint17.visited && pathpoint17.distanceTo(targetPoint) < maxDistance) {
                 pathOptions[i++] = pathpoint17;
             }
@@ -257,7 +257,7 @@ public class FlyingNodeProcessor extends WalkNodeProcessor {
         pathnodetype = this.checkNeighborBlocks(blockaccessIn, x, y, z, pathnodetype);
         return pathnodetype;
     }
-    private PathNodeType getPathNodeTypeRaw(IBlockAccess blockaccessIn, int x, int y, int z) {
+    protected PathNodeType getPathNodeTypeRaw(IBlockAccess blockaccessIn, int x, int y, int z) {
     	BlockPos blockpos = new BlockPos(x, y, z);
         IBlockState iblockstate = blockaccessIn.getBlockState(blockpos);
         Block block = iblockstate.getBlock();
@@ -272,7 +272,7 @@ public class FlyingNodeProcessor extends WalkNodeProcessor {
         return this.getPathNodeType(pos.getX(), pos.getY(), pos.getZ(), entity);
     }
     private PathNodeType getPathNodeType(int x, int y, int z, EntityLiving entity) {
-        return this.getPathNodeType(this.blockaccess, x, y, z, entity, this.entitySizeX, this.entitySizeY, this.entitySizeZ, this.getCanBreakDoors(), this.getCanEnterDoors());
+        return this.getPathNodeType(this.blockaccess, x, y, z, entity, this.entitySizeX, this.entitySizeY, this.entitySizeZ, /*this.getCanBreakDoors(),*/ this.getCanOpenDoors(), this.getCanEnterDoors());
     }
     public PathNodeType checkNeighborBlocks(IBlockAccess blockaccessIn, int x, int y, int z, PathNodeType pathnodetype) {
         BlockPos.PooledMutableBlockPos blockpos = BlockPos.PooledMutableBlockPos.retain();

@@ -3,10 +3,12 @@ package mod.akrivus.kagic.enchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.util.ResourceLocation;
 
 public class EnchantmentFairFight extends Enchantment {
 	public EnchantmentFairFight() {
 		super(Rarity.UNCOMMON, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET});
+		this.setRegistryName(new ResourceLocation("kagic:fair_fight"));
 		this.setName("fair_fight.name");
 	}
 	public boolean isAllowedOnBooks() {

@@ -222,14 +222,14 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	        				else {
 	        					player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_harvest").getUnformattedComponentText()));
 	        				}
-	        				player.addStat(ModAchievements.HELLO_CORN);
+	        				//player.addStat(ModAchievements.HELLO_CORN);
 	        				this.openGUI(player);
 	        				this.playObeySound();
 	        				return true;
 		        		}
 		        		else {
 		        			this.checkSurroundings(this.world, this.getPosition());
-		        			player.addStat(ModAchievements.IM_REPORTING_THIS);
+		        			//player.addStat(ModAchievements.IM_REPORTING_THIS);
 		        			this.playObeySound();
 		        			return true;
 		        		}
@@ -337,7 +337,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
         this.setCanPickUpLoot(this.isTamed());
     }
 	protected void updateEquipmentIfNeeded(EntityItem itementity) {
-        ItemStack itemstack = itementity.getEntityItem();
+        ItemStack itemstack = itementity.getItem();
         if (this.canPickupItem(itemstack.getItem()) && this.isFarmer()) {
 	        ItemStack itemstack1 = this.gemStorage.addItem(itemstack);
 	        if (itemstack1.isEmpty()) {

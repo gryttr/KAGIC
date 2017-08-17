@@ -3,10 +3,12 @@ package mod.akrivus.kagic.enchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.util.ResourceLocation;
 
 public class EnchantmentBreakingPoint extends Enchantment {
 	public EnchantmentBreakingPoint() {
 		super(Rarity.RARE, EnumEnchantmentType.WEAPON, new EntityEquipmentSlot[] {EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET});
+		this.setRegistryName(new ResourceLocation("kagic:breaking_point"));
 		this.setName("breaking_point.name");
 	}
 	public boolean isAllowedOnBooks() {

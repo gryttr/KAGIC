@@ -21,12 +21,12 @@ public class EntityAIPredictFights extends EntityAITarget {
         this.setMutexBits(3);
     }
     public boolean shouldExecute() {
-        return this.gem.getAITarget() != null;
+        return this.gem.getAttackTarget() != null;
     }
     public void startExecuting() {
-    	if (this.gem.getAITarget() != null) {
+    	if (this.gem.getAttackTarget() != null) {
 	    	if (this.gem.isSoldier) {
-	    		EntityLivingBase target = this.gem.getAITarget();
+	    		EntityLivingBase target = this.gem.getAttackTarget();
 	    		double healthRatio = this.gem.getHealth() / target.getHealth();
 	        	if (healthRatio >= 1.0D && healthRatio <= 2.0D) {
 	        		this.callForHelp(true);
@@ -44,7 +44,7 @@ public class EntityAIPredictFights extends EntityAITarget {
     	}
     }
     private void flee(boolean callForHelp) {
-        List<EntityGem> nearbygems = this.gem.world.getEntitiesWithinAABB(EntityGem.class, this.gem.getEntityBoundingBox().expand(8.0D, 4.0D, 8.0D));
+        List<EntityGem> nearbygems = this.gem.world.getEntitiesWithinAABB(EntityGem.class, this.gem.getEntityBoundingBox().grow(8.0D, 4.0D, 8.0D));
     	EntityGem destination = null;
     	double distance = 0;
         for (EntityGem fighter : nearbygems) {
@@ -63,7 +63,7 @@ public class EntityAIPredictFights extends EntityAITarget {
         		BlockPos pos = this.gem.world.getTopSolidOrLiquidBlock(this.gem.getPosition().add(nextX, 0, nextZ));
         		randomPosition = new Vec3d(pos.getX(), pos.getY(), pos.getZ());
         	}
-        	this.flightPath = this.gem.getNavigator().getPathToXYZ(randomPosition.xCoord, randomPosition.yCoord, randomPosition.zCoord);
+        	this.flightPath = this.gem.getNavigator().getPathToXYZ(randomPosition.x, randomPosition.y, randomPosition.z);
         }
         else {
         	this.flightPath = this.gem.getNavigator().getPathToEntityLiving(destination);
@@ -74,10 +74,10 @@ public class EntityAIPredictFights extends EntityAITarget {
         this.gem.getNavigator().setPath(this.flightPath, this.movementSpeed);
     }
     private void callForHelp(boolean victimWillFight) {
-    	List<EntityGem> nearbygems = this.gem.world.getEntitiesWithinAABB(EntityGem.class, this.gem.getEntityBoundingBox().expand(8.0D, 4.0D, 8.0D));
+    	List<EntityGem> nearbygems = this.gem.world.getEntitiesWithinAABB(EntityGem.class, this.gem.getEntityBoundingBox().grow(8.0D, 4.0D, 8.0D));
     	for (EntityGem fighter : nearbygems) {
         	if (fighter.isSoldier) {
-        		fighter.setAttackTarget(this.gem.getAITarget());
+        		fighter.setAttackTarget(this.gem.getAttackTarget());
             }
         }
         if (victimWillFight) {
@@ -85,7 +85,7 @@ public class EntityAIPredictFights extends EntityAITarget {
         }
     }
     private void fight() {
-    	this.gem.setAttackTarget(this.gem.getAITarget());
+    	this.gem.setAttackTarget(this.gem.getAttackTarget());
         this.flightPath = null;
     }
 }

@@ -52,7 +52,7 @@ public class TENameMessage implements IMessage{
 		}
 		
 		private void handle(TENameMessage message, MessageContext ctx) {
-			EntityPlayerMP playerEntity = ctx.getServerHandler().playerEntity;
+			EntityPlayerMP playerEntity = ctx.getServerHandler().player;
 			World world = playerEntity.getEntityWorld();
 			TileEntityWarpPadCore te = (TileEntityWarpPadCore) world.getTileEntity(new BlockPos(message.x, message.y, message.z));
 			if (te != null) {

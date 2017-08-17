@@ -210,7 +210,7 @@ public class EntityTopaz extends EntityGem {
 		topaz.setPosition((this.posX + other.posX) / 2, (this.posY + other.posY) / 2, (this.posZ + other.posZ) / 2);
 		topaz.setSpecial(this.getSpecial() == other.getSpecial() ? this.getSpecial() : 2);
 		topaz.setAttackTarget(this.getAttackTarget());
-		topaz.setRevengeTarget(this.getAITarget());
+		topaz.setRevengeTarget(this.getAttackingEntity());
 		
 		topaz.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D * topaz.getFusionCount());
 		topaz.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(18.0D * topaz.getFusionCount());
@@ -254,9 +254,9 @@ public class EntityTopaz extends EntityGem {
 		return super.attackEntityFrom(source, amount);
 	}
 	public boolean attackEntityAsMob(Entity entityIn) {
-		if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
+		/*if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
         	this.getOwner().addStat(ModAchievements.DO_IT_YOURSELF);
-        }
+        }*/
 		return super.attackEntityAsMob(entityIn);
 	}
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {

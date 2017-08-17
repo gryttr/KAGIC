@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "kagic:autonomy_contract"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "kagic:liberation_contract"
+    },
+    {
+      "item": "minecraft:redstone"
+    }
+  ]
+}

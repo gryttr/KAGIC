@@ -16,6 +16,6 @@ public class ItemActiveGemBase extends Item {
 	}
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 		super.onCreated(stack, worldIn, playerIn);
-		playerIn.addStat(ModAchievements.GEM_FORGER);
+		//playerIn.addStat(ModAchievements.GEM_FORGER);
 	}
 }

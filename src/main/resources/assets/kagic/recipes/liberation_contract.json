@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "kagic:liberation_contract"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "kagic:transfer_contract"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ]
+}

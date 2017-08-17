@@ -55,9 +55,9 @@ public class ModEntities {
 		registerGem("aquamarine", EntityAquamarine.class, 0x8AFFFF, 0x0487E3);
 		registerGem("topaz", EntityTopaz.class, 0xF5FC51, 0xFDFEA4);
 		registerGem("rutile", EntityRutile.class, 0xD2508C, 0x23020D);
-		registerGem("yellow_diamond", EntityYellowDiamond.class, 0xFEFF6E, 0xFCFF22);
-		registerGem("blue_diamond", EntityBlueDiamond.class, 0x2E3674, 0x2AA1FB);
 		registerGem("zircon", EntityZircon.class, 0x458FBE, 0x57C7CF);
+		registerDiamond("yellow_diamond", EntityYellowDiamond.class);//, 0xFEFF6E, 0xFCFF22);
+		registerDiamond("blue_diamond", EntityBlueDiamond.class);//, 0x2E3674, 0x2AA1FB);
 		registerMob("melon", EntityMelon.class, 0xB5B128, 0x5A671A);
 		registerMob("pumpkin", EntityPumpkin.class, 0xD58116, 0x744E03);
 		registerMob("cactus", EntityCactus.class, 0x138622, 0xD9DB9F);
@@ -192,6 +192,24 @@ public class ModEntities {
 		GEMS.put(name, entity);
 		++currentID;
 	}
+	
+	//Just like registerGem, but no spawn egg
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	public static <T extends EntityGem> void registerDiamond(String name, Class<T> entity) {
+		EntityRegistry.registerModEntity(new ResourceLocation("kagic:kagic." + name), entity, "kagic." + name, currentID, KAGIC.instance, 256, 1, true);
+	 	if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+			try {
+				Class<Render<? extends T>> render = (Class<Render<? extends T>>) KAGIC.class.getClassLoader().loadClass("mod/akrivus/kagic/client/render/" + entity.getName().replaceAll(".+?Entity", "Render"));
+				RenderingRegistry.registerEntityRenderingHandler(entity, render.newInstance());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		GEMS.put(name, entity);
+		++currentID;
+	}
+
 	@SuppressWarnings({ "deprecation", "unchecked" })
     public static <T extends EntityGem> void registerExternalGem(String prefix, String name, Class<T> entity, String renderpath, int back, int fore) {
         EntityRegistry.registerModEntity(new ResourceLocation(prefix + ":" + name), entity, name, currentID, KAGIC.instance, 256, 1, true, back, fore);

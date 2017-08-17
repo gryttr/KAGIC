@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "kagic:warp_pad_core"
+  },
+  "pattern": [
+    " q ",
+    "rer",
+    " q "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "q": {
+      "item": "minecraft:stone_slab",
+      "data": 7
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "e": {
+      "item": "minecraft:ender_eye"
+    }
+  }
+}

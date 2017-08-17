@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "kagic:incubator"
+  },
+  "pattern": [
+    "psp",
+    "grg",
+    "pep"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "p": {
+      "item": "minecraft:blaze_powder"
+    },
+    "s": {
+      "item": "minecraft:soul_sand"
+    },
+    "g": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "e": {
+      "item": "minecraft:emerald"
+    }
+  }
+}

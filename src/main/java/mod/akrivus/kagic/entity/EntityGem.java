@@ -153,6 +153,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	private int timeUntilBetrayal;
 	private int servitude = 0;
 	private float pitch = 1.0F;
+	protected int visorChanceReciprocal = 3; // 1 in visorChanceReciprocal gems will have a visor
 	private Map<GemCuts, ArrayList<GemPlacements>> cutPlacements = new HashMap<GemCuts, ArrayList<GemPlacements>>();
 	
 	public EntityGem(World worldIn) {
@@ -245,7 +246,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			this.setNewCutPlacement();
 		}
 
-		this.applyGemPlacementBuffs();
+		this.applyGemPlacementBuffs(false);
 		
 		this.setHasVisor(compound.getBoolean("hasVisor"));
 		if (compound.hasKey("insigniaColor")) {
@@ -337,8 +338,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		GemPlacements placement = placements.get(placementIndex);
 		
 		this.setGemCut(cut.id);
-		this.setGemPlacement(placement.id);
-		
+		this.setGemPlacement(placement.id);		
 	}
 	
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
@@ -348,8 +348,8 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			this.setNewCutPlacement();
 		}
 
-		this.applyGemPlacementBuffs();
-		this.setHasVisor(this.rand.nextInt(3) == 0);
+		this.applyGemPlacementBuffs(true);
+		this.setHasVisor(this.rand.nextInt(visorChanceReciprocal) == 0);
 		this.setDimensionOfCreation(this.dimension);
 		this.setAttackAI();
 		if (this.fallbackServitude == -1) {
@@ -358,6 +358,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.pitch = 0.7F + (this.rand.nextFloat() / 2);
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
+	
 	public boolean canChangeInsigniaColorByDefault() {
 		return true;
 	}
@@ -426,7 +427,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 						this.playTameEffect();
 						this.world.setEntityState(this, (byte) 7);
 						this.playObeySound();
-						player.addStat(ModAchievements.I_MADE_YOU);
+						//player.addStat(ModAchievements.I_MADE_YOU);
 						player.sendMessage(new TextComponentTranslation("command.kagic.now_serves_you", this.getName()));
 						return true;
 					}
@@ -720,7 +721,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 					if (this.isMatching("regex.kagic.kill", message)) {
 						ArrayList<String> args = this.getArgsFrom("regex.kagic.kill", message);
 						if (args.size() > 0) {
-							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().expand(48.0D, 16.0D, 48.0D));
+							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
 							double distance = Double.MAX_VALUE;
 							for (EntityLivingBase base : list) {
 								double newDistance = this.getDistanceSqToEntity(base);
@@ -730,23 +731,23 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 								}
 							}
 						}
-						return this.getAITarget() != null;
+						return this.getRevengeTarget() != null;
 					}
 					else if (this.isMatching("regex.kagic.help", message)) {
 						ArrayList<String> args = this.getArgsFrom("regex.kagic.help", message);
 						if (args.size() > 0) {
-							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().expand(48.0D, 16.0D, 48.0D));
+							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
 							double distance = Double.MAX_VALUE;
 							for (EntityLivingBase base : list) {
 								double newDistance = this.getDistanceSqToEntity(base);
 								if (newDistance <= distance && base.getName().toLowerCase().contains(args.get(0)) && this.shouldAttackEntity(this, base)) {
 									this.getNavigator().tryMoveToEntityLiving(base, 1.0);
-									this.setRevengeTarget(base.getAITarget());
+									this.setRevengeTarget(base.getRevengeTarget());
 									distance = newDistance;
 								}
 							}
 						}
-						return this.getAITarget() != null;
+						return this.getRevengeTarget() != null;
 					}
 					else if (this.isMatching("regex.kagic.retreat", message)) {
 						boolean retreated = this.getAttackTarget() != null;
@@ -792,7 +793,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public void warp(EntityPlayer player, String destination) {
 		TileEntityWarpPadCore pad = TileEntityWarpPadCore.getEntityPad(this);
-		if (pad != null) {
+		if (pad != null && pad.isValidPad() && !pad.warping) {
 			if (!pad.isValid()) {
 				this.talkTo(player, new TextComponentTranslation("notify.kagic.padnotvalid").getUnformattedComponentText());
 				return;
@@ -932,7 +933,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	@SuppressWarnings("incomplete-switch")
-	public void applyGemPlacementBuffs() {
+	public void applyGemPlacementBuffs(boolean initialSpawn) {
 		switch (this.getGemPlacement()) {
 		case FOREHEAD:
 			this.tasks.addTask(2, new EntityAIPredictFights(this, 0.9D));
@@ -941,16 +942,22 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			this.canTalk = false;
 			break;
 		case LEFT_HAND:
-			this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue() * 2.0D);
+			if (initialSpawn) {
+				this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue() * 2.0D);
+			}
 			break;
 		case RIGHT_HAND:
-			this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue() * 2.0D);
+			if (initialSpawn) {
+				this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue() * 2.0D);
+			}
 			break;
 		case BACK:
 			this.tasks.addTask(2, new EntityAIPanic(this, 0.9D));
 			break;
 		case CHEST:
-			this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue() * 2.5D);
+			if (initialSpawn) {
+				this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue() * 2.5D);
+			}
 			break;
 		case BELLY:
 			if (this.fallbackServitude == -1 && this.rand.nextInt(8) == 0 && ModConfigs.canRebel) {
@@ -1259,8 +1266,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 					}
 					break;
 				}
-				if (source.getEntity() instanceof EntityLivingBase) {
-					EntityLivingBase attacker = (EntityLivingBase) source.getEntity();
+				
+				if (source.getTrueSource() instanceof EntityLivingBase) {
+					EntityLivingBase attacker = (EntityLivingBase) source.getTrueSource();
 					ItemStack heldItem = attacker.getHeldItemMainhand();
 					if (heldItem.isItemEnchanted()) {
 						NBTTagList enchantments = heldItem.getEnchantmentTagList();
@@ -1356,9 +1364,10 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.world.spawnEntity(arrow);
 	}
 	
-	public void moveEntityWithHeading(float strafe, float forward) {
+	//Was moveEntityWithHeading in 1.11
+	public void travel(float strafe, float up, float forward) {
 		if (this.getGemPlacement() == GemPlacements.NOSE) {
-			if (this.getAttackTarget() != null || this.getAITarget() != null) {
+			if (this.getAttackTarget() != null || this.getRevengeTarget() != null) {
 				forward *= 2;
 				strafe *= 2;
 			}
@@ -1371,7 +1380,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 				this.motionY *= 0.5;
 			}
 		}
-		super.moveEntityWithHeading(strafe, forward);
+		super.travel(strafe, up, forward);
 	}
 	
 	public void fall(float distance, float damageMultiplier) {
@@ -1490,25 +1499,25 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 				ItemStack stack = new ItemStack(this.droppedGemItem);
 				boolean shattered = false;
 				boolean enchanted = false;
-				if (cause.getEntity() instanceof EntityLivingBase) {
-					ItemStack heldItem = ((EntityLivingBase)cause.getEntity()).getHeldItemMainhand();
+				if (cause.getTrueSource() instanceof EntityLivingBase) {
+					ItemStack heldItem = ((EntityLivingBase)cause.getTrueSource()).getHeldItemMainhand();
 						if (heldItem.isItemEnchanted()) {
 							NBTTagList enchantments = heldItem.getEnchantmentTagList();
 							for (int i = 0; i < enchantments.tagCount(); i++) {
 								if (enchantments.getCompoundTagAt(i).getInteger("id") == Enchantment.getEnchantmentID(ModEnchantments.BREAKING_POINT)) {
-									if (cause.getEntity() instanceof EntityPlayer) {
-										EntityPlayer player = (EntityPlayer) cause.getEntity();
+									/*if (cause.getTrueSource() instanceof EntityPlayer) {
+										EntityPlayer player = (EntityPlayer) cause.getTrueSource();
 										player.addStat(ModAchievements.NOW_THATS_A_WEAPON);
-									}
+									}*/
 									stack = new ItemStack(this.droppedCrackedGemItem);
 									enchanted = true;
 									shattered = true;
 								}
 								else if (enchantments.getCompoundTagAt(i).getInteger("id") == Enchantment.getEnchantmentID(ModEnchantments.FAIR_FIGHT)) {
-									if (cause.getEntity() instanceof EntityPlayer) {
-										EntityPlayer player = (EntityPlayer) cause.getEntity();
+									/*if (cause.getTrueSource() instanceof EntityPlayer) {
+										EntityPlayer player = (EntityPlayer) cause.getTrueSource();
 										player.addStat(ModAchievements.MY_BEST_WORK);
-									}
+									}*/
 									stack = new ItemStack(this.droppedGemItem);
 									enchanted = true;
 								}
@@ -1536,7 +1545,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 					this.playSound(ModSounds.GEM_POOF, 3.0F, 1.0F);
 					cause = new PoofDamage();
 				}
-				if (cause.getEntity() instanceof EntitySlag) {
+				if (cause.getTrueSource() instanceof EntitySlag) {
 					cause = new SlagDamage();
 				}
 				if (this.world.getGameRules().getBoolean("showDeathMessages")) {
@@ -1636,10 +1645,10 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	 * Methods related to entity rendering.				  *
 	 *********************************************************/
 	@SideOnly(Side.CLIENT)
-	public int getBrightnessForRender(float partialTicks) {
-		return this.isSpaceBorn ? 15728880 : super.getBrightnessForRender(partialTicks);
+	public int getBrightnessForRender(/*float partialTicks*/) {
+		return this.isSpaceBorn ? 15728880 : super.getBrightnessForRender();
 	}
-	public float getBrightness(float partialTicks) {
-		return this.isSpaceBorn ? 1.0F : super.getBrightness(partialTicks);
+	public float getBrightness(/*float partialTicks*/) {
+		return this.isSpaceBorn ? 1.0F : super.getBrightness();
 	}
 }

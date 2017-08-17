@@ -8,7 +8,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
-import net.minecraft.world.chunk.IChunkGenerator;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,7 +16,7 @@ public class WorldProviderLion extends WorldProvider {
 	public void createBiomeProvider() {
         this.biomeProvider = new BiomeProviderSingle(ModBiomes.LION);
         this.hasSkyLight = true;
-        this.hasNoSky = false;
+        //this.hasNoSky = false;
     }
     public IChunkGenerator createChunkGenerator() {
         return new ChunkProviderLion(this.world, this.world.getSeed());

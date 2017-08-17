@@ -50,6 +50,8 @@ public class EntityYellowDiamond extends EntityGem {
 		this.setSize(3.0F, 13.8F);
 		this.stepHeight = 2.0F;
 		
+		this.setCutPlacement(GemCuts.DIAMOND, GemPlacements.CHEST);
+		
 		// Boss stuff.
 		this.experienceValue = 18000;
 		this.isImmuneToFire = true;
@@ -130,7 +132,7 @@ public class EntityYellowDiamond extends EntityGem {
 	    	}
 	    	++this.lastRecruitAttack;
 	    	if (this.lastSpecialAttack > 100 && this.rand.nextBoolean()) {
-	    		AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, (this.posX + 1), (this.posY + 1), (this.posZ + 1))).expandXyz(8.0).addCoord(0.0D, (double)this.world.getHeight(), 0.0D);
+	    		AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, (this.posX + 1), (this.posY + 1), (this.posZ + 1))).grow(8.0, (double) this.world.getHeight(), 8.0);
 	            List<EntityGem> list = this.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, axisalignedbb);
 	            int count = 0;
 	            for (EntityGem gem : list) {
@@ -160,7 +162,7 @@ public class EntityYellowDiamond extends EntityGem {
         this.healthBar.removePlayer(player);
     }
     public boolean attackEntityFrom(DamageSource source, float amount) {
-    	if (source.getEntity() instanceof EntityLivingBase && this.getHealth() / 20 < amount &&  this.rand.nextInt(4) == 0 && !this.world.isRemote) {
+    	if (source.getTrueSource() instanceof EntityLivingBase && this.getHealth() / 20 < amount &&  this.rand.nextInt(4) == 0 && !this.world.isRemote) {
     		EntityGem warrior = new EntityTopaz(this.world);
 			warrior.setPosition(this.posX, this.posY, this.posZ);
 			warrior.setServitude(EntityGem.SERVE_YELLOW_DIAMOND);
@@ -186,9 +188,9 @@ public class EntityYellowDiamond extends EntityGem {
 	public void onDeath(DamageSource cause) {
 		if (!this.world.isRemote) {
 			this.dropItem(ModItems.RECORD_YELLOW_DIAMOND, 1);
-			if (cause.getEntity() instanceof EntityPlayer) {
-				List<EntityGem> list = this.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, this.getEntityBoundingBox().expand(24.0D, 8.0D, 24.0D));
-				EntityPlayer player = (EntityPlayer)cause.getEntity();
+			if (cause.getTrueSource() instanceof EntityPlayer) {
+				List<EntityGem> list = this.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, this.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D));
+				EntityPlayer player = (EntityPlayer)cause.getTrueSource();
 				for(EntityGem gem : list) {
 					if (gem.getServitude() == EntityGem.SERVE_YELLOW_DIAMOND && !gem.equals(this)) {
 			    		gem.setOwnerId(player.getUniqueID());

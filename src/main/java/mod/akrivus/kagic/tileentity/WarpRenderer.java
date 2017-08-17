@@ -3,9 +3,9 @@ package mod.akrivus.kagic.tileentity;
 import org.lwjgl.opengl.GL11;
 
 import mod.akrivus.kagic.init.KAGIC;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
@@ -17,12 +17,12 @@ public class WarpRenderer extends TileEntitySpecialRenderer<TileEntityWarpPadCor
 	private static final ResourceLocation warpStream = new ResourceLocation("kagic:textures/blocks/warpstream.png");
 	private static final double height = 6;
 	
-	private void renderVertex(VertexBuffer renderer, double x, double y, double z, double u, double v) {
+	private void renderVertex(BufferBuilder renderer, double x, double y, double z, double u, double v) {
 		renderer.pos(x, y, z).tex(u, v).color(1.0f, 1.0f, 1.0f, 0.75f).lightmap(0, 255).endVertex();
 	}
 
 	@Override
-	public void renderTileEntityAt(TileEntityWarpPadCore tilePad, double x, double y, double z, float partialTicks, int destroyStage) {
+	public void render(TileEntityWarpPadCore tilePad, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
 		if (tilePad.warping && tilePad.isValidPad()) {
 			Tessellator tessellator = Tessellator.getInstance();
 			GlStateManager.pushMatrix();
@@ -50,7 +50,7 @@ public class WarpRenderer extends TileEntitySpecialRenderer<TileEntityWarpPadCor
 
 			GlStateManager.color(1, 1, 1, 1);
 
-			VertexBuffer renderer = tessellator.getBuffer();
+			BufferBuilder renderer = tessellator.getBuffer();
 			renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
 			double offset = -1.0;

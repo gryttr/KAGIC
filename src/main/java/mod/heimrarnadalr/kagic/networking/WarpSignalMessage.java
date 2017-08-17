@@ -46,7 +46,7 @@ public class WarpSignalMessage implements IMessage {
 		}
 		
 		private void handle(WarpSignalMessage message, MessageContext ctx) {
-			EntityPlayerMP playerEntity = ctx.getServerHandler().playerEntity;
+			EntityPlayerMP playerEntity = ctx.getServerHandler().player;
 			World world = playerEntity.getEntityWorld();
 			TileEntityWarpPadCore te = (TileEntityWarpPadCore) world.getTileEntity(message.sourcePad);
 			if (te != null) {

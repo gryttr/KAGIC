@@ -33,24 +33,12 @@ public class ItemWarpWhistle extends Item {
         this.setMaxStackSize(1);
     }
 
-    private TileEntityWarpPadCore getPlayerPadTE(World world, EntityPlayer playerIn) {
-		for (int i = -1; i <= 1; ++i) {
-			for (int j = -1; j <= 1; ++j) {
-				TileEntity te =  world.getTileEntity(new BlockPos(playerIn.posX + i, playerIn.posY - 1, playerIn.posZ + j));
-				if (te instanceof TileEntityWarpPadCore && ((TileEntityWarpPadCore) te).isValidPad()) {
-					return (TileEntityWarpPadCore) te;
-				}
-			}
-		}
-		return null;
-    }
-    
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer playerIn, EnumHand hand) {
     	ItemStack stack = playerIn.getHeldItem(hand);
     	if (world.isRemote) {
 	    	TileEntityWarpPadCore te = TileEntityWarpPadCore.getEntityPad(playerIn);//getPlayerPadTE(world, playerIn);
-	    	if (te != null) {
+	    	if (te != null && te.isValidPad() && !te.warping) {
 				//playerIn.openGui(KAGIC.instance, KTGUIProxy.GUIWARPPADSELECTIONID, world, te.getPos().getX(), te.getPos().getY(), te.getPos().getZ());
 				KTPacketHandler.INSTANCE.sendToServer(new PadDataRequestMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ()));
 	    	}

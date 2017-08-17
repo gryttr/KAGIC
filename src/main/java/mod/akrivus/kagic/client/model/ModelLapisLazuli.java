@@ -74,11 +74,11 @@ public class ModelLapisLazuli extends ModelBiped {
         float f4 = 1.0F;
         if (entityIn.motionY < 0.0D) {
             Vec3d vec3d = (new Vec3d(entityIn.motionX, entityIn.motionY, entityIn.motionZ)).normalize();
-            f4 = 1.0F - (float)Math.pow(-vec3d.yCoord, 1.5D);
+            f4 = 1.0F - (float)Math.pow(-vec3d.y, 1.5D);
         }
         else if (entityIn.motionY > 0.0D) {
             Vec3d vec3d = (new Vec3d(entityIn.motionX, entityIn.motionY, entityIn.motionZ)).normalize();
-            f4 = 1.0F + (float)Math.pow(vec3d.yCoord, 1.5D);
+            f4 = 1.0F + (float)Math.pow(vec3d.y, 1.5D);
         }
         f = f4 * 0.34906584F + (1.0F - f4) * f;
         f1 = f4 * -((float)Math.PI / 2F) + (1.0F - f4) * f1;

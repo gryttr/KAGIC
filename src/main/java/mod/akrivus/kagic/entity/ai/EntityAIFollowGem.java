@@ -18,7 +18,7 @@ public class EntityAIFollowGem extends EntityAIBase {
         this.setMutexBits(3);
     }
     public boolean shouldExecute() {
-        List<EntityGem> list = this.follower.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, this.follower.getEntityBoundingBox().expand(24.0D, 8.0D, 24.0D));
+        List<EntityGem> list = this.follower.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, this.follower.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D));
         double maxDistance = Double.MAX_VALUE;
         for (EntityGem gem : list) {
             double newDistance = gem.getDistanceSqToEntity(this.follower);

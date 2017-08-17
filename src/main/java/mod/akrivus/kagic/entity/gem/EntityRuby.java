@@ -284,10 +284,10 @@ public class EntityRuby extends EntityGem {
 				if (this.wantsToFuse && other.wantsToFuse) {
 					return true;
 				}
-				if ((this.getAITarget() != null && this.getAITarget().equals(other.getAITarget())) || (this.getAttackTarget() != null && this.getAttackTarget().equals(other.getAttackTarget()))) {
+				if ((this.getAttackingEntity() != null && this.getAttackingEntity().equals(other.getAttackingEntity())) || (this.getAttackTarget() != null && this.getAttackTarget().equals(other.getAttackTarget()))) {
 					return true;
 				}
-				if (this.getHealth() / this.getMaxHealth() <= 0.5 || other.getHealth() / other.getMaxHealth() <= 0.5) {
+				if ((this.getHealth() / this.getMaxHealth() <= 0.5 || other.getHealth() / other.getMaxHealth() <= 0.5) && this.getHealth() > 0.0f && other.getHealth() > 0.0f) {
 					return true;
 				}
 			}
@@ -326,7 +326,7 @@ public class EntityRuby extends EntityGem {
 		ruby.setPosition((this.posX + other.posX) / 2, (this.posY + other.posY) / 2, (this.posZ + other.posZ) / 2);
 		ruby.setAnger(this.getAnger() + other.getAnger());
 		ruby.setAttackTarget(this.getAttackTarget());
-		ruby.setRevengeTarget(this.getAITarget());
+		ruby.setRevengeTarget(this.getAttackingEntity());
 
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D * ruby.getFusionCount());
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D * ruby.getFusionCount());
@@ -378,7 +378,7 @@ public class EntityRuby extends EntityGem {
 	 * Methods related to combat.                            *
 	 *********************************************************/
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.getEntity() instanceof EntityLivingBase && !this.isOwner((EntityLivingBase) source.getEntity())) {
+		if (source.getTrueSource() instanceof EntityLivingBase && !this.isOwner((EntityLivingBase) source.getTrueSource())) {
 			if (source.isMagicDamage()) {
 				this.setAnger(this.getAnger() + 4 + (int)(amount / 2));
 			}
@@ -389,11 +389,11 @@ public class EntityRuby extends EntityGem {
 		else if (source.isProjectile()) {
 			this.setAnger(this.getAnger() + 2 + (int)(amount / 3));
 		}
-		if (this.getAnger() > 3) {
+		/*if (this.getAnger() > 3) {
 			if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
             	this.getOwner().addStat(ModAchievements.IM_AN_ETERNAL_FLAME);
             }
-		}
+		}*/
 		if (this.isDefective()) {
 			this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);

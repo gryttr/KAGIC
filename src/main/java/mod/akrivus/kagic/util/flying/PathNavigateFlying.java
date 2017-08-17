@@ -21,10 +21,10 @@ public class PathNavigateFlying extends PathNavigateGround {
         return new PathFinder(this.nodeProcessor);
     }
     protected boolean canNavigate() {
-        return this.canFloat() && this.isInLiquid() || !this.theEntity.isRiding();
+        return this.canFloat() && this.isInLiquid() || !this.entity.isRiding();
     }
     protected Vec3d getEntityPosition() {
-        return new Vec3d(this.theEntity.posX, this.theEntity.posY, this.theEntity.posZ);
+        return new Vec3d(this.entity.posX, this.entity.posY, this.entity.posZ);
     }
     public Path getPathToEntityLiving(Entity entity) {
         return this.getPathToPos(new BlockPos(entity));
@@ -36,24 +36,24 @@ public class PathNavigateFlying extends PathNavigateGround {
                 this.pathFollow();
             }
             else if (this.currentPath != null && this.currentPath.getCurrentPathIndex() < this.currentPath.getCurrentPathLength()) {
-                Vec3d vec3d = this.currentPath.getVectorFromIndex(this.theEntity, this.currentPath.getCurrentPathIndex());
-                if (MathHelper.floor(this.theEntity.posX) == MathHelper.floor(vec3d.xCoord) && MathHelper.floor(this.theEntity.posY) == MathHelper.floor(vec3d.yCoord) && MathHelper.floor(this.theEntity.posZ) == MathHelper.floor(vec3d.zCoord)) {
+                Vec3d vec3d = this.currentPath.getVectorFromIndex(this.entity, this.currentPath.getCurrentPathIndex());
+                if (MathHelper.floor(this.entity.posX) == MathHelper.floor(vec3d.x) && MathHelper.floor(this.entity.posY) == MathHelper.floor(vec3d.y) && MathHelper.floor(this.entity.posZ) == MathHelper.floor(vec3d.z)) {
                     this.currentPath.setCurrentPathIndex(this.currentPath.getCurrentPathIndex() + 1);
                 }
             }
             if (!this.noPath()) {
-                Vec3d finish = this.currentPath.getPosition(this.theEntity);
-                this.theEntity.getMoveHelper().setMoveTo(finish.xCoord, finish.yCoord, finish.zCoord, this.speed);
+                Vec3d finish = this.currentPath.getPosition(this.entity);
+                this.entity.getMoveHelper().setMoveTo(finish.x, finish.y, finish.z, this.speed);
             }
         }
     }
     protected boolean isDirectPathBetweenPoints(Vec3d start, Vec3d finish, int sizeX, int sizeY, int sizeZ) {
-        int i = MathHelper.floor(start.xCoord);
-        int j = MathHelper.floor(start.yCoord);
-        int k = MathHelper.floor(start.zCoord);
-        double d0 = finish.xCoord - start.xCoord;
-        double d1 = finish.yCoord - start.yCoord;
-        double d2 = finish.zCoord - start.zCoord;
+        int i = MathHelper.floor(start.x);
+        int j = MathHelper.floor(start.y);
+        int k = MathHelper.floor(start.z);
+        double d0 = finish.x - start.x;
+        double d1 = finish.y - start.y;
+        double d2 = finish.z - start.z;
         double d3 = d0 * d0 + d1 * d1 + d2 * d2;
         if (d3 < 1.0E-8D) {
             return false;
@@ -66,9 +66,9 @@ public class PathNavigateFlying extends PathNavigateGround {
             double d5 = 1.0D / Math.abs(d0);
             double d6 = 1.0D / Math.abs(d1);
             double d7 = 1.0D / Math.abs(d2);
-            double d8 = i - start.xCoord;
-            double d9 = j - start.yCoord;
-            double d10 = k - start.zCoord;
+            double d8 = i - start.x;
+            double d9 = j - start.y;
+            double d10 = k - start.z;
             if (d0 >= 0.0D) {
                 ++d8;
             }
@@ -84,9 +84,9 @@ public class PathNavigateFlying extends PathNavigateGround {
             int l = d0 < 0.0D ? -1 : 1;
             int i1 = d1 < 0.0D ? -1 : 1;
             int j1 = d2 < 0.0D ? -1 : 1;
-            int k1 = MathHelper.floor(finish.xCoord);
-            int l1 = MathHelper.floor(finish.yCoord);
-            int i2 = MathHelper.floor(finish.zCoord);
+            int k1 = MathHelper.floor(finish.x);
+            int l1 = MathHelper.floor(finish.y);
+            int i2 = MathHelper.floor(finish.z);
             int j2 = k1 - i;
             int k2 = l1 - j;
             int l2 = i2 - k;

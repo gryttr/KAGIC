@@ -22,7 +22,7 @@ public class EntityAIRoseHurtByTarget extends EntityAITarget {
                 return false;
             }
             else {
-                this.attacker = master.getAITarget();
+                this.attacker = master.getAttackingEntity();
                 int i = master.getRevengeTimer();
                 return i != this.timestamp && this.isSuitableTarget(this.attacker, false) && this.pepo.shouldAttackEntity(this.attacker, master);
             }
