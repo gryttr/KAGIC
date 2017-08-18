@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,6 +39,7 @@ import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import mod.akrivus.kagic.util.PoofDamage;
 import mod.akrivus.kagic.util.ShatterDamage;
 import mod.akrivus.kagic.util.SlagDamage;
+import mod.heimrarnadalr.kagic.reflection.ReflectionUtils;
 import mod.heimrarnadalr.kagic.worlddata.WarpPadDataEntry;
 import mod.heimrarnadalr.kagic.worlddata.WorldDataWarpPad;
 import net.minecraft.enchantment.Enchantment;
@@ -1224,7 +1226,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	 * Methods related to entity combat.					 *
 	 *********************************************************/
 	public boolean shouldAttackEntity(EntityLivingBase attacker, EntityLivingBase victim) {
-		return this.isOnSameTeam(victim);
+		return !this.isOnSameTeam(victim);
 	}
 	
 	public void setAttackAI() {
@@ -1306,6 +1308,25 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		if (entityIn instanceof EntityLivingBase) {
 			f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((EntityLivingBase) entityIn).getCreatureAttribute());
 			i += EnchantmentHelper.getKnockbackModifier(this);
+			try {
+				Field recentlyHit = ReflectionUtils.getFieldFromSuperclass(entityIn.getClass(), EntityLivingBase.class, "recentlyHit");
+				recentlyHit.setAccessible(true);
+				recentlyHit.setInt(entityIn, 100);
+				if (this.getOwner() != null) {
+					Field attackingPlayer = ReflectionUtils.getFieldFromSuperclass(entityIn.getClass(), EntityLivingBase.class, "attackingPlayer");
+					attackingPlayer.setAccessible(true);
+					attackingPlayer.set(entityIn, this.getOwner());
+				} else {
+					KAGIC.instance.chatInfoMessage("Owner was null");
+				}
+			} catch (Exception e) {
+				String errorReport = "Error: tried to illegally access field 'recentlyHit' or 'attackingPlayer'. ";
+				errorReport += "This was caused by a gem attacking a strange entity. ";
+				errorReport += "Please report this to the mod developers. ";
+				errorReport += "Entity class was " + ((EntityLivingBase) entityIn).getClass().getName();
+				KAGIC.instance.chatInfoMessage(errorReport);
+				e.printStackTrace();
+			}
 		}
 		boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), f);
 		this.swingArm(EnumHand.MAIN_HAND);

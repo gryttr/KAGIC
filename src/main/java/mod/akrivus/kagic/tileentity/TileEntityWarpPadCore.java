@@ -249,10 +249,10 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		} 
 		if (this.cooldownTicksLeft >= 0) {
 			--this.cooldownTicksLeft;
-			if (this.cooldownTicksLeft <= 0) {
-				this.warping = false;
-				this.setDirty();
-			}
+		}
+		if (this.cooldownTicksLeft <= 0) {
+			this.warping = false;
+			this.setDirty();
 		}
 	}
 	
