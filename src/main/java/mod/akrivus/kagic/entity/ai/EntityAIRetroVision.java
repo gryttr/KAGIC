@@ -42,9 +42,11 @@ public class EntityAIRetroVision extends EntityAIBase {
 				this.sendMessage("snow");
 			}
 		}
+		/*
 		else if (world.getTotalWorldTime() - world.getLastLightningBolt() > 20 && world.getTotalWorldTime() - world.getLastLightningBolt() < 200 && !this.lastMessage.equals("thunder")) {
 			this.sendMessage("thunder");
 		}
+		*/
 		else if (this.gem.getOwner().getAttackingEntity() != null && !this.lastMessage.equals(this.gem.getOwner().getAttackingEntity().getName())) {
 			this.sendMessage("hurt_by", this.gem.getOwner().getAttackingEntity().getName());
 		}
