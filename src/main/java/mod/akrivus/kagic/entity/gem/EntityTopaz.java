@@ -182,6 +182,9 @@ public class EntityTopaz extends EntityGem {
 		super.onLivingUpdate();
 	}
 	public boolean canFuseWith(EntityTopaz other) {
+		if (this.getHealth() < 0.0f || other.getHealth() < 0.0f) {
+			return false;
+		}
 		if (this.canFuse() && other.canFuse() && this.getServitude() == other.getServitude() && this.getGemPlacement() != other.getGemPlacement()) {
 			if ((this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwnerId().equals(other.getOwnerId())) || this.getServitude() != EntityGem.SERVE_HUMAN) {
 				return true;
