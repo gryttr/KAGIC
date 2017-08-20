@@ -207,7 +207,7 @@ public class EntityCarnelian extends EntityGem {
 			            		EntityGem gem = (EntityGem) entity;
 			            		if (this.getServitude() == gem.getServitude()) {
 			            			if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
-			            				shouldAttack = this.isOwnerId(gem.getOwnerId());
+			            				shouldAttack = !this.isOwnerId(gem.getOwnerId());
 			            			}
 			            			else {
 			            				shouldAttack = false;
