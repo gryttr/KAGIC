@@ -39,7 +39,6 @@ import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import mod.akrivus.kagic.util.PoofDamage;
 import mod.akrivus.kagic.util.ShatterDamage;
 import mod.akrivus.kagic.util.SlagDamage;
-import mod.heimrarnadalr.kagic.reflection.ReflectionUtils;
 import mod.heimrarnadalr.kagic.worlddata.WarpPadDataEntry;
 import mod.heimrarnadalr.kagic.worlddata.WorldDataWarpPad;
 import net.minecraft.enchantment.Enchantment;
@@ -93,6 +92,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -1308,24 +1308,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((EntityLivingBase) entityIn).getCreatureAttribute());
 			i += EnchantmentHelper.getKnockbackModifier(this);
 			try {
-					Field recentlyHit = ReflectionUtils.getFieldFromSuperclass(entityIn.getClass(), EntityLivingBase.class, "recentlyHit");
-					recentlyHit.setAccessible(true);
-					recentlyHit.setInt(entityIn, 100);
-					if (this.getOwner() != null) {
-						Field attackingPlayer = ReflectionUtils.getFieldFromSuperclass(entityIn.getClass(), EntityLivingBase.class, "attackingPlayer");
-						attackingPlayer.setAccessible(true);
-						attackingPlayer.set(entityIn, this.getOwner());
-					} else {
-						KAGIC.instance.chatInfoMessage("Owner was null");
-					}
-				} catch (Exception e) {
-					String errorReport = "Error: tried to illegally access field 'recentlyHit' or 'attackingPlayer'. ";
-					errorReport += "This was caused by a gem attacking a strange entity. ";
-		 			errorReport += "Please report this to the mod developers. ";
-					errorReport += "Entity class was " + ((EntityLivingBase) entityIn).getClass().getName();
-					KAGIC.instance.chatInfoMessage(errorReport);
-					e.printStackTrace();
-				}
+				ReflectionHelper.setPrivateValue(EntityLivingBase.class, (EntityLivingBase) entityIn, 100, "recentlyHit", "field_70718_bc", "aT");
+				KAGIC.instance.chatInfoMessage("Set recentlyHit to 100");
+			} catch (Exception e) {}
 		}
 		boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), f);
 		this.swingArm(EnumHand.MAIN_HAND);
