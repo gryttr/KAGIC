@@ -53,15 +53,17 @@ public class BlockWarpPadCore extends Block implements ITileEntityProvider {
 				TileEntityWarpPadCore entityPad = this.getTE(worldIn, pos);
 				if (entityPad.isValidPad()) {
 						playerIn.openGui(KAGIC.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
+						return true;
 				 } else {
 					entityPad.validateWarpPad();
 					if (entityPad.isValidPad()) {
 						playerIn.openGui(KAGIC.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
+						return true;
 					}
 				}
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	@Override

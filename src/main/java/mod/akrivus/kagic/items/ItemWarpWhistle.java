@@ -38,7 +38,7 @@ public class ItemWarpWhistle extends Item {
     	ItemStack stack = playerIn.getHeldItem(hand);
     	if (world.isRemote) {
 	    	TileEntityWarpPadCore te = TileEntityWarpPadCore.getEntityPad(playerIn);//getPlayerPadTE(world, playerIn);
-	    	if (te != null && te.isValidPad() && !te.warping) {
+	    	if (te != null && te.isValidPad() && !te.isWarping()) {
 				//playerIn.openGui(KAGIC.instance, KTGUIProxy.GUIWARPPADSELECTIONID, world, te.getPos().getX(), te.getPos().getY(), te.getPos().getZ());
 				KTPacketHandler.INSTANCE.sendToServer(new PadDataRequestMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ()));
 	    	}

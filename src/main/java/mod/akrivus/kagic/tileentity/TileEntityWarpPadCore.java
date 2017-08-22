@@ -64,10 +64,14 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 	private boolean isClear = false;
 	private boolean isPadValid = false;
 	public String name = "";
-	public boolean warping = false;
+	private boolean warping = false;
+	private boolean cooling = false;
 
 	private void setDirty() {
 		this.markDirty();
+		if (!this.warping) {
+			KAGIC.instance.chatInfoMessage("setDirty called with warping " + this.warping);
+		}
 		IBlockState state = this.world.getBlockState(this.pos);
 		world.notifyBlockUpdate(this.pos, state, state, 3);
 		if (!this.world.isRemote) {
@@ -241,27 +245,30 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			this.validateWarpPad();
 			this.ticksSinceLastCheck = 0;
 		}
+		
 		if (this.warpTicksLeft > 0) {
 			--this.warpTicksLeft;
 			if (this.warpTicksLeft <= 0) {
 				this.WARP();
 			}
 		} 
+		
 		if (this.cooldownTicksLeft >= 0) {
 			--this.cooldownTicksLeft;
-		}
-		if (this.cooldownTicksLeft <= 0) {
-			this.warping = false;
+		} else if (this.cooling) {
+			this.cooling = false;
 			this.setDirty();
 		}
 	}
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
+		KAGIC.instance.chatInfoMessage("writeToNBT called with warping " + this.warping);
 		super.writeToNBT(compound);
 		compound.setBoolean("valid", this.isPadValid);
 		compound.setBoolean("clear", this.isClear);
 		compound.setBoolean("warping", this.warping);
+		compound.setBoolean("cooling", this.cooling);
 		compound.setString("name", this.name);
 		compound.setInteger("renderTicks", this.warpTicksLeft);
 		return compound;
@@ -276,6 +283,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		if (this.warping == false) {
 			this.renderCooldown = 0;
 		}
+		this.cooling = compound.getBoolean("cooling");
 		this.name = compound.getString("name");
 		this.renderTicks = compound.getInteger("renderTicks");
 	}
@@ -352,7 +360,10 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 				entity.setRotationYawHead(entity.rotationYaw);
 			}
 		}
+		this.warping = false;
+		this.cooling = true;
 		this.cooldownTicksLeft = this.warpCooldownTicks;
+		this.setDirty();
 	}
 	
 	public static TileEntityWarpPadCore getEntityPad(Entity entityIn) {
@@ -365,6 +376,10 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			}
 		}
 		return null;
+	}
+	
+	public boolean isWarping() {
+		return this.warping || this.cooling;
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -23,7 +23,7 @@ public class WarpRenderer extends TileEntitySpecialRenderer<TileEntityWarpPadCor
 
 	@Override
 	public void render(TileEntityWarpPadCore tilePad, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-		if (tilePad.warping && tilePad.isValidPad()) {
+		if (tilePad.isWarping() && tilePad.isValidPad()) {
 			Tessellator tessellator = Tessellator.getInstance();
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x, y + 1.0, z);
