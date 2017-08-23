@@ -69,9 +69,6 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 
 	private void setDirty() {
 		this.markDirty();
-		if (!this.warping) {
-			KAGIC.instance.chatInfoMessage("setDirty called with warping " + this.warping);
-		}
 		IBlockState state = this.world.getBlockState(this.pos);
 		world.notifyBlockUpdate(this.pos, state, state, 3);
 		if (!this.world.isRemote) {
@@ -263,7 +260,6 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound){
-		KAGIC.instance.chatInfoMessage("writeToNBT called with warping " + this.warping);
 		super.writeToNBT(compound);
 		compound.setBoolean("valid", this.isPadValid);
 		compound.setBoolean("clear", this.isClear);
