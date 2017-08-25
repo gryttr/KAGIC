@@ -56,6 +56,7 @@ public class EntityAIAlignGems extends EntityAIBase {
         	this.unalignedGem.setHealth(this.unalignedGem.getMaxHealth());
         	this.unalignedGem.playTameEffect();
         	this.unalignedGem.world.setEntityState(this.unalignedGem, (byte) 7);
+        	this.unalignedGem.setInsigniaColor(this.alignedGem.getInsigniaColor());
         	this.unalignedGem.playObeySound();
         	this.resetTask();
     	}

@@ -1008,7 +1008,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public void setDefective(boolean defective) {
 		this.dataManager.set(DEFECTIVE, defective);
-		this.whenDefective();
+		if (defective) {
+			this.whenDefective();
+		}
 	}
 	
 	public void whenDefective() {
