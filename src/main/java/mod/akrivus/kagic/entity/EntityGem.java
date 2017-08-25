@@ -627,6 +627,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	public boolean alternateInteract(EntityPlayer player) {
+		KAGIC.instance.chatInfoMessage("Max health is " + this.getMaxHealth() + " and defective is " + this.isDefective());
 		KAGIC.instance.chatInfoMessage("Cut is " + this.getGemCut() + " and Placement is " + this.getGemPlacement());
 		return false;
 	}
@@ -1009,7 +1010,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public void setDefective(boolean defective) {
 		this.dataManager.set(DEFECTIVE, defective);
-		this.whenDefective();
+		if (defective) {
+			this.whenDefective();
+		}
 	}
 	
 	public void whenDefective() {
