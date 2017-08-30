@@ -106,7 +106,11 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public static final int SERVE_REBELLION = 5;
 	public static final int SERVE_ITSELF = 6;
 	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityGem.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+
 	protected static final DataParameter<Integer> INSIGNIA_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> SKIN_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> HAIR_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+
 	protected static final DataParameter<Integer> HAIR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
 	protected static final DataParameter<Boolean> SWINGING_ARMS = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
 	protected static final DataParameter<Integer> GEM_CUT = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
@@ -171,6 +175,8 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.dataManager.register(GEM_CUT, -1);
 		this.dataManager.register(VISOR, false);
 		this.dataManager.register(INSIGNIA_COLOR, 12);
+		this.dataManager.register(SKIN_COLOR, 0);
+		this.dataManager.register(HAIR_COLOR, 0);
 		this.dataManager.register(HAIR, 0);
 		this.dataManager.register(SWINGING_ARMS, false);
 		this.dataManager.register(DEFECTIVE, false);
@@ -190,7 +196,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		compound.setInteger("gemCut", this.getGemCut().id);
 		compound.setBoolean("hasVisor", this.hasVisor());
 		compound.setInteger("insigniaColor", this.getInsigniaColor());
+		compound.setInteger("skinColor", this.getSkinColor());
 		compound.setInteger("hair", this.getHairStyle());
+		compound.setInteger("hairColor", this.getHairColor());
 		compound.setBoolean("defective", this.isDefective());
 		compound.setBoolean("primary", this.isPrimary());
 		compound.setInteger("special", this.getSpecial());
@@ -258,6 +266,29 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		else {
 			this.setInsigniaColor(12);
 		}
+		
+		if (compound.hasKey("skinColor")) {
+			if (compound.getInteger("skinColor") == 0) {
+				this.setSkinColor(this.generateSkinColor());
+			} else {
+				this.setSkinColor(compound.getInteger("skinColor"));
+			}
+		}
+		else {
+			this.setSkinColor(this.generateSkinColor());
+		}
+
+		if (compound.hasKey("hairColor")) {
+			if (compound.getInteger("hairColor") == 0) {
+				this.setHairColor(this.generateHairColor());
+			} else {
+				this.setHairColor(compound.getInteger("hairColor"));
+			}
+		}
+		else {
+			this.setHairColor(this.generateHairColor());
+		}
+
 		this.setHairStyle(compound.getInteger("hair"));
 		this.setDefective(compound.getBoolean("defective"));
 		this.setPrimary(compound.getBoolean("primary"));
@@ -362,12 +393,26 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
 	
+	protected int generateSkinColor() {
+		return 0;
+	}
+	
+	protected int generateHairStyle() {
+		return 0;
+	}
+	
+	protected int generateHairColor() {
+		return 0;
+	}
+
 	public boolean canChangeInsigniaColorByDefault() {
 		return true;
 	}
+	
 	public boolean canBreatheUnderwater() {
 		return true;
 	}
+	
 	public boolean canDespawn() {
 		return false;
 	}
@@ -629,6 +674,8 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public boolean alternateInteract(EntityPlayer player) {
 		KAGIC.instance.chatInfoMessage("Max health is " + this.getMaxHealth() + " and defective is " + this.isDefective());
 		KAGIC.instance.chatInfoMessage("Cut is " + this.getGemCut() + " and Placement is " + this.getGemPlacement());
+		KAGIC.instance.chatInfoMessage("skinColor is " + this.getSkinColor());
+		KAGIC.instance.chatInfoMessage("hairColor is " + this.getHairColor());
 		return false;
 	}
 	
@@ -996,6 +1043,14 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.dataManager.set(INSIGNIA_COLOR, insigniaColor);
 	}
 	
+	public int getSkinColor() {
+		return this.dataManager.get(SKIN_COLOR);
+	}
+	
+	public void setSkinColor(int skinColor) {
+		this.dataManager.set(SKIN_COLOR, skinColor);
+	}
+
 	public int getHairStyle() {
 		return this.dataManager.get(HAIR);
 	}
@@ -1004,6 +1059,14 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.dataManager.set(HAIR, hairstyle);
 	}
 	
+	public int getHairColor() {
+		return this.dataManager.get(HAIR_COLOR);
+	}
+	
+	public void setHairColor(int hairColor) {
+		this.dataManager.set(HAIR_COLOR, hairColor);
+	}
+
 	public boolean isDefective() {
 		return this.dataManager.get(DEFECTIVE);
 	}

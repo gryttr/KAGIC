@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -50,8 +52,34 @@ public class EntityAmethyst extends EntityGem {
 	public static final HashMap<Block, Double> AMETHYST_YIELDS = new HashMap<Block, Double>();
 	public static final HashMap<Integer, ResourceLocation> AMETHYST_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private static final DataParameter<Boolean> CHARGED = EntityDataManager.<Boolean>createKey(EntityAmethyst.class, DataSerializers.BOOLEAN);
+	
+	//13811681
+	private static final int SKIN_COLOR_BEGIN = 0xD2BFE1; 
+	//12097994
+	private static final int SKIN_COLOR_MID = 0xB899CA; 
+	//11875965
+	private static final int SKIN_COLOR_END = 0xB5367D; 
+
+
+	private static final int HAIR_COLOR_BEGIN = 0xBD79C9;
+	
+	private static final int HAIR_COLOR_MID_1 = 0x9877B1;
+
+	private static final int HAIR_COLOR_MID_2 = 0xF9E4FF;
+
+	private static final int HAIR_COLOR_MID_3 = 0xFFFDFF; 
+	//Amethyst
+	private static final int HAIR_COLOR_MID_4 = 0xDCD3EF; 
+	
+	private static final int HAIR_COLOR_MID_5 = 0xAD859F;
+	
+	private static final int HAIR_COLOR_END = 0xC47DA3; 
+	
+	private static final int NUM_HAIRSTYLES = 1;
+	
 	private int charge_ticks = 0;
 	private int hit_count = 0;
+	
 	public EntityAmethyst(World worldIn) {
 		super(worldIn);
 		this.setSize(0.9F, 2.3F);
@@ -112,12 +140,16 @@ public class EntityAmethyst extends EntityGem {
 	 * Methods related to entity loading.                    *
 	 *********************************************************/
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		this.setSkinColor(this.generateSkinColor());
+		this.setHairStyle(this.generateHairStyle());
+		this.setHairColor(this.generateHairColor());
     	this.setSpecial(/*this.rand.nextInt(9) == 0 ? 1 : */0);
 		if (this.isCitrine()) {
     		this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.citrine.name")).getUnformattedText());
     	}
 		return super.onInitialSpawn(difficulty, livingdata);
     }
+	
 	public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
         compound.setBoolean("charged", this.dataManager.get(CHARGED).booleanValue());
@@ -293,10 +325,34 @@ public class EntityAmethyst extends EntityGem {
 	/*********************************************************
 	 * Methods related to rendering.                         *
 	 *********************************************************/
+	@Override
+	protected int generateSkinColor() {
+		return Colors.triLerp(this.SKIN_COLOR_BEGIN, this.SKIN_COLOR_MID, this.SKIN_COLOR_END);
+	}
+	
+	@Override
+	protected int generateHairStyle() {
+		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+	}
+	
+	@Override
+	protected int generateHairColor() {
+		ArrayList hairColors = new ArrayList();
+		hairColors.add(this.HAIR_COLOR_BEGIN);
+		hairColors.add(this.HAIR_COLOR_MID_1);
+		hairColors.add(this.HAIR_COLOR_MID_2);
+		hairColors.add(this.HAIR_COLOR_MID_3);
+		hairColors.add(this.HAIR_COLOR_MID_4);
+		hairColors.add(this.HAIR_COLOR_MID_5);
+		hairColors.add(this.HAIR_COLOR_END);
+		return Colors.arbiLerp(hairColors);
+	}
+
 	@SideOnly(Side.CLIENT)
     public int getBrightnessForRender() {
         return isCharged() ? 15728880 : super.getBrightnessForRender();
 	}
+	
     public float getBrightness() {
         return isCharged() ? 1.0F : super.getBrightness();
     }

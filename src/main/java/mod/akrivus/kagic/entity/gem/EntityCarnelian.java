@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,10 +15,12 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -38,6 +41,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -49,6 +54,16 @@ public class EntityCarnelian extends EntityGem {
 	private static final DataParameter<Boolean> CHARGED = EntityDataManager.<Boolean>createKey(EntityCarnelian.class, DataSerializers.BOOLEAN);
 	private int charge_ticks = 0;
 	private int hit_count = 0;
+	
+	private static final int SKIN_COLOR_BEGIN = 0xF02D57;
+	
+	private static final int SKIN_COLOR_END = 0xC5307D;
+	
+	private static final int NUM_HAIRSTYLES = 1;
+	
+	private static final int HAIR_COLOR_BEGIN = 0x7C0034;
+	
+	private static final int HAIR_COLOR_END = 0x4D0043;
 	
 	public EntityCarnelian(World worldIn) {
 		super(worldIn);
@@ -149,6 +164,14 @@ public class EntityCarnelian extends EntityGem {
 	/*********************************************************
 	 * Methods related to entity loading.                    *
 	 *********************************************************/
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		this.setSkinColor(this.generateSkinColor());
+		this.setHairStyle(this.generateHairStyle());
+		this.setHairColor(this.generateHairColor());
+
+		return super.onInitialSpawn(difficulty, livingdata);
+    }
+	
 	public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
         compound.setBoolean("charged", this.dataManager.get(CHARGED).booleanValue());
@@ -278,10 +301,31 @@ public class EntityCarnelian extends EntityGem {
 	/*********************************************************
 	 * Methods related to rendering.                         *
 	 *********************************************************/
+	@Override
+	protected int generateSkinColor() {
+		ArrayList skinColors = new ArrayList();
+		skinColors.add(this.SKIN_COLOR_BEGIN);
+		skinColors.add(this.SKIN_COLOR_END);
+		return Colors.arbiLerp(skinColors);
+	}
+	
+	@Override
+	protected int generateHairStyle() {
+		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+	}
+	
+	@Override
+	protected int generateHairColor() {
+		ArrayList hairColors = new ArrayList();
+		hairColors.add(this.HAIR_COLOR_BEGIN);
+		hairColors.add(this.HAIR_COLOR_END);
+		return Colors.arbiLerp(hairColors);
+	}
 	@SideOnly(Side.CLIENT)
     public int getBrightnessForRender() {
         return isCharged() ? 15728880 : super.getBrightnessForRender();
 	}
+	
     public float getBrightness() {
         return isCharged() ? 1.0F : super.getBrightness();
     }
