@@ -348,6 +348,16 @@ public class EntityAmethyst extends EntityGem {
 		return Colors.arbiLerp(hairColors);
 	}
 
+	@Override
+	public boolean hasUniformVariant(GemPlacements placement) {
+		switch(placement) {
+		case BELLY:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
 	@SideOnly(Side.CLIENT)
     public int getBrightnessForRender() {
         return isCharged() ? 15728880 : super.getBrightnessForRender();

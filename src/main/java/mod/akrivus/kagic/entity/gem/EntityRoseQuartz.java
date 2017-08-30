@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,9 +19,11 @@ import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.items.ItemGem;
+import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -43,6 +46,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityRoseQuartz extends EntityGem {
@@ -50,6 +54,17 @@ public class EntityRoseQuartz extends EntityGem {
 	public static final HashMap<Integer, ResourceLocation> ROSE_QUARTZ_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private BlockPos lastSurgeLocation;
 	private int regenTicks = 0;
+
+	private static final int SKIN_COLOR_BEGIN = 0xFEDED3;
+	
+	private static final int SKIN_COLOR_END = 0xFEDED3;
+	
+	private static final int NUM_HAIRSTYLES = 1;
+	
+	private static final int HAIR_COLOR_BEGIN = 0xFDAECB;
+	
+	private static final int HAIR_COLOR_END = 0xE99CBE;
+	
 	public EntityRoseQuartz(World worldIn) {
 		super(worldIn);
 		this.setSize(0.9F, 2.3F);
@@ -118,6 +133,17 @@ public class EntityRoseQuartz extends EntityGem {
     	}
     }
 	
+	/*********************************************************
+	 * Methods related to entity loading.                    *
+	 *********************************************************/
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		this.setSkinColor(this.generateSkinColor());
+		this.setHairStyle(this.generateHairStyle());
+		this.setHairColor(this.generateHairColor());
+
+		return super.onInitialSpawn(difficulty, livingdata);
+    }
+
 	/*********************************************************
 	 * Methods related to interaction.                       *
 	 *********************************************************/
@@ -274,5 +300,39 @@ public class EntityRoseQuartz extends EntityGem {
 	}
 	public SoundEvent getDeathSound() {
 		return ModSounds.ROSE_QUARTZ_DEATH;
+	}
+	
+	/*********************************************************
+	 * Methods related to rendering.                         *
+	 *********************************************************/
+	@Override
+	protected int generateSkinColor() {
+		ArrayList skinColors = new ArrayList();
+		skinColors.add(this.SKIN_COLOR_BEGIN);
+		skinColors.add(this.SKIN_COLOR_END);
+		return Colors.arbiLerp(skinColors);
+	}
+	
+	@Override
+	protected int generateHairStyle() {
+		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+	}
+	
+	@Override
+	protected int generateHairColor() {
+		ArrayList hairColors = new ArrayList();
+		hairColors.add(this.HAIR_COLOR_BEGIN);
+		hairColors.add(this.HAIR_COLOR_END);
+		return Colors.arbiLerp(hairColors);
+	}
+
+	@Override
+	public boolean hasUniformVariant(GemPlacements placement) {
+		switch(placement) {
+		case BELLY:
+			return true;
+		default:
+			return false;
+		}
 	}
 }

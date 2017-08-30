@@ -2,8 +2,10 @@ package mod.akrivus.kagic.client.render;
 
 import mod.akrivus.kagic.client.model.ModelQuartz;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
+import mod.akrivus.kagic.client.render.layers.LayerHair;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
 import mod.akrivus.kagic.client.render.layers.LayerQuartzItem;
+import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.entity.gem.EntityRoseQuartz;
 import net.minecraft.client.Minecraft;
@@ -15,8 +17,10 @@ public class RenderRoseQuartz extends RenderLivingBase<EntityRoseQuartz> {
 	public RenderRoseQuartz() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelQuartz(), 0.25F);
         this.addLayer(new LayerQuartzItem(this));
-        this.addLayer(new LayerVisor(this));
+        this.addLayer(new LayerSkin(this));
         this.addLayer(new LayerInsignia(this));
+        this.addLayer(new LayerHair(this));
+        this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerGemPlacement(this));
     }
 	protected void preRenderCallback(EntityRoseQuartz entitylivingbaseIn, float partialTickTime) {

@@ -35,8 +35,8 @@ public class LayerInsignia implements LayerRenderer<EntityGem> {
 	
 	public ResourceLocation getTexture(EntityGem gem) {
 		ResourceLocation loc = EntityList.getKey(gem);
-		if (gem.getGemPlacement() == GemPlacements.BELLY) {
-			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/insignia_navel.png");
+		if (gem.hasUniformVariant(gem.getGemPlacement())) {
+			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/insignia_" + gem.getGemPlacement().toString().toLowerCase() + ".png");
 		} else {
 			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/insignia.png");
 		}

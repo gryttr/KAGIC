@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.annotation.Nullable;
@@ -17,6 +18,7 @@ import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -69,6 +71,16 @@ public class EntityRuby extends EntityGem {
 	public static final HashMap<Block, Double> RUBY_YIELDS = new HashMap<Block, Double>();
 	private static final DataParameter<Integer> ANGER = EntityDataManager.<Integer>createKey(EntityRuby.class, DataSerializers.VARINT);
 	private int angerTicks = 0;
+	
+	private static final int SKIN_COLOR_BEGIN = 0xE0316F; 
+	private static final int SKIN_COLOR_MID = 0xE52C5C; 
+	private static final int SKIN_COLOR_END = 0xED294C; 
+
+
+	private static final int HAIR_COLOR_BEGIN = 0x3B0015;
+	private static final int HAIR_COLOR_END = 0x3A0015; 
+	
+	private static final int NUM_HAIRSTYLES = 1;
 	
 	public EntityRuby(World worldIn) {
 		super(worldIn);
@@ -177,6 +189,9 @@ public class EntityRuby extends EntityGem {
         this.setAnger(compound.getInteger("anger"));
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		this.setSkinColor(this.generateSkinColor());
+		this.setHairStyle(this.generateHairStyle());
+		this.setHairColor(this.generateHairColor());
     	this.setSpecial(this.rand.nextInt(6));
         return super.onInitialSpawn(difficulty, livingdata);
     }
@@ -327,6 +342,10 @@ public class EntityRuby extends EntityGem {
 		ruby.setAnger(this.getAnger() + other.getAnger());
 		ruby.setAttackTarget(this.getAttackTarget());
 		ruby.setRevengeTarget(this.getAttackingEntity());
+		
+		ruby.setSkinColor(this.getSkinColor());
+		ruby.setHairColor(this.getHairColor());
+		ruby.setHairStyle(this.getHairStyle());
 
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D * ruby.getFusionCount());
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D * ruby.getFusionCount());
@@ -475,6 +494,39 @@ public class EntityRuby extends EntityGem {
 	/*********************************************************
 	 * Methods related to sounds.                            *
 	 *********************************************************/
+	@Override
+	protected int generateSkinColor() {
+		ArrayList skinColors = new ArrayList();
+		skinColors.add(this.SKIN_COLOR_BEGIN);
+		skinColors.add(this.SKIN_COLOR_MID);
+		skinColors.add(this.SKIN_COLOR_END);
+		return Colors.arbiLerp(skinColors);	}
+	
+	@Override
+	protected int generateHairStyle() {
+		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+	}
+	
+	@Override
+	protected int generateHairColor() {
+		ArrayList hairColors = new ArrayList();
+		hairColors.add(this.HAIR_COLOR_BEGIN);
+		hairColors.add(this.HAIR_COLOR_END);
+		return Colors.arbiLerp(hairColors);
+	}
+	
+	@Override
+	public boolean hasUniformVariant(GemPlacements placement) {
+		switch(placement) {
+		case BELLY:
+			return true;
+		case CHEST:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
 	public SoundEvent getAmbientSound() {
 		return ModSounds.RUBY_LIVING;
 	}

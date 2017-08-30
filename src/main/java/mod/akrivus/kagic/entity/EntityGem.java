@@ -1716,10 +1716,15 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	/*********************************************************
 	 * Methods related to entity rendering.				  *
 	 *********************************************************/
+	public boolean hasUniformVariant(GemPlacements placement) {
+		return false;
+	}
+	
 	@SideOnly(Side.CLIENT)
 	public int getBrightnessForRender(/*float partialTicks*/) {
 		return this.isSpaceBorn ? 15728880 : super.getBrightnessForRender();
 	}
+	
 	public float getBrightness(/*float partialTicks*/) {
 		return this.isSpaceBorn ? 1.0F : super.getBrightness();
 	}

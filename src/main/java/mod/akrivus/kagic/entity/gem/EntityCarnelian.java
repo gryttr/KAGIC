@@ -321,6 +321,17 @@ public class EntityCarnelian extends EntityGem {
 		hairColors.add(this.HAIR_COLOR_END);
 		return Colors.arbiLerp(hairColors);
 	}
+
+	@Override
+	public boolean hasUniformVariant(GemPlacements placement) {
+		switch(placement) {
+		case BELLY:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
 	@SideOnly(Side.CLIENT)
     public int getBrightnessForRender() {
         return isCharged() ? 15728880 : super.getBrightnessForRender();
