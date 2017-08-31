@@ -24,6 +24,7 @@ public class LayerHair implements LayerRenderer<EntityGem> {
 		this.gemRenderer = gemRendererIn;
 		this.gemModel = gemRendererIn.getMainModel();
 	}
+	
 	public void doRenderLayer(EntityGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		this.gemRenderer.bindTexture(this.getHairStyle(gem, gem.getHairStyle()));
 		int hairColor = gem.getHairColor();
@@ -55,6 +56,7 @@ public class LayerHair implements LayerRenderer<EntityGem> {
 	        return loc.getResourcePath();
 		}
 	}
+	
 	public boolean shouldCombineTextures() {
 		return false;
 	}

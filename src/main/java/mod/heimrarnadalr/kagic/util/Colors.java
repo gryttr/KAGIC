@@ -39,6 +39,9 @@ public class Colors {
 	}
 	
 	public static int arbiLerp(ArrayList<Integer> colors) {
+		if (colors.size() == 0) {
+			return 0;
+		}
 		if (colors.size() == 1) {
 			return colors.get(0);
 		}
