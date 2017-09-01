@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,11 +13,13 @@ import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModEnchantments;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -33,11 +36,18 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityBismuth extends EntityGem {
 	public static final HashMap<Block, Double> BISMUTH_YIELDS = new HashMap<Block, Double>();
 	public static final HashMap<Integer, ResourceLocation> BISMUTH_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
+
+
+	private static final int SKIN_COLOR_BEGIN = 0x91A8CF; 
+	private static final int SKIN_COLOR_END = 0x503243; 
+	
 	public EntityBismuth(World worldIn) {
 		super(worldIn);
 		this.isImmuneToFire = true;
@@ -79,6 +89,14 @@ public class EntityBismuth extends EntityGem {
     		this.setGemPlacement(GemPlacements.CHEST.id);
     		break;
     	}
+    }
+	
+	/*********************************************************
+	 * Methods related to entity loading.                    *
+	 *********************************************************/
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		this.setSkinColor(this.generateSkinColor());
+		return super.onInitialSpawn(difficulty, livingdata);
     }
 	
 	/*********************************************************
@@ -178,4 +196,16 @@ public class EntityBismuth extends EntityGem {
 	public SoundEvent getDeathSound() {
 		return ModSounds.BISMUTH_DEATH;
 	}
+
+	/*********************************************************
+	 * Methods related to rendering.                         *
+	 *********************************************************/
+	@Override
+	protected int generateSkinColor() {
+		ArrayList skinColors = new ArrayList();
+		skinColors.add(this.SKIN_COLOR_BEGIN);
+		skinColors.add(this.SKIN_COLOR_END);
+		return Colors.arbiLerp(skinColors);
+	}
+
 }

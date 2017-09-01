@@ -19,13 +19,13 @@ public class RenderTopaz extends RenderLivingBase<EntityTopaz> {
 	public RenderTopaz() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelTopaz(), 0.25F);
         this.addLayer(new LayerTopazItem(this));
-        this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerSkin(this));
         this.addLayer(new LayerUniform(this));
         this.addLayer(new LayerInsignia(this));
         this.addLayer(new LayerHair(this));
         this.addLayer(new LayerGemPlacement(this));
         this.addLayer(new LayerFusionPlacement(this));
+        this.addLayer(new LayerVisor(this));
     }
 	protected void preRenderCallback(EntityTopaz gem, float partialTickTime) {
 		if (gem.isFusion()) {

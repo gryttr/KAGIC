@@ -4,6 +4,8 @@ import mod.akrivus.kagic.client.model.ModelBismuth;
 import mod.akrivus.kagic.client.render.layers.LayerBismuthItem;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
+import mod.akrivus.kagic.client.render.layers.LayerNoDyeOverlay;
+import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.entity.gem.EntityBismuth;
 import net.minecraft.client.Minecraft;
@@ -14,6 +16,8 @@ public class RenderBismuth extends RenderLivingBase<EntityBismuth> {
 	public RenderBismuth() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelBismuth(), 0.25F);
         this.addLayer(new LayerBismuthItem(this));
+        this.addLayer(new LayerSkin(this));
+        this.addLayer(new LayerNoDyeOverlay(this));
         this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerInsignia(this));
         this.addLayer(new LayerGemPlacement(this));
