@@ -108,6 +108,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityGem.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 
 	protected static final DataParameter<Integer> INSIGNIA_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> UNIFORM_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
 	protected static final DataParameter<Integer> SKIN_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
 	protected static final DataParameter<Integer> HAIR_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
 
@@ -175,6 +176,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.dataManager.register(GEM_CUT, -1);
 		this.dataManager.register(VISOR, false);
 		this.dataManager.register(INSIGNIA_COLOR, 12);
+		this.dataManager.register(UNIFORM_COLOR, 12);
 		this.dataManager.register(SKIN_COLOR, 0);
 		this.dataManager.register(HAIR_COLOR, 0);
 		this.dataManager.register(HAIR, 0);
@@ -196,6 +198,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		compound.setInteger("gemCut", this.getGemCut().id);
 		compound.setBoolean("hasVisor", this.hasVisor());
 		compound.setInteger("insigniaColor", this.getInsigniaColor());
+		compound.setInteger("uniformColor", this.getUniformColor());
 		compound.setInteger("skinColor", this.getSkinColor());
 		compound.setInteger("hair", this.getHairStyle());
 		compound.setInteger("hairColor", this.getHairColor());
@@ -267,6 +270,13 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			this.setInsigniaColor(12);
 		}
 		
+		if (compound.hasKey("uniformColor")) {
+			this.setUniformColor(compound.getInteger("uniformColor"));
+		}
+		else {
+			this.setUniformColor(this.getInsigniaColor());
+		}
+
 		if (compound.hasKey("skinColor")) {
 			if (compound.getInteger("skinColor") == 0) {
 				this.setSkinColor(this.generateSkinColor());
@@ -406,6 +416,10 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 
 	public boolean canChangeInsigniaColorByDefault() {
+		return true;
+	}
+	
+	public boolean canChangeUniformColorByDefault() {
 		return true;
 	}
 	
@@ -652,6 +666,12 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 						}
 					}
 				}
+				else if (stack.getItem() == Items.DYE && this.canChangeUniformColorByDefault() && player.isSneaking()) {
+					if (this.isTamed() && this.isOwner(player)) {
+						this.setUniformColor(15 - stack.getItemDamage());
+						return true;
+					}
+				}
 				else if (stack.getItem() == Items.DYE && this.canChangeInsigniaColorByDefault()) {
 					if (this.isTamed()) {
 						if (this.isOwner(player)) {
@@ -672,10 +692,12 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	public boolean alternateInteract(EntityPlayer player) {
-		KAGIC.instance.chatInfoMessage("Max health is " + this.getMaxHealth() + " and defective is " + this.isDefective());
+		KAGIC.instance.chatInfoMessage("Max health is " + this.getMaxHealth() + ", defective is " + this.isDefective() + ", and prime is " + this.isPrimary());
 		KAGIC.instance.chatInfoMessage("Cut is " + this.getGemCut() + " and Placement is " + this.getGemPlacement());
 		KAGIC.instance.chatInfoMessage("skinColor is " + this.getSkinColor());
 		KAGIC.instance.chatInfoMessage("hairColor is " + this.getHairColor());
+		KAGIC.instance.chatInfoMessage("Insignia color is " + this.getInsigniaColor());
+		KAGIC.instance.chatInfoMessage("Uniform color is " + this.getUniformColor());
 		return false;
 	}
 	
@@ -900,7 +922,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		if (stack.getItem() == ModItems.CRACKED_BLUE_DIAMOND_GEM || stack.getItem() == ModItems.CRACKED_YELLOW_DIAMOND_GEM || stack.getItem() == ModItems.BLUE_DIAMOND_GEM || stack.getItem() == ModItems.YELLOW_DIAMOND_GEM) {
 			return true;
 		}
-		else if (stack.getItem() == Items.DYE && this.canChangeInsigniaColorByDefault()) {
+		else if (stack.getItem() == Items.DYE && (this.canChangeInsigniaColorByDefault() || this.canChangeUniformColorByDefault())) {
 			return true;
 		}
 		else if (stack.getItem() == ModItems.GEM_STAFF) {
@@ -1041,6 +1063,14 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public void setInsigniaColor(int insigniaColor) {
 		this.dataManager.set(INSIGNIA_COLOR, insigniaColor);
+	}
+	
+	public int getUniformColor() {
+		return this.dataManager.get(UNIFORM_COLOR);
+	}
+	
+	public void setUniformColor(int uniformColor) {
+		this.dataManager.set(UNIFORM_COLOR, uniformColor);
 	}
 	
 	public int getSkinColor() {
@@ -1526,18 +1556,22 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			case EntityGem.SERVE_YELLOW_DIAMOND:
 				this.targetTasks.addTask(2, this.diamondAttackAI);
 				this.setInsigniaColor(4);
+				this.setUniformColor(14);
 				break;
 			case EntityGem.SERVE_BLUE_DIAMOND:
 				this.targetTasks.addTask(2, this.diamondAttackAI);
 				this.setInsigniaColor(11);
+				this.setUniformColor(11);
 				break;
 			case EntityGem.SERVE_WHITE_DIAMOND:
 				this.targetTasks.addTask(2, this.diamondAttackAI);
 				this.setInsigniaColor(0);
+				this.setUniformColor(0);
 				break;
 			case EntityGem.SERVE_REBELLION:
 				this.targetTasks.addTask(2, this.rebelAttackAI);
 				this.setInsigniaColor(6);
+				this.setUniformColor(6);
 				break;
 			}
 		}
@@ -1716,6 +1750,10 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	/*********************************************************
 	 * Methods related to entity rendering.				  *
 	 *********************************************************/
+	public boolean hasInsigniaVariant(GemPlacements placement) {
+		return false;
+	}
+	
 	public boolean hasUniformVariant(GemPlacements placement) {
 		return false;
 	}

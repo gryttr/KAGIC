@@ -3,8 +3,11 @@ package mod.akrivus.kagic.client.render;
 import mod.akrivus.kagic.client.model.ModelTopaz;
 import mod.akrivus.kagic.client.render.layers.LayerFusionPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
+import mod.akrivus.kagic.client.render.layers.LayerHair;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
+import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerTopazItem;
+import mod.akrivus.kagic.client.render.layers.LayerUniform;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.entity.gem.EntityTopaz;
 import net.minecraft.client.Minecraft;
@@ -17,7 +20,10 @@ public class RenderTopaz extends RenderLivingBase<EntityTopaz> {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelTopaz(), 0.25F);
         this.addLayer(new LayerTopazItem(this));
         this.addLayer(new LayerVisor(this));
+        this.addLayer(new LayerSkin(this));
+        this.addLayer(new LayerUniform(this));
         this.addLayer(new LayerInsignia(this));
+        this.addLayer(new LayerHair(this));
         this.addLayer(new LayerGemPlacement(this));
         this.addLayer(new LayerFusionPlacement(this));
     }
@@ -27,6 +33,6 @@ public class RenderTopaz extends RenderLivingBase<EntityTopaz> {
 		}
 	}
 	protected ResourceLocation getEntityTexture(EntityTopaz entity) {
-		return new ResourceLocation("kagic:textures/entities/topaz/" + entity.getColor() + "topaz.png");
+		return new ResourceLocation("kagic:textures/entities/topaz/topaz.png");
 	}
 }

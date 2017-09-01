@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import mod.akrivus.kagic.entity.EntityGem;
@@ -13,6 +14,7 @@ import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -41,6 +43,16 @@ import net.minecraft.world.World;
 public class EntityTopaz extends EntityGem {
 	public static final HashMap<Block, Double> TOPAZ_YIELDS = new HashMap<Block, Double>();
 		
+	private static final int SKIN_COLOR_YELLOW = 0xF6E83E; 
+	private static final int SKIN_COLOR_BLUE = 0x5167fB; 
+	private static final int SKIN_COLOR_GREEN = 0x52FC75; 
+
+	private static final int HAIR_COLOR_YELLOW = 0xFFF564;
+	private static final int HAIR_COLOR_BLUE = 0xA6B5FE;
+	private static final int HAIR_COLOR_GREEN = 0xA5FEB4;
+	
+	private static final int NUM_HAIRSTYLES = 1;
+	
 	public EntityTopaz(World worldIn) {
 		super(worldIn);
 		this.isSoldier = true;
@@ -126,6 +138,9 @@ public class EntityTopaz extends EntityGem {
 	 *********************************************************/
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
     	this.setSpecial(this.rand.nextInt(7) == 0 ? 1 : 0);
+		this.setSkinColor(this.generateSkinColor());
+		this.setHairStyle(this.generateHairStyle());
+		this.setHairColor(this.generateHairColor());
 		return super.onInitialSpawn(difficulty, livingdata);
     }
 	public void writeEntityToNBT(NBTTagCompound compound) {
@@ -142,6 +157,7 @@ public class EntityTopaz extends EntityGem {
     	return super.processInteract(player, hand);
     }
     public boolean alternateInteract(EntityPlayer player) {
+    	super.alternateInteract(player);
     	this.wantsToFuse = true;
     	return true;
     }
@@ -212,6 +228,11 @@ public class EntityTopaz extends EntityGem {
 		topaz.generateFusionPlacements();
 		topaz.setPosition((this.posX + other.posX) / 2, (this.posY + other.posY) / 2, (this.posZ + other.posZ) / 2);
 		topaz.setSpecial(this.getSpecial() == other.getSpecial() ? this.getSpecial() : 2);
+		topaz.setSkinColor(topaz.generateSkinColor());
+		topaz.setHairStyle(topaz.generateHairStyle());
+		topaz.setHairColor(topaz.generateHairColor());
+		topaz.setInsigniaColor(this.getInsigniaColor());
+		topaz.setUniformColor(this.getUniformColor());
 		topaz.setAttackTarget(this.getAttackTarget());
 		topaz.setRevengeTarget(this.getAttackingEntity());
 		
@@ -250,7 +271,56 @@ public class EntityTopaz extends EntityGem {
 		}
 		this.world.removeEntity(this);
 	}
-    /*********************************************************
+
+	/*********************************************************
+	 * Methods related to rendering.                         *
+	 *********************************************************/
+	@Override
+	protected int generateSkinColor() {
+		int color = this.getSpecial();
+		switch(color) {
+		case 0:
+			return this.SKIN_COLOR_YELLOW;
+		case 1:
+			return this.SKIN_COLOR_BLUE;
+		case 2:
+			return this.SKIN_COLOR_GREEN;
+		default:
+			return 0;
+		}
+	}
+	
+	@Override
+	protected int generateHairStyle() {
+		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+	}
+	
+	@Override
+	protected int generateHairColor() {
+		int color = this.getSpecial();
+		switch(color) {
+		case 0:
+			return this.HAIR_COLOR_YELLOW;
+		case 1:
+			return this.HAIR_COLOR_BLUE;
+		case 2:
+			return this.HAIR_COLOR_GREEN;
+		default:
+			return 0;
+		}
+	}
+
+	@Override
+	public boolean hasUniformVariant(GemPlacements placement) {
+		switch(placement) {
+		//case BELLY:
+		//	return true;
+		default:
+			return false;
+		}
+	}
+
+	/*********************************************************
      * Methods related to entity combat.                     *
      *********************************************************/
     public boolean attackEntityFrom(DamageSource source, float amount) {

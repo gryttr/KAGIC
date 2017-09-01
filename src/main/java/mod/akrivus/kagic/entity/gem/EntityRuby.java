@@ -516,6 +516,18 @@ public class EntityRuby extends EntityGem {
 	}
 	
 	@Override
+	public boolean hasInsigniaVariant(GemPlacements placement) {
+		switch(placement) {
+		case BELLY:
+			return true;
+		case CHEST:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
+	@Override
 	public boolean hasUniformVariant(GemPlacements placement) {
 		switch(placement) {
 		case BELLY:

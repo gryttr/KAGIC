@@ -131,6 +131,7 @@ public class EntitySapphire extends EntityGem {
         		EntityPadparadscha gem = new EntityPadparadscha(this.world);
         		gem.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
         		this.world.spawnEntity(gem);
+        		gem.onInitialSpawn(gem.world.getDifficultyForLocation(gem.getPosition()), null);
         		this.spawnedPadparadscha = true;
         	}
         }

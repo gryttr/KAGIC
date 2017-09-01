@@ -3,6 +3,7 @@ package mod.akrivus.kagic.entity.ai;
 import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.item.EntityItem;
 
@@ -21,12 +22,12 @@ public class EntityAIPickUpItems extends EntityAIBase {
         double maxDistance = Double.MAX_VALUE;
         for (EntityItem item : list) {
             double newDistance = this.gem.getDistanceSqToEntity(item);
-            if (newDistance <= maxDistance && this.gem.canPickUpItem(item.getItem().getItem()) && this.gem.canEntityBeSeen(item)) {
+            if (newDistance <= maxDistance && this.gem.canPickUpItem(item.getItem().getItem()) && this.gem.canEntityBeSeen(item) && !item.isDead) {
                 maxDistance = newDistance;
                 this.item = item;
             }
         }
-        return this.item != null;
+        return this.item != null && !this.item.isDead;
     }
     public boolean continueExecuting() {
         return this.item != null && !this.item.isDead && this.gem.canEntityBeSeen(this.item) && !this.gem.getNavigator().noPath();
@@ -40,7 +41,7 @@ public class EntityAIPickUpItems extends EntityAIBase {
     }
     public void updateTask() {
         if (this.gem.getDistanceSqToEntity(this.item) > 1) {
-        	this.gem.getNavigator().tryMoveToEntityLiving(this.item, this.movementSpeed);
+	       	this.gem.getNavigator().tryMoveToEntityLiving(this.item, this.movementSpeed);
         }
     }
 }

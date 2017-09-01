@@ -13,19 +13,18 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 
-public class LayerInsignia implements LayerRenderer<EntityGem> {
+public class LayerUniform implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<EntityGem> gemRenderer;
 	private final ModelBase gemModel;
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public LayerInsignia(RenderLivingBase gemRendererIn) {
+	public LayerUniform(RenderLivingBase gemRendererIn) {
 		this.gemRenderer = gemRendererIn;
 		this.gemModel = gemRendererIn.getMainModel();
 	}
 	
 	public void doRenderLayer(EntityGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		this.gemRenderer.bindTexture(this.getTexture(gem));
-		float[] afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[gem.getInsigniaColor()]);
+		float[] afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[gem.getUniformColor()]);
 		GlStateManager.color(afloat[0] * 2, afloat[1] * 2, afloat[2] * 2, 0.99f);
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -35,10 +34,10 @@ public class LayerInsignia implements LayerRenderer<EntityGem> {
 	
 	public ResourceLocation getTexture(EntityGem gem) {
 		ResourceLocation loc = EntityList.getKey(gem);
-		if (gem.hasInsigniaVariant(gem.getGemPlacement())) {
-			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/insignia_" + gem.getGemPlacement().toString().toLowerCase() + ".png");
+		if (gem.hasUniformVariant(gem.getGemPlacement())) {
+			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/uniform_" + gem.getGemPlacement().toString().toLowerCase() + ".png");
 		} else {
-			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/insignia.png");
+			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/uniform.png");
 		}
 	}
 	

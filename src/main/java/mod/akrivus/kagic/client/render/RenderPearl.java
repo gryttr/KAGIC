@@ -17,6 +17,8 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderPearl extends RenderLivingBase<EntityPearl> {
+	private static final float OFFSET = .75f;
+
 	public RenderPearl() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelPearl(), 0.25F);
         this.addLayer(new LayerPearlItem(this));
@@ -30,7 +32,7 @@ public class RenderPearl extends RenderLivingBase<EntityPearl> {
 	protected void preRenderCallback(EntityPearl gem, float partialTickTime) {
 		if (gem.getSpecialSkin().equals("_0")) {
 			float[] afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[((EntityPearl) gem).getColor()]);
-			GlStateManager.color(afloat[0], afloat[1], afloat[2]);
+			GlStateManager.color(afloat[0] + OFFSET, afloat[1] + OFFSET, afloat[2] + OFFSET);
 		}
 	}
 	protected ResourceLocation getEntityTexture(EntityPearl entity) {

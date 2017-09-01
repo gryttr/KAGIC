@@ -173,7 +173,7 @@ public class InjectorResult {
     	//Dirt/grass -> coarse dirt
     	//Coarse dirt -> gravel
     	//Stone -> drained stone
-    	if (state == Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT)) {
+    	if (state == Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT) || state == Blocks.SAND.getDefaultState()) {
     		world.setBlockState(ore, Blocks.GRAVEL.getDefaultState());
     	} else if (state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND) {
     		world.setBlockState(ore, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT));

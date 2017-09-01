@@ -8,6 +8,7 @@ import mod.akrivus.kagic.client.render.layers.LayerJasperMark1;
 import mod.akrivus.kagic.client.render.layers.LayerJasperMark2;
 import mod.akrivus.kagic.client.render.layers.LayerQuartzItem;
 import mod.akrivus.kagic.client.render.layers.LayerSkin;
+import mod.akrivus.kagic.client.render.layers.LayerUniform;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.entity.gem.EntityJasper;
 import net.minecraft.client.Minecraft;
@@ -22,6 +23,7 @@ public class RenderJasper extends RenderLivingBase<EntityJasper> {
         this.addLayer(new LayerSkin(this));
         this.addLayer(new LayerJasperMark1(this));
         this.addLayer(new LayerJasperMark2(this));
+        this.addLayer(new LayerUniform(this));
         this.addLayer(new LayerInsignia(this));
         this.addLayer(new LayerHair(this));
         this.addLayer(new LayerVisor(this));

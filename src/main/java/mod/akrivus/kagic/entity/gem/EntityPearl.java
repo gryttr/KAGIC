@@ -13,6 +13,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIPickUpItems;
 import mod.akrivus.kagic.entity.ai.EntityAISitStill;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
@@ -109,7 +110,11 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 	}
 
 	public float[] getGemColor() {
-		return EntitySheep.getDyeRgb(EnumDyeColor.values()[this.getColor()]);
+		float[] gemColor = EntitySheep.getDyeRgb(EnumDyeColor.values()[this.getColor()]).clone();
+		for (int i = 0; i < gemColor.length; ++i) {
+			gemColor[i] += 0.5f;
+		}
+		return gemColor;
     }
 	public void convertGems(int placement) {
     	this.setGemCut(GemCuts.CABOCHON.id);
@@ -125,7 +130,14 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
     		break;
     	}
     }
+	
+	@Override
 	public boolean canChangeInsigniaColorByDefault() {
+		return false;
+	}
+	
+	@Override
+	public boolean canChangeUniformColorByDefault() {
 		return false;
 	}
 	
