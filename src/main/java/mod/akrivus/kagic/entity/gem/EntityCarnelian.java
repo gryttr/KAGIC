@@ -333,6 +333,11 @@ public class EntityCarnelian extends EntityGem {
 	}
 	
 	@Override
+	public boolean hasCape() {
+		return true;
+	}
+	
+	@Override
 	public boolean hasHairVariant(GemPlacements placement) {
 		switch(placement) {
 		case FOREHEAD:

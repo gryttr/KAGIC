@@ -157,6 +157,15 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public boolean isPeaceful;
 	public boolean isSitting;
 	public boolean canTalk;
+	
+	//Used for capes
+    public double prevChasingPosX;
+    public double prevChasingPosY;
+    public double prevChasingPosZ;
+    public double chasingPosX;
+    public double chasingPosY;
+    public double chasingPosZ;
+	
 	private int dimensionOfCreation;
 	private int timeUntilBetrayal;
 	private int servitude = 0;
@@ -455,6 +464,67 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		super.onLivingUpdate();
 	}
 	
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+        this.updateCape();
+	}
+	
+	public boolean hasCape() {
+		return false;
+	}
+	
+    private void updateCape()
+    {
+        this.prevChasingPosX = this.chasingPosX;
+        this.prevChasingPosY = this.chasingPosY;
+        this.prevChasingPosZ = this.chasingPosZ;
+        double d0 = this.posX - this.chasingPosX;
+        double d1 = this.posY - this.chasingPosY;
+        double d2 = this.posZ - this.chasingPosZ;
+        double d3 = 10.0D;
+
+        if (d0 > 10.0D)
+        {
+            this.chasingPosX = this.posX;
+            this.prevChasingPosX = this.chasingPosX;
+        }
+
+        if (d2 > 10.0D)
+        {
+            this.chasingPosZ = this.posZ;
+            this.prevChasingPosZ = this.chasingPosZ;
+        }
+
+        if (d1 > 10.0D)
+        {
+            this.chasingPosY = this.posY;
+            this.prevChasingPosY = this.chasingPosY;
+        }
+
+        if (d0 < -10.0D)
+        {
+            this.chasingPosX = this.posX;
+            this.prevChasingPosX = this.chasingPosX;
+        }
+
+        if (d2 < -10.0D)
+        {
+            this.chasingPosZ = this.posZ;
+            this.prevChasingPosZ = this.chasingPosZ;
+        }
+
+        if (d1 < -10.0D)
+        {
+            this.chasingPosY = this.posY;
+            this.prevChasingPosY = this.chasingPosY;
+        }
+
+        this.chasingPosX += d0 * 0.25D;
+        this.chasingPosZ += d2 * 0.25D;
+        this.chasingPosY += d1 * 0.25D;
+    }
+
 	/*********************************************************
 	 * Methods related to entity interaction.				*
 	 *********************************************************/
@@ -1474,6 +1544,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 				strafe *= 2;
 			}
 		}
+		/*
 		if (this.dimensionOfCreation == -1) {
 			if (this.motionY > 0) {
 				this.motionY *= 2.0;
@@ -1481,7 +1552,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			else {
 				this.motionY *= 0.5;
 			}
-		}
+		}*/
 		super.travel(strafe, up, forward);
 	}
 	

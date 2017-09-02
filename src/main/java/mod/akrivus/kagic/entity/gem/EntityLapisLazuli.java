@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.common.base.Predicate;
@@ -12,12 +13,14 @@ import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -42,12 +45,20 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityLapisLazuli extends EntityGem {
 	public static final HashMap<Block, Double> LAPIS_LAZULI_YIELDS = new HashMap<Block, Double>();
 	public static final HashMap<Integer, ResourceLocation> LAPIS_LAZULI_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	public int ticksFlying = 0;
+
+	private static final int SKIN_COLOR_BEGIN = 0x4FEEFB;
+	private static final int SKIN_COLOR_END = 0x4FEEFB;
+	private static final int NUM_HAIRSTYLES = 1;
+	private static final int HAIR_COLOR_BEGIN = 0x1B6AD6;
+	private static final int HAIR_COLOR_END = 0x1B6AD6;
+	
 	public EntityLapisLazuli(World worldIn) {
 		super(worldIn);
 		this.setSize(0.6F, 1.9F);
@@ -106,6 +117,16 @@ public class EntityLapisLazuli extends EntityGem {
     	}
     }
 	
+	/*********************************************************
+	 * Methods related to loading.                           *
+	 *********************************************************/
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		this.setSkinColor(this.generateSkinColor());
+		this.setHairStyle(this.generateHairStyle());
+		this.setHairColor(this.generateHairColor());
+        return super.onInitialSpawn(difficulty, livingdata);
+    }
+
 	/*********************************************************
 	 * Methods related to interaction.                       *
 	 *********************************************************/
@@ -325,5 +346,29 @@ public class EntityLapisLazuli extends EntityGem {
 	}
 	public SoundEvent getDeathSound() {
 		return ModSounds.LAPIS_LAZULI_DEATH;
+	}
+
+	/*********************************************************
+	 * Methods related to rendering.                         *
+	 *********************************************************/
+	@Override
+	protected int generateSkinColor() {
+		ArrayList skinColors = new ArrayList();
+		skinColors.add(this.SKIN_COLOR_BEGIN);
+		skinColors.add(this.SKIN_COLOR_END);
+		return Colors.arbiLerp(skinColors);
+	}
+	
+	@Override
+	protected int generateHairStyle() {
+		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+	}
+	
+	@Override
+	protected int generateHairColor() {
+		ArrayList hairColors = new ArrayList();
+		hairColors.add(this.HAIR_COLOR_BEGIN);
+		hairColors.add(this.HAIR_COLOR_END);
+		return Colors.arbiLerp(hairColors);
 	}
 }
