@@ -13,8 +13,10 @@ import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIScareMobs;
 import mod.akrivus.kagic.entity.ai.EntityAISitStill;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -39,7 +41,47 @@ import net.minecraft.world.World;
 public class EntityAgate extends EntityGem {
 	public static final HashMap<Block, Double> AGATE_YIELDS = new HashMap<Block, Double>();
 	public static final ArrayList<ResourceLocation> AGATE_HAIR_STYLES = new ArrayList<ResourceLocation>();
+	public static final ArrayList<ResourceLocation> AGATE_BAND_STYLES = new ArrayList<ResourceLocation>();
 	private static final DataParameter<Integer> COLOR = EntityDataManager.<Integer>createKey(EntityAgate.class, DataSerializers.VARINT);
+
+	public static final float[][] AGATECOLORS = {
+			{(float)0xF9/255f, (float)0xFF/255f, (float)0xFE/255f}, //#F9FFFE	White
+			{(float)0xF9/255f, (float)0x80/255f, (float)0x1D/255f}, //#F9801D	Orange
+			{(float)0xC7/255f, (float)0x4E/255f, (float)0xBD/255f}, //#C74EBD	Magenta
+			{(float)0x3A/255f, (float)0xB3/255f, (float)0xDA/255f}, //#3AB3DA	Light blue
+			{(float)0xFE/255f, (float)0xD8/255f, (float)0x3D/255f}, //#FED83D	Yellow
+			{(float)0x80/255f, (float)0xC7/255f, (float)0x1F/255f}, //#80C71F	Lime
+			{(float)0xF3/255f, (float)0x8B/255f, (float)0xAA/255f}, //#F38BAA	Pink
+			{(float)0x47/255f, (float)0x4F/255f, (float)0x52/255f}, //#474F52	Gray
+			{(float)0x9D/255f, (float)0x9D/255f, (float)0x97/255f}, //#9D9D97	Light gray
+			{(float)0x16/255f, (float)0x9C/255f, (float)0x9C/255f}, //#169C9C	Cyan
+			{(float)0x89/255f, (float)0x32/255f, (float)0xB8/255f}, //#8932B8	Purple
+			{(float)0x3C/255f, (float)0x44/255f, (float)0xAA/255f}, //#3C44AA	Blue
+			{(float)0x83/255f, (float)0x54/255f, (float)0x32/255f}, //#835432	Brown
+			{(float)0x5E/255f, (float)0x7C/255f, (float)0x16/255f}, //#5E7C16	Green
+			{(float)0xB0/255f, (float)0x2E/255f, (float)0x26/255f}, //#B02E26	Red
+			{(float)0x1D/255f, (float)0x1D/255f, (float)0x21/255f}  //#1D1D21	Black
+	};
+	
+	public static final float[][] BANDCOLORS = {
+			{(float)0xF9/255f, (float)0xFF/255f, (float)0xFE/255f}, //#F9FFFE	White
+			{(float)0xF9/255f, (float)0x80/255f, (float)0x1D/255f}, //#F9801D	Orange
+			{(float)0xF9/255f, (float)0x80/255f, (float)0x1D/255f}, //Magenta Agua Nueva has Orange bands
+			{(float)0xF9/255f, (float)0xFF/255f, (float)0xFE/255f}, //Light Blue Lace has White bands
+			{(float)0xFE/255f, (float)0xD8/255f, (float)0x3D/255f}, //#FED83D	Yellow
+			{(float)0xF9/255f, (float)0xFF/255f, (float)0xFE/255f}, //Lime Moss has White bands
+			{(float)0xF3/255f, (float)0x8B/255f, (float)0xAA/255f}, //#F38BAA	Pink
+			{(float)0x47/255f, (float)0x4F/255f, (float)0x52/255f}, //#474F52	Gray
+			{(float)0x9D/255f, (float)0x9D/255f, (float)0x97/255f}, //#9D9D97	Light gray
+			{(float)0x3A/255f, (float)0xB3/255f, (float)0xDA/255f}, //Cyan Blue Lace has Light blue bands
+			{(float)0xF9/255f, (float)0x80/255f, (float)0x1D/255f}, //Purple Agua Nueva has Orange bands
+			{(float)0x3A/255f, (float)0xB3/255f, (float)0xDA/255f}, //Blue Lace has Light blue bands
+			{(float)0x3A/255f, (float)0xB3/255f, (float)0xDA/255f}, //Zimbabwe has Light blue bands
+			{(float)0x9D/255f, (float)0x9D/255f, (float)0x97/255f}, //Green Moss has Light gray bands
+			{(float)0xF9/255f, (float)0xFF/255f, (float)0xFE/255f}, //Red Lake Superior has White bands
+			{(float)0xF9/255f, (float)0xFF/255f, (float)0xFE/255f}, //Black Onyx has White bands
+	};
+	
 	public EntityAgate(World worldIn) {
 		super(worldIn);
 		this.setSize(0.9F, 2.3F);
@@ -87,7 +129,7 @@ public class EntityAgate extends EntityGem {
 		this.droppedCrackedGemItem = ModItems.CRACKED_AGATE_GEM;
         
         // Register entity data.
-        this.dataManager.register(COLOR, Integer.valueOf(new Random().nextInt(15)));
+        this.dataManager.register(COLOR, Integer.valueOf(new Random().nextInt(16)));
 	}
 
     public float[] getGemColor() {
@@ -156,6 +198,12 @@ public class EntityAgate extends EntityGem {
 		return this.getSpecial() == 1 || this.getName().toLowerCase().contains("holly");
 	}
 	
+	@Override
+	public boolean alternateInteract(EntityPlayer player) {
+		super.alternateInteract(player);
+		KAGIC.instance.chatInfoMessage("Agate type is " + this.getColor());
+		return false;
+	}
 	/*********************************************************
      * Methods related to death.                             *
      *********************************************************/
@@ -245,4 +293,24 @@ public class EntityAgate extends EntityGem {
 	public SoundEvent getDeathSound() {
 		return ModSounds.AGATE_DEATH;
 	}
+
+	/*********************************************************
+	 * Methods related to rendering.                         *
+	 *********************************************************/
+	public boolean hasBands() {
+		switch(this.getColor()) {
+		case 2: return true;
+		case 3: return true;
+		case 5: return true;
+		case 9: return true;
+		case 10: return true;
+		case 11: return true;
+		case 12: return true;
+		case 13: return true;
+		case 14: return true;
+		case 15: return true;
+		default: return false;
+		}
+	}
+	
 }

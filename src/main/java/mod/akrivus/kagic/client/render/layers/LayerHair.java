@@ -36,6 +36,7 @@ public class LayerHair implements LayerRenderer<EntityGem> {
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
         this.gemModel.render(gem, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+		GlStateManager.disableBlend();
 	}
 	
 	public ResourceLocation getHairStyle(EntityGem gem, int hairstyle) {

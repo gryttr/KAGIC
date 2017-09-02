@@ -20,15 +20,15 @@ public class ModelAgate extends ModelBiped {
 		this.bipedHeadwear.setRotationPoint(0F, 0F, 0F);
 		// Buns.
 		this.bipedSideBuns = new ModelRenderer(this, 0, 56);
-		this.bipedSideBuns.addBox(-10F, -10F, -2F, 20, 4, 4);
+		this.bipedSideBuns.addBox(-9F, -10F, -2F, 18, 4, 4);
 		this.bipedSideBuns.setRotationPoint(0F, 0F, 0F);
 		// Buns.
 		this.bipedTopBun = new ModelRenderer(this, 48, 54);
-		this.bipedTopBun.addBox(-2F, -19F, -2F, 4, 6, 4);
+		this.bipedTopBun.addBox(-2F, -17F, -2F, 4, 4, 4);
 		this.bipedTopBun.setRotationPoint(0F, 0F, 0F);
 		// Buns.
 		this.bipedBackBun = new ModelRenderer(this, 16, 38);
-		this.bipedBackBun.addBox(-2F, -10F, 5F, 4, 4, 6);
+		this.bipedBackBun.addBox(-2F, -10F, 5F, 4, 4, 4);
 		this.bipedBackBun.setRotationPoint(0F, 0F, 0F);
 		// Body.
 		this.bipedBody = new ModelRenderer(this, 16, 16);
