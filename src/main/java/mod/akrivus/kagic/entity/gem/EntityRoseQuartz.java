@@ -335,4 +335,14 @@ public class EntityRoseQuartz extends EntityGem {
 			return false;
 		}
 	}
+
+	@Override
+	public boolean hasHairVariant(GemPlacements placement) {
+		switch(placement) {
+		case FOREHEAD:
+			return true;
+		default:
+			return false;
+		}
+	}
 }

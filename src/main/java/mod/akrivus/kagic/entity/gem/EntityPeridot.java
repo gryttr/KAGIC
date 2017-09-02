@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.common.base.Predicate;
@@ -17,7 +18,9 @@ import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.util.injector.InjectorResult;
+import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -48,6 +51,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
@@ -62,6 +66,13 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	private BlockPos lastCheckPos;
 	private long lastCheckTime;
 	private InjectorResult lastResult;
+	
+	private static final int SKIN_COLOR_BEGIN = 0x98FF72;
+	private static final int SKIN_COLOR_END = 0x9CEC4D;
+	private static final int NUM_HAIRSTYLES = 2;
+	private static final int HAIR_COLOR_BEGIN = 0xEFF6B4;
+	private static final int HAIR_COLOR_END = 0xFFFF9B;
+	
 	public EntityPeridot(World worldIn) {
 		super(worldIn);
 		this.setSize(0.7F, 1.9F);
@@ -69,7 +80,8 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		this.seePastDoors();
 
 		//Define valid gem cuts and placements
-		this.setCutPlacement(GemCuts.PERIDOT, GemPlacements.BACK_OF_HEAD);
+		//No back of head because it gets covered up by squaridot hair
+		//this.setCutPlacement(GemCuts.PERIDOT, GemPlacements.BACK_OF_HEAD);
 		this.setCutPlacement(GemCuts.PERIDOT, GemPlacements.FOREHEAD);
 		this.setCutPlacement(GemCuts.PERIDOT, GemPlacements.LEFT_EYE);
 		this.setCutPlacement(GemCuts.PERIDOT, GemPlacements.RIGHT_EYE);
@@ -111,6 +123,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	public float[] getGemColor() {
     	return new float[] { 47F / 255F, 248F / 255F, 42F / 255F };
     }
+	
 	public void convertGems(int placement) {
     	switch (placement) {
     	case 0:
@@ -127,7 +140,14 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	/*********************************************************
 	 * Methods related to loading.                           *
 	 *********************************************************/
-	public void writeEntityToNBT(NBTTagCompound compound) {
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		this.setSkinColor(this.generateSkinColor());
+		this.setHairStyle(this.generateHairStyle());
+		this.setHairColor(this.generateHairColor());
+        return super.onInitialSpawn(difficulty, livingdata);
+    }
+
+    public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
         NBTTagList nbttaglist = new NBTTagList();
         for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
@@ -149,6 +169,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
         compound.setTag("harvestItems", nbttaglist);
         compound.setInteger("harvestTimer", this.harvestTimer);
 	}
+    
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
         NBTTagList nbttaglist = compound.getTagList("items", 10);
@@ -378,5 +399,29 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	}
 	public SoundEvent getDeathSound() {
 		return ModSounds.PERIDOT_DEATH;
+	}
+
+	/*********************************************************
+	 * Methods related to rendering.                         *
+	 *********************************************************/
+	@Override
+	protected int generateSkinColor() {
+		ArrayList skinColors = new ArrayList();
+		skinColors.add(this.SKIN_COLOR_BEGIN);
+		skinColors.add(this.SKIN_COLOR_END);
+		return Colors.arbiLerp(skinColors);
+	}
+	
+	@Override
+	protected int generateHairStyle() {
+		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+	}
+	
+	@Override
+	protected int generateHairColor() {
+		ArrayList hairColors = new ArrayList();
+		hairColors.add(this.HAIR_COLOR_BEGIN);
+		hairColors.add(this.HAIR_COLOR_END);
+		return Colors.arbiLerp(hairColors);
 	}
 }

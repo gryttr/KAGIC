@@ -539,6 +539,16 @@ public class EntityRuby extends EntityGem {
 		}
 	}
 	
+	@Override
+	public boolean hasHairVariant(GemPlacements placement) {
+		switch(placement) {
+		case FOREHEAD:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
 	public SoundEvent getAmbientSound() {
 		return ModSounds.RUBY_LIVING;
 	}

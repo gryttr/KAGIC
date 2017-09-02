@@ -332,6 +332,16 @@ public class EntityCarnelian extends EntityGem {
 		}
 	}
 	
+	@Override
+	public boolean hasHairVariant(GemPlacements placement) {
+		switch(placement) {
+		case FOREHEAD:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
 	@SideOnly(Side.CLIENT)
     public int getBrightnessForRender() {
         return isCharged() ? 15728880 : super.getBrightnessForRender();

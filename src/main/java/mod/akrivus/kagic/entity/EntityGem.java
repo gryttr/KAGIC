@@ -1758,6 +1758,10 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		return false;
 	}
 	
+	public boolean hasHairVariant(GemPlacements placement) {
+		return false;
+	}
+	
 	@SideOnly(Side.CLIENT)
 	public int getBrightnessForRender(/*float partialTicks*/) {
 		return this.isSpaceBorn ? 15728880 : super.getBrightnessForRender();

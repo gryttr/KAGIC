@@ -487,6 +487,16 @@ public class EntityJasper extends EntityGem {
 		}
 	}
 	
+	@Override
+	public boolean hasHairVariant(GemPlacements placement) {
+		switch(placement) {
+		case FOREHEAD:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
 	public boolean hasSecondMarking() {
 		return this.getSpecial() != 0;
 	}

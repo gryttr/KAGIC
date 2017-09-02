@@ -320,6 +320,16 @@ public class EntityTopaz extends EntityGem {
 		}
 	}
 
+	@Override
+	public boolean hasHairVariant(GemPlacements placement) {
+		switch(placement) {
+		case FOREHEAD:
+			return true;
+		default:
+			return false;
+		}
+	}
+	
 	/*********************************************************
      * Methods related to entity combat.                     *
      *********************************************************/

@@ -124,7 +124,7 @@ public class EntityRoamingEye extends EntityLiving {
 		            this.moveRelative(strafe, 0.0F, 0.0F, 0.0f);
 		        }
             	else {
-            		this.travel(strafe, up, 1.0F);
+            		super.travel(strafe, up, 1.0F);
             		this.moveRelative(strafe, up, 1.0f, 0.1f);
             	}
 				this.motionY = forward / 6;
