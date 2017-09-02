@@ -42,7 +42,7 @@ public class LayerHair implements LayerRenderer<EntityGem> {
 	public ResourceLocation getHairStyle(EntityGem gem, int hairstyle) {
 		ResourceLocation loc = EntityList.getKey(gem);
 		if (gem.hasHairVariant(gem.getGemPlacement())) {
-			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/hair_" + gem.getGemPlacement().toString().toLowerCase() + "png");
+			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/hair_" + gem.getGemPlacement().toString().toLowerCase() + ".png");
 		} else {
 			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/hair_" + gem.getHairStyle() + ".png");
 		}
