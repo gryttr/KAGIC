@@ -174,13 +174,14 @@ public class EntityAgate extends EntityGem {
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
     	boolean holly = this.rand.nextInt(9) == 0;
-        this.setHairStyle(this.rand.nextInt(EntityAgate.AGATE_HAIR_STYLES.size()));
-    	this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.agate_%1$d.name", this.getColor())).getUnformattedComponentText());
         if (holly) {
         	this.setCustomNameTag(new TextComponentTranslation("entity.kagic.agate_16.name").getUnformattedComponentText());
         	this.setGemPlacement(GemPlacements.BACK_OF_HEAD.id);
         	this.setGemCut(GemCuts.TEARDROP.id);
         	this.setSpecial(1);
+        } else {
+            this.setHairStyle(this.rand.nextInt(EntityAgate.AGATE_HAIR_STYLES.size()));
+        	this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.agate_%1$d.name", this.getColor())).getUnformattedComponentText());
         }
         return super.onInitialSpawn(difficulty, livingdata);
     }
