@@ -2,6 +2,7 @@ package mod.akrivus.kagic.util.injector;
 
 import java.util.ArrayList;
 
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModBlocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -26,7 +27,7 @@ public class ExitHole {
 	public void emerge(World world) {
 		for (BlockPos block : this.blocks) {
 			world.destroyBlock(block, false);
-			if (this.meltRocks && block.getY() == minY) {
+			if (this.meltRocks && block.getY() == minY && !world.isAirBlock(block.down())) {
 				world.setBlockState(block, ModBlocks.ROCK_MELT.getDefaultState());
 			}
 		}
@@ -38,7 +39,7 @@ public class ExitHole {
 		int brightestLight = 0;
 		for (int x = -9; x <= 9; ++x) {
 			BlockPos check = pos.add(x, 0, 0);
-			if (world.isAirBlock(check) && x <= shortestLength && world.getLight(check) >= brightestLight) {
+			if (world.isAirBlock(check) && Math.abs(x) <= shortestLength && world.getLight(check) >= brightestLight) {
 				brightestLight = world.getLight(check);
 				shortestLength = Math.abs(x);
 				if (x == 0) {
@@ -52,12 +53,14 @@ public class ExitHole {
 				}
 			}
 		}
+
 		for (int y = 0; y < height; ++y) {
 			blocksToDelete.add(pos.up(y));
 		}
+		
 		for (int z = -9; z <= 9; ++z) {
 			BlockPos check = pos.add(0, 0, z);
-			if (world.isAirBlock(check) && z <= shortestLength && world.getLight(check) >= brightestLight) {
+			if (world.isAirBlock(check) && Math.abs(z) <= shortestLength && world.getLight(check) >= brightestLight) {
 				brightestLight = world.getLight(check);
 				shortestLength = Math.abs(z);
 				if (z == 0) {
@@ -71,6 +74,7 @@ public class ExitHole {
 				}
 			}
 		}
+		
 		switch (direction) {
 		case 'n':
 			for (int z = 0; z <= shortestLength; ++z) {
@@ -95,7 +99,7 @@ public class ExitHole {
 			break;
 		case 'w':
 			for (int x = 0; x <= shortestLength; ++x) {
-				for (int y = 0; y <= height; ++y) {
+				for (int y = 0; y < height; ++y) {
 					blocksToDelete.add(pos.add(-x, y, 0));
 				}
 			}
