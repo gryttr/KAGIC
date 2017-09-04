@@ -32,8 +32,8 @@ import net.minecraftforge.fml.relauncher.Side;
 @Mod(modid = KAGIC.MODID, version = KAGIC.VERSION, acceptedMinecraftVersions = KAGIC.MCVERSION, guiFactory = "mod.akrivus.kagic.client.gui.GuiFactory")
 public class KAGIC {
     public static final String MODID = "kagic";
-    public static final String VERSION = "1.10.0-a1";
-    public static final String MCVERSION = "[1.12,1.12.1]";
+    public static final String VERSION = "@version";
+    public static final String MCVERSION = "@mcversion";
     public static final boolean DEVELOPER = true;
  
 	public static Logger logger;
