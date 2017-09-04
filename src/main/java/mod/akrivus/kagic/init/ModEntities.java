@@ -219,6 +219,14 @@ public class ModEntities {
 		EntityAgate.AGATE_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/agate/hair/top.png"));
 		EntityAgate.AGATE_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/agate/hair/spikes.png"));
 		EntityAgate.AGATE_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/agate/hair/axis.png"));
+ 		EntityAgate.AGATE_BAND_STYLES.add(new ResourceLocation("kagic:textures/entities/agate/band/holly.png"));
+ 		EntityAgate.AGATE_BAND_STYLES.add(new ResourceLocation("kagic:textures/entities/agate/band/back.png"));
+ 		EntityAgate.AGATE_BAND_STYLES.add(new ResourceLocation("kagic:textures/entities/agate/band/top.png"));
+ 		EntityAgate.AGATE_BAND_STYLES.add(new ResourceLocation("kagic:textures/entities/agate/band/spikes.png"));
+ 		EntityAgate.AGATE_BAND_STYLES.add(new ResourceLocation("kagic:textures/entities/agate/band/axis.png"));
+  		EntityPearl.PEARL_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/hair/blue.png"));
+  		EntityPearl.PEARL_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/hair/brows.png"));
+  		EntityPearl.PEARL_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/hair/curly.png"));
 		EntityPearl.PEARL_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/hair/blue.png"));
 		EntityPearl.PEARL_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/hair/brows.png"));
 		EntityPearl.PEARL_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/hair/curly.png"));
