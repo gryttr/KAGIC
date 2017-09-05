@@ -12,6 +12,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIAlignGems;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.block.Block;
@@ -112,15 +113,16 @@ public class EntityBlueDiamond extends EntityGem {
         this.setServitude(EntityGem.SERVE_BLUE_DIAMOND);
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
+    	//KAGIC.instance.chatInfoMessage("Blue Diamond onInitialSpawn called");
     	this.setServitude(EntityGem.SERVE_BLUE_DIAMOND);
     	EntityPearl pearl = new EntityPearl(this.world);
 		pearl.setPosition(this.posX, this.posY, this.posZ);
 		pearl.setServitude(EntityGem.SERVE_BLUE_DIAMOND);
-		pearl.setGemPlacement(GemPlacements.CHEST.id);
+		//pearl.setGemPlacement(GemPlacements.CHEST.id);
 		pearl.setSpecialSkin(1);
-		pearl.onInitialSpawn(difficulty, null);
 		this.world.spawnEntity(pearl);
-    	return super.onInitialSpawn(difficulty, livingdata);
+		pearl.onInitialSpawn(difficulty, null);
+		return super.onInitialSpawn(difficulty, livingdata);
     }
     public boolean isHooded() {
     	return this.dataManager.get(HOODED);
@@ -153,6 +155,7 @@ public class EntityBlueDiamond extends EntityGem {
 				amethyst.setRevengeTarget(this.getAttackTarget());
 				amethyst.setCitrine(false);
 				this.world.spawnEntity(amethyst);
+				amethyst.onInitialSpawn(this.world.getDifficultyForLocation(this.getPosition()), null);
 	    	}
 	    	++this.lastRecruitAttack;
 	    	if (this.lastSpecialAttack < 0 && this.rand.nextBoolean()) {

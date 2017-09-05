@@ -14,6 +14,7 @@ import mod.heimrarnadalr.kagic.chunk.KAGICChunkCallback;
 import mod.heimrarnadalr.kagic.crafting.KAGICSmeltingRecipes;
 import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
 import mod.heimrarnadalr.kagic.proxies.CommonProxy;
+import mod.heimrarnadalr.kagic.world.KAGICWorldGenerator;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.ForgeChunkManager;
@@ -27,6 +28,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = KAGIC.MODID, version = KAGIC.VERSION, acceptedMinecraftVersions = KAGIC.MCVERSION, guiFactory = "mod.akrivus.kagic.client.gui.GuiFactory")
@@ -41,6 +43,7 @@ public class KAGIC {
     @Instance
     public static KAGIC instance;
     public static SpaceStuff spaceStuff;
+    public static KAGICWorldGenerator worldGen = new KAGICWorldGenerator();
 
     @SidedProxy(clientSide = "mod.heimrarnadalr.kagic.proxies.ClientProxy", serverSide = "mod.heimrarnadalr.kagic.proxies.ServerProxy")
     public static CommonProxy proxy;
@@ -69,6 +72,7 @@ public class KAGIC {
 		if (e.getSide() == Side.CLIENT) {
 			ModTESRs.register();
 		}
+		GameRegistry.registerWorldGenerator(worldGen, 50);
     }
     
     @EventHandler

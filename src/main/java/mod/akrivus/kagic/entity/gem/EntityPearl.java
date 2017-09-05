@@ -182,6 +182,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
         }
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+    	KAGIC.instance.chatInfoMessage("Pearl onInitialSpawn called");
     	this.setHairStyle(this.rand.nextInt(EntityPearl.PEARL_HAIR_STYLES.size()));
     	this.setGemCut(GemCuts.CABOCHON.id);
         return super.onInitialSpawn(difficulty, livingdata);
