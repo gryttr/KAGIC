@@ -298,6 +298,11 @@ public class EntityAgate extends EntityGem {
 	/*********************************************************
 	 * Methods related to rendering.                         *
 	 *********************************************************/
+	@Override
+	public boolean hasCape() {
+		return true;
+	}
+	
 	public boolean hasBands() {
 		switch(this.getColor()) {
 		case 2: return true;
@@ -313,5 +318,4 @@ public class EntityAgate extends EntityGem {
 		default: return false;
 		}
 	}
-	
 }

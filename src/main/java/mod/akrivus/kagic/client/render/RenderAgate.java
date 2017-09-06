@@ -7,6 +7,7 @@ import mod.akrivus.kagic.client.render.layers.LayerAgateItem;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
 import mod.akrivus.kagic.client.render.layers.LayerNoDyeOverlay;
+import mod.akrivus.kagic.client.render.layers.LayerQuartzCape;
 import mod.akrivus.kagic.client.render.layers.LayerUniform;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.entity.gem.EntityAgate;
@@ -30,6 +31,7 @@ public class RenderAgate extends RenderLivingBase<EntityAgate> {
         this.addLayer(new LayerUniform(this));
         this.addLayer(new LayerInsignia(this));
         this.addLayer(new LayerVisor(this));
+        this.addLayer(new LayerQuartzCape(this));
         this.addLayer(new LayerGemPlacement(this));
     }
 	protected void preRenderCallback(EntityAgate agate, float partialTickTime) {

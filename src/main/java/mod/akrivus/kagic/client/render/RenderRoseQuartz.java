@@ -4,6 +4,7 @@ import mod.akrivus.kagic.client.model.ModelQuartz;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerHair;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
+import mod.akrivus.kagic.client.render.layers.LayerQuartzCape;
 import mod.akrivus.kagic.client.render.layers.LayerQuartzItem;
 import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerUniform;
@@ -23,6 +24,7 @@ public class RenderRoseQuartz extends RenderLivingBase<EntityRoseQuartz> {
         this.addLayer(new LayerInsignia(this));
         this.addLayer(new LayerHair(this));
         this.addLayer(new LayerVisor(this));
+        this.addLayer(new LayerQuartzCape(this));
         this.addLayer(new LayerGemPlacement(this));
     }
 	protected void preRenderCallback(EntityRoseQuartz entitylivingbaseIn, float partialTickTime) {

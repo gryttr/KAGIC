@@ -4,12 +4,12 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelAgate extends ModelBiped {
+public class ModelAgate extends ModelQuartz {
 	private ModelRenderer bipedSideBuns;
 	private ModelRenderer bipedTopBun;
 	private ModelRenderer bipedBackBun;
 	public ModelAgate() {
-		super(0.0F, 0.0F, 64, 64);
+		super();
 		// Head.
 		this.bipedHead = new ModelRenderer(this, 0, 0);
 		this.bipedHead.addBox(-4F, -12F, -4F, 8, 8, 8);

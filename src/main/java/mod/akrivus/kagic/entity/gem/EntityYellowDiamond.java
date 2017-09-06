@@ -128,6 +128,7 @@ public class EntityYellowDiamond extends EntityGem {
 				warrior.setServitude(EntityGem.SERVE_YELLOW_DIAMOND);
 				warrior.setRevengeTarget(this.getAttackTarget());
 				warrior.setColor(0);
+				warrior.onInitialSpawn(this.world.getDifficultyForLocation(this.getPosition()), null);
 				this.world.spawnEntity(warrior);
 	    	}
 	    	++this.lastRecruitAttack;

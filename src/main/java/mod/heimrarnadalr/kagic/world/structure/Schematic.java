@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class Schematic {
 	
 	
-	public static Map<Vec3i, IBlockState> loadSchematic(String schematic) {
+	public static StructureData loadSchematic(String schematic) {
 		NBTTagCompound schematicData;
 		try {
 			schematicData = CompressedStreamTools.readCompressed(Schematic.class.getResourceAsStream(schematic));
@@ -26,7 +26,7 @@ public class Schematic {
 			return null;
 		}
 		
-		Map<Vec3i, IBlockState> structure = new HashMap<Vec3i, IBlockState>();
+		Map<BlockPos, IBlockState> structureBlocks = new HashMap<BlockPos, IBlockState>();
 		
 		short length = schematicData.getShort("Length");
 		short width = schematicData.getShort("Width");
@@ -40,22 +40,46 @@ public class Schematic {
 			for (short z = 0; z < length; ++z) {
 				for (short x = 0; x < width; ++x) {
 					int index = (y * length + z) * width + x;
-					Vec3i pos = new BlockPos(x, y, z);
+					BlockPos pos = new BlockPos(x, y, z);
 					IBlockState blockState = Block.getBlockById(Byte.toUnsignedInt(blocks[index])).getStateFromMeta(Byte.toUnsignedInt(data[index]));
-					structure.put(pos, blockState);
+					structureBlocks.put(pos, blockState);
 				}
 			}
 		}
-		return structure;
+		return new StructureData(width, height, length, structureBlocks);
 	}
 	
-	public static void GenerateStructureAtPoint(String schematic, World world, BlockPos pos, boolean keepTerrain) {
-		Map<Vec3i, IBlockState> structure = Schematic.loadSchematic(schematic);
-		for (Vec3i offset : structure.keySet()) {
-			if (keepTerrain && structure.get(offset).getBlock() == Blocks.AIR) {
+	public static void GenerateStructureAtPoint(String schematic, World world, BlockPos pos, boolean keepTerrain, byte rotation) {
+		KAGIC.instance.chatInfoMessage("Using rotation " + rotation);
+		StructureData structure = Schematic.loadSchematic(schematic);
+		Map<BlockPos, IBlockState> structureBlocks = structure.getStructureBlocks();
+
+		int rotationCorrectionX = structure.getWidth() % 2 == 0 ? -1 : 1;
+		int rotationCorrectionZ = structure.getLength() % 2 == 0 ? -1 : 1;
+		for (BlockPos offset : structureBlocks.keySet()) {
+			BlockPos bP = offset;
+			if (rotation % 4 != 0) {
+				//translate origin to center
+				bP = offset.add(-structure.getWidth() / 2, 0, -structure.getLength() / 2);
+				//Rotate around center
+				switch (rotation % 4) {
+				case 1:
+					bP = new BlockPos(-bP.getZ() + rotationCorrectionX, bP.getY(), bP.getX());
+					break;
+				case 2:
+					bP = new BlockPos(-bP.getX() + rotationCorrectionX, bP.getY(), -bP.getZ() + rotationCorrectionZ);
+					break;
+				case 3:
+					bP = new BlockPos(bP.getZ(), bP.getY(), -bP.getX() + rotationCorrectionZ);
+					break;
+				}
+				//translate origin back to corner
+				bP = bP.add(structure.getWidth() / 2, 0, structure.getLength() / 2);
+			}
+			if (keepTerrain && structureBlocks.get(offset).getBlock() == Blocks.AIR) {
 				continue;
 			}
-			world.setBlockState(pos.add(offset), structure.get(offset));
+			world.setBlockState(pos.add(bP), structureBlocks.get(offset));
 		}
 	}
 }

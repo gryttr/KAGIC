@@ -24,12 +24,13 @@ public class RuinStructure extends WorldGenerator {
 	private final int width;
 	private final int foundationDepth;
 	private final boolean keepTerrain;
+	private final boolean randomRotation;
 	
 	protected final IBlockState foundationBlock;
 	protected Set<Biome> allowedBiomes = new HashSet<Biome>();
 	protected Set<IBlockState> allowedBlocks = new HashSet<IBlockState>();
 	
-	public RuinStructure(String file, String type, int length, int width, int foundationDepth, IBlockState foundation, boolean keepTerrain) {
+	public RuinStructure(String file, String type, int length, int width, int foundationDepth, IBlockState foundation, boolean keepTerrain, boolean randomRotation) {
 		this.fileLocation = file;
 		this.type = type;
 		this.length = length;
@@ -37,6 +38,7 @@ public class RuinStructure extends WorldGenerator {
 		this.foundationDepth = foundationDepth;
 		this.foundationBlock = foundation;
 		this.keepTerrain = keepTerrain;
+		this.randomRotation = randomRotation;
 	}
 	
 	public String getLocation() {
@@ -110,23 +112,25 @@ public class RuinStructure extends WorldGenerator {
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		if (!checkBiome(world, pos)) {
-			KAGIC.instance.chatInfoMessage("Biome check failed");
+			//KAGIC.instance.chatInfoMessage("Biome check failed");
 			return false;
 		}
 		if (!checkCorners(world, pos)) {
-			KAGIC.instance.chatInfoMessage("Corner check failed");
+			//KAGIC.instance.chatInfoMessage("Corner check failed");
 			return false;
 		}
 		Set<ChunkLocation> affectedChunks = this.getAffectedChunks(world, pos);
 		if (!checkChunks(world, affectedChunks)) {
-			KAGIC.instance.chatInfoMessage("Existing ruin check failed");
+			//KAGIC.instance.chatInfoMessage("Existing ruin check failed");
 			return false;
 		}
 		
-		KAGIC.instance.chatInfoMessage("Generating communication hub");
+		//KAGIC.instance.chatInfoMessage("Generating communication hub");
 		this.markChunks(world, affectedChunks);
 		this.generateFoundation(world, pos);
-		Schematic.GenerateStructureAtPoint(this.fileLocation, world, pos, this.keepTerrain);
+		
+		byte rotation = (byte) (this.randomRotation ? rand.nextInt(4) : 0);
+		Schematic.GenerateStructureAtPoint(this.fileLocation, world, pos, this.keepTerrain, rotation);
 		return true;
 	}
 	

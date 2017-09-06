@@ -86,7 +86,7 @@ public class EntityRutile extends EntityGem {
     }
 	public void onLivingUpdate() {
         if (this.isTamed() && !this.isSitting()) {	
-	        if (this.world.isAirBlock(this.getPosition()) && this.world.getLightFor(EnumSkyBlock.SKY, this.getPosition()) < 8) {
+	        if (this.world.isAirBlock(this.getPosition()) && this.world.isBlockNormalCube(this.getPosition().down(), false) && this.world.getLightFor(EnumSkyBlock.SKY, this.getPosition()) < 8) {
 	            this.world.setBlockState(this.getPosition(), ModBlocks.RUTILE_TRAIL.getDefaultState());
 	        }
 		}

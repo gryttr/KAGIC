@@ -1668,6 +1668,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	 * Methods related to entity death.					  *
 	 *********************************************************/
 	public void onDeath(DamageSource cause) {
+		this.world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, this.posX, this.posY + this.height / 2, this.posZ, 1.0D, 1.0D, 1.0D);
 		if (!this.world.isRemote) {
 			if (this.isFusion()) {
 				this.unfuse();
