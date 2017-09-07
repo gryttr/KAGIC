@@ -45,10 +45,10 @@ public class RuinStructure extends WorldGenerator {
 		return fileLocation;
 	}
 	
-	Set<ChunkLocation> getAffectedChunks(World world, BlockPos pos) {
+	Set<ChunkLocation> getAffectedChunks(World world, BlockPos pos, byte rotation) {
 		Set<ChunkLocation> chunks = new HashSet<ChunkLocation>();
 		ChunkLocation nearCorner = new ChunkLocation(pos.getX() >> 4, pos.getZ() >> 4);
-		BlockPos far = pos.add(this.width, 0, this.length);
+		BlockPos far = rotation % 2 == 0 ? pos.add(this.width, 0, this.length) : pos.add(this.length, 0, this.width);
 		ChunkLocation farCorner = new ChunkLocation(far.getX() >> 4, far.getZ() >> 4);
 		
 		for (int x = nearCorner.getX(); x <= farCorner.getX(); ++x) {
@@ -87,13 +87,13 @@ public class RuinStructure extends WorldGenerator {
 		if (!allowedBlocks.contains(world.getBlockState(corner1))) {
 			return false;
 		}
-		if (!allowedBlocks.contains(world.getBlockState(corner2)) || (Math.abs(corner2.getY() - corner1.getY()) - 1) > this.foundationDepth) {
+		if (!allowedBlocks.contains(world.getBlockState(corner2)) || (Math.abs(corner2.getY() - corner1.getY())) > this.foundationDepth) {
 			return false;
 		}
-		if (!allowedBlocks.contains(world.getBlockState(corner3)) || (Math.abs(corner3.getY() - corner1.getY()) - 1) > this.foundationDepth) {
+		if (!allowedBlocks.contains(world.getBlockState(corner3)) || (Math.abs(corner3.getY() - corner1.getY())) > this.foundationDepth) {
 			return false;
 		}
-		if (!allowedBlocks.contains(world.getBlockState(corner4)) || (Math.abs(corner4.getY() - corner1.getY()) - 1) > this.foundationDepth) {
+		if (!allowedBlocks.contains(world.getBlockState(corner4)) || (Math.abs(corner4.getY() - corner1.getY())) > this.foundationDepth) {
 			return false;
 		}
 		return true;
@@ -119,28 +119,31 @@ public class RuinStructure extends WorldGenerator {
 			//KAGIC.instance.chatInfoMessage("Corner check failed");
 			return false;
 		}
-		Set<ChunkLocation> affectedChunks = this.getAffectedChunks(world, pos);
+		byte rotation = (byte) (this.randomRotation ? rand.nextInt(4) : 0);
+		Set<ChunkLocation> affectedChunks = this.getAffectedChunks(world, pos, rotation);
 		if (!checkChunks(world, affectedChunks)) {
 			//KAGIC.instance.chatInfoMessage("Existing ruin check failed");
 			return false;
 		}
 		
-		//KAGIC.instance.chatInfoMessage("Generating communication hub");
+		KAGIC.instance.chatInfoMessage("Generating " + this.type);
 		this.markChunks(world, affectedChunks);
-		this.generateFoundation(world, pos);
+		this.generateFoundation(world, pos, rotation);
 		
-		byte rotation = (byte) (this.randomRotation ? rand.nextInt(4) : 0);
 		Schematic.GenerateStructureAtPoint(this.fileLocation, world, pos, this.keepTerrain, rotation);
 		return true;
 	}
 	
-	protected void generateFoundation(World world, BlockPos pos) {
+	protected void generateFoundation(World world, BlockPos pos, byte rotation) {
 		if (this.foundationDepth == 0) {
 			return;
 		}
 		
-		for (int x = 0; x < this.width; ++x) {
-			for (int z = 0; z < this.length; ++z) {
+		int width = rotation % 2 == 0 ? this.width : this.length;
+		int length = rotation % 2 == 0 ? this.length : this.width;
+		
+		for (int x = 0; x < width; ++x) {
+			for (int z = 0; z < length; ++z) {
 				for (int y = 1; y <= this.foundationDepth; ++y) {
 					world.setBlockState(pos.add(x, -y, z), this.foundationBlock);
 				}

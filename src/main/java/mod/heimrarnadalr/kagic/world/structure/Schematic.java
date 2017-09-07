@@ -5,11 +5,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mod.akrivus.kagic.init.KAGIC;
+import mod.akrivus.kagic.init.ModBlocks;
+import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
@@ -33,9 +39,9 @@ public class Schematic {
 		short height = schematicData.getShort("Height");
 		byte[] blocks = schematicData.getByteArray("Blocks");
 		byte[] data = schematicData.getByteArray("Data");
+		NBTTagList tileEntities = schematicData.getTagList("TileEntities", 10);
 
-		//i = (y * Length + z) * Width + x
-		
+		//i = (y * Length + z) * Width + x		
 		for (short y = 0; y < height; ++y) {
 			for (short z = 0; z < length; ++z) {
 				for (short x = 0; x < width; ++x) {
@@ -46,7 +52,7 @@ public class Schematic {
 				}
 			}
 		}
-		return new StructureData(width, height, length, structureBlocks);
+		return new StructureData(width, height, length, structureBlocks, tileEntities);
 	}
 	
 	public static void GenerateStructureAtPoint(String schematic, World world, BlockPos pos, boolean keepTerrain, byte rotation) {
@@ -54,32 +60,71 @@ public class Schematic {
 		StructureData structure = Schematic.loadSchematic(schematic);
 		Map<BlockPos, IBlockState> structureBlocks = structure.getStructureBlocks();
 
-		int rotationCorrectionX = structure.getWidth() % 2 == 0 ? -1 : 1;
-		int rotationCorrectionZ = structure.getLength() % 2 == 0 ? -1 : 1;
+		Rotation rot;
+		switch (rotation % 4) {
+		case 1:
+			rot = Rotation.CLOCKWISE_90;
+			break;
+		case 2:
+			rot = Rotation.CLOCKWISE_180;
+			break;
+		case 3:
+			rot = Rotation.COUNTERCLOCKWISE_90;
+			break;
+		default:
+			rot = Rotation.NONE;
+		}
+		
 		for (BlockPos offset : structureBlocks.keySet()) {
-			BlockPos bP = offset;
-			if (rotation % 4 != 0) {
-				//translate origin to center
-				bP = offset.add(-structure.getWidth() / 2, 0, -structure.getLength() / 2);
-				//Rotate around center
-				switch (rotation % 4) {
-				case 1:
-					bP = new BlockPos(-bP.getZ() + rotationCorrectionX, bP.getY(), bP.getX());
-					break;
-				case 2:
-					bP = new BlockPos(-bP.getX() + rotationCorrectionX, bP.getY(), -bP.getZ() + rotationCorrectionZ);
-					break;
-				case 3:
-					bP = new BlockPos(bP.getZ(), bP.getY(), -bP.getX() + rotationCorrectionZ);
-					break;
-				}
-				//translate origin back to corner
-				bP = bP.add(structure.getWidth() / 2, 0, structure.getLength() / 2);
-			}
 			if (keepTerrain && structureBlocks.get(offset).getBlock() == Blocks.AIR) {
 				continue;
 			}
-			world.setBlockState(pos.add(bP), structureBlocks.get(offset));
+			
+			BlockPos bP = Schematic.getRotatedPos(offset, structure.getWidth(), structure.getLength(), rotation);
+
+			world.setBlockState(pos.add(bP), structureBlocks.get(offset).withRotation(rot));
 		}
+		
+		for (NBTBase nbt : structure.getTileEntities()) {
+			TileEntity te = TileEntity.create(world, (NBTTagCompound) nbt);
+			if (te != null) {
+				int x = ((NBTTagCompound) nbt).getInteger("x");
+				int y = ((NBTTagCompound) nbt).getInteger("y");
+				int z = ((NBTTagCompound) nbt).getInteger("z");
+				BlockPos tePos = getRotatedPos(new BlockPos(x, y, z), structure.getWidth(), structure.getLength(), rotation);
+				if (te instanceof TileEntityWarpPadCore) {
+					world.setBlockState(pos.add(tePos), ModBlocks.WARP_PAD_CORE.getDefaultState());
+				} else {
+					KAGIC.instance.chatInfoMessage("Found tile entity of type " + te.getClass().getName());
+				}
+				world.setTileEntity(pos.add(tePos), te);
+			}
+		}
+	}
+	
+	private static BlockPos getRotatedPos(BlockPos original, int width, int length, byte rotation) {
+		int rotationCorrectionX = width % 2 == 0 ? -1 : 0;
+		int rotationCorrectionZ = length % 2 == 0 ? -1 : 0;
+		
+		BlockPos bP = original;
+		if (rotation % 4 != 0) {
+			//translate origin to center
+			bP = original.add(-width / 2, 0, -length / 2);
+			//Rotate around center
+			switch (rotation % 4) {
+			case 1:
+				bP = new BlockPos(-bP.getZ() + rotationCorrectionX, bP.getY(), bP.getX());
+				break;
+			case 2:
+				bP = new BlockPos(-bP.getX() + rotationCorrectionX, bP.getY(), -bP.getZ() + rotationCorrectionZ);
+				break;
+			case 3:
+				bP = new BlockPos(bP.getZ(), bP.getY(), -bP.getX() + rotationCorrectionZ);
+				break;
+			}
+			//translate origin back to corner
+			bP = bP.add(length / 2, 0, width / 2);
+		}
+		return bP;
 	}
 }

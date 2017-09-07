@@ -347,13 +347,13 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 				((EntityPlayerMP) entity).connection.setPlayerLocation(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
 			} else if (entity instanceof EntityLivingBase){
 				entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
-				
-				for (EntityPlayer player : ((WorldServer) this.world).getEntityTracker().getTrackingPlayers(entity)) {
-					KTPacketHandler.INSTANCE.sendTo(new EntityTeleportMessage(entity.getEntityId(), this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ), (EntityPlayerMP) player);
-				}
 			} else {
 				entity.setLocationAndAngles(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
 				entity.setRotationYawHead(entity.rotationYaw);
+			}
+			
+			for (EntityPlayer player : ((WorldServer) this.world).getEntityTracker().getTrackingPlayers(entity)) {
+				KTPacketHandler.INSTANCE.sendTo(new EntityTeleportMessage(entity.getEntityId(), this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ), (EntityPlayerMP) player);
 			}
 		}
 		this.warping = false;

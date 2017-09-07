@@ -227,7 +227,7 @@ public class EntityLapisLazuli extends EntityGem {
                     this.motionZ *= 0.5D;
                 }
                 else {
-	                float f = 0.91F * (this.isPrimary() ? 2.0F : 1.0F);
+	                float f = 0.91F * (this.isPrimary() ? 1.06F : 1.0F);
 	                if (!this.onGround) {
 		                float f1 = 0.16277136F / (f * f * f);
 			            this.moveRelative(strafe, up, 0.91F, 0.2F * f1);

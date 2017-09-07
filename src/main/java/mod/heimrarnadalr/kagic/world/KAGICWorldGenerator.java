@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import mod.heimrarnadalr.kagic.world.structure.CommunicationHub;
+import mod.heimrarnadalr.kagic.world.structure.DesertWarpPad;
 import mod.heimrarnadalr.kagic.world.structure.RuinStructure;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -17,6 +18,7 @@ public class KAGICWorldGenerator implements IWorldGenerator {
 	
 	public KAGICWorldGenerator() {
 		ruins.add(new CommunicationHub("/assets/kagic/structures/CommHub2.schematic"));
+		ruins.add(new DesertWarpPad("/assets/kagic/structures/DesertWarpPad.schematic"));
 	}
 	
 	@Override
