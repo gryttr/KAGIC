@@ -345,6 +345,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			
 			if (entity instanceof EntityPlayerMP) {
 				((EntityPlayerMP) entity).connection.setPlayerLocation(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
+				KTPacketHandler.INSTANCE.sendTo(new EntityTeleportMessage(entity.getEntityId(), this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ), (EntityPlayerMP) entity);
 			} else if (entity instanceof EntityLivingBase){
 				entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
 			} else {
@@ -354,6 +355,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			
 			for (EntityPlayer player : ((WorldServer) this.world).getEntityTracker().getTrackingPlayers(entity)) {
 				KTPacketHandler.INSTANCE.sendTo(new EntityTeleportMessage(entity.getEntityId(), this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ), (EntityPlayerMP) player);
+				KAGIC.instance.chatInfoMessage("Player " + player.getName() + " is tracking entity " + entity.getName());
 			}
 		}
 		this.warping = false;
