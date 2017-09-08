@@ -46,7 +46,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityLapisLazuli extends EntityGem {
-	public static final HashMap<Block, Double> LAPIS_LAZULI_YIELDS = new HashMap<Block, Double>();
+	public static final HashMap<IBlockState, Double> LAPIS_LAZULI_YIELDS = new HashMap<IBlockState, Double>();
 	public static final HashMap<Integer, ResourceLocation> LAPIS_LAZULI_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	public int ticksFlying = 0;
 

@@ -337,7 +337,6 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			
 			for (EntityPlayer player : ((WorldServer) this.world).getEntityTracker().getTrackingPlayers(entity)) {
 				KTPacketHandler.INSTANCE.sendTo(new EntityTeleportMessage(entity.getEntityId(), this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ), (EntityPlayerMP) player);
-				KAGIC.instance.chatInfoMessage("Player " + player.getName() + " is tracking entity " + entity.getName());
 			}
 		}
 		this.warping = false;

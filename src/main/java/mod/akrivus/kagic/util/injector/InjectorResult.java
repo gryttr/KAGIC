@@ -93,7 +93,7 @@ public class InjectorResult {
 		for (String gem : ModEntities.GEMS.keySet()) {
     		try {
         		Class<EntityGem> gemClass = (Class<EntityGem>) ModEntities.GEMS.get(gem);
-        		HashMap<Block, Double> yield = (HashMap<Block, Double>) gemClass.getField((gem + "_yields").toUpperCase()).get(null);
+        		HashMap<IBlockState, Double> yield = (HashMap<IBlockState, Double>) gemClass.getField((gem + "_yields").toUpperCase()).get(null);
 				double defectivityRate = 1.0;
 				double frictionFactor = 0.0;
 				for (int x = -4; x <= 4; ++x) {
@@ -105,8 +105,8 @@ public class InjectorResult {
 		                		if (!resultTable.containsKey(gemClass)) {
 		                			resultTable.put(gemClass, 0.0);
 		                		}
-		                		if (yield.containsKey(state.getBlock())) {
-		                			resultTable.put(gemClass, resultTable.get(gemClass) + yield.get(state.getBlock()));
+		                		if (yield.containsKey(state)) {
+		                			resultTable.put(gemClass, resultTable.get(gemClass) + yield.get(state));
 		                			frictionFactor += 0.003;
 		                			defectivityRate -= 0.2;
 		                			
@@ -192,15 +192,10 @@ public class InjectorResult {
     	//Stone -> drained stone
     	if (state == Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT) || state == Blocks.SAND.getDefaultState()) {
     		world.setBlockState(ore, Blocks.GRAVEL.getDefaultState());
-    	}
-    	else if (state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND) {
+    	} else if (state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND) {
     		world.setBlockState(ore, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT));
-    	}
-    	else if (state.getMaterial() == Material.ROCK && state.isFullCube()) {
+    	} else if (state.getMaterial() == Material.ROCK && state.isFullCube()) {
     		world.setBlockState(ore, ModBlocks.DRAINED_BLOCK.getDefaultState());
     	}
-    	else if (state.getBlock() == Blocks.GRAVEL) {
-			world.setBlockState(ore, ModBlocks.DRAINED_BLOCK.getDefaultState());
-		}
 	}
 }

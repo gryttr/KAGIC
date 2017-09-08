@@ -12,6 +12,7 @@ import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -26,7 +27,7 @@ import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 
 public class EntityRutile extends EntityGem {
-	public static final HashMap<Block, Double> RUTILE_YIELDS = new HashMap<Block, Double>();
+	public static final HashMap<IBlockState, Double> RUTILE_YIELDS = new HashMap<IBlockState, Double>();
 	public EntityRutile(World worldIn) {
 		super(worldIn);
 		this.setSize(0.6F, 1.9F);

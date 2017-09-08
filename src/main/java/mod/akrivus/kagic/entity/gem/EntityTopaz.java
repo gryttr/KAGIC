@@ -12,6 +12,7 @@ import mod.akrivus.kagic.entity.ai.EntityAITopazFuse;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -37,7 +38,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityTopaz extends EntityGem {
-	public static final HashMap<Block, Double> TOPAZ_YIELDS = new HashMap<Block, Double>();
+	public static final HashMap<IBlockState, Double> TOPAZ_YIELDS = new HashMap<IBlockState, Double>();
 		
 	private static final int SKIN_COLOR_YELLOW = 0xF6E83E; 
 	private static final int SKIN_COLOR_BLUE = 0x5167fB; 

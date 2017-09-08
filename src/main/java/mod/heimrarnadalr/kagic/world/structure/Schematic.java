@@ -122,7 +122,11 @@ public class Schematic {
 				break;
 			}
 			//translate origin back to corner
-			bP = bP.add(length / 2, 0, width / 2);
+			if (rotation == 1 || rotation == 3) {
+				bP = bP.add(length / 2, 0, width / 2);
+			} else {
+				bP = bP.add(width / 2, 0, length / 2);
+			}
 		}
 		return bP;
 	}

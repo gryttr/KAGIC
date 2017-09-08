@@ -19,6 +19,7 @@ import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -64,7 +65,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityRuby extends EntityGem {
-	public static final HashMap<Block, Double> RUBY_YIELDS = new HashMap<Block, Double>();
+	public static final HashMap<IBlockState, Double> RUBY_YIELDS = new HashMap<IBlockState, Double>();
 	private static final DataParameter<Integer> ANGER = EntityDataManager.<Integer>createKey(EntityRuby.class, DataSerializers.VARINT);
 	private int angerTicks = 0;
 	

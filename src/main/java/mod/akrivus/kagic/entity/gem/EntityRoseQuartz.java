@@ -49,7 +49,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityRoseQuartz extends EntityGem {
-	public static final HashMap<Block, Double> ROSE_QUARTZ_YIELDS = new HashMap<Block, Double>();
+	public static final HashMap<IBlockState, Double> ROSE_QUARTZ_YIELDS = new HashMap<IBlockState, Double>();
 	public static final HashMap<Integer, ResourceLocation> ROSE_QUARTZ_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private BlockPos lastSurgeLocation;
 	private int regenTicks = 0;
