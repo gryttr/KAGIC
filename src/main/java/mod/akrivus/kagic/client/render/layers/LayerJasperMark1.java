@@ -1,24 +1,22 @@
 package mod.akrivus.kagic.client.render.layers;
 
-import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.client.render.RenderJasper;
 import mod.akrivus.kagic.entity.gem.EntityJasper;
-import mod.akrivus.kagic.entity.gem.GemPlacements;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
 
 public class LayerJasperMark1 implements LayerRenderer<EntityJasper> {
-	private final RenderLivingBase<EntityGem> gemRenderer;
+	private final RenderJasper gemRenderer;
 	private final ModelBase gemModel;
 	
-	public LayerJasperMark1(RenderLivingBase gemRendererIn) {
-		this.gemRenderer = gemRendererIn;
-		this.gemModel = gemRendererIn.getMainModel();
+	public LayerJasperMark1(RenderJasper renderJasper) {
+		this.gemRenderer = renderJasper;
+		this.gemModel = renderJasper.getMainModel();
 	}
 
 	@Override

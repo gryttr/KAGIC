@@ -1,7 +1,6 @@
 package mod.akrivus.kagic.entity.ai;
 
 import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
-import mod.akrivus.kagic.init.ModAchievements;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;

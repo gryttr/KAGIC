@@ -1,24 +1,20 @@
 package mod.akrivus.kagic.client.render.layers;
 
-import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.client.render.RenderAgate;
 import mod.akrivus.kagic.entity.gem.EntityAgate;
-import mod.akrivus.kagic.entity.gem.GemPlacements;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.entity.EntityList;
-import net.minecraft.util.ResourceLocation;
 
 public class LayerAgateBand implements LayerRenderer<EntityAgate> {
-	private final RenderLivingBase<EntityGem> gemRenderer;
+	private final RenderAgate gemRenderer;
 	private final ModelBase gemModel;
 	
-	public LayerAgateBand(RenderLivingBase gemRendererIn) {
-		this.gemRenderer = gemRendererIn;
-		this.gemModel = gemRendererIn.getMainModel();
+	public LayerAgateBand(RenderAgate renderAgate) {
+		this.gemRenderer = renderAgate;
+		this.gemModel = renderAgate.getMainModel();
 	}
 
 	@Override

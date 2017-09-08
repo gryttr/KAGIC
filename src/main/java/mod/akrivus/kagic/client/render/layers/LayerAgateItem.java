@@ -1,24 +1,24 @@
 package mod.akrivus.kagic.client.render.layers;
 
+import mod.akrivus.kagic.client.render.RenderAgate;
+import mod.akrivus.kagic.entity.gem.EntityAgate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHandSide;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class LayerAgateItem implements LayerRenderer<EntityLivingBase> {
-    protected final RenderLivingBase<?> livingEntityRenderer;
-    public LayerAgateItem(RenderLivingBase<?> livingEntityRendererIn) {
-        this.livingEntityRenderer = livingEntityRendererIn;
+public class LayerAgateItem implements LayerRenderer<EntityAgate> {
+    protected final RenderAgate livingEntityRenderer;
+    public LayerAgateItem(RenderAgate renderAgate) {
+        this.livingEntityRenderer = renderAgate;
     }
-    public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    public void doRenderLayer(EntityAgate entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         boolean flag = entitylivingbaseIn.getPrimaryHand() == EnumHandSide.RIGHT;
         ItemStack itemstack = flag ? entitylivingbaseIn.getHeldItemOffhand() : entitylivingbaseIn.getHeldItemMainhand();
         ItemStack itemstack1 = flag ? entitylivingbaseIn.getHeldItemMainhand() : entitylivingbaseIn.getHeldItemOffhand();
@@ -29,7 +29,7 @@ public class LayerAgateItem implements LayerRenderer<EntityLivingBase> {
             GlStateManager.popMatrix();
         }
     }
-    private void renderHeldItem(EntityLivingBase entity, ItemStack stack, ItemCameraTransforms.TransformType camera, EnumHandSide handSide) {
+    private void renderHeldItem(EntityAgate entity, ItemStack stack, ItemCameraTransforms.TransformType camera, EnumHandSide handSide) {
         if (!stack.isEmpty()) {
             GlStateManager.pushMatrix();
             if (entity.isSneaking()) {

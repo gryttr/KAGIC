@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.UUID;
 
 import mod.akrivus.kagic.entity.gem.EntityAquamarine;
-import mod.akrivus.kagic.init.ModAchievements;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockLiquid;

@@ -9,11 +9,9 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
 
 public class LayerFusionPlacement implements LayerRenderer<EntityGem> {
-	private final RenderLivingBase<EntityGem> gemRenderer;
+	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
-	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public LayerFusionPlacement(RenderLivingBase gemRendererIn) {
+	public LayerFusionPlacement(RenderLivingBase<?> gemRendererIn) {
 		this.gemRenderer = gemRendererIn;
 		this.gemModel = gemRendererIn.getMainModel();
 	}

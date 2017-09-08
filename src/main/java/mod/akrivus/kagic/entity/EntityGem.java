@@ -1,6 +1,5 @@
 package mod.akrivus.kagic.entity;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,7 +15,6 @@ import java.util.regex.Pattern;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 
-import mod.akrivus.kagic.client.gui.GUIWarpPadList.PadListEntry;
 import mod.akrivus.kagic.entity.ai.EntityAIAttackRangedBow;
 import mod.akrivus.kagic.entity.ai.EntityAIPredictFights;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
@@ -25,7 +23,6 @@ import mod.akrivus.kagic.entity.gem.EntityYellowDiamond;
 import mod.akrivus.kagic.entity.gem.GemCuts;
 import mod.akrivus.kagic.entity.gem.GemPlacements;
 import mod.akrivus.kagic.init.KAGIC;
-import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModConfigs;
 import mod.akrivus.kagic.init.ModEnchantments;
 import mod.akrivus.kagic.init.ModItems;
@@ -39,7 +36,6 @@ import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import mod.akrivus.kagic.util.PoofDamage;
 import mod.akrivus.kagic.util.ShatterDamage;
 import mod.akrivus.kagic.util.SlagDamage;
-import mod.heimrarnadalr.kagic.reflection.ReflectionUtils;
 import mod.heimrarnadalr.kagic.worlddata.WarpPadDataEntry;
 import mod.heimrarnadalr.kagic.worlddata.WorldDataWarpPad;
 import net.minecraft.enchantment.Enchantment;

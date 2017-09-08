@@ -1,28 +1,16 @@
 package mod.akrivus.kagic.items;
 
-import mod.akrivus.kagic.client.gui.KTGUIProxy;
-import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModCreativeTabs;
 import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
 import mod.heimrarnadalr.kagic.networking.PadDataRequestMessage;
-import mod.heimrarnadalr.kagic.networking.TENameMessage;
-import mod.heimrarnadalr.kagic.worlddata.WorldDataWarpPad;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemWarpWhistle extends Item {
 

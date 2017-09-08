@@ -1,7 +1,6 @@
 package mod.akrivus.kagic.client.render.layers;
 
 import mod.akrivus.kagic.entity.EntityGem;
-import mod.akrivus.kagic.entity.gem.EntityAgate;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -11,10 +10,9 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
 
 public class LayerDiamondGlow implements LayerRenderer<EntityGem> {
-	private final RenderLivingBase<EntityAgate> gemRenderer;
+	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public LayerDiamondGlow(RenderLivingBase gemRendererIn) {
+	public LayerDiamondGlow(RenderLivingBase<?> gemRendererIn) {
 		this.gemRenderer = gemRendererIn;
 		this.gemModel = gemRendererIn.getMainModel();
 	}

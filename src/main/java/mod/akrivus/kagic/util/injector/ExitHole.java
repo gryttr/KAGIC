@@ -2,7 +2,6 @@ package mod.akrivus.kagic.util.injector;
 
 import java.util.ArrayList;
 
-import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModBlocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

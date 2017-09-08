@@ -2,18 +2,12 @@ package mod.akrivus.kagic.client.render.layers;
 
 import mod.akrivus.kagic.client.model.ModelQuartz;
 import mod.akrivus.kagic.entity.EntityGem;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
-import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.entity.player.EnumPlayerModelParts;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -21,9 +15,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class LayerQuartzCape implements LayerRenderer<EntityGem> {
-	private final RenderLivingBase<EntityGem> gemRenderer;
+	private final RenderLivingBase<?> gemRenderer;
 
-	public LayerQuartzCape(RenderLivingBase gemRendererIn) {
+	public LayerQuartzCape(RenderLivingBase<?> gemRendererIn) {
 		this.gemRenderer = gemRendererIn;
 	}
 

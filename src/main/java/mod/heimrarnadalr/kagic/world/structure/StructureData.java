@@ -5,7 +5,6 @@ import java.util.Map;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3i;
 
 public class StructureData {
 	private short width;

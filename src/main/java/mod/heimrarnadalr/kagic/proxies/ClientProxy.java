@@ -3,7 +3,6 @@ package mod.heimrarnadalr.kagic.proxies;
 import java.util.LinkedHashMap;
 
 import mod.akrivus.kagic.client.gui.GUIWarpPadSelection;
-import mod.akrivus.kagic.init.KAGIC;
 import mod.heimrarnadalr.kagic.worlddata.WarpPadDataEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;

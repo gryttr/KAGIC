@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.google.common.base.Predicate;
 
-import mod.akrivus.kagic.dimensions.homeworld.TeleporterHomeworld;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityAgate;
 import mod.akrivus.kagic.entity.gem.EntityRuby;
@@ -19,7 +18,6 @@ import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.SoundCategory;

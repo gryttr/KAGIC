@@ -2,7 +2,6 @@ package mod.akrivus.kagic.tileentity;
 
 import org.lwjgl.opengl.GL11;
 
-import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

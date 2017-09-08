@@ -14,8 +14,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class LayerRubyItem implements LayerRenderer<EntityRuby> {
-    protected final RenderLivingBase<?> livingEntityRenderer;
-    public LayerRubyItem(RenderLivingBase<?> livingEntityRendererIn) {
+    protected final RenderLivingBase<EntityRuby> livingEntityRenderer;
+    public LayerRubyItem(RenderLivingBase<EntityRuby> livingEntityRendererIn) {
         this.livingEntityRenderer = livingEntityRendererIn;
     }
     public void doRenderLayer(EntityRuby entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {

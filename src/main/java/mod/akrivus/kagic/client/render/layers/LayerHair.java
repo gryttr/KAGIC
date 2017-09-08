@@ -1,10 +1,6 @@
 package mod.akrivus.kagic.client.render.layers;
 
-import java.util.ArrayList;
-
 import mod.akrivus.kagic.entity.EntityGem;
-import mod.akrivus.kagic.entity.gem.GemPlacements;
-import mod.akrivus.kagic.init.ModEntities;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
@@ -12,15 +8,12 @@ import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityList;
-import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 
 public class LayerHair implements LayerRenderer<EntityGem> {
-	private final RenderLivingBase<EntityGem> gemRenderer;
+	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
-	
-	public LayerHair(RenderLivingBase gemRendererIn) {
+	public LayerHair(RenderLivingBase<?> gemRendererIn) {
 		this.gemRenderer = gemRendererIn;
 		this.gemModel = gemRendererIn.getMainModel();
 	}

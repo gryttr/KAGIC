@@ -1,10 +1,10 @@
 package mod.akrivus.kagic.client.render.layers;
 
+import mod.akrivus.kagic.client.render.RenderTopaz;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -14,9 +14,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class LayerTopazItem implements LayerRenderer<EntityLivingBase> {
-    protected final RenderLivingBase<?> livingEntityRenderer;
-    public LayerTopazItem(RenderLivingBase<?> livingEntityRendererIn) {
-        this.livingEntityRenderer = livingEntityRendererIn;
+    protected final RenderTopaz livingEntityRenderer;
+    public LayerTopazItem(RenderTopaz renderTopaz) {
+        this.livingEntityRenderer = renderTopaz;
     }
     public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         boolean flag = entitylivingbaseIn.getPrimaryHand() == EnumHandSide.RIGHT;
