@@ -1,7 +1,6 @@
 package mod.akrivus.kagic.client.render.layers;
 
 import mod.akrivus.kagic.entity.EntityGem;
-import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.GlStateManager.DestFactor;
@@ -12,10 +11,10 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
 
 public class LayerSkin implements LayerRenderer<EntityGem> {
-	private final RenderLivingBase<EntityGem> gemRenderer;
+	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
 	
-	public LayerSkin(RenderLivingBase gemRendererIn) {
+	public LayerSkin(RenderLivingBase<?> gemRendererIn) {
 		this.gemRenderer = gemRendererIn;
 		this.gemModel = gemRendererIn.getMainModel();
 	}

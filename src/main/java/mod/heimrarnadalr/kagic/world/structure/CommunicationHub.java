@@ -2,8 +2,6 @@ package mod.heimrarnadalr.kagic.world.structure;
 
 import java.util.Random;
 
-import mod.akrivus.kagic.init.KAGIC;
-import mod.heimrarnadalr.kagic.worlddata.ChunkLocation;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;

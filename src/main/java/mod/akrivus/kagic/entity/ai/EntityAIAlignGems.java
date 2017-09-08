@@ -3,7 +3,6 @@ package mod.akrivus.kagic.entity.ai;
 import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityGem;
-import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.entity.ai.EntityAIBase;
 
 public class EntityAIAlignGems extends EntityAIBase {

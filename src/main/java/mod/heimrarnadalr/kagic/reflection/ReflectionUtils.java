@@ -3,8 +3,8 @@ package mod.heimrarnadalr.kagic.reflection;
 import java.lang.reflect.Field;
 
 public class ReflectionUtils {
-	public static Field getFieldFromSuperclass(Class inClass, Class superClass, String fieldName) {
-		Class c = inClass;
+	public static Field getFieldFromSuperclass(Class<?> inClass, Class<?> superClass, String fieldName) {
+		Class<?> c = inClass;
 		while (c != superClass) {
 			c = c.getSuperclass();
 			if (c == Object.class) {

@@ -1,6 +1,5 @@
 package mod.akrivus.kagic.entity.gem;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import mod.akrivus.kagic.entity.EntityGem;
@@ -10,11 +9,8 @@ import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.entity.ai.EntityAITopazFuse;
-import mod.akrivus.kagic.init.KAGIC;
-import mod.akrivus.kagic.init.ModAchievements;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
-import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

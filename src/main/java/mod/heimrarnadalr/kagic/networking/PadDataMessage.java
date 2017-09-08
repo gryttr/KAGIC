@@ -3,28 +3,20 @@ package mod.heimrarnadalr.kagic.networking;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import io.netty.buffer.ByteBuf;
-import mod.akrivus.kagic.client.gui.GUIWarpPadSelection;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.heimrarnadalr.kagic.worlddata.WarpPadDataEntry;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PadDataMessage implements IMessage {
 	private NBTTagCompound padDataCompound;

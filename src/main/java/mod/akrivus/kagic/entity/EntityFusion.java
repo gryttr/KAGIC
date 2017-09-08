@@ -1,7 +1,6 @@
 package mod.akrivus.kagic.entity;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import mod.akrivus.kagic.entity.gem.GemCuts;
 import mod.akrivus.kagic.entity.gem.GemPlacements;

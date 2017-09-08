@@ -9,10 +9,9 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
 
 public class LayerNoDyeOverlay implements LayerRenderer<EntityGem> {
-	private final RenderLivingBase<EntityGem> gemRenderer;
+	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public LayerNoDyeOverlay(RenderLivingBase gemRendererIn) {
+	public LayerNoDyeOverlay(RenderLivingBase<?> gemRendererIn) {
 		this.gemRenderer = gemRendererIn;
 		this.gemModel = gemRendererIn.getMainModel();
 	}

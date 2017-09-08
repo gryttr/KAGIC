@@ -12,7 +12,6 @@ import mod.akrivus.kagic.entity.ai.EntityAIAlignGems;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
-import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.block.Block;

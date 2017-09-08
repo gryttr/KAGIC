@@ -3,9 +3,7 @@ package mod.akrivus.kagic.init;
 import mod.akrivus.kagic.enchantment.EnchantmentBreakingPoint;
 import mod.akrivus.kagic.enchantment.EnchantmentFairFight;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModEnchantments {
 	public static final EnchantmentBreakingPoint BREAKING_POINT = new EnchantmentBreakingPoint();

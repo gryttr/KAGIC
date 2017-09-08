@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
@@ -59,7 +58,7 @@ public class WorldDataRuins extends WorldSavedData {
 		Iterator<Entry<ChunkLocation, String>> it = this.ruins.entrySet().iterator();
 		while (it.hasNext()) {
 			NBTTagCompound tc = new NBTTagCompound();
-			Map.Entry pair = it.next();
+			Entry<ChunkLocation, String> pair = it.next();
 			tc.setInteger("x", ((ChunkLocation) pair.getKey()).getX());
 			tc.setInteger("z", ((ChunkLocation) pair.getKey()).getZ());
 			tc.setString("type", (String) (pair.getValue()));

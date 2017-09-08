@@ -1,18 +1,17 @@
 package mod.akrivus.kagic.util.injector;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.EntitySlag;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModEntities;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockAir;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockStone;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -127,22 +126,40 @@ public class InjectorResult {
 				System.out.println("Error creating gem: " + e.getMessage());
     		}
 		}
-		ArrayList<EntityGem> spawnlist = new ArrayList<EntityGem>();
+		boolean canSpawnGem = false;
+		Class<EntityGem> mostLikelyGem = null;
+		double highestYield = 0.0;
 		for (Class<EntityGem> gemClass : resultTable.keySet()) {
 			if (!gemClass.getName().contains("Diamond")) {
-		        int multiples = (int) (resultTable.get(gemClass) * 10);
-		        for (int i = 0; i < multiples; ++i) {
-		        	try {
-		        		spawnlist.add((EntityGem) gemClass.getConstructors()[0].newInstance(world));
+				boolean forget = world.rand.nextBoolean();
+				if (resultTable.get(gemClass) > 0.1 && world.rand.nextInt((int)(resultTable.get(gemClass) * 10) + 1) == 0) {
+					highestYield = resultTable.get(gemClass);
+			        mostLikelyGem = gemClass;
+			        canSpawnGem = true;
+				}
+				else {
+					if (resultTable.get(gemClass) == highestYield) {
+			        	highestYield = forget ? resultTable.get(gemClass) : highestYield;
+			        	mostLikelyGem = forget ? gemClass : mostLikelyGem;
+			        	canSpawnGem = true;
+			        }
+					else if (resultTable.get(gemClass) > highestYield) {
+				        highestYield = resultTable.get(gemClass);
+				        mostLikelyGem = gemClass;
+				        canSpawnGem = true;
 					}
-					catch (Exception e) {
-						e.printStackTrace();
-						System.out.println("Error creating gem: " + e.getMessage());
-					}
-			    }
+				}
 			}
 		}
-		EntityGem gemSpawned = spawnlist.isEmpty() ? null : spawnlist.get(world.rand.nextInt(spawnlist.size()));
+		EntityGem gemSpawned = null;
+		try {
+			gemSpawned = (EntityGem)(mostLikelyGem.getConstructors()[0].newInstance(world));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Error creating gem: " + e.getMessage());
+			canSpawnGem = false;
+		}
 		ExitHole exitHole = null;
 		if (drain && gemSpawned != null) {
 			exitHole = ExitHole.create(world, pos, Math.ceil(gemSpawned.height), friction.get(gemSpawned.getClass()) >= 1.0F);
@@ -161,7 +178,7 @@ public class InjectorResult {
 	            }
 			}
 		}
-		return new InjectorResult(gemSpawned, pos, gemSpawned == null ? 0.0 : defectivity.get(gemSpawned.getClass()), spawnlist.isEmpty(), exitHole);
+		return new InjectorResult(gemSpawned, pos, gemSpawned == null ? 0.0 : defectivity.get(gemSpawned.getClass()), !canSpawnGem, exitHole);
 	}
 	
 	private static void drainBlock(World world, BlockPos ore) {
@@ -175,10 +192,15 @@ public class InjectorResult {
     	//Stone -> drained stone
     	if (state == Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT) || state == Blocks.SAND.getDefaultState()) {
     		world.setBlockState(ore, Blocks.GRAVEL.getDefaultState());
-    	} else if (state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND) {
+    	}
+    	else if (state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND) {
     		world.setBlockState(ore, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT));
-    	} else if (state.getMaterial() == Material.ROCK && state.isFullCube()) {
+    	}
+    	else if (state.getMaterial() == Material.ROCK && state.isFullCube()) {
     		world.setBlockState(ore, ModBlocks.DRAINED_BLOCK.getDefaultState());
     	}
+    	else if (state.getBlock() == Blocks.GRAVEL) {
+			world.setBlockState(ore, ModBlocks.DRAINED_BLOCK.getDefaultState());
+		}
 	}
 }

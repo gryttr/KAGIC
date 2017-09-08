@@ -1,6 +1,5 @@
 package mod.heimrarnadalr.kagic.worlddata;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,8 +13,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.WorldSavedData;
 import net.minecraft.world.storage.MapStorage;
+import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
 
 public class WorldDataWarpPad extends WorldSavedData {
@@ -52,7 +51,7 @@ public class WorldDataWarpPad extends WorldSavedData {
 		Iterator<Entry<BlockPos, WarpPadDataEntry>> it = this.warpPadData.entrySet().iterator();
 		while (it.hasNext()) {
 			NBTTagCompound tc = new NBTTagCompound();
-			Map.Entry pair = it.next();
+			Entry<BlockPos, WarpPadDataEntry> pair = it.next();
 			tc.setString("name", ((WarpPadDataEntry)(pair.getValue())).name);
 			tc.setBoolean("valid", ((WarpPadDataEntry)(pair.getValue())).valid);
 			tc.setBoolean("clear", ((WarpPadDataEntry)(pair.getValue())).clear);

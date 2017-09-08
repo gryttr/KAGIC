@@ -1,7 +1,5 @@
 package mod.akrivus.kagic.init;
 
-import net.minecraft.init.Items;
-
 public class ModAchievements {
 	/*public static final Achievement INSTALLED_KAGIC = new Achievement("installed_kagic", "installed_kagic", 0, 0, ModItems.YELLOW_DIAMOND_GEM, null).initIndependentStat().registerStat();
 	public static final Achievement GEM_FORGER = new Achievement("gem_forger", "gem_forger", 0, 2, ModItems.ACTIVATED_GEM_BASE, INSTALLED_KAGIC).registerStat();

@@ -4,7 +4,6 @@ import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.init.ModCreativeTabs;
-import mod.akrivus.kagic.init.ModAchievements;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

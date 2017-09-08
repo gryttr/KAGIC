@@ -1,12 +1,8 @@
 package mod.akrivus.kagic.client.gui;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -14,13 +10,10 @@ import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import mod.heimrarnadalr.kagic.worlddata.WarpPadDataEntry;
 import mod.heimrarnadalr.kagic.worlddata.WorldDataWarpPad;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.client.GuiScrollingList;
 
 public class GUIWarpPadSelection extends GuiScreen {
 	private final TileEntityWarpPadCore tilePad;
