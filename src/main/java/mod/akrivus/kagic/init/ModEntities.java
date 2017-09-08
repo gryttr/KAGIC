@@ -92,7 +92,6 @@ public class ModEntities {
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.IRON_ORE, 0.22);
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.PACKED_ICE, 0.99);
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.SNOW, 0.77);
-		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.SNOW_LAYER, 0.44);
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.STONE, 0.33);
 		ModEntities.registerWithOreDictionary(EntitySapphire.SAPPHIRE_YIELDS, "Sapphire", "Corundum", "Aluminium", "Aluminum", "Bauxite", "Garnet");
 		EntityPearl.PEARL_YIELDS.put(Blocks.CLAY, 0.77);
