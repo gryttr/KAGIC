@@ -78,6 +78,7 @@ public class WorldDataWarpPad extends WorldSavedData {
 	}
 	
 	public void addWarpPadEntry(String name, boolean valid, boolean clear, BlockPos pos) {
+		//KAGIC.instance.chatInfoMessage("Adding entry");
 		this.warpPadData.put(pos, new WarpPadDataEntry(name, valid, clear));
 		this.markDirty();
 	}

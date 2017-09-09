@@ -17,7 +17,7 @@ public class DesertWarpPad extends RuinStructure {
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
-		if (rand.nextInt(10) != 0) {
+		if (rand.nextInt(500) != 0) {
 			return false;
 		}
 		//KAGIC.instance.chatInfoMessage("Random passed; checking world conditions");

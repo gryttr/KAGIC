@@ -80,10 +80,14 @@ public class BlockInjector extends Block {
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
     }
+
+	@Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
     	worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
         Injector.onInjectorPlacement(worldIn, pos);
     }
+
+	@Override
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
         super.onBlockAdded(worldIn, pos, state);
         this.setDefaultFacing(worldIn, pos, state);
@@ -94,6 +98,7 @@ public class BlockInjector extends Block {
     /*********************************************************
      * Methods related to block activation and interaction.  *
      *********************************************************/
+	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote) {
 			ItemStack heldItem = playerIn.getHeldItem(hand);
@@ -119,11 +124,14 @@ public class BlockInjector extends Block {
 		}
         return true;
     }
+
+	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos p_189540_5_) {
 		if (worldIn.isBlockPowered(pos) && this.isEquipped) {
 			this.injectGemSeed(worldIn, pos);
         }
     }
+	
 	public int calcDistance(World worldIn, BlockPos pos) {
     	int bestDepth = -1;
     	int worstDepth = 6;
@@ -168,21 +176,23 @@ public class BlockInjector extends Block {
 	/*********************************************************
 	 * Methods related to block destruction and removal.     *
 	 *********************************************************/
-	public void onBlockDestroyed(World worldIn, BlockPos pos) {
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		if (!worldIn.isRemote) {
-			if (this.isEquipped) {
+			if (this.isEquipped && worldIn.getBlockState(pos).getBlock() != ModBlocks.INJECTOR) {
 				EntityItem item = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.ACTIVATED_GEM_BASE));
 				worldIn.spawnEntity(item);
 			}
 		}
 	}
+	
+	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return Item.getItemFromBlock(ModBlocks.INJECTOR);
     }
+	
+	@Override
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-        return new ItemStack(ModBlocks.INJECTOR);
-    }
-    protected ItemStack createStackedBlock(IBlockState state) {
         return new ItemStack(ModBlocks.INJECTOR);
     }
 	
@@ -216,6 +226,8 @@ public class BlockInjector extends Block {
         worldIn.setBlockState(pos, ModBlocks.INJECTOR.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
         worldIn.setBlockState(pos, ModBlocks.INJECTOR.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
     }
+    
+	@Override
     public IBlockState getStateFromMeta(int meta) {
         EnumFacing enumfacing = EnumFacing.getFront(meta);
         if (enumfacing.getAxis() == EnumFacing.Axis.Y) {
@@ -223,15 +235,23 @@ public class BlockInjector extends Block {
         }
         return this.getDefaultState().withProperty(FACING, enumfacing);
     }
-    public int getMetaFromState(IBlockState state) {
+
+	@Override
+	public int getMetaFromState(IBlockState state) {
         return ((EnumFacing)state.getValue(FACING)).getIndex();
     }
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
+
+	@Override
+	public IBlockState withRotation(IBlockState state, Rotation rot) {
         return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
     }
+
+	@Override
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
         return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
     }
+
+	@Override
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, new IProperty[] {FACING});
     }
@@ -239,17 +259,24 @@ public class BlockInjector extends Block {
     /*********************************************************
      * Methods related to block rendering.                   *
      *********************************************************/
-    @SideOnly(Side.CLIENT)
+	@Override
+   @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.TRANSLUCENT;
     }
+
+	@Override
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
         return true;
     }
+
+	@Override
     public boolean isFullCube(IBlockState state) {
         return false;
     }
+
+	@Override
     public boolean isOpaqueCube(IBlockState state) {
         return false;
     }

@@ -18,6 +18,7 @@ import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.util.injector.InjectorResult;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
@@ -54,7 +55,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class EntityPeridot extends EntityGem implements IInventoryChangedListener {
-	public static final HashMap<Block, Double> PERIDOT_YIELDS = new HashMap<Block, Double>();
+	public static final HashMap<IBlockState, Double> PERIDOT_YIELDS = new HashMap<IBlockState, Double>();
 	public InventoryBasic gemStorage;
 	public InvWrapper gemStorageHandler;
 	public InventoryBasic harvest;

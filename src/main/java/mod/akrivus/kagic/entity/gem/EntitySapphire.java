@@ -38,7 +38,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EntitySapphire extends EntityGem {
-	public static final HashMap<Block, Double> SAPPHIRE_YIELDS = new HashMap<Block, Double>();
+	public static final HashMap<IBlockState, Double> SAPPHIRE_YIELDS = new HashMap<IBlockState, Double>();
 	public static final HashMap<Integer, ResourceLocation> SAPPHIRE_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private boolean spawnedPadparadscha;
 	private int luckTicks = 0;

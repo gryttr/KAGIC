@@ -18,7 +18,7 @@ public class CommunicationHub extends RuinStructure {
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
-		if (rand.nextInt(1000) != -1) {
+		if (rand.nextInt(1000) != 0) {
 			return false;
 		}
 		//KAGIC.instance.chatInfoMessage("Random passed; checking world conditions");

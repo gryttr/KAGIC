@@ -12,6 +12,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -30,7 +31,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityZircon extends EntityGem {
-	public static final HashMap<Block, Double> ZIRCON_YIELDS = new HashMap<Block, Double>();
+	public static final HashMap<IBlockState, Double> ZIRCON_YIELDS = new HashMap<IBlockState, Double>();
 	public static final ArrayList<ResourceLocation> ZIRCON_HAIR_STYLES = new ArrayList<ResourceLocation>();
 	public EntityZircon(World worldIn) {
 		super(worldIn);

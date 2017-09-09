@@ -12,6 +12,7 @@ import mod.akrivus.kagic.entity.ai.EntityAITopazFuse;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -37,7 +38,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityTopaz extends EntityGem {
-	public static final HashMap<Block, Double> TOPAZ_YIELDS = new HashMap<Block, Double>();
+	public static final HashMap<IBlockState, Double> TOPAZ_YIELDS = new HashMap<IBlockState, Double>();
 		
 	private static final int SKIN_COLOR_YELLOW = 0xF6E83E; 
 	private static final int SKIN_COLOR_BLUE = 0x5167fB; 
@@ -51,6 +52,7 @@ public class EntityTopaz extends EntityGem {
 	
 	public EntityTopaz(World worldIn) {
 		super(worldIn);
+		this.setSize(0.9F, 2.3F);
 		this.isSoldier = true;
 		
 		//Define valid gem cuts and placements
@@ -210,10 +212,10 @@ public class EntityTopaz extends EntityGem {
 	public EntityTopaz fuse(EntityTopaz other) {
 		EntityTopaz topaz = new EntityTopaz(this.world);
 		NBTTagCompound primeCompound = new NBTTagCompound();
-		this.writeEntityToNBT(primeCompound);
+		this.writeToNBT(primeCompound);
 		topaz.fusionMembers.add(primeCompound);
 		NBTTagCompound otherCompound = new NBTTagCompound();
-		other.writeEntityToNBT(otherCompound);
+		other.writeToNBT(otherCompound);
 		topaz.fusionMembers.add(otherCompound);
 		if (this.getServitude() == EntityGem.SERVE_HUMAN) {
 			topaz.setOwnerId(this.getOwnerId());
@@ -229,6 +231,7 @@ public class EntityTopaz extends EntityGem {
 		topaz.setHairColor(topaz.generateHairColor());
 		topaz.setInsigniaColor(this.getInsigniaColor());
 		topaz.setUniformColor(this.getUniformColor());
+		topaz.setHasVisor(this.hasVisor());
 		topaz.setAttackTarget(this.getAttackTarget());
 		topaz.setRevengeTarget(this.getAttackingEntity());
 		

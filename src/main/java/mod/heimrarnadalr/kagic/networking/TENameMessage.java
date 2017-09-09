@@ -51,6 +51,7 @@ public class TENameMessage implements IMessage{
 		}
 		
 		private void handle(TENameMessage message, MessageContext ctx) {
+			KAGIC.instance.chatInfoMessage("Handling name");
 			EntityPlayerMP playerEntity = ctx.getServerHandler().player;
 			World world = playerEntity.getEntityWorld();
 			TileEntityWarpPadCore te = (TileEntityWarpPadCore) world.getTileEntity(new BlockPos(message.x, message.y, message.z));

@@ -32,7 +32,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityAquamarine extends EntityGem {
-	public static final HashMap<Block, Double> AQUAMARINE_YIELDS = new HashMap<Block, Double>();
+	public static final HashMap<IBlockState, Double> AQUAMARINE_YIELDS = new HashMap<IBlockState, Double>();
 	public static final HashMap<Integer, ResourceLocation> AQUAMARINE_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	public boolean wantsToScan;
 	private int lastScanTime;

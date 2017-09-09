@@ -50,6 +50,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 	private boolean cooling = false;
 
 	private void setDirty() {
+		//KAGIC.instance.chatInfoMessage("Setting dirty");
 		this.markDirty();
 		IBlockState state = this.world.getBlockState(this.pos);
 		world.notifyBlockUpdate(this.pos, state, state, 3);
@@ -283,6 +284,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 	
 	public void setName(String name) {
 		if (!this.world.isRemote) {
+			KAGIC.instance.chatInfoMessage("Name set");
 			this.name = name;
 			this.setDirty();
 		} else {
@@ -326,7 +328,9 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			double offsetZ = entity.posZ - this.pos.getZ();
 			
 			if (entity instanceof EntityPlayerMP) {
-				((EntityPlayerMP) entity).connection.setPlayerLocation(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
+				entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
+				//((EntityPlayerMP) entity).connection.setPlayerLocation(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
+				KTPacketHandler.INSTANCE.sendTo(new EntityTeleportMessage(entity.getEntityId(), this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ), (EntityPlayerMP) entity);
 			} else if (entity instanceof EntityLivingBase){
 				entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
 			} else {

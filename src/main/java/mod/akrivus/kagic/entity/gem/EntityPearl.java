@@ -16,6 +16,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -55,7 +56,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class EntityPearl extends EntityGem implements IInventoryChangedListener {
-	public static final HashMap<Block, Double> PEARL_YIELDS = new HashMap<Block, Double>();
+	public static final HashMap<IBlockState, Double> PEARL_YIELDS = new HashMap<IBlockState, Double>();
 	public static final ArrayList<ResourceLocation> PEARL_HAIR_STYLES = new ArrayList<ResourceLocation>();
 	public static final ArrayList<ResourceLocation> PEARL_DRESS_STYLES = new ArrayList<ResourceLocation>();
 	private static final DataParameter<Integer> COLOR = EntityDataManager.<Integer>createKey(EntityPearl.class, DataSerializers.VARINT);

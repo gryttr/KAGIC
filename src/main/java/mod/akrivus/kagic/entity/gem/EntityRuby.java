@@ -19,6 +19,7 @@ import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -64,7 +65,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityRuby extends EntityGem {
-	public static final HashMap<Block, Double> RUBY_YIELDS = new HashMap<Block, Double>();
+	public static final HashMap<IBlockState, Double> RUBY_YIELDS = new HashMap<IBlockState, Double>();
 	private static final DataParameter<Integer> ANGER = EntityDataManager.<Integer>createKey(EntityRuby.class, DataSerializers.VARINT);
 	private int angerTicks = 0;
 	
@@ -331,7 +332,7 @@ public class EntityRuby extends EntityGem {
 		}
 		else {
 			NBTTagCompound primeCompound = new NBTTagCompound();
-			this.writeEntityToNBT(primeCompound);
+			this.writeToNBT(primeCompound);
 			ruby.fusionMembers.add(primeCompound);
 		}
 		if (other.isFusion()) {
@@ -341,7 +342,7 @@ public class EntityRuby extends EntityGem {
 		}
 		else {
 			NBTTagCompound otherCompound = new NBTTagCompound();
-			other.writeEntityToNBT(otherCompound);
+			other.writeToNBT(otherCompound);
 			ruby.fusionMembers.add(otherCompound);
 		}
 		if (this.getServitude() == EntityGem.SERVE_HUMAN) {
@@ -359,6 +360,7 @@ public class EntityRuby extends EntityGem {
 		ruby.setSkinColor(this.getSkinColor());
 		ruby.setHairColor(this.getHairColor());
 		ruby.setHairStyle(this.getHairStyle());
+		ruby.setHasVisor(this.hasVisor());
 
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D * ruby.getFusionCount());
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D * ruby.getFusionCount());
