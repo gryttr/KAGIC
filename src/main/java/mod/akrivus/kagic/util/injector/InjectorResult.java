@@ -194,7 +194,7 @@ public class InjectorResult {
     		world.setBlockState(ore, Blocks.GRAVEL.getDefaultState());
     	} else if (state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND) {
     		world.setBlockState(ore, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT));
-    	} else if (state.getMaterial() == Material.ROCK && state.isFullCube()) {
+    	} else if ((state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON) && state.isFullCube()) {
     		world.setBlockState(ore, ModBlocks.DRAINED_BLOCK.getDefaultState());
     	}
 	}

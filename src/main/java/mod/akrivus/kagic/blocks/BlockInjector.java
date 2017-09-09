@@ -179,7 +179,7 @@ public class BlockInjector extends Block {
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		if (!worldIn.isRemote) {
-			if (this.isEquipped) {
+			if (this.isEquipped && worldIn.getBlockState(pos).getBlock() != ModBlocks.INJECTOR) {
 				EntityItem item = new EntityItem(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ModItems.ACTIVATED_GEM_BASE));
 				worldIn.spawnEntity(item);
 			}

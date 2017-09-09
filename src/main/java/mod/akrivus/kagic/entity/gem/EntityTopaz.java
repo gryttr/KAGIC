@@ -52,6 +52,7 @@ public class EntityTopaz extends EntityGem {
 	
 	public EntityTopaz(World worldIn) {
 		super(worldIn);
+		this.setSize(0.9F, 2.3F);
 		this.isSoldier = true;
 		
 		//Define valid gem cuts and placements
@@ -211,10 +212,10 @@ public class EntityTopaz extends EntityGem {
 	public EntityTopaz fuse(EntityTopaz other) {
 		EntityTopaz topaz = new EntityTopaz(this.world);
 		NBTTagCompound primeCompound = new NBTTagCompound();
-		this.writeEntityToNBT(primeCompound);
+		this.writeToNBT(primeCompound);
 		topaz.fusionMembers.add(primeCompound);
 		NBTTagCompound otherCompound = new NBTTagCompound();
-		other.writeEntityToNBT(otherCompound);
+		other.writeToNBT(otherCompound);
 		topaz.fusionMembers.add(otherCompound);
 		if (this.getServitude() == EntityGem.SERVE_HUMAN) {
 			topaz.setOwnerId(this.getOwnerId());
@@ -230,6 +231,7 @@ public class EntityTopaz extends EntityGem {
 		topaz.setHairColor(topaz.generateHairColor());
 		topaz.setInsigniaColor(this.getInsigniaColor());
 		topaz.setUniformColor(this.getUniformColor());
+		topaz.setHasVisor(this.hasVisor());
 		topaz.setAttackTarget(this.getAttackTarget());
 		topaz.setRevengeTarget(this.getAttackingEntity());
 		

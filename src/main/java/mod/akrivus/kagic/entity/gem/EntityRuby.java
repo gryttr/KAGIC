@@ -332,7 +332,7 @@ public class EntityRuby extends EntityGem {
 		}
 		else {
 			NBTTagCompound primeCompound = new NBTTagCompound();
-			this.writeEntityToNBT(primeCompound);
+			this.writeToNBT(primeCompound);
 			ruby.fusionMembers.add(primeCompound);
 		}
 		if (other.isFusion()) {
@@ -342,7 +342,7 @@ public class EntityRuby extends EntityGem {
 		}
 		else {
 			NBTTagCompound otherCompound = new NBTTagCompound();
-			other.writeEntityToNBT(otherCompound);
+			other.writeToNBT(otherCompound);
 			ruby.fusionMembers.add(otherCompound);
 		}
 		if (this.getServitude() == EntityGem.SERVE_HUMAN) {
@@ -360,6 +360,7 @@ public class EntityRuby extends EntityGem {
 		ruby.setSkinColor(this.getSkinColor());
 		ruby.setHairColor(this.getHairColor());
 		ruby.setHairStyle(this.getHairStyle());
+		ruby.setHasVisor(this.hasVisor());
 
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D * ruby.getFusionCount());
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D * ruby.getFusionCount());
