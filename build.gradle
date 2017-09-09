@@ -48,7 +48,7 @@ dependencies {
 jar {
 	from sourceSets.api.output
 	from ( configurations.customCompile.collect { it.isDirectory() ? it : zipTree(it)}) { exclude 'META-INF/**' }
-	appendix = minecraft_version
+	//appendix = minecraft_version
 }
 task jarApi(type: Jar){
 	from sourceSets.api.output
