@@ -114,7 +114,7 @@ public class EntityPadparadscha extends EntityGem {
 	public SoundEvent getAmbientSound() {
 		return ModSounds.PADPARADSCHA_LIVING;
 	}
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.SAPPHIRE_HURT;
 	}
 	public SoundEvent getObeySound() {

@@ -16,7 +16,6 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -285,7 +284,7 @@ public class EntityAgate extends EntityGem {
 	/*********************************************************
 	 * Methods related to sounds.                            *
 	 *********************************************************/
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.AGATE_HURT;
 	}
 	public SoundEvent getObeySound() {

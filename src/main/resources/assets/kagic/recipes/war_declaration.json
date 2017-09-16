@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "kagic:war_declaration"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:writable_book"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    }
+  ]
+}

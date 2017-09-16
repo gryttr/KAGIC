@@ -10,8 +10,10 @@ import mod.akrivus.kagic.items.ItemGemStaff;
 import mod.akrivus.kagic.items.ItemInactiveGemBase;
 import mod.akrivus.kagic.items.ItemJointContract;
 import mod.akrivus.kagic.items.ItemLiberationContract;
+import mod.akrivus.kagic.items.ItemPeaceTreaty;
 import mod.akrivus.kagic.items.ItemTransferContract;
 import mod.akrivus.kagic.items.ItemVehicle;
+import mod.akrivus.kagic.items.ItemWarDeclaration;
 import mod.akrivus.kagic.items.ItemWarpWhistle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -40,6 +42,8 @@ public class ModItems {
 	public static final ItemJointContract JOINT_CONTRACT = new ItemJointContract();
 	public static final ItemLiberationContract LIBERATION_CONTRACT = new ItemLiberationContract();
 	public static final ItemAutonomyContract AUTONOMY_CONTRACT = new ItemAutonomyContract();
+	public static final ItemWarDeclaration WAR_DECLARATION = new ItemWarDeclaration();
+	public static final ItemPeaceTreaty PEACE_TREATY = new ItemPeaceTreaty();
 	public static final ItemGemStaff GEM_STAFF = new ItemGemStaff();
 	public static final ItemVehicle ROAMING_EYE = new ItemVehicle("roaming_eye");
 	public static final Item LASER_BEAM = new Item().setUnlocalizedName("laser_beam");
@@ -237,6 +241,8 @@ public class ModItems {
 		registerItem(JOINT_CONTRACT, event);
 		registerItem(LIBERATION_CONTRACT, event);
 		registerItem(AUTONOMY_CONTRACT, event);
+		registerItem(WAR_DECLARATION, event);
+		registerItem(PEACE_TREATY, event);
 		registerItem(GEM_STAFF, event);
 		registerItem(ROAMING_EYE, event);
 		registerItem(LASER_BEAM, event);

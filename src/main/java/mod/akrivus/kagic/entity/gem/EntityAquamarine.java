@@ -11,7 +11,6 @@ import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.util.flying.EntityFlyHelper;
 import mod.akrivus.kagic.util.flying.PathNavigateFlying;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -177,7 +176,7 @@ public class EntityAquamarine extends EntityGem {
 	/*********************************************************
      * Methods related to entity sounds.                     *
      *********************************************************/
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.AQUAMARINE_HURT;
 	}
 	public SoundEvent getObeySound() {

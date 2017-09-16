@@ -15,7 +15,6 @@ import mod.akrivus.kagic.entity.ai.EntityAISitStill;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -562,7 +561,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 	/*********************************************************
 	 * Methods related to sounds.                            *
 	 *********************************************************/
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.PEARL_HURT;
 	}
 	public SoundEvent getObeySound() {

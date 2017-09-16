@@ -279,11 +279,11 @@ public class EntityTopaz extends EntityGem {
 		int color = this.getSpecial();
 		switch(color) {
 		case 0:
-			return this.SKIN_COLOR_YELLOW;
+			return EntityTopaz.SKIN_COLOR_YELLOW;
 		case 1:
-			return this.SKIN_COLOR_BLUE;
+			return EntityTopaz.SKIN_COLOR_BLUE;
 		case 2:
-			return this.SKIN_COLOR_GREEN;
+			return EntityTopaz.SKIN_COLOR_GREEN;
 		default:
 			return 0;
 		}
@@ -291,7 +291,7 @@ public class EntityTopaz extends EntityGem {
 	
 	@Override
 	protected int generateHairStyle() {
-		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+		return this.rand.nextInt(EntityTopaz.NUM_HAIRSTYLES);
 	}
 	
 	@Override
@@ -299,11 +299,11 @@ public class EntityTopaz extends EntityGem {
 		int color = this.getSpecial();
 		switch(color) {
 		case 0:
-			return this.HAIR_COLOR_YELLOW;
+			return EntityTopaz.HAIR_COLOR_YELLOW;
 		case 1:
-			return this.HAIR_COLOR_BLUE;
+			return EntityTopaz.HAIR_COLOR_BLUE;
 		case 2:
-			return this.HAIR_COLOR_GREEN;
+			return EntityTopaz.HAIR_COLOR_GREEN;
 		default:
 			return 0;
 		}
@@ -362,7 +362,7 @@ public class EntityTopaz extends EntityGem {
 	protected void playStepSound(BlockPos pos, Block blockIn) {
         this.playSound(SoundEvents.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
     }
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.TOPAZ_STEP;
 	}
 	public SoundEvent getObeySound() {

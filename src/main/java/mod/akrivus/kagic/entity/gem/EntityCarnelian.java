@@ -15,7 +15,6 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -287,7 +286,7 @@ public class EntityCarnelian extends EntityGem {
 	/*********************************************************
 	 * Methods related to sound.                             *
 	 *********************************************************/
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.AMETHYST_HURT;
 	}
 	public SoundEvent getObeySound() {
@@ -302,22 +301,22 @@ public class EntityCarnelian extends EntityGem {
 	 *********************************************************/
 	@Override
 	protected int generateSkinColor() {
-		ArrayList skinColors = new ArrayList();
-		skinColors.add(this.SKIN_COLOR_BEGIN);
-		skinColors.add(this.SKIN_COLOR_END);
+		ArrayList<Integer> skinColors = new ArrayList<Integer>();
+		skinColors.add(EntityCarnelian.SKIN_COLOR_BEGIN);
+		skinColors.add(EntityCarnelian.SKIN_COLOR_END);
 		return Colors.arbiLerp(skinColors);
 	}
 	
 	@Override
 	protected int generateHairStyle() {
-		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+		return this.rand.nextInt(EntityCarnelian.NUM_HAIRSTYLES);
 	}
 	
 	@Override
 	protected int generateHairColor() {
-		ArrayList hairColors = new ArrayList();
-		hairColors.add(this.HAIR_COLOR_BEGIN);
-		hairColors.add(this.HAIR_COLOR_END);
+		ArrayList<Integer> hairColors = new ArrayList<Integer>();
+		hairColors.add(EntityCarnelian.HAIR_COLOR_BEGIN);
+		hairColors.add(EntityCarnelian.HAIR_COLOR_END);
 		return Colors.arbiLerp(hairColors);
 	}
 

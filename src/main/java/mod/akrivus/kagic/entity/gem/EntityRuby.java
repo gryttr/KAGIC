@@ -17,7 +17,6 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -511,22 +510,22 @@ public class EntityRuby extends EntityGem {
 	 *********************************************************/
 	@Override
 	protected int generateSkinColor() {
-		ArrayList skinColors = new ArrayList();
-		skinColors.add(this.SKIN_COLOR_BEGIN);
-		skinColors.add(this.SKIN_COLOR_MID);
-		skinColors.add(this.SKIN_COLOR_END);
+		ArrayList<Integer> skinColors = new ArrayList<Integer>();
+		skinColors.add(EntityRuby.SKIN_COLOR_BEGIN);
+		skinColors.add(EntityRuby.SKIN_COLOR_MID);
+		skinColors.add(EntityRuby.SKIN_COLOR_END);
 		return Colors.arbiLerp(skinColors);	}
 	
 	@Override
 	protected int generateHairStyle() {
-		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+		return this.rand.nextInt(EntityRuby.NUM_HAIRSTYLES);
 	}
 	
 	@Override
 	protected int generateHairColor() {
-		ArrayList hairColors = new ArrayList();
-		hairColors.add(this.HAIR_COLOR_BEGIN);
-		hairColors.add(this.HAIR_COLOR_END);
+		ArrayList<Integer> hairColors = new ArrayList<Integer>();
+		hairColors.add(EntityRuby.HAIR_COLOR_BEGIN);
+		hairColors.add(EntityRuby.HAIR_COLOR_END);
 		return Colors.arbiLerp(hairColors);
 	}
 	
@@ -567,7 +566,7 @@ public class EntityRuby extends EntityGem {
 	public SoundEvent getAmbientSound() {
 		return ModSounds.RUBY_LIVING;
 	}
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.RUBY_HURT;
 	}
 	public SoundEvent getObeySound() {
