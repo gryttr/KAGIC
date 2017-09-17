@@ -13,6 +13,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 
 public class InjectorResult {
@@ -20,12 +21,14 @@ public class InjectorResult {
 	private final BlockPos position;
 	private final double defectiveRate;
 	private final boolean createSlags;
+	private final boolean isPrimary;
 	private final ExitHole exitHole;
-	public InjectorResult(EntityGem gem, BlockPos pos, double defectiveRate, boolean createSlags, ExitHole exitHole) {
+	public InjectorResult(EntityGem gem, BlockPos pos, double defectiveRate, boolean createSlags, boolean isPrimary, ExitHole exitHole) {
 		this.gem = gem;
 		this.position = pos;
 		this.defectiveRate = defectiveRate;
 		this.createSlags = createSlags;
+		this.isPrimary = isPrimary;
 		this.exitHole = exitHole;
 	}
 	public EntityGem getGem() {
@@ -39,6 +42,9 @@ public class InjectorResult {
 	}
 	public double getDefectivity() {
 		return this.defectiveRate;
+	}
+	public boolean isPrimary() {
+		return this.isPrimary;
 	}
 	public boolean canCreateSlags() {
 		return this.createSlags;
@@ -87,6 +93,7 @@ public class InjectorResult {
 		HashMap<Class<EntityGem>, Double> resultTable = new HashMap<Class<EntityGem>, Double>();
 		HashMap<Class<EntityGem>, Double> defectivity = new HashMap<Class<EntityGem>, Double>();
 		HashMap<Class<EntityGem>, Double> friction = new HashMap<Class<EntityGem>, Double>();
+		boolean regionIsNotDrained = true;
 		for (String gem : ModEntities.GEMS.keySet()) {
     		try {
         		Class<EntityGem> gemClass = (Class<EntityGem>) ModEntities.GEMS.get(gem);
@@ -98,7 +105,6 @@ public class InjectorResult {
 		                for (int z = -4; z <= 4; ++z) {
 		                	BlockPos ore = pos.add(x, y, z);
 		                	IBlockState state = world.getBlockState(ore);
-
 	                		if (!resultTable.containsKey(gemClass)) {
 	                			resultTable.put(gemClass, 0.0);
 	                		}
@@ -107,6 +113,9 @@ public class InjectorResult {
 	                			frictionFactor += 0.0036;
 	                			defectivityRate -= 0.2;
 	                			
+	                		}
+	                		if (state.getBlock() == ModBlocks.DRAINED_BLOCK) {
+	                			regionIsNotDrained = false;
 	                		}
 	                		if (state.getMaterial() == Material.GRASS) {
 	                			defectivityRate -= 0.4;
@@ -123,7 +132,7 @@ public class InjectorResult {
     		}
 		}
 		boolean canSpawnGem = false;
-		Class<EntityGem> mostLikelyGem = null;
+		Class<? extends EntityGem> mostLikelyGem = null;
 		double highestYield = 0.0;
 		for (Class<EntityGem> gemClass : resultTable.keySet()) {
 			if (!gemClass.getName().contains("Diamond")) {
@@ -147,6 +156,12 @@ public class InjectorResult {
 					}
 				}
 			}
+		}
+		if (highestYield <= 0.0 && regionIsNotDrained) {
+			ChunkPos c = world.getChunkFromBlockCoords(pos).getPos();
+			int chunkPos = (c.x + c.z) % ModEntities.MINERALS.size();
+			mostLikelyGem = ModEntities.MINERALS.get(Math.abs(chunkPos));
+			canSpawnGem = true;
 		}
 		EntityGem gemSpawned = null;
 		try {
@@ -175,7 +190,7 @@ public class InjectorResult {
 	            }
 			}
 		}
-		return new InjectorResult(gemSpawned, pos, gemSpawned == null ? 0.0 : defectivity.get(gemSpawned.getClass()), !canSpawnGem, exitHole);
+		return new InjectorResult(gemSpawned, pos, gemSpawned == null ? 0.0 : defectivity.get(gemSpawned.getClass()), !canSpawnGem, friction.get(gemSpawned.getClass()) >= 1.0F, exitHole);
 	}
 	
 	private static void drainBlock(World world, BlockPos ore) {
@@ -189,9 +204,11 @@ public class InjectorResult {
     	//Stone -> drained stone
     	if (state == Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT) || state == Blocks.SAND.getDefaultState()) {
     		world.setBlockState(ore, Blocks.GRAVEL.getDefaultState());
-    	} else if (state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND) {
+    	}
+    	else if (state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND) {
     		world.setBlockState(ore, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT));
-    	} else if ((state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON) && state.isFullCube()) {
+    	}
+    	else if ((state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON) && state.isFullCube()) {
     		world.setBlockState(ore, ModBlocks.DRAINED_BLOCK.getDefaultState());
     	}
 	}

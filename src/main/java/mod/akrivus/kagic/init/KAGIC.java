@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 import mod.akrivus.kagic.client.gui.KTGUIProxy;
 import mod.akrivus.kagic.command.CommandMeteorRuby;
+import mod.akrivus.kagic.command.CommandScanGems;
 import mod.akrivus.kagic.command.CommandSpawnGems;
 import mod.akrivus.kagic.server.SpaceStuff;
 import mod.heimrarnadalr.kagic.chunk.KAGICChunkCallback;
@@ -15,9 +16,7 @@ import mod.heimrarnadalr.kagic.proxies.CommonProxy;
 import mod.heimrarnadalr.kagic.world.KAGICWorldGenerator;
 import mod.heimrarnadalr.kagic.world.structure.LootTables;
 import net.minecraft.server.management.PlayerList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -58,7 +57,7 @@ public class KAGIC {
 		KTPacketHandler.registerMessages(KAGIC.MODID);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new KAGICChunkCallback());
 		LootTables.register();
-		this.worldGen = new KAGICWorldGenerator();
+		KAGIC.worldGen = new KAGICWorldGenerator();
     }
     
     @EventHandler
@@ -85,6 +84,7 @@ public class KAGIC {
     	}
     	e.registerServerCommand(new CommandMeteorRuby());
 		e.registerServerCommand(new CommandSpawnGems());
+		e.registerServerCommand(new CommandScanGems());
 	}
     
     //Used for debugging
