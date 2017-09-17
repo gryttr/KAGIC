@@ -22,8 +22,13 @@ public class GalaxyWarp extends SunkenRuinStructure {
 	}
 
 	@Override
+	protected boolean checkCorners(World world, BlockPos pos, byte rotation) {
+		return true;
+	}
+	
+	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
-		if (rand.nextInt(10) != 0) {
+		if (rand.nextInt(1000) != 0) {
 			return false;
 		}
 

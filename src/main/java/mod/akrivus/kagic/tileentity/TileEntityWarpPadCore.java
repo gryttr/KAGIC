@@ -251,7 +251,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			--this.loadChunkTicksLeft;
 		}
 		if (this.loadChunkTicksLeft < 0 && this.ticket != null) {
-			KAGIC.instance.chatInfoMessage("Releasing ticket");
+			//KAGIC.instance.chatInfoMessage("Releasing ticket");
 			ForgeChunkManager.releaseTicket(ticket);
 			this.ticket = null;
 			this.loadChunkTicksLeft = 0;
@@ -291,7 +291,6 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 	
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket() {
-		KAGIC.instance.chatInfoMessage("getUpdatePacket called");
 		return new SPacketUpdateTileEntity(this.pos, 1, this.writeToNBT(new NBTTagCompound()));
 	}
 	
@@ -320,7 +319,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 	
 	public void loadPadChunks(TileEntityWarpPadCore pad, Ticket ticket) {
 		if (ticket == null) {
-			KAGIC.instance.chatInfoMessage("WARNING: warp pad could not load destination chunks. Strange errors may occur!");
+			KAGIC.instance.chatInfoMessage("WARNING: warp pad could not load pad chunks. Strange glitches may occur!");
 			return;
 		}
 		
@@ -333,7 +332,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
         {
             for (int j = zStart; j <= zEnd; ++j)
             {
-            	KAGIC.instance.chatInfoMessage("Loading chunk " + i + ", " + j);
+            	//KAGIC.instance.chatInfoMessage("Loading chunk " + i + ", " + j);
         		ForgeChunkManager.forceChunk(ticket, new ChunkPos(i, j));
             }
         }
