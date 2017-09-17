@@ -20,7 +20,7 @@ compileJava {
     sourceCompatibility = targetCompatibility = "1.8"
 }
 minecraft {
-	replace "@mcversion", minecraft_version
+    replace "@mcversion", minecraft_version
     replace "@version", project.version
     replaceIn "KAGIC.java"
     version = "1.12.1-14.22.0.2452"

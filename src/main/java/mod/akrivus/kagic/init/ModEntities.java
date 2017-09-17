@@ -4,6 +4,7 @@ import java.lang.invoke.LambdaMetafactory;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import mod.akrivus.kagic.entity.EntityGem;
@@ -50,27 +51,28 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class ModEntities {
 	public static final HashMap<String, Class<? extends EntityGem>> GEMS = new HashMap<String, Class<? extends EntityGem>>();
+	public static final ArrayList<Class<? extends EntityGem>> MINERALS = new ArrayList<Class<? extends EntityGem>>();
 	public static final boolean GENERATE_FACTORIES_INSTEAD_OF_INSTANCES = false;	// Switches to the new system, which doesn't work right now.
 	private static int currentID = 0;
 	public static void register() {
-		registerGem("ruby", EntityRuby.class, 0xE52C5C, 0x3A0015);
-		registerGem("sapphire", EntitySapphire.class, 0xBAF5FD, 0x7298EC);
-		registerGem("padparadscha", EntityPadparadscha.class, 0xFF8065, 0xFFB3A4);
-		registerGem("pearl", EntityPearl.class, 0xFCCCB1, 0x92EAD9);
-		registerGem("bismuth", EntityBismuth.class, 0x91A8CF, 0x9C5867);
-		registerGem("peridot", EntityPeridot.class, 0x98FF72, 0x13BA54);
-		registerGem("jasper", EntityJasper.class, 0xF89E57, 0xE13941);
-		registerGem("amethyst", EntityAmethyst.class, 0xEAE2FF, 0xC49EDB);
-		registerGem("rose_quartz", EntityRoseQuartz.class, 0xFEDED3, 0xE99CBE);
-		registerGem("lapis_lazuli", EntityLapisLazuli.class, 0x4FEEFB, 0x1B6AD6);
-		registerGem("carnelian", EntityCarnelian.class, 0xC13178, 0x510245);
-		registerGem("agate", EntityAgate.class, 0xB3DEFF, 0x1B50D0);
-		registerGem("aquamarine", EntityAquamarine.class, 0x8AFFFF, 0x0487E3);
-		registerGem("topaz", EntityTopaz.class, 0xF5FC51, 0xFDFEA4);
-		registerGem("rutile", EntityRutile.class, 0xD2508C, 0x23020D);
-		registerGem("zircon", EntityZircon.class, 0x458FBE, 0x57C7CF);
-		registerDiamond("yellow_diamond", EntityYellowDiamond.class);//, 0xFEFF6E, 0xFCFF22);
-		registerDiamond("blue_diamond", EntityBlueDiamond.class);//, 0x2E3674, 0x2AA1FB);
+		registerGem("ruby", EntityRuby.class, 0xE52C5C, 0x3A0015, true);
+		registerGem("sapphire", EntitySapphire.class, 0xBAF5FD, 0x7298EC, false);
+		registerGem("padparadscha", EntityPadparadscha.class, 0xFF8065, 0xFFB3A4, true);
+		registerGem("pearl", EntityPearl.class, 0xFCCCB1, 0x92EAD9, true);
+		registerGem("bismuth", EntityBismuth.class, 0x91A8CF, 0x9C5867, false);
+		registerGem("peridot", EntityPeridot.class, 0x98FF72, 0x13BA54, true);
+		registerGem("jasper", EntityJasper.class, 0xF89E57, 0xE13941, true);
+		registerGem("amethyst", EntityAmethyst.class, 0xEAE2FF, 0xC49EDB, true);
+		registerGem("rose_quartz", EntityRoseQuartz.class, 0xFEDED3, 0xE99CBE, false);
+		registerGem("lapis_lazuli", EntityLapisLazuli.class, 0x4FEEFB, 0x1B6AD6, false);
+		registerGem("carnelian", EntityCarnelian.class, 0xC13178, 0x510245, true);
+		registerGem("agate", EntityAgate.class, 0xB3DEFF, 0x1B50D0, true);
+		registerGem("aquamarine", EntityAquamarine.class, 0x8AFFFF, 0x0487E3, false);
+		registerGem("topaz", EntityTopaz.class, 0xF5FC51, 0xFDFEA4, false);
+		registerGem("rutile", EntityRutile.class, 0xD2508C, 0x23020D, false);
+		registerGem("zircon", EntityZircon.class, 0x458FBE, 0x57C7CF, false);
+		registerDiamond("yellow_diamond", EntityYellowDiamond.class);
+		registerDiamond("blue_diamond", EntityBlueDiamond.class);
 		registerMob("melon", EntityMelon.class, 0xB5B128, 0x5A671A);
 		registerMob("pumpkin", EntityPumpkin.class, 0xD58116, 0x744E03);
 		registerMob("cactus", EntityCactus.class, 0x138622, 0xD9DB9F);
@@ -242,7 +244,7 @@ public class ModEntities {
 		EntityZircon.ZIRCON_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/zircon/hair/smooth.png"));
 	}
 	@SuppressWarnings({ "unchecked" })
-	public static <T extends EntityGem> void registerGem(String name, Class<T> entity, int back, int fore) {
+	public static <T extends EntityGem> void registerGem(String name, Class<T> entity, int back, int fore, boolean mineral) {
 		EntityRegistry.registerModEntity(new ResourceLocation("kagic:kagic." + name), entity, "kagic." + name, currentID, KAGIC.instance, 256, 1, true, back, fore);
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			try {
@@ -269,6 +271,9 @@ public class ModEntities {
 			}
 		}
 		GEMS.put(name, entity);
+		if (mineral) {
+			MINERALS.add(entity);
+		}
 		++currentID;
 	}
 	
@@ -305,7 +310,7 @@ public class ModEntities {
 	}
 
 	@SuppressWarnings({ "unchecked" })
-    public static <T extends EntityGem> void registerExternalGem(String prefix, String name, Class<T> entity, String renderpath, int back, int fore) {
+    public static <T extends EntityGem> void registerExternalGem(String prefix, String name, Class<T> entity, String renderpath, int back, int fore, boolean mineral) {
         EntityRegistry.registerModEntity(new ResourceLocation(prefix + ":" + name), entity, name, currentID, KAGIC.instance, 256, 1, true, back, fore);
         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
             try {
@@ -332,6 +337,9 @@ public class ModEntities {
             }
         }
         GEMS.put(name, entity);
+        if (mineral) {
+			MINERALS.add(entity);
+		}
         ++currentID;
     }
 	@SuppressWarnings({ "unchecked" })
