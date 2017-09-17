@@ -97,6 +97,26 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityGem extends EntityCreature implements IEntityOwnable, IRangedAttackMob {
+	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityGem.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+	protected static final DataParameter<Boolean> SELECTED = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
+	protected static final DataParameter<Boolean> SWINGING_ARMS = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
+	
+	protected static final DataParameter<Integer> INSIGNIA_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> UNIFORM_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> SKIN_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> HAIR_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> HAIR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> GEM_CUT = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> GEM_PLACEMENT = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Boolean> VISOR = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
+	
+	protected static final DataParameter<Integer> FUSION_COUNT = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<String> FUSION_PLACEMENTS = EntityDataManager.<String>createKey(EntityGem.class, DataSerializers.STRING);
+	
+	protected static final DataParameter<Boolean> DEFECTIVE = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
+	protected static final DataParameter<Boolean> PRIMARY = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
+	protected static final DataParameter<Integer> SPECIAL = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	
 	public static final int SERVE_NONE = 0;
 	public static final int SERVE_HUMAN = 1;
 	public static final int SERVE_YELLOW_DIAMOND = 2;
@@ -104,23 +124,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public static final int SERVE_WHITE_DIAMOND = 4;
 	public static final int SERVE_REBELLION = 5;
 	public static final int SERVE_ITSELF = 6;
-	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityGem.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 	
-	protected static final DataParameter<Integer> INSIGNIA_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
-	protected static final DataParameter<Integer> UNIFORM_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
-	protected static final DataParameter<Integer> SKIN_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
-	protected static final DataParameter<Integer> HAIR_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
-
-	protected static final DataParameter<Integer> HAIR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
-	protected static final DataParameter<Boolean> SWINGING_ARMS = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
-	protected static final DataParameter<Integer> GEM_CUT = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
-	protected static final DataParameter<Integer> GEM_PLACEMENT = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
-	protected static final DataParameter<Boolean> VISOR = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
-	protected static final DataParameter<Integer> FUSION_COUNT = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
-	protected static final DataParameter<String> FUSION_PLACEMENTS = EntityDataManager.<String>createKey(EntityGem.class, DataSerializers.STRING);
-	protected static final DataParameter<Boolean> DEFECTIVE = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
-	protected static final DataParameter<Boolean> PRIMARY = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
-	protected static final DataParameter<Integer> SPECIAL = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
 	private final EntityAIBase rangedAttack = new EntityAIAttackRangedBow(this, 0.6D, 20, 16.0F);
 	private final EntityAIBase meleeAttack = new EntityAIAttackMelee(this, 1.2D, true);
 	private final EntityAITarget diamondAttackAI = new EntityAINearestAttackableTarget<EntityLivingBase>(this, EntityLivingBase.class, 10, true, false, new Predicate<EntityLivingBase>() {
@@ -141,15 +145,21 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	});
 	private final EntityAITarget warDeclarationAI = new EntityAIFightWars(this);
 	protected EntityAIStay stayAI;
+	
 	public ArrayList<NBTTagCompound> fusionMembers = new ArrayList<NBTTagCompound>();
+	public boolean wantsToFuse;
 	public int compatIndex;
+	
 	private ArrayList<UUID> jointOwners = new ArrayList<UUID>();
 	private UUID leader = null;
 	private BlockPos restPosition;
+	
+	public HashMap<String, Integer> crystalQueue = new HashMap<String, Integer>();
+	
 	public ItemGem droppedGemItem;
 	public ItemGem droppedCrackedGemItem;
 	public int fallbackServitude = -1;
-	public boolean wantsToFuse;
+	
 	public boolean isSoldier;
 	public boolean isDiamond;
 	public boolean isSpaceBorn;
@@ -159,7 +169,6 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public boolean canTalk;
 	public boolean killsPlayers;
 	
-	//Used for capes
     public double prevChasingPosX;
     public double prevChasingPosY;
     public double prevChasingPosZ;
@@ -170,9 +179,10 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	private int dimensionOfCreation;
 	private int timeUntilBetrayal;
 	private int servitude = 0;
+	
 	private float pitch = 1.0F;
 	protected int visorChanceReciprocal = 3; // 1 in visorChanceReciprocal gems will have a visor
-	private Map<GemCuts, ArrayList<GemPlacements>> cutPlacements = new HashMap<GemCuts, ArrayList<GemPlacements>>();
+	private HashMap<GemCuts, ArrayList<GemPlacements>> cutPlacements = new HashMap<GemCuts, ArrayList<GemPlacements>>();
 	
 	public EntityGem(World worldIn) {
 		super(worldIn);
@@ -182,6 +192,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIRestrictOpenDoor(this));
 		this.dataManager.register(OWNER_UNIQUE_ID, Optional.<UUID>absent());
+		this.dataManager.register(SELECTED, false);
 		this.dataManager.register(GEM_PLACEMENT, -1);
 		this.dataManager.register(GEM_CUT, -1);
 		this.dataManager.register(VISOR, false);
@@ -399,11 +410,12 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
 		this.setHealth(this.getMaxHealth());
-		
 		if (!this.isGemPlacementDefined() || !this.isGemCutDefined() || !this.isCorrectCutPlacement()) {
 			this.setNewCutPlacement();
 		}
-		
+		this.setSkinColor(this.generateSkinColor());
+		this.setHairStyle(this.generateHairStyle());
+		this.setHairColor(this.generateHairColor());
 		this.applyGemPlacementBuffs(true);
 		this.setHasVisor(this.rand.nextInt(visorChanceReciprocal) == 0);
 		this.setDimensionOfCreation(this.dimension);
@@ -447,22 +459,26 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	 * Methods related to entity living.					 *
 	 *********************************************************/
 	public void onLivingUpdate() {
-		if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL && this.getAttackTarget() instanceof EntityPlayer) {
-			this.setAttackTarget(null);
+		if (this.world.isRemote) {
+			this.setGlowing(this.isSelected());
 		}
-		if (this.isPeaceful) {
-			this.setAttackTarget(null);
-			this.isPeaceful = false;
-		}
-		if (this.isDefective()) {
-			this.whenDefective();
-		}
-
-		if (this.fallbackServitude > 0 && ModConfigs.canRebel) {
-			if (this.timeUntilBetrayal > (this.rand.nextDouble() * 4) * 24000) {
-				this.setServitude(this.fallbackServitude);
+		else {
+			if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL && this.getAttackTarget() instanceof EntityPlayer) {
+				this.setAttackTarget(null);
 			}
-			++this.timeUntilBetrayal;
+			if (this.isPeaceful) {
+				this.setAttackTarget(null);
+				this.isPeaceful = false;
+			}
+			if (this.isDefective()) {
+				this.whenDefective();
+			}
+			if (this.fallbackServitude > 0 && ModConfigs.canRebel) {
+				if (this.timeUntilBetrayal > (this.rand.nextDouble() * 4) * 24000) {
+					this.setServitude(this.fallbackServitude);
+				}
+				++this.timeUntilBetrayal;
+			}
 		}
 		super.onLivingUpdate();
 	}
@@ -523,7 +539,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 				if (stack.getItem() == ModItems.GEM_STAFF) {
 					if (this.isTamed()) {
 						if (player.isSneaking()) {
-							this.alternateInteract(player);
+							this.setSelected(!this.isSelected());
 							this.playObeySound();
 						}
 						else {
@@ -817,9 +833,6 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 							return true;
 						}
 					}
-				}
-				else if (stack.isEmpty()) {
-					this.setAttackWeapon(player, hand, stack);
 				}
 				else if (this.isSoldier) {
 					return super.processInteract(player, hand) || this.setAttackWeapon(player, hand, stack);
@@ -1149,6 +1162,10 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		
 	}
 	
+	public void itemDataToGemData(int data) {
+		this.setSpecial(data);
+	}
+	
 	@SuppressWarnings("incomplete-switch")
 	public void applyGemPlacementBuffs(boolean initialSpawn) {
 		switch (this.getGemPlacement()) {
@@ -1369,6 +1386,14 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public void setLeader(UUID newLeader) {
 		this.leader = newLeader; 	
+	}
+	
+	public void setSelected(boolean selected) {
+		this.dataManager.set(SELECTED, selected);
+	}
+	
+	public boolean isSelected() {
+		return this.dataManager.get(SELECTED);
 	}
 	
 	public BlockPos getRestPosition() {
@@ -1916,7 +1941,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public int getTalkInterval() {
 		return 200;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return null;
 	}
 	public void playObeySound() {
@@ -1932,9 +1957,6 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public void playHurtSound(DamageSource source) {
 		if (ModConfigs.canGemsMakeSounds) {
 			super.playHurtSound(source);
-		}
-		else {
-			this.playSound(SoundEvents.ENTITY_GENERIC_HURT, this.getSoundVolume(), this.getSoundPitch());
 		}
 	}
 	

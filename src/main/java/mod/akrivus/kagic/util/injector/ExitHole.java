@@ -34,7 +34,7 @@ public class ExitHole {
 	}
 	public static ExitHole create(World world, BlockPos pos, double height, boolean meltRocks) {
 		ArrayList<BlockPos> blocksToDelete = new ArrayList<BlockPos>();
-		PriorityQueue<ExitPotential> exitQueue = new PriorityQueue(4, new ExitPotential());
+		PriorityQueue<ExitPotential> exitQueue = new PriorityQueue<ExitPotential>(4, new ExitPotential());
 		exitQueue.add(new ExitPotential(false, 0, 10, 'o'));
 		
 		for (int x = -1; x >= -9; --x) {

@@ -76,7 +76,7 @@ public class KAGIC {
 	public void serverStarting(FMLServerStartingEvent e) {
     	if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
 	    	try {
-	    		ModMetrics.setMetrics(null);
+	    		ModMetrics.sendMetrics();
 	    	}
 	    	catch (Exception x) {
 	    		x.printStackTrace();

@@ -184,6 +184,12 @@ public class EntityAgate extends EntityGem {
         }
         return super.onInitialSpawn(difficulty, livingdata);
     }
+    public void itemDataToGemData(int data) {
+		this.dataManager.set(COLOR, data);
+		this.setHairStyle(this.rand.nextInt(EntityAgate.AGATE_HAIR_STYLES.size()));
+    	this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.agate_%1$d.name", data)).getUnformattedComponentText());
+    	this.setSpecial(0);
+	}
 
     /*********************************************************
 	 * Methods related to interaction.                       *
@@ -284,13 +290,13 @@ public class EntityAgate extends EntityGem {
 	/*********************************************************
 	 * Methods related to sounds.                            *
 	 *********************************************************/
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.AGATE_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.AGATE_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.AGATE_DEATH;
 	}
 

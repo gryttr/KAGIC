@@ -3,7 +3,9 @@ package mod.akrivus.kagic.entity;
 import mod.akrivus.kagic.entity.ai.EntityAISlagEatGems;
 import mod.akrivus.kagic.entity.ai.EntityAISlagFuse;
 import mod.akrivus.kagic.entity.ai.EntityAISlagHateLight;
+import mod.akrivus.kagic.init.ModEntities;
 import mod.akrivus.kagic.init.ModItems;
+import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -20,8 +22,10 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.BossInfoServer;
@@ -29,12 +33,13 @@ import net.minecraft.world.World;
 
 public class EntitySlag extends EntityMob {
 	protected static final DataParameter<Integer> COUNT = EntityDataManager.<Integer>createKey(EntitySlag.class, DataSerializers.VARINT);
-	protected static final DataParameter<Integer> AGE = EntityDataManager.<Integer>createKey(EntitySlag.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> VARIANT = EntityDataManager.<Integer>createKey(EntitySlag.class, DataSerializers.VARINT);
 	private BossInfoServer healthBar = new BossInfoServer(new TextComponentTranslation("entity.kagic.slag.super"), BossInfo.Color.GREEN, BossInfo.Overlay.PROGRESS);
 	public int compatIndex = 0;
 	public EntitySlag(World worldIn) {
         super(worldIn);
         this.setSize(0.4F, 0.3F);
+        this.healthBar = new BossInfoServer(new TextComponentTranslation("entity.kagic.slag.super"), BossInfo.Color.values()[this.rand.nextInt(BossInfo.Color.values().length)], BossInfo.Overlay.PROGRESS);
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D);
@@ -49,48 +54,43 @@ public class EntitySlag extends EntityMob {
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityGem>(this, EntityGem.class, true));
         this.dataManager.register(COUNT, 1);
-        this.dataManager.register(AGE, 0);
+        this.dataManager.register(VARIANT, -1);
         this.compatIndex = worldIn.rand.nextInt(4);
     }
 	public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
         compound.setInteger("count", this.dataManager.get(COUNT));
-        compound.setInteger("age", this.dataManager.get(AGE));
+        compound.setInteger("variant", this.dataManager.get(VARIANT));
 	}
 	public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
-        this.dataManager.set(AGE, compound.getInteger("age"));
+        this.dataManager.set(VARIANT, compound.getInteger("variant"));
         this.setCount(compound.getInteger("count"));
 	}
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		this.setSize(0.4F * this.getCount(), 0.3F * this.getCount());
-		if (this.getStage() < 4) {
-			this.addAge();
+		if (this.ticksExisted < 4 && this.getVariant() < 0) {
+			ChunkPos c = world.getChunkFromBlockCoords(this.getPosition()).getPos();
+			this.setVariant(Math.abs((c.x + c.z) % ModEntities.MINERALS.size()));
 		}
 	}
 	protected void updateAITasks() {
 		super.updateAITasks();
 		this.healthBar.setPercent(this.getHealth() / this.getMaxHealth());
 	}
-	public int getStage() {
-		return this.dataManager.get(AGE) / (18000 + this.rand.nextInt(6000));
+	public void setVariant(int variant) {
+		this.dataManager.set(VARIANT, variant);
 	}
-	public int getAge() {
-		return this.dataManager.get(AGE);
-	}
-	public void setAge(int age) {
-		this.dataManager.set(AGE, age);
-	}
-	public void addAge() {
-		this.dataManager.set(AGE, this.dataManager.get(AGE) + 1);
+	public int getVariant() {
+		return this.dataManager.get(VARIANT);
 	}
 	public int getCount() {
 		return this.dataManager.get(COUNT);
 	}
 	public void setCount(int count) {
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(30.0D * count);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D * count);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D * count);
 		this.setSize(0.4F * count, 0.3F * count);
 		this.dataManager.set(COUNT, count);
 	}
@@ -134,13 +134,16 @@ public class EntitySlag extends EntityMob {
         super.removeTrackingPlayer(player);
         this.healthBar.removePlayer(player);
     }
+    protected SoundEvent getAmbientSound() {
+		return ModSounds.SLAG_LIVING;
+	}
 	public boolean canFuse() {
 		return this.getCount() < 10 && (this.getHealth() / this.getMaxHealth() <= 0.9 || this.getAttackTarget() != null || this.getRevengeTarget() != null);
 	}
 	public EntitySlag fuse(EntitySlag other) {
 		EntitySlag newSlag = new EntitySlag(this.world);
 		newSlag.setCount(this.getCount() + other.getCount());
-		newSlag.setAge(this.getAge() + other.getAge());
+		newSlag.setVariant(Integer.parseInt(Integer.toString(this.getVariant()) + Integer.toString(other.getVariant())));
 		newSlag.setHealth(newSlag.getMaxHealth());
 		newSlag.setLocationAndAngles((this.posX + other.posX) / 2, (this.posY + other.posY) / 2, (this.posZ + other.posZ) / 2, (this.rotationYaw + other.rotationYaw) / 2, (this.rotationPitch + other.rotationPitch) / 2);
 		return newSlag;

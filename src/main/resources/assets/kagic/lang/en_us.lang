@@ -63,6 +63,7 @@ entity.kagic.zircon.name=Zircon
 entity.kagic.zircon.name.plural=Zircons
 entity.kagic.slag.name=Slag
 entity.kagic.slag.super=Super Slag
+entity.kagic.steven.name=Steven
 
 item.active_gem_base.name=Active Gem Base
 item.inactive_gem_base.name=Inactive Gem Base
@@ -231,6 +232,7 @@ tile.chiseled_carbonite.name=Chiseled Carbonite
 tile.rock_melt.name=Frictional Rock Melt
 tile.rutile_trail.name=Rutile Trail
 tile.warp_pad_core.name=Warp Pad Core
+tile.galaxy_pad_core.name=Galaxy Warp Pad Core
 
 command.kagic.will_follow_you=%1$s will follow you.
 command.kagic.will_not_follow_you=%1$s will not follow you.

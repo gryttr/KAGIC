@@ -235,13 +235,13 @@ public class EntityBlueDiamond extends EntityGem {
 	/*********************************************************
 	 * Methods related to sounds.                            *
 	 *********************************************************/
-	public SoundEvent getAmbientSound() {
+	protected SoundEvent getAmbientSound() {
 		return ModSounds.BLUE_DIAMOND_LIVING;
 	}
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.BLUE_DIAMOND_HURT;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.BLUE_DIAMOND_DEATH;
 	}
 }

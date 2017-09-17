@@ -117,9 +117,6 @@ public class EntityLapisLazuli extends EntityGem {
 	 * Methods related to loading.                           *
 	 *********************************************************/
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		this.setSkinColor(this.generateSkinColor());
-		this.setHairStyle(this.generateHairStyle());
-		this.setHairColor(this.generateHairColor());
         return super.onInitialSpawn(difficulty, livingdata);
     }
 
@@ -334,13 +331,13 @@ public class EntityLapisLazuli extends EntityGem {
 	/*********************************************************
 	 * Methods related to sounds.                            *
 	 *********************************************************/
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.LAPIS_LAZULI_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.LAPIS_LAZULI_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.LAPIS_LAZULI_DEATH;
 	}
 

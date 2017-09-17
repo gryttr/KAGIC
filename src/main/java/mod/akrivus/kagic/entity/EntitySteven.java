@@ -1,8 +1,5 @@
 package mod.akrivus.kagic.entity;
 
-import mod.akrivus.kagic.entity.ai.EntityAIFollowRose;
-import mod.akrivus.kagic.entity.ai.EntityAIRoseHurtByTarget;
-import mod.akrivus.kagic.entity.gem.EntityRoseQuartz;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -17,24 +14,19 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-public class EntityPepo extends EntityCreature {
-	public ItemStack dropItem;
-	public EntityRoseQuartz master;
-	public EntityPepo(ItemStack dropItem, World worldIn) {
+public class EntitySteven extends EntityCreature {
+	public EntitySteven(World worldIn) {
 		super(worldIn);
-		this.dropItem = dropItem;
 		this.setSize(0.5F, 1.5F);
-		
+
 		// Other entity AIs.
 		this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.0D, true));
         this.tasks.addTask(3, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
-        this.tasks.addTask(4, new EntityAIFollowRose(this, 1.0D));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWander(this, 0.6D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
@@ -42,7 +34,6 @@ public class EntityPepo extends EntityCreature {
         this.tasks.addTask(9, new EntityAILookIdle(this));
         
         // Apply targetting.
-        this.targetTasks.addTask(1, new EntityAIRoseHurtByTarget(this));
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false, new Class[0]));
         
         // Apply entity attributes.
@@ -56,12 +47,6 @@ public class EntityPepo extends EntityCreature {
     public boolean canDespawn() {
 		return false;
     }
-    public EntityRoseQuartz getMaster() {
-        return this.master;
-    }
-    public void setMaster(EntityRoseQuartz master) {
-        this.master = master;
-    }
     public boolean shouldAttackEntity(EntityLivingBase var1, EntityLivingBase var2) {
         return true;
     }
@@ -71,9 +56,6 @@ public class EntityPepo extends EntityCreature {
         return entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), amount);
     }
 	public void onDeath(DamageSource cause) {
-		if (!this.world.isRemote) {
-			this.entityDropItem(this.dropItem, 0.0F);
-		}
 		super.onDeath(cause);
 	}
 	protected SoundEvent getAmbientSound() {

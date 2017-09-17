@@ -135,10 +135,6 @@ public class EntityRoseQuartz extends EntityGem {
 	 * Methods related to entity loading.                    *
 	 *********************************************************/
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		this.setSkinColor(this.generateSkinColor());
-		this.setHairStyle(this.generateHairStyle());
-		this.setHairColor(this.generateHairColor());
-
 		return super.onInitialSpawn(difficulty, livingdata);
     }
 
@@ -287,16 +283,16 @@ public class EntityRoseQuartz extends EntityGem {
 	/*********************************************************
 	 * Methods related to sounds.                            *
 	 *********************************************************/
-	public SoundEvent getAmbientSound() {
+	protected SoundEvent getAmbientSound() {
 		return ModSounds.ROSE_QUARTZ_LIVING;
 	}
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.ROSE_QUARTZ_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.ROSE_QUARTZ_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.ROSE_QUARTZ_DEATH;
 	}
 	

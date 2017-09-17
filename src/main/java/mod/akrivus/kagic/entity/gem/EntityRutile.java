@@ -70,16 +70,16 @@ public class EntityRutile extends EntityGem {
 	public float[] getGemColor() {
     	return new float[] { 174F / 255F, 29F / 255F, 72F / 255F };
     }
-	public SoundEvent getAmbientSound() {
+	protected SoundEvent getAmbientSound() {
 		return ModSounds.RUTILE_LIVING;
 	}
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.RUTILE_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.RUTILE_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.RUTILE_DEATH;
 	}
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {

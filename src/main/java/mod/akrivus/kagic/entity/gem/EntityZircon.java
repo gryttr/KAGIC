@@ -83,18 +83,23 @@ public class EntityZircon extends EntityGem {
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
     	livingdata = super.onInitialSpawn(difficulty, livingdata);
     	this.setInsigniaColor(this.rand.nextInt(16));
-		this.setHairStyle(this.rand.nextInt(EntityZircon.ZIRCON_HAIR_STYLES.size()));
 		this.setHasVisor(true);
     	return livingdata;
 	}
+	public void itemDataToGemData(int data) {
+		this.setInsigniaColor(data);
+	}
+	protected int generateHairStyle() {
+    	return this.rand.nextInt(EntityZircon.ZIRCON_HAIR_STYLES.size());
+    }
 
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.ZIRCON_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.ZIRCON_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.ZIRCON_DEATH;
 	}
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {

@@ -55,14 +55,10 @@ public class ModEvents {
 					player.sendMessage(new TextComponentString("Note that some features may be removed!"));
 				}
 				else if (ModConfigs.notifyOnUpdates) {
-					Update result = ModMetrics.setMetrics(player);
-					if (result != null && !KAGIC.VERSION.equals(result.getModVersion())) {
-						player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§cKAGIC v" + result.getModVersion() + " is out for Minecraft " + KAGIC.MCVERSION + "§f\"}]"));
-						player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"This update adds the following changes:\"}]"));
-						for (String change : result.getChangelogs()) {
-							player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"- " + change + "\"}]"));
-						}
-						player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§e§nDownload§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDownloadLink() + "\"}}, {\"text\":\" | \"}, {\"text\":\"§3§nDiscord§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDiscordLink() + "\"}}, {\"text\":\" | \"}, {\"text\":\"§6§nPatreon§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getPatreonLink() + "\"}}]"));
+					Update result = ModMetrics.checkForUpdates();
+					if (result != null && !KAGIC.VERSION.equals(result.getNewVersion())) {
+						player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§cKAGIC v" + result.getNewVersion() + " is out for Minecraft " + KAGIC.MCVERSION + "§f\"}]"));
+						player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§e§nDownload§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDownloadLink() + "\"}}, {\"text\":\" | \"}, {\"text\":\"§3§nDiscord§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDiscordLink() + "\"}}]"));
 					}
 				}
 				//player.addStat(ModAchievements.INSTALLED_KAGIC);
@@ -189,6 +185,7 @@ public class ModEvents {
 				ex.printStackTrace();
 			}
 		}
+		ModMetrics.sendMetrics();
 	}
 	@SubscribeEvent
 	public void onWorldSave(WorldEvent.Save e) {
@@ -199,10 +196,11 @@ public class ModEvents {
 	@SubscribeEvent
 	public void onServerChat(ServerChatEvent e) {
 		List<EntityGem> list = e.getPlayer().world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, e.getPlayer().getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
-       for (EntityGem gem : list) {
-            boolean obeyed = gem.onSpokenTo(e.getPlayer(), e.getMessage());
+		for (EntityGem gem : list) {
+        	boolean obeyed = gem.onSpokenTo(e.getPlayer(), e.getMessage());
             if (obeyed) {
             	gem.playObeySound();
+            	e.setCanceled(true);
             }
         }
 	}

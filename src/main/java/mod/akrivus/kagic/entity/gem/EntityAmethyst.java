@@ -139,9 +139,6 @@ public class EntityAmethyst extends EntityGem {
 	 * Methods related to entity loading.                    *
 	 *********************************************************/
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		this.setSkinColor(this.generateSkinColor());
-		this.setHairStyle(this.generateHairStyle());
-		this.setHairColor(this.generateHairColor());
     	this.setSpecial(/*this.rand.nextInt(9) == 0 ? 1 : */0);
 		if (this.isCitrine()) {
     		this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.citrine.name")).getUnformattedText());
@@ -311,13 +308,13 @@ public class EntityAmethyst extends EntityGem {
 	/*********************************************************
 	 * Methods related to sound.                             *
 	 *********************************************************/
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.AMETHYST_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.AMETHYST_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.AMETHYST_DEATH;
 	}
 	

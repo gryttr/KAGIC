@@ -10,6 +10,7 @@ import java.util.HashMap;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.EntityLaser;
 import mod.akrivus.kagic.entity.EntitySlag;
+import mod.akrivus.kagic.entity.EntitySteven;
 import mod.akrivus.kagic.entity.gem.EntityAgate;
 import mod.akrivus.kagic.entity.gem.EntityAmethyst;
 import mod.akrivus.kagic.entity.gem.EntityAquamarine;
@@ -77,6 +78,7 @@ public class ModEntities {
 		registerMob("pumpkin", EntityPumpkin.class, 0xD58116, 0x744E03);
 		registerMob("cactus", EntityCactus.class, 0x138622, 0xD9DB9F);
 		registerMob("slag", EntitySlag.class, 0xFFFFFF, 0x00FF5D);
+		registerMob("steven", EntitySteven.class, 0xFD6270, 0xFFD248);
 		registerEntity("roaming_eye", EntityRoamingEye.class);
 		registerEntity("laser", EntityLaser.class);
 		registerGemYields();
@@ -341,6 +343,9 @@ public class ModEntities {
 		}
         ++currentID;
     }
+	public static <T extends EntityGem> void registerExternalGem(String prefix, String name, Class<T> entity, String renderpath, int back, int fore) {
+		ModEntities.registerExternalGem(prefix, name, entity, renderpath, back, fore, false);
+	}
 	@SuppressWarnings({ "unchecked" })
 	public static <T extends Entity> void registerMob(String name, Class<T> entity, int back, int fore) {
 		EntityRegistry.registerModEntity(new ResourceLocation("kagic:kagic." + name), entity, "kagic." + name, currentID, KAGIC.instance, 256, 1, true, back, fore);

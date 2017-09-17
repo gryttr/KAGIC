@@ -219,13 +219,13 @@ public class EntityYellowDiamond extends EntityGem {
 	public int getTalkInterval() {
     	return 200;
     }
-	public SoundEvent getAmbientSound() {
+	protected SoundEvent getAmbientSound() {
 		return ModSounds.YELLOW_DIAMOND_LIVING;
 	}
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.YELLOW_DIAMOND_HURT;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.YELLOW_DIAMOND_DEATH;
 	}
 }

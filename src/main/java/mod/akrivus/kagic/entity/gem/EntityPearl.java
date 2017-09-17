@@ -179,9 +179,16 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
         }
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-    	this.setHairStyle(this.rand.nextInt(EntityPearl.PEARL_HAIR_STYLES.size()));
     	this.setGemCut(GemCuts.CABOCHON.id);
         return super.onInitialSpawn(difficulty, livingdata);
+    }
+    public void itemDataToGemData(int data) {
+		this.setColor(data);
+		this.setHairColor(data);
+		this.setInsigniaColor(data);
+	}
+    protected int generateHairStyle() {
+    	return this.rand.nextInt(EntityPearl.PEARL_HAIR_STYLES.size());
     }
 
     /*********************************************************
@@ -561,13 +568,13 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 	/*********************************************************
 	 * Methods related to sounds.                            *
 	 *********************************************************/
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.PEARL_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.PEARL_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.PEARL_DEATH;
 	}
 }

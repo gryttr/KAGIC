@@ -111,16 +111,16 @@ public class EntityPadparadscha extends EntityGem {
             }
         }
     }
-	public SoundEvent getAmbientSound() {
+	protected SoundEvent getAmbientSound() {
 		return ModSounds.PADPARADSCHA_LIVING;
 	}
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.SAPPHIRE_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.SAPPHIRE_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.SAPPHIRE_DEATH;
 	}
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {

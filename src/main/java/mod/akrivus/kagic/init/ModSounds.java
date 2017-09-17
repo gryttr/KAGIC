@@ -22,6 +22,7 @@ public class ModSounds {
 	public static final SoundEvent GEM_SHATTER = new SoundEvent(new ResourceLocation("kagic:entities.gem.shatter"));
 
 	public static final SoundEvent SLAG_EAT = new SoundEvent(new ResourceLocation("kagic:entities.slag.eat"));
+	public static final SoundEvent SLAG_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.slag.living"));
 	public static final SoundEvent PEPO_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.pepo.living"));
 	public static final SoundEvent RUBY_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.ruby.living"));
 	public static final SoundEvent RUBY_HURT = new SoundEvent(new ResourceLocation("kagic:entities.ruby.hurt"));
@@ -101,6 +102,7 @@ public class ModSounds {
 		registerSound(GEM_POOF, new ResourceLocation("kagic:entities.gem.poof"), event);
 		registerSound(GEM_SHATTER, new ResourceLocation("kagic:entities.gem.shatter"), event);
 		registerSound(SLAG_EAT, new ResourceLocation("kagic:entities.slag.eat"), event);
+		registerSound(SLAG_LIVING, new ResourceLocation("kagic:entities.slag.living"), event);
 		registerSound(PEPO_LIVING, new ResourceLocation("kagic:entities.pepo.living"), event);
 		registerSound(RUBY_LIVING, new ResourceLocation("kagic:entities.ruby.living"), event);
 		registerSound(RUBY_HURT, new ResourceLocation("kagic:entities.ruby.hurt"), event);

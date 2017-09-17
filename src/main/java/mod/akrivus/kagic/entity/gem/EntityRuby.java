@@ -202,9 +202,6 @@ public class EntityRuby extends EntityGem {
         this.setAnger(compound.getInteger("anger"));
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		this.setSkinColor(this.generateSkinColor());
-		this.setHairStyle(this.generateHairStyle());
-		this.setHairColor(this.generateHairColor());
     	this.setSpecial(this.rand.nextInt(6));
         return super.onInitialSpawn(difficulty, livingdata);
     }
@@ -563,16 +560,16 @@ public class EntityRuby extends EntityGem {
 		}
 	}
 	
-	public SoundEvent getAmbientSound() {
+	protected SoundEvent getAmbientSound() {
 		return ModSounds.RUBY_LIVING;
 	}
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.RUBY_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.RUBY_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.RUBY_DEATH;
 	}
 }

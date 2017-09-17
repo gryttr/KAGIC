@@ -1,6 +1,8 @@
 package mod.akrivus.kagic.items;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityRuby;
@@ -95,6 +97,10 @@ public class ItemGem extends Item {
 	    	}
 	    	catch (Exception e) {
 	    		newGem.onInitialSpawn(worldIn.getDifficultyForLocation(blockpos), null);
+	    		Matcher matcher = Pattern.compile("_(\\d+)_").matcher(this.getUnlocalizedName());
+            	if (matcher.find()) {
+            		newGem.itemDataToGemData(Integer.parseInt(matcher.group(1)));
+            	}
 	    		if (playerIn != null && !newGem.isDiamond) {
 	    			newGem.setOwnerId(EntityPlayer.getUUID(playerIn.getGameProfile()));
 	    			newGem.setLeader(playerIn);
@@ -112,6 +118,7 @@ public class ItemGem extends Item {
 			newGem.setHealth(newGem.getMaxHealth());
 			newGem.setAttackTarget(null);
 			newGem.extinguish();
+			newGem.clearActivePotions();
 			worldIn.spawnEntity(newGem);
 			return true;
 		}

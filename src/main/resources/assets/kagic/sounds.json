@@ -71,7 +71,16 @@
     },
     "entities.slag.eat": {
     	"sounds": [
-    		{ "name": "kagic:entities/eat" }
+    		{ "name": "kagic:entities/slag/eat" }
+    	]
+    },
+    "entities.slag.living": {
+    	"sounds": [
+    		{ "name": "kagic:entities/slag/slag1" },
+    		{ "name": "kagic:entities/slag/slag2" },
+    		{ "name": "kagic:entities/slag/slag3" },
+    		{ "name": "kagic:entities/slag/slag4" },
+    		{ "name": "kagic:entities/slag/slag5" }
     	]
     },
     "entities.pepo.living": {

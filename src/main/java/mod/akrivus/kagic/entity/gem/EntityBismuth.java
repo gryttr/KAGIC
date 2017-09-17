@@ -92,7 +92,6 @@ public class EntityBismuth extends EntityGem {
 	 * Methods related to entity loading.                    *
 	 *********************************************************/
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		this.setSkinColor(this.generateSkinColor());
 		return super.onInitialSpawn(difficulty, livingdata);
     }
 	
@@ -184,13 +183,13 @@ public class EntityBismuth extends EntityGem {
 	/*********************************************************
      * Methods related to entity sounds.                     *
      *********************************************************/
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.BISMUTH_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.BISMUTH_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.BISMUTH_DEATH;
 	}
 

@@ -134,20 +134,22 @@ public class EntityTopaz extends EntityGem {
 	/*********************************************************
 	 * Methods related to entity loading.                    *
 	 *********************************************************/
-	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-    	this.setSpecial(this.rand.nextInt(7) == 0 ? 1 : 0);
-		this.setSkinColor(this.generateSkinColor());
-		this.setHairStyle(this.generateHairStyle());
-		this.setHairColor(this.generateHairColor());
-		return super.onInitialSpawn(difficulty, livingdata);
-    }
 	public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
     }
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
     }
-	
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+    	this.setSpecial(this.rand.nextInt(7) == 0 ? 1 : 0);
+		return super.onInitialSpawn(difficulty, livingdata);
+    }
+    public void itemDataToGemData(int data) {
+        this.setSpecial(data);
+        this.setSkinColor(this.generateSkinColor());
+		this.setHairStyle(this.generateHairStyle());
+		this.setHairColor(this.generateHairColor());
+	}
     /*********************************************************
      * Methods related to entity interaction.                *
      *********************************************************/
@@ -362,13 +364,13 @@ public class EntityTopaz extends EntityGem {
 	protected void playStepSound(BlockPos pos, Block blockIn) {
         this.playSound(SoundEvents.ENTITY_IRONGOLEM_STEP, 1.0F, 1.0F);
     }
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.TOPAZ_STEP;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.TOPAZ_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.TOPAZ_DEATH;
 	}
 }

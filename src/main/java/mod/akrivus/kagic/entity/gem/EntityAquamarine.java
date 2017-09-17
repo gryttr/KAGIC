@@ -176,13 +176,13 @@ public class EntityAquamarine extends EntityGem {
 	/*********************************************************
      * Methods related to entity sounds.                     *
      *********************************************************/
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.AQUAMARINE_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.AQUAMARINE_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.AQUAMARINE_DEATH;
 	}
 }

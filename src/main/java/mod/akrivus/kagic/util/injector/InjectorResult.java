@@ -60,10 +60,12 @@ public class InjectorResult {
 				int attempts = 0;
 				while (failed && attempts < 10) {
 					BlockPos spawn = this.getPosition().add(world.rand.nextInt(9), 0, world.rand.nextInt(9));
+					ChunkPos c = world.getChunkFromBlockCoords(spawn).getPos();
 					failed = !world.isAirBlock(spawn);
 					if (!failed) {
 						EntitySlag slag = new EntitySlag(world);
 						slag.setPosition(spawn.getX(), spawn.getY(), spawn.getZ());
+						slag.setVariant(Math.abs((c.x + c.z) % ModEntities.MINERALS.size()));
 						world.spawnEntity(slag);
 						slag.onInitialSpawn(world.getDifficultyForLocation(spawn), null);
 					}

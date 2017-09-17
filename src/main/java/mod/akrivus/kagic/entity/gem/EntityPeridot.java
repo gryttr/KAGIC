@@ -139,9 +139,6 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	 * Methods related to loading.                           *
 	 *********************************************************/
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		this.setSkinColor(this.generateSkinColor());
-		this.setHairStyle(this.generateHairStyle());
-		this.setHairColor(this.generateHairColor());
         return super.onInitialSpawn(difficulty, livingdata);
     }
 
@@ -386,16 +383,16 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	/*********************************************************
 	 * Methods related to sounds.                            *
 	 *********************************************************/
-	public SoundEvent getAmbientSound() {
+	protected SoundEvent getAmbientSound() {
 		return ModSounds.PERIDOT_LIVING;
 	}
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.PERIDOT_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.PERIDOT_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.PERIDOT_DEATH;
 	}
 

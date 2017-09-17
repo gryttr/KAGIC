@@ -293,19 +293,25 @@ public class EntityJasper extends EntityGem {
     	}
     	this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", special)).getUnformattedComponentText());
         this.setSpecial(special);
-
-		this.setSkinColor(this.generateSkinColor());
-		this.setHairStyle(this.generateHairStyle());
-		this.setHairColor(this.generateHairColor());
 		this.setMark1(this.generateMark1());
 		this.setMark1Color(this.generateMark1Color());
 		if (this.hasSecondMarking()) {
 			this.setMark2(this.generateMark2());
 			this.setMark2Color(this.generateMark2Color());
 		}
-		
 		return super.onInitialSpawn(difficulty, livingdata);
     }
+    public void itemDataToGemData(int data) {
+    	this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", data)).getUnformattedComponentText());
+        this.setSpecial(data);
+		this.setMark1(this.generateMark1());
+		this.setMark1Color(this.generateMark1Color());
+		if (this.hasSecondMarking()) {
+			this.setMark2(this.generateMark2());
+			this.setMark2Color(this.generateMark2Color());
+		}
+		this.setSkinColor(this.generateSkinColor());
+	}
 	
 	/*********************************************************
 	 * Methods related to entity interaction.                *
@@ -448,13 +454,13 @@ public class EntityJasper extends EntityGem {
 	/*********************************************************
 	 * Methods related to entity sounds.                     *
 	 *********************************************************/
-	public SoundEvent getHurtSound(DamageSource source) {
+	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.JASPER_HURT;
 	}
-	public SoundEvent getObeySound() {
+	protected SoundEvent getObeySound() {
 		return ModSounds.JASPER_OBEY;
 	}
-	public SoundEvent getDeathSound() {
+	protected SoundEvent getDeathSound() {
 		return ModSounds.JASPER_DEATH;
 	}
 	
