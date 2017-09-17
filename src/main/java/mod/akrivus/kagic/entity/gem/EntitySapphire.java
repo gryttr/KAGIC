@@ -12,7 +12,6 @@ import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -29,6 +28,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -98,7 +98,7 @@ public class EntitySapphire extends EntityGem {
 	public SoundEvent getAmbientSound() {
 		return ModSounds.SAPPHIRE_LIVING;
 	}
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.SAPPHIRE_HURT;
 	}
 	public SoundEvent getObeySound() {

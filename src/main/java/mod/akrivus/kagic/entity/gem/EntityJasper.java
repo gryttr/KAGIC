@@ -18,7 +18,6 @@ import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -449,7 +448,7 @@ public class EntityJasper extends EntityGem {
 	/*********************************************************
 	 * Methods related to entity sounds.                     *
 	 *********************************************************/
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.JASPER_HURT;
 	}
 	public SoundEvent getObeySound() {
@@ -464,17 +463,17 @@ public class EntityJasper extends EntityGem {
 	 *********************************************************/
 	@Override
 	protected int generateSkinColor() {
-		return Colors.arbiLerp(this.SKIN_COLORS.get(this.getSpecial()));
+		return Colors.arbiLerp(EntityJasper.SKIN_COLORS.get(this.getSpecial()));
 	}
 	
 	@Override
 	protected int generateHairStyle() {
-		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+		return this.rand.nextInt(EntityJasper.NUM_HAIRSTYLES);
 	}
 	
 	@Override
 	protected int generateHairColor() {
-		return Colors.arbiLerp(this.HAIR_COLORS.get(this.getSpecial()));
+		return Colors.arbiLerp(EntityJasper.HAIR_COLORS.get(this.getSpecial()));
 	}
 
 	@Override
@@ -507,20 +506,20 @@ public class EntityJasper extends EntityGem {
 	}
 	
 	protected int generateMark1Color() {
-		return Colors.arbiLerp(this.MARK_1_COLORS.get(this.getSpecial()));
+		return Colors.arbiLerp(EntityJasper.MARK_1_COLORS.get(this.getSpecial()));
 	}
 	
 	protected int generateMark1() {
-		return this.rand.nextInt(this.MARK1S.get(this.getSpecial()));
+		return this.rand.nextInt(EntityJasper.MARK1S.get(this.getSpecial()));
 	}
 	
 	protected int generateMark2Color() {
-		return Colors.arbiLerp(this.MARK_2_COLORS.get(this.getSpecial()));
+		return Colors.arbiLerp(EntityJasper.MARK_2_COLORS.get(this.getSpecial()));
 	}	
 	
 	protected int generateMark2() {
 		if (this.hasSecondMarking()) {
-			return this.rand.nextInt(this.MARK2S.get(this.getSpecial()));
+			return this.rand.nextInt(EntityJasper.MARK2S.get(this.getSpecial()));
 		} else {
 			return 0;
 		}

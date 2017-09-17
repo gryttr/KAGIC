@@ -19,7 +19,6 @@ import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.items.ItemGem;
 import mod.heimrarnadalr.kagic.util.Colors;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -291,7 +290,7 @@ public class EntityRoseQuartz extends EntityGem {
 	public SoundEvent getAmbientSound() {
 		return ModSounds.ROSE_QUARTZ_LIVING;
 	}
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.ROSE_QUARTZ_HURT;
 	}
 	public SoundEvent getObeySound() {
@@ -306,22 +305,22 @@ public class EntityRoseQuartz extends EntityGem {
 	 *********************************************************/
 	@Override
 	protected int generateSkinColor() {
-		ArrayList skinColors = new ArrayList();
-		skinColors.add(this.SKIN_COLOR_BEGIN);
-		skinColors.add(this.SKIN_COLOR_END);
+		ArrayList<Integer> skinColors = new ArrayList<Integer>();
+		skinColors.add(EntityRoseQuartz.SKIN_COLOR_BEGIN);
+		skinColors.add(EntityRoseQuartz.SKIN_COLOR_END);
 		return Colors.arbiLerp(skinColors);
 	}
 	
 	@Override
 	protected int generateHairStyle() {
-		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+		return this.rand.nextInt(EntityRoseQuartz.NUM_HAIRSTYLES);
 	}
 	
 	@Override
 	protected int generateHairColor() {
-		ArrayList hairColors = new ArrayList();
-		hairColors.add(this.HAIR_COLOR_BEGIN);
-		hairColors.add(this.HAIR_COLOR_END);
+		ArrayList<Integer> hairColors = new ArrayList<Integer>();
+		hairColors.add(EntityRoseQuartz.HAIR_COLOR_BEGIN);
+		hairColors.add(EntityRoseQuartz.HAIR_COLOR_END);
 		return Colors.arbiLerp(hairColors);
 	}
 

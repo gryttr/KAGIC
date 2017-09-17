@@ -15,7 +15,6 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -312,7 +311,7 @@ public class EntityAmethyst extends EntityGem {
 	/*********************************************************
 	 * Methods related to sound.                             *
 	 *********************************************************/
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.AMETHYST_HURT;
 	}
 	public SoundEvent getObeySound() {
@@ -327,24 +326,24 @@ public class EntityAmethyst extends EntityGem {
 	 *********************************************************/
 	@Override
 	protected int generateSkinColor() {
-		return Colors.triLerp(this.SKIN_COLOR_BEGIN, this.SKIN_COLOR_MID, this.SKIN_COLOR_END);
+		return Colors.triLerp(EntityAmethyst.SKIN_COLOR_BEGIN, EntityAmethyst.SKIN_COLOR_MID, EntityAmethyst.SKIN_COLOR_END);
 	}
 	
 	@Override
 	protected int generateHairStyle() {
-		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+		return this.rand.nextInt(EntityAmethyst.NUM_HAIRSTYLES);
 	}
 	
 	@Override
 	protected int generateHairColor() {
-		ArrayList hairColors = new ArrayList();
-		hairColors.add(this.HAIR_COLOR_BEGIN);
-		hairColors.add(this.HAIR_COLOR_MID_1);
-		hairColors.add(this.HAIR_COLOR_MID_2);
-		hairColors.add(this.HAIR_COLOR_MID_3);
-		hairColors.add(this.HAIR_COLOR_MID_4);
-		hairColors.add(this.HAIR_COLOR_MID_5);
-		hairColors.add(this.HAIR_COLOR_END);
+		ArrayList<Integer> hairColors = new ArrayList<Integer>();
+		hairColors.add(EntityAmethyst.HAIR_COLOR_BEGIN);
+		hairColors.add(EntityAmethyst.HAIR_COLOR_MID_1);
+		hairColors.add(EntityAmethyst.HAIR_COLOR_MID_2);
+		hairColors.add(EntityAmethyst.HAIR_COLOR_MID_3);
+		hairColors.add(EntityAmethyst.HAIR_COLOR_MID_4);
+		hairColors.add(EntityAmethyst.HAIR_COLOR_MID_5);
+		hairColors.add(EntityAmethyst.HAIR_COLOR_END);
 		return Colors.arbiLerp(hairColors);
 	}
 

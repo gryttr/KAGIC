@@ -238,7 +238,7 @@ public class EntityBlueDiamond extends EntityGem {
 	public SoundEvent getAmbientSound() {
 		return ModSounds.BLUE_DIAMOND_LIVING;
 	}
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.BLUE_DIAMOND_HURT;
 	}
 	public SoundEvent getDeathSound() {

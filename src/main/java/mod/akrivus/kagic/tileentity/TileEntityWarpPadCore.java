@@ -358,7 +358,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		BlockPos majorCorner = new BlockPos(this.pos.getX() + 2, this.pos.getY() + 5, this.pos.getZ() + 2);
 		AxisAlignedBB warpArea = new AxisAlignedBB(minorCorner, majorCorner);
 		List<Entity> entitiesToWarp = this.world.getEntitiesWithinAABB(Entity.class, warpArea);
-		Iterator it = entitiesToWarp.iterator();
+		Iterator<Entity> it = entitiesToWarp.iterator();
 		TileEntityWarpPadCore destPad = (TileEntityWarpPadCore) this.world.getTileEntity(this.destination);
 		ChunkPos cPos = destPad.world.getChunkFromBlockCoords(destPad.pos).getPos();
 		if (!destPad.isValidPad()) {
@@ -374,9 +374,10 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			
 			if (entity instanceof EntityPlayerMP) {
 				entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
-			} else if (entity instanceof EntityLivingBase){
+			} else if (entity instanceof EntityLivingBase) {
 				entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
-			} else {
+			}
+			else {
 				entity.setLocationAndAngles(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
 				entity.setRotationYawHead(entity.rotationYaw);
 			}

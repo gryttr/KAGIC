@@ -17,7 +17,6 @@ import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.util.injector.InjectorResult;
 import mod.heimrarnadalr.kagic.util.Colors;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -390,7 +389,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	public SoundEvent getAmbientSound() {
 		return ModSounds.PERIDOT_LIVING;
 	}
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.PERIDOT_HURT;
 	}
 	public SoundEvent getObeySound() {
@@ -405,22 +404,22 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	 *********************************************************/
 	@Override
 	protected int generateSkinColor() {
-		ArrayList skinColors = new ArrayList();
-		skinColors.add(this.SKIN_COLOR_BEGIN);
-		skinColors.add(this.SKIN_COLOR_END);
+		ArrayList<Integer> skinColors = new ArrayList<Integer>();
+		skinColors.add(EntityPeridot.SKIN_COLOR_BEGIN);
+		skinColors.add(EntityPeridot.SKIN_COLOR_END);
 		return Colors.arbiLerp(skinColors);
 	}
 	
 	@Override
 	protected int generateHairStyle() {
-		return this.rand.nextInt(this.NUM_HAIRSTYLES);
+		return this.rand.nextInt(EntityPeridot.NUM_HAIRSTYLES);
 	}
 	
 	@Override
 	protected int generateHairColor() {
-		ArrayList hairColors = new ArrayList();
-		hairColors.add(this.HAIR_COLOR_BEGIN);
-		hairColors.add(this.HAIR_COLOR_END);
+		ArrayList<Integer> hairColors = new ArrayList<Integer>();
+		hairColors.add(EntityPeridot.HAIR_COLOR_BEGIN);
+		hairColors.add(EntityPeridot.HAIR_COLOR_END);
 		return Colors.arbiLerp(hairColors);
 	}
 }

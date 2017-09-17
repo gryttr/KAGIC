@@ -11,7 +11,6 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -21,6 +20,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.EnumSkyBlock;
@@ -73,7 +73,7 @@ public class EntityRutile extends EntityGem {
 	public SoundEvent getAmbientSound() {
 		return ModSounds.RUTILE_LIVING;
 	}
-	public SoundEvent getHurtSound() {
+	public SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.RUTILE_HURT;
 	}
 	public SoundEvent getObeySound() {

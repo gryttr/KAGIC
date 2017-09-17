@@ -4,14 +4,11 @@ import java.util.HashMap;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.EntitySlag;
-import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockStone;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -101,20 +98,19 @@ public class InjectorResult {
 		                for (int z = -4; z <= 4; ++z) {
 		                	BlockPos ore = pos.add(x, y, z);
 		                	IBlockState state = world.getBlockState(ore);
-		                	if (state.getBlock() != Blocks.STONE || (state.getBlock() == Blocks.STONE && state.getValue(BlockStone.VARIANT) != BlockStone.EnumType.STONE)) {
-		                		if (!resultTable.containsKey(gemClass)) {
-		                			resultTable.put(gemClass, 0.0);
-		                		}
-		                		if (yield.containsKey(state)) {
-		                			resultTable.put(gemClass, resultTable.get(gemClass) + yield.get(state));
-		                			frictionFactor += 0.003;
-		                			defectivityRate -= 0.2;
-		                			
-		                		}
-		                		if (state.getMaterial() == Material.GRASS) {
-		                			defectivityRate -= 0.4;
-		                		}
-		                	}
+
+	                		if (!resultTable.containsKey(gemClass)) {
+	                			resultTable.put(gemClass, 0.0);
+	                		}
+	                		if (yield.containsKey(state)) {
+	                			resultTable.put(gemClass, resultTable.get(gemClass) + yield.get(state));
+	                			frictionFactor += 0.0036;
+	                			defectivityRate -= 0.2;
+	                			
+	                		}
+	                		if (state.getMaterial() == Material.GRASS) {
+	                			defectivityRate -= 0.4;
+	                		}
 		                }
 		            }
 				}
@@ -138,12 +134,13 @@ public class InjectorResult {
 			        canSpawnGem = true;
 				}
 				else {
-					if (resultTable.get(gemClass) == highestYield) {
+					double result = resultTable.get(gemClass);
+					if (result == highestYield && result > 0) {
 			        	highestYield = forget ? resultTable.get(gemClass) : highestYield;
 			        	mostLikelyGem = forget ? gemClass : mostLikelyGem;
 			        	canSpawnGem = true;
 			        }
-					else if (resultTable.get(gemClass) > highestYield) {
+					else if (result > highestYield && result > 0) {
 				        highestYield = resultTable.get(gemClass);
 				        mostLikelyGem = gemClass;
 				        canSpawnGem = true;
