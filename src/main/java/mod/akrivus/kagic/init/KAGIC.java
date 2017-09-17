@@ -13,8 +13,11 @@ import mod.heimrarnadalr.kagic.crafting.KAGICSmeltingRecipes;
 import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
 import mod.heimrarnadalr.kagic.proxies.CommonProxy;
 import mod.heimrarnadalr.kagic.world.KAGICWorldGenerator;
+import mod.heimrarnadalr.kagic.world.structure.LootTables;
 import net.minecraft.server.management.PlayerList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -40,7 +43,7 @@ public class KAGIC {
     @Instance
     public static KAGIC instance;
     public static SpaceStuff spaceStuff;
-    public static KAGICWorldGenerator worldGen = new KAGICWorldGenerator();
+    public static KAGICWorldGenerator worldGen;
 
     @SidedProxy(clientSide = "mod.heimrarnadalr.kagic.proxies.ClientProxy", serverSide = "mod.heimrarnadalr.kagic.proxies.ServerProxy")
     public static CommonProxy proxy;
@@ -48,18 +51,16 @@ public class KAGIC {
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
     	logger = e.getModLog();
-        //ModAchievements.register();
-        ModBiomes.register();
-        //ModBlocks.register();
+        //ModBiomes.register();
         ModConfigs.register(e);
         ModDimensions.register();
-    	//ModEnchantments.register();
-    	//ModItems.register();
-    	//ModSounds.register();
         KAGICSmeltingRecipes.register();
 		KTPacketHandler.registerMessages(KAGIC.MODID);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new KAGICChunkCallback());
+		LootTables.register();
+		this.worldGen = new KAGICWorldGenerator();
     }
+    
     @EventHandler
     public void init(FMLInitializationEvent e) {
     	ModEntities.register();

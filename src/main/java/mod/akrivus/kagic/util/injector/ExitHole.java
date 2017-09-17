@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.util.injector;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 import mod.akrivus.kagic.init.ModBlocks;
 import net.minecraft.util.math.BlockPos;
@@ -33,23 +34,46 @@ public class ExitHole {
 	}
 	public static ExitHole create(World world, BlockPos pos, double height, boolean meltRocks) {
 		ArrayList<BlockPos> blocksToDelete = new ArrayList<BlockPos>();
-		float shortestLength = Float.MAX_VALUE;
-		char direction = 'o';
-		int brightestLight = 0;
-		for (int x = -9; x <= 9; ++x) {
+		PriorityQueue<ExitPotential> exitQueue = new PriorityQueue(4, new ExitPotential());
+		exitQueue.add(new ExitPotential(false, 0, 10, 'o'));
+		
+		for (int x = -1; x >= -9; --x) {
 			BlockPos check = pos.add(x, 0, 0);
-			if (world.isAirBlock(check) && Math.abs(x) <= shortestLength && world.getLight(check) >= brightestLight) {
-				brightestLight = world.getLight(check);
-				shortestLength = Math.abs(x);
-				if (x == 0) {
-					direction = 'o';
-				}
-				else if (x > 0) {
-					direction = 'e';
-				}
-				else {
-					direction = 'w';
-				}
+			if (world.isAirBlock(check)) {
+				boolean seesSky = world.canSeeSky(check);
+				int light = world.getLight(check);
+				exitQueue.add(new ExitPotential(seesSky, light, -x, 'w'));
+				break;
+			}
+		}
+
+		for (int x = 1; x <= 9; ++x) {
+			BlockPos check = pos.add(x, 0, 0);
+			if (world.isAirBlock(check)) {
+				boolean seesSky = world.canSeeSky(check);
+				int light = world.getLight(check);
+				exitQueue.add(new ExitPotential(seesSky, light, x, 'e'));
+				break;
+			}
+		}
+
+		for (int z = -1; z >= -9; --z) {
+			BlockPos check = pos.add(0, 0, z);
+			if (world.isAirBlock(check)) {
+				boolean seesSky = world.canSeeSky(check);
+				int light = world.getLight(check);
+				exitQueue.add(new ExitPotential(seesSky, light, -z, 'n'));
+				break;
+			}
+		}
+
+		for (int z = 1; z <= 9; ++z) {
+			BlockPos check = pos.add(0, 0, z);
+			if (world.isAirBlock(check)) {
+				boolean seesSky = world.canSeeSky(check);
+				int light = world.getLight(check);
+				exitQueue.add(new ExitPotential(seesSky, light, z, 's'));
+				break;
 			}
 		}
 
@@ -57,47 +81,32 @@ public class ExitHole {
 			blocksToDelete.add(pos.up(y));
 		}
 		
-		for (int z = -9; z <= 9; ++z) {
-			BlockPos check = pos.add(0, 0, z);
-			if (world.isAirBlock(check) && Math.abs(z) <= shortestLength && world.getLight(check) >= brightestLight) {
-				brightestLight = world.getLight(check);
-				shortestLength = Math.abs(z);
-				if (z == 0) {
-					direction = 'o';
-				}
-				else if (z > 0) {
-					direction = 's';
-				}
-				else {
-					direction = 'n';
-				}
-			}
-		}
+		ExitPotential exit = exitQueue.peek();
 		
-		switch (direction) {
+		switch (exit.direction) {
 		case 'n':
-			for (int z = 0; z <= shortestLength; ++z) {
+			for (int z = 0; z <= exit.length; ++z) {
 				for (int y = 0; y < height; ++y) {
 					blocksToDelete.add(pos.add(0, y, -z));
 				}
 			}
 			break;
 		case 's':
-			for (int z = 0; z <= shortestLength; ++z) {
+			for (int z = 0; z <= exit.length; ++z) {
 				for (int y = 0; y < height; ++y) {
 					blocksToDelete.add(pos.add(0, y, z));
 				}
 			}
 			break;
 		case 'e':
-			for (int x = 0; x <= shortestLength; ++x) {
+			for (int x = 0; x <= exit.length; ++x) {
 				for (int y = 0; y < height; ++y) {
 					blocksToDelete.add(pos.add(x, y, 0));
 				}
 			}
 			break;
 		case 'w':
-			for (int x = 0; x <= shortestLength; ++x) {
+			for (int x = 0; x <= exit.length; ++x) {
 				for (int y = 0; y < height; ++y) {
 					blocksToDelete.add(pos.add(-x, y, 0));
 				}

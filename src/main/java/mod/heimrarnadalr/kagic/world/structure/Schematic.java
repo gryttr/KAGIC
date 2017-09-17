@@ -9,12 +9,15 @@ import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -39,6 +42,7 @@ public class Schematic {
 		byte[] blocks = schematicData.getByteArray("Blocks");
 		byte[] data = schematicData.getByteArray("Data");
 		NBTTagList tileEntities = schematicData.getTagList("TileEntities", 10);
+		NBTTagList entities = schematicData.getTagList("Entities", 10);
 
 		//i = (y * Length + z) * Width + x		
 		for (short y = 0; y < height; ++y) {
@@ -51,12 +55,11 @@ public class Schematic {
 				}
 			}
 		}
-		return new StructureData(width, height, length, structureBlocks, tileEntities);
+		return new StructureData(width, height, length, structureBlocks, tileEntities, entities);
 	}
 	
-	public static void GenerateStructureAtPoint(String schematic, World world, BlockPos pos, boolean keepTerrain, byte rotation) {
+	public static void GenerateStructureAtPoint(StructureData structure, World world, BlockPos pos, boolean keepTerrain, byte rotation) {
 		KAGIC.instance.chatInfoMessage("Using rotation " + rotation);
-		StructureData structure = Schematic.loadSchematic(schematic);
 		Map<BlockPos, IBlockState> structureBlocks = structure.getStructureBlocks();
 
 		Rotation rot;
@@ -93,15 +96,32 @@ public class Schematic {
 				BlockPos tePos = getRotatedPos(new BlockPos(x, y, z), structure.getWidth(), structure.getLength(), rotation);
 				if (te instanceof TileEntityWarpPadCore) {
 					world.setBlockState(pos.add(tePos), ModBlocks.WARP_PAD_CORE.getDefaultState());
+				} else if (te instanceof TileEntityChest) {
+					KAGIC.instance.chatInfoMessage("Found chest at unrotated pos " + x + ", " + y + ", " + z);
+					structure.chests.add((TileEntityChest) te);
 				} else {
 					KAGIC.instance.chatInfoMessage("Found tile entity of type " + te.getClass().getName());
 				}
 				world.setTileEntity(pos.add(tePos), te);
 			}
 		}
+		
+		/* WorldEdit saves entities with their global coordinates, instead of structure relative coordinates
+		for (NBTBase nbt : structure.getEntities()) {
+			NBTTagList nbtPos = ((NBTTagCompound) nbt).getTagList("Pos", 6);
+			double x = nbtPos.getDoubleAt(0);
+			double y = nbtPos.getDoubleAt(1);
+			double z = nbtPos.getDoubleAt(2);
+			BlockPos ePos = getRotatedPos(new BlockPos(x, y, z), structure.getWidth(), structure.getLength(), rotation);
+			Entity e = EntityList.createEntityFromNBT((NBTTagCompound) nbt, world);
+			if (e != null) {
+				e.setLocationAndAngles(pos.getX() + ePos.getX(), pos.getY() + ePos.getY(), pos.getZ() + ePos.getZ(), e.rotationYaw, e.rotationPitch);
+				world.spawnEntity(e);
+			}
+		}*/
 	}
 	
-	private static BlockPos getRotatedPos(BlockPos original, int width, int length, byte rotation) {
+	public static BlockPos getRotatedPos(BlockPos original, int width, int length, byte rotation) {
 		int rotationCorrectionX = width % 2 == 0 ? -1 : 0;
 		int rotationCorrectionZ = length % 2 == 0 ? -1 : 0;
 		

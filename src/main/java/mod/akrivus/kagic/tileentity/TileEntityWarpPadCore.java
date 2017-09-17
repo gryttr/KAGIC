@@ -29,6 +29,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.Ticket;
+import net.minecraftforge.common.ForgeChunkManager.Type;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -48,6 +51,10 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 	public String name = "";
 	private boolean warping = false;
 	private boolean cooling = false;
+	
+	private Ticket ticket = null;
+	private static final int loadChunkTicks = 100;
+	private int loadChunkTicksLeft = 0;
 
 	private void setDirty() {
 		//KAGIC.instance.chatInfoMessage("Setting dirty");
@@ -239,6 +246,16 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			this.cooling = false;
 			this.setDirty();
 		}
+		
+		if (this.ticket != null) {
+			--this.loadChunkTicksLeft;
+		}
+		if (this.loadChunkTicksLeft < 0 && this.ticket != null) {
+			KAGIC.instance.chatInfoMessage("Releasing ticket");
+			ForgeChunkManager.releaseTicket(ticket);
+			this.ticket = null;
+			this.loadChunkTicksLeft = 0;
+		}
 	}
 	
 	@Override
@@ -300,7 +317,35 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		WorldDataWarpPad.get(this.world).removeWarpPadEntry(this.pos);
 	}
 	
+	public void loadPadChunks(TileEntityWarpPadCore pad, Ticket ticket) {
+		if (ticket == null) {
+			KAGIC.instance.chatInfoMessage("WARNING: warp pad could not load destination chunks. Strange errors may occur!");
+			return;
+		}
+		
+        int xStart = (pad.getPos().getX() - 2) >> 4;
+        int zStart = (pad.getPos().getZ() - 2) >> 4;
+        int xEnd = (pad.getPos().getX() + 2) >> 4;
+        int zEnd = (pad.getPos().getZ() + 2) >> 4;
+
+        for (int i = xStart; i <= xEnd; ++i)
+        {
+            for (int j = zStart; j <= zEnd; ++j)
+            {
+            	KAGIC.instance.chatInfoMessage("Loading chunk " + i + ", " + j);
+        		ForgeChunkManager.forceChunk(ticket, new ChunkPos(i, j));
+            }
+        }
+        
+        pad.ticket = ticket;
+        pad.loadChunkTicksLeft = this.loadChunkTicks;
+	}
+	
 	public void beginWarp(BlockPos destination) {
+		Ticket ticket = ForgeChunkManager.requestTicket(KAGIC.instance, this.world, Type.NORMAL);
+		TileEntityWarpPadCore destPad = (TileEntityWarpPadCore) this.world.getTileEntity(destination);
+		this.loadPadChunks(this, ticket);
+		
 		this.warpTicksLeft = this.warpTicks;
 		this.destination = destination;
 		this.warping = true;
@@ -328,8 +373,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			double offsetZ = entity.posZ - this.pos.getZ();
 			
 			if (entity instanceof EntityPlayerMP) {
-				((EntityPlayerMP) entity).connection.setPlayerLocation(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
-				KTPacketHandler.INSTANCE.sendTo(new EntityTeleportMessage(entity.getEntityId(), this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ), (EntityPlayerMP) entity);
+				entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
 			} else if (entity instanceof EntityLivingBase){
 				entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
 			} else {

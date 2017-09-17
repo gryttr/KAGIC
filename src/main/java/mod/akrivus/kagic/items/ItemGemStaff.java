@@ -3,6 +3,7 @@ package mod.akrivus.kagic.items;
 import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModCreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -11,6 +12,9 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -33,6 +37,9 @@ public class ItemGemStaff extends Item {
 	        	gem.setRevengeTarget(null);
 	        	gem.setAttackTarget(null);
 	            gem.isPeaceful = true;
+	        }
+	        for (Biome biome : BiomeDictionary.getBiomes(Type.PLAINS)) {
+	        	KAGIC.instance.chatInfoMessage("Found plains biome " + biome.getBiomeName());
 	        }
 	        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 		}

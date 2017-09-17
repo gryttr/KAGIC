@@ -138,8 +138,8 @@ public class BlockInjector extends Block {
 		for (bestDepth = pos.down(5).getY(); bestDepth > worstDepth; --bestDepth) {
 			boolean aerated = false;
 			BlockPos newBlockPos = new BlockPos(pos.getX(), bestDepth, pos.getZ());
-			if (worldIn.getBlockState(newBlockPos).getBlock() == ModBlocks.GEM_SEED || !worldIn.isSideSolid(newBlockPos, EnumFacing.UP)) {
-				bestDepth -= 4;
+			if (worldIn.getBlockState(newBlockPos).getBlock() == ModBlocks.GEM_SEED || !worldIn.isSideSolid(newBlockPos, EnumFacing.UP) || !worldIn.isSideSolid(newBlockPos.up(), EnumFacing.DOWN)) {
+				bestDepth -= 3;
 			}
 			else {
 				boolean inContactWithAir = false;

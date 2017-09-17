@@ -9,9 +9,13 @@ import net.minecraft.world.World;
 
 public class CommunicationHub extends RuinStructure {
 
-	public CommunicationHub(String file) {
-		super(file, "CommHub", 40, 40, 10, Blocks.SANDSTONE.getDefaultState(), true, true);
+	public CommunicationHub(String type) {
+		super(type, 10, Blocks.SANDSTONE.getDefaultState(), true, true);
+		this.structures.add("/assets/kagic/structures/CommHub2.schematic");
+		
 		this.allowedBiomes.add(Biomes.DESERT);
+		this.allowedBiomes.add(Biomes.DESERT_HILLS);
+		this.allowedBiomes.add(Biomes.MUTATED_DESERT);
 		this.allowedBlocks.add(Blocks.SAND.getDefaultState());
 		this.allowedBlocks.add(Blocks.SANDSTONE.getDefaultState());
 	}

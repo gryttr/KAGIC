@@ -1,6 +1,10 @@
 package mod.heimrarnadalr.kagic.world.structure;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
@@ -8,6 +12,8 @@ import mod.akrivus.kagic.init.KAGIC;
 import mod.heimrarnadalr.kagic.worlddata.ChunkLocation;
 import mod.heimrarnadalr.kagic.worlddata.WorldDataRuins;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -15,32 +21,33 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class RuinStructure extends WorldGenerator {
-	private static final Random rand = new Random();
-	private final String fileLocation;
 	private final String type;
-	private final int length;
-	private final int width;
 	private final int foundationDepth;
 	private final boolean keepTerrain;
 	private final boolean randomRotation;
 	
+	protected List<String> structures = new ArrayList<String>();
+	protected int width;  //x
+	protected int height; //y
+	protected int length; //z
 	protected final IBlockState foundationBlock;
 	protected Set<Biome> allowedBiomes = new HashSet<Biome>();
 	protected Set<IBlockState> allowedBlocks = new HashSet<IBlockState>();
+	protected Map<BlockPos, ResourceLocation> chestTables = new HashMap<BlockPos, ResourceLocation>();
 	
-	public RuinStructure(String file, String type, int length, int width, int foundationDepth, IBlockState foundation, boolean keepTerrain, boolean randomRotation) {
-		this.fileLocation = file;
+	public RuinStructure(String type, int foundationDepth, IBlockState foundation, boolean keepTerrain, boolean randomRotation) {
 		this.type = type;
-		this.length = length;
-		this.width = width;
 		this.foundationDepth = foundationDepth;
 		this.foundationBlock = foundation;
 		this.keepTerrain = keepTerrain;
 		this.randomRotation = randomRotation;
 	}
 	
-	public String getLocation() {
-		return fileLocation;
+	public String getRandomVariant(Random rand) {
+		if (structures.size() == 0) {
+			throw new IllegalStateException("No structures defined for " + this.type + "!");
+		}
+		return structures.get(rand.nextInt(structures.size()));
 	}
 	
 	Set<ChunkLocation> getAffectedChunks(World world, BlockPos pos, byte rotation) {
@@ -59,6 +66,7 @@ public class RuinStructure extends WorldGenerator {
 	}
 	
 	protected boolean checkBiome(World world, BlockPos pos) {
+		//If we haven't defined any biomes, we can generate anywhere
 		if (allowedBiomes.isEmpty()) {
 			return true;
 		}
@@ -68,15 +76,9 @@ public class RuinStructure extends WorldGenerator {
 		return false;
 	}
 	
-	protected boolean checkExistingRuin(World world, BlockPos pos) {
-		WorldDataRuins existingRuins = WorldDataRuins.get(world);
-		Chunk chunk = world.getChunkFromBlockCoords(pos);
-		return !existingRuins.chunkHasRuin(new ChunkLocation(chunk.x, chunk.z));
-	}
-	
-	protected boolean checkCorners(World world, BlockPos pos) {
-		int xFar = pos.getX() + this.width - 1;
-		int zFar = pos.getZ() + this.length - 1;
+	protected boolean checkCorners(World world, BlockPos pos, byte rotation) {
+		int xFar = pos.getX() + ((rotation % 2 == 0) ? this.width : this.length) - 1;
+		int zFar = pos.getZ() + ((rotation % 2 == 0) ? this.length : this.width) - 1;
 		BlockPos corner1 = world.getTopSolidOrLiquidBlock(pos).down();
 		BlockPos corner2 = world.getTopSolidOrLiquidBlock(new BlockPos(xFar, 255, 0)).down();
 		BlockPos corner3 = world.getTopSolidOrLiquidBlock(new BlockPos(0, 255, zFar)).down();
@@ -97,6 +99,10 @@ public class RuinStructure extends WorldGenerator {
 		return true;
 	}
 	
+	protected boolean checkHeight(World world, BlockPos pos) {
+		return pos.getY() + this.height < world.getActualHeight();
+	}
+	
 	protected boolean checkChunks(World world, Set<ChunkLocation> chunks) {
 		WorldDataRuins existingRuins = WorldDataRuins.get(world);
 		for (ChunkLocation chunk : chunks) {
@@ -109,15 +115,26 @@ public class RuinStructure extends WorldGenerator {
 	
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
+		StructureData ruin = Schematic.loadSchematic(this.getRandomVariant(rand));
+		this.width = ruin.getWidth();
+		this.height = ruin.getHeight();
+		this.length = ruin.getLength();
+		
+		byte rotation = (byte) (this.randomRotation ? rand.nextInt(4) : 0);
+
 		if (!checkBiome(world, pos)) {
 			//KAGIC.instance.chatInfoMessage("Biome check failed");
 			return false;
 		}
-		if (!checkCorners(world, pos)) {
+		if (!checkCorners(world, pos, rotation)) {
 			//KAGIC.instance.chatInfoMessage("Corner check failed");
 			return false;
 		}
-		byte rotation = (byte) (this.randomRotation ? rand.nextInt(4) : 0);
+
+		if (!checkHeight(world, pos)) {
+			return false;
+		}
+		
 		Set<ChunkLocation> affectedChunks = this.getAffectedChunks(world, pos, rotation);
 		if (!checkChunks(world, affectedChunks)) {
 			//KAGIC.instance.chatInfoMessage("Existing ruin check failed");
@@ -128,7 +145,19 @@ public class RuinStructure extends WorldGenerator {
 		this.markChunks(world, affectedChunks);
 		this.generateFoundation(world, pos, rotation);
 		
-		Schematic.GenerateStructureAtPoint(this.fileLocation, world, pos, this.keepTerrain, rotation);
+		Schematic.GenerateStructureAtPoint(ruin, world, pos, this.keepTerrain, rotation);
+		
+		if (!ruin.chests.isEmpty()) {
+			for (Map.Entry<BlockPos, ResourceLocation> entry : this.chestTables.entrySet()) {
+				BlockPos chestPos = Schematic.getRotatedPos(entry.getKey(), this.width, this.length, rotation);
+				TileEntityChest chest = (TileEntityChest) world.getTileEntity(pos.add(chestPos));
+				if (chest != null) {
+					chest.setLootTable(entry.getValue(), rand.nextLong());
+				} else {
+					KAGIC.instance.chatInfoMessage("ERROR: could not find chest at position " + chestPos);
+				}
+			}
+		}
 		return true;
 	}
 	

@@ -1,9 +1,12 @@
 package mod.heimrarnadalr.kagic.world.structure;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
 
 public class StructureData {
@@ -12,13 +15,16 @@ public class StructureData {
 	private short length;
 	private Map<BlockPos, IBlockState> structureBlocks;
 	private NBTTagList tileEntities;
+	private NBTTagList entities;
+	public List<TileEntityChest> chests = new ArrayList<TileEntityChest>();
 	
-	public StructureData(short width, short height, short length, Map<BlockPos, IBlockState> structureBlocks, NBTTagList tileEntities) {
+	public StructureData(short width, short height, short length, Map<BlockPos, IBlockState> structureBlocks, NBTTagList tileEntities, NBTTagList entities) {
 		this.width = width;
 		this.height = height;
 		this.length = length;
 		this.structureBlocks = structureBlocks;
 		this.tileEntities = tileEntities;
+		this.entities = entities;
 	}
 	
 	public void setWidth(short width) {
@@ -59,5 +65,13 @@ public class StructureData {
 	
 	public NBTTagList getTileEntities(){
 		return this.tileEntities;
+	}
+
+	public void setEntities(NBTTagList entities) {
+		this.entities = entities;
+	}
+	
+	public NBTTagList getEntities(){
+		return this.entities;
 	}
 }
