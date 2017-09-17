@@ -6,6 +6,7 @@ import java.util.Map;
 
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModBlocks;
+import mod.akrivus.kagic.tileentity.TileEntityGalaxyPadCore;
 import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -78,7 +79,7 @@ public class Schematic {
 		}
 		
 		for (BlockPos offset : structureBlocks.keySet()) {
-			if (keepTerrain && structureBlocks.get(offset).getBlock() == Blocks.AIR) {
+			if (keepTerrain && structureBlocks.get(offset).getBlock() == Blocks.AIR || structureBlocks.get(offset).getBlock() == Blocks.STRUCTURE_VOID) {
 				continue;
 			}
 			
@@ -94,7 +95,9 @@ public class Schematic {
 				int y = ((NBTTagCompound) nbt).getInteger("y");
 				int z = ((NBTTagCompound) nbt).getInteger("z");
 				BlockPos tePos = getRotatedPos(new BlockPos(x, y, z), structure.getWidth(), structure.getLength(), rotation);
-				if (te instanceof TileEntityWarpPadCore) {
+				if (te instanceof TileEntityGalaxyPadCore) {
+					world.setBlockState(pos.add(tePos), ModBlocks.GALAXY_PAD_CORE.getDefaultState());
+				} else if (te instanceof TileEntityWarpPadCore) {
 					world.setBlockState(pos.add(tePos), ModBlocks.WARP_PAD_CORE.getDefaultState());
 				} else if (te instanceof TileEntityChest) {
 					KAGIC.instance.chatInfoMessage("Found chest at unrotated pos " + x + ", " + y + ", " + z);

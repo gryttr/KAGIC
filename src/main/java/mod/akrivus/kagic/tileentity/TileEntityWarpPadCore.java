@@ -38,25 +38,25 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 	public static final int warpTicks = 2 * 20;
 	public static final int warpCooldownTicks = 1 * 20;
-	private int warpTicksLeft = 0;
-	private int cooldownTicksLeft = 0;
-	private BlockPos destination = null;
+	protected int warpTicksLeft = 0;
+	protected int cooldownTicksLeft = 0;
+	protected BlockPos destination = null;
 	public int renderTicks = 0;
 	public int renderCooldown = 0;
 	
 	private int ticksSinceLastCheck = 0;
-	private final int clearanceHeight = 6;
-	private boolean isClear = false;
-	private boolean isPadValid = false;
+	protected final int clearanceHeight = 6;
+	protected boolean isClear = false;
+	protected boolean isPadValid = false;
 	public String name = "";
-	private boolean warping = false;
-	private boolean cooling = false;
+	protected boolean warping = false;
+	protected boolean cooling = false;
 	
 	private Ticket ticket = null;
 	private static final int loadChunkTicks = 100;
 	private int loadChunkTicksLeft = 0;
 
-	private void setDirty() {
+	protected void setDirty() {
 		//KAGIC.instance.chatInfoMessage("Setting dirty");
 		this.markDirty();
 		IBlockState state = this.world.getBlockState(this.pos);
@@ -66,14 +66,14 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		}
 	}
 	
-	private boolean isStair(IBlockState state) {
+	protected boolean isStair(IBlockState state) {
 		if (state.getBlock() != Blocks.QUARTZ_STAIRS || state.getValue(BlockStairs.HALF) != EnumHalf.BOTTOM) {
 			return false;
 		}
 		return true;
 	}
 	
-	private boolean validateStairs() {
+	protected boolean validateStairs() {
 		IBlockState state = this.world.getBlockState(this.pos.add(2, 0, 0));
 		if (state.getBlock() != Blocks.QUARTZ_STAIRS || state.getValue(BlockStairs.FACING) != EnumFacing.WEST || state.getValue(BlockStairs.HALF) != EnumHalf.BOTTOM || state.getValue(BlockStairs.SHAPE) != EnumShape.STRAIGHT) {
 			//KAGICTech.instance.chatInfoMessage("Pad has no west quartz stair");	
@@ -168,7 +168,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		return true;
 	}
 	
-	private boolean validatePad() {
+	protected boolean validatePad() {
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 				if (j == 0 && i == 0) {
@@ -291,6 +291,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 	
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket() {
+		KAGIC.instance.chatInfoMessage("getUpdatePacket called");
 		return new SPacketUpdateTileEntity(this.pos, 1, this.writeToNBT(new NBTTagCompound()));
 	}
 	
@@ -368,24 +369,25 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		
 		while (it.hasNext()) {
 			Entity entity = (Entity) it.next();
-			double offsetX = entity.posX - this.pos.getX();
-			double offsetY = entity.posY - this.pos.getY();
-			double offsetZ = entity.posZ - this.pos.getZ();
-			
+			double posX = this.destination.getX() + entity.posX - this.pos.getX();
+			double posY = this.destination.getY() + entity.posY - this.pos.getY();
+			double posZ = this.destination.getZ() + entity.posZ - this.pos.getZ();
+
 			if (entity instanceof EntityPlayerMP) {
-				entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
+				entity.setPositionAndUpdate(posX, posY, posZ);
 			} else if (entity instanceof EntityLivingBase) {
-				entity.setPositionAndUpdate(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ);
+				entity.setPositionAndUpdate(posX, posY, posZ);
 			}
 			else {
-				entity.setLocationAndAngles(this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ, entity.rotationYaw, entity.rotationPitch);
+				entity.setLocationAndAngles(posX, posY, posZ, entity.rotationYaw, entity.rotationPitch);
 				entity.setRotationYawHead(entity.rotationYaw);
 			}
 			
 			for (EntityPlayer player : ((WorldServer) this.world).getEntityTracker().getTrackingPlayers(entity)) {
-				KTPacketHandler.INSTANCE.sendTo(new EntityTeleportMessage(entity.getEntityId(), this.destination.getX() + offsetX, this.destination.getY() + offsetY, this.destination.getZ() + offsetZ), (EntityPlayerMP) player);
+				KTPacketHandler.INSTANCE.sendTo(new EntityTeleportMessage(entity.getEntityId(), posX, posY, posZ), (EntityPlayerMP) player);
 			}
 		}
+		
 		this.warping = false;
 		this.cooling = true;
 		this.cooldownTicksLeft = this.warpCooldownTicks;

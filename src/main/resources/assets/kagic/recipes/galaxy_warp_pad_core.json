@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "kagic:galaxy_pad_core"
+  },
+  "pattern": [
+    " e ",
+    "rwr",
+    "rcr"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "c": {
+      "item": "minecraft:comparator"
+    },
+    "e": {
+      "item": "minecraft:ender_eye"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "w": {
+      "item": "kagic:warp_pad_core"
+    }
+  }
+}

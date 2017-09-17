@@ -23,5 +23,6 @@ public class KTPacketHandler {
 		INSTANCE.registerMessage(PadDataMessage.PadDataMessageHandler.class, PadDataMessage.class, nextID(), Side.CLIENT);
 		INSTANCE.registerMessage(WarpSignalMessage.WarpSignalMessageHandler.class, WarpSignalMessage.class, nextID(), Side.SERVER);
 		INSTANCE.registerMessage(EntityTeleportMessage.EntityTeleportMessageHandler.class, EntityTeleportMessage.class, nextID(), Side.CLIENT);
+		INSTANCE.registerMessage(GalaxySignalMessage.GalaxySignalMessageHandler.class, GalaxySignalMessage.class, nextID(), Side.SERVER);
 	}
 }

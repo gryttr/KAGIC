@@ -7,6 +7,7 @@ import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModEnchantments;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.heimrarnadalr.kagic.worlddata.GalaxyPadLocation;
 import mod.heimrarnadalr.kagic.worlddata.WarpPadDataEntry;
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
@@ -48,6 +49,10 @@ public class CommonProxy {
 	}
 	
 	public void openWarpPadSelectionGUI(LinkedHashMap<BlockPos, WarpPadDataEntry> padData, int x, int y, int z) {
+
+	}
+
+	public void openGalaxyPadSelectionGUI(LinkedHashMap<GalaxyPadLocation, WarpPadDataEntry> padData, int x, int y, int z) {
 
 	}
 }

@@ -86,6 +86,7 @@ public class ModEntities {
 		EntityRuby.RUBY_YIELDS.put(Blocks.MAGMA.getDefaultState(), 0.77);
 		EntityRuby.RUBY_YIELDS.put(Blocks.NETHERRACK.getDefaultState(), 0.99);
 		EntityRuby.RUBY_YIELDS.put(Blocks.REDSTONE_ORE.getDefaultState(), 0.99);
+		EntityRuby.RUBY_YIELDS.put(Blocks.STONE.getDefaultState(), 0.11);
 		EntityRuby.RUBY_YIELDS.put(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), 0.99);
 		EntityRuby.RUBY_YIELDS.put(Blocks.REDSTONE_BLOCK.getDefaultState(), 5.99);
 		ModEntities.registerWithOreDictionary(EntityRuby.RUBY_YIELDS, "Ruby", "Corundum", "Aluminium", "Aluminum", "Bauxite", "Cinnabar", "Chromite", "Chromium", "Garnet");

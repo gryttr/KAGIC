@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.init;
 
+import mod.akrivus.kagic.blocks.BlockGalaxyPadCore;
 import mod.akrivus.kagic.blocks.BlockGemDrill;
 import mod.akrivus.kagic.blocks.BlockGemSeed;
 import mod.akrivus.kagic.blocks.BlockIncubator;
@@ -30,6 +31,7 @@ public class ModBlocks {
 	public static final BlockRockMelt ROCK_MELT = new BlockRockMelt(true);
 	public static final BlockRockMelt RUTILE_TRAIL = new BlockRockMelt(false);
 	public static final BlockWarpPadCore WARP_PAD_CORE = new BlockWarpPadCore();
+	public static final BlockGalaxyPadCore GALAXY_PAD_CORE = new BlockGalaxyPadCore();
 	
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		registerBlock(GEM_SEED, new ResourceLocation("kagic:gem_seed"), event);
@@ -43,6 +45,7 @@ public class ModBlocks {
 		registerBlock(ROCK_MELT, new ResourceLocation("kagic:rock_melt"), event);
 		registerBlock(RUTILE_TRAIL, new ResourceLocation("kagic:rutile_trail"), event);
 		registerBlock(WARP_PAD_CORE, new ResourceLocation("kagic:warp_pad_core"), event);
+		registerBlock(GALAXY_PAD_CORE, new ResourceLocation("kagic:galaxy_pad_core"), event);
 	}
 	
 	public static void registerBlock(Block block, ResourceLocation location, RegistryEvent.Register<Block> event) {
@@ -62,6 +65,7 @@ public class ModBlocks {
 		registerBlockItem(ROCK_MELT, new ResourceLocation("kagic:rock_melt"), event);
 		registerBlockItem(RUTILE_TRAIL, new ResourceLocation("kagic:rutile_trail"), event);
 		registerBlockItem(WARP_PAD_CORE, new ResourceLocation("kagic:warp_pad_core"), event);		
+		registerBlockItem(GALAXY_PAD_CORE, new ResourceLocation("kagic:galaxy_pad_core"), event);		
 	}
 	
 	public static void registerBlockItem(Block block, ResourceLocation location, RegistryEvent.Register<Item> event) {

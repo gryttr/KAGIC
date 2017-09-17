@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 
 import io.netty.buffer.ByteBuf;
 import mod.akrivus.kagic.init.KAGIC;
+import mod.heimrarnadalr.kagic.worlddata.GalaxyPadLocation;
 import mod.heimrarnadalr.kagic.worlddata.WarpPadDataEntry;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,7 +36,6 @@ public class PadDataMessage implements IMessage {
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		// TODO Auto-generated method stub
 		int count = buf.readInt();
 		byte[] dataBytes = new byte[count];
 		buf.readBytes(dataBytes);
@@ -74,6 +74,21 @@ public class PadDataMessage implements IMessage {
 			return null;
 		}
 		
+		private LinkedHashMap<GalaxyPadLocation, WarpPadDataEntry> decodeGalaxyData(NBTTagCompound padDataCompound) {
+			LinkedHashMap<GalaxyPadLocation, WarpPadDataEntry> padDataMap = new LinkedHashMap<GalaxyPadLocation, WarpPadDataEntry>();
+			NBTTagList list = padDataCompound.getTagList("pads", Constants.NBT.TAG_COMPOUND);
+			for (int i = 0; i < list.tagCount(); ++i) {
+				NBTTagCompound tc = list.getCompoundTagAt(i);
+				int dim= tc.getInteger("dim");
+				BlockPos pos = new BlockPos(tc.getInteger("x"), tc.getInteger("y"), tc.getInteger("z"));
+				String name = tc.getString("name");
+				boolean valid = tc.getBoolean("valid");
+				boolean clear = tc.getBoolean("clear");
+				padDataMap.put(new GalaxyPadLocation(dim, pos), new WarpPadDataEntry(name, valid, clear));
+			}
+			return padDataMap;
+		}
+
 		private LinkedHashMap<BlockPos, WarpPadDataEntry> decodePadData(NBTTagCompound padDataCompound) {
 			LinkedHashMap<BlockPos, WarpPadDataEntry> padDataMap = new LinkedHashMap<BlockPos, WarpPadDataEntry>();
 			NBTTagList list = padDataCompound.getTagList("pads", Constants.NBT.TAG_COMPOUND);
@@ -89,8 +104,13 @@ public class PadDataMessage implements IMessage {
 		}
 
 		private void handle(PadDataMessage message, MessageContext ctx) {
-			LinkedHashMap<BlockPos, WarpPadDataEntry> padData = this.decodePadData(message.padDataCompound);
-			KAGIC.proxy.openWarpPadSelectionGUI(padData, message.x, message.y, message.z);
+			if (message.padDataCompound.getBoolean("galaxy")) {
+				LinkedHashMap<GalaxyPadLocation, WarpPadDataEntry> padData = this.decodeGalaxyData(message.padDataCompound);
+				KAGIC.proxy.openGalaxyPadSelectionGUI(padData, message.x, message.y, message.z);
+			} else {
+				LinkedHashMap<BlockPos, WarpPadDataEntry> padData = this.decodePadData(message.padDataCompound);
+				KAGIC.proxy.openWarpPadSelectionGUI(padData, message.x, message.y, message.z);
+			}
 		}
 	}
 }

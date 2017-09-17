@@ -1,6 +1,7 @@
 package mod.heimrarnadalr.kagic.networking;
 
 import io.netty.buffer.ByteBuf;
+import mod.heimrarnadalr.kagic.worlddata.WorldDataGalaxyPad;
 import mod.heimrarnadalr.kagic.worlddata.WorldDataWarpPad;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,13 +12,15 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PadDataRequestMessage implements IMessage {
+	private boolean isGalaxy;
 	private int x;
 	private int y;
 	private int z;
 	
 	public PadDataRequestMessage() {}
 	
-	public PadDataRequestMessage(int x, int y, int z) {
+	public PadDataRequestMessage(boolean isGalaxy, int x, int y, int z) {
+		this.isGalaxy = isGalaxy;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -25,6 +28,7 @@ public class PadDataRequestMessage implements IMessage {
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
+		this.isGalaxy = buf.readBoolean();
 		this.x = buf.readInt();
 		this.y = buf.readInt();
 		this.z = buf.readInt();
@@ -32,6 +36,7 @@ public class PadDataRequestMessage implements IMessage {
 
 	@Override
 	public void toBytes(ByteBuf buf) {
+		buf.writeBoolean(this.isGalaxy);
 		buf.writeInt(this.x);
 		buf.writeInt(this.y);
 		buf.writeInt(this.z);
@@ -48,9 +53,17 @@ public class PadDataRequestMessage implements IMessage {
 			EntityPlayerMP playerEntity = ctx.getServerHandler().player;
 			World world = playerEntity.getEntityWorld();
 			NBTTagCompound data = new NBTTagCompound();
-			WorldDataWarpPad padData = WorldDataWarpPad.get(world);
-			data = padData.writeToNBT(data);
-			KTPacketHandler.INSTANCE.sendTo(new PadDataMessage(data, message.x, message.y, message.z), ctx.getServerHandler().player);
+			if (message.isGalaxy) {
+				WorldDataGalaxyPad padData = WorldDataGalaxyPad.get(world);
+				data = padData.writeToNBT(data);
+				data.setBoolean("galaxy", true);
+				KTPacketHandler.INSTANCE.sendTo(new PadDataMessage(data, message.x, message.y, message.z), ctx.getServerHandler().player);
+			} else {
+				WorldDataWarpPad padData = WorldDataWarpPad.get(world);
+				data = padData.writeToNBT(data);
+				data.setBoolean("galaxy", false);
+				KTPacketHandler.INSTANCE.sendTo(new PadDataMessage(data, message.x, message.y, message.z), ctx.getServerHandler().player);
+			}
 		}
 	}
 }

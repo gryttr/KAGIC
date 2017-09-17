@@ -35,11 +35,14 @@ import mod.akrivus.kagic.items.ItemLiberationContract;
 import mod.akrivus.kagic.items.ItemPeaceTreaty;
 import mod.akrivus.kagic.items.ItemTransferContract;
 import mod.akrivus.kagic.items.ItemWarDeclaration;
+import mod.akrivus.kagic.tileentity.TileEntityGalaxyPadCore;
 import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import mod.akrivus.kagic.util.PoofDamage;
 import mod.akrivus.kagic.util.ShatterDamage;
 import mod.akrivus.kagic.util.SlagDamage;
+import mod.heimrarnadalr.kagic.worlddata.GalaxyPadLocation;
 import mod.heimrarnadalr.kagic.worlddata.WarpPadDataEntry;
+import mod.heimrarnadalr.kagic.worlddata.WorldDataGalaxyPad;
 import mod.heimrarnadalr.kagic.worlddata.WorldDataWarpPad;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -1018,26 +1021,50 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 				return;
 			}
 			
-			Map<BlockPos, WarpPadDataEntry> padData = WorldDataWarpPad.get(this.world).getWarpPadData();
-			SortedMap<Double, BlockPos> sortedPoses = WorldDataWarpPad.getSortedPositions(padData, pad.getPos());
-			Iterator<BlockPos> it = sortedPoses.values().iterator();
-			while (it.hasNext()) {
-				BlockPos pos = (BlockPos) it.next();
-				WarpPadDataEntry data = padData.get(pos);
-				if (data.name.toLowerCase().equals(destination)) {
-					TileEntityWarpPadCore dest = (TileEntityWarpPadCore) this.getEntityWorld().getTileEntity(pos);
-					if (!dest.isValid()) {
-						this.talkTo(player, new TextComponentTranslation("notify.kagic.destnotvalid").getUnformattedComponentText());
+			if (pad instanceof TileEntityGalaxyPadCore) {
+				Map<GalaxyPadLocation, WarpPadDataEntry> padData = WorldDataGalaxyPad.get(this.world).getGalaxyPadData();
+				SortedMap<Double, GalaxyPadLocation> sortedPoses = WorldDataGalaxyPad.getSortedPositions(padData, pad.getPos());
+				Iterator<GalaxyPadLocation> it = sortedPoses.values().iterator();
+				while (it.hasNext()) {
+					GalaxyPadLocation dest = (GalaxyPadLocation) it.next();
+					WarpPadDataEntry data = padData.get(dest);
+					if (data.name.toLowerCase().equals(destination)) {
+						if (!data.valid) {
+							this.talkTo(player, new TextComponentTranslation("notify.kagic.destnotvalid").getUnformattedComponentText());
+							return;
+						}
+						if (!data.clear) {
+							this.talkTo(player, new TextComponentTranslation("notify.kagic.destnotclear").getUnformattedComponentText());
+							return;
+						}
+						this.talkTo(player, new TextComponentTranslation("notify.kagic.warping", data.name).getUnformattedComponentText());
+						this.playObeySound();
+						((TileEntityGalaxyPadCore) pad).beginWarp(dest);
 						return;
 					}
-					if (!dest.isClear()) {
-						this.talkTo(player, new TextComponentTranslation("notify.kagic.destnotclear").getUnformattedComponentText());
+				}
+			} else {
+				Map<BlockPos, WarpPadDataEntry> padData = WorldDataWarpPad.get(this.world).getWarpPadData();
+				SortedMap<Double, BlockPos> sortedPoses = WorldDataWarpPad.getSortedPositions(padData, pad.getPos());
+				Iterator<BlockPos> it = sortedPoses.values().iterator();
+				while (it.hasNext()) {
+					BlockPos pos = (BlockPos) it.next();
+					WarpPadDataEntry data = padData.get(pos);
+					if (data.name.toLowerCase().equals(destination)) {
+						TileEntityWarpPadCore dest = (TileEntityWarpPadCore) this.getEntityWorld().getTileEntity(pos);
+						if (!dest.isValid()) {
+							this.talkTo(player, new TextComponentTranslation("notify.kagic.destnotvalid").getUnformattedComponentText());
+							return;
+						}
+						if (!dest.isClear()) {
+							this.talkTo(player, new TextComponentTranslation("notify.kagic.destnotclear").getUnformattedComponentText());
+							return;
+						}
+						this.talkTo(player, new TextComponentTranslation("notify.kagic.warping", data.name).getUnformattedComponentText());
+						this.playObeySound();
+						pad.beginWarp(pos);
 						return;
 					}
-					this.talkTo(player, new TextComponentTranslation("notify.kagic.warping", data.name).getUnformattedComponentText());
-					this.playObeySound();
-					pad.beginWarp(pos);
-					return;
 				}
 			}
 			this.talkTo(player, new TextComponentTranslation("notify.kagic.nopad", destination).getUnformattedComponentText());

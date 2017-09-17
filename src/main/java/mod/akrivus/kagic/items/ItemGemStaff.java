@@ -38,9 +38,7 @@ public class ItemGemStaff extends Item {
 	        	gem.setAttackTarget(null);
 	            gem.isPeaceful = true;
 	        }
-	        for (Biome biome : BiomeDictionary.getBiomes(Type.PLAINS)) {
-	        	KAGIC.instance.chatInfoMessage("Found plains biome " + biome.getBiomeName());
-	        }
+
 	        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 		}
 		playerIn.swingArm(hand);
