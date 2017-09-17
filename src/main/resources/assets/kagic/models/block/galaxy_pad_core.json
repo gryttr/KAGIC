@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "kagic:blocks/warp_pad_core_top",
+    "down": "kagic:blocks/warp_pad_core_side",
+    "up": "kagic:blocks/warp_pad_core_top",
+    "east": "kagic:blocks/warp_pad_core_side",
+    "west": "kagic:blocks/warp_pad_core_side",
+    "north": "kagic:blocks/warp_pad_core_side",
+    "south": "kagic:blocks/warp_pad_core_side"
+  }
+}

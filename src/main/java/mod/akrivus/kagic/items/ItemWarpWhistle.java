@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.items;
 
 import mod.akrivus.kagic.init.ModCreativeTabs;
+import mod.akrivus.kagic.tileentity.TileEntityGalaxyPadCore;
 import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
 import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
 import mod.heimrarnadalr.kagic.networking.PadDataRequestMessage;
@@ -27,8 +28,11 @@ public class ItemWarpWhistle extends Item {
     	if (world.isRemote) {
 	    	TileEntityWarpPadCore te = TileEntityWarpPadCore.getEntityPad(playerIn);//getPlayerPadTE(world, playerIn);
 	    	if (te != null && te.isValidPad() && !te.isWarping()) {
-				//playerIn.openGui(KAGIC.instance, KTGUIProxy.GUIWARPPADSELECTIONID, world, te.getPos().getX(), te.getPos().getY(), te.getPos().getZ());
-				KTPacketHandler.INSTANCE.sendToServer(new PadDataRequestMessage(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ()));
+				if (te instanceof TileEntityGalaxyPadCore) {
+					KTPacketHandler.INSTANCE.sendToServer(new PadDataRequestMessage(true, te.getPos().getX(), te.getPos().getY(), te.getPos().getZ()));
+				} else {
+					KTPacketHandler.INSTANCE.sendToServer(new PadDataRequestMessage(false, te.getPos().getX(), te.getPos().getY(), te.getPos().getZ()));
+				}
 	    	}
     	}
     	return new ActionResult<> (EnumActionResult.SUCCESS, stack);
