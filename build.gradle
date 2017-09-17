@@ -11,11 +11,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 def minecraft_version = "[1.12,1.12.1]"
-<<<<<<< HEAD
 version = "1.10a4"
-=======
-version = "1.10a3"
->>>>>>> f00f02f0a94a078e88cd9d0099f886da18060195
 group = "mod.akrivus.kagic"
 archivesBaseName = "kagic"
 
@@ -24,7 +20,7 @@ compileJava {
     sourceCompatibility = targetCompatibility = "1.8"
 }
 minecraft {
-	replace "@mcversion", minecraft_version
+    replace "@mcversion", minecraft_version
     replace "@version", project.version
     replaceIn "KAGIC.java"
     version = "1.12.1-14.22.0.2452"
