@@ -8,6 +8,6 @@ public class ItemInactiveGemBase extends Item {
 		super();
 		this.setUnlocalizedName("inactive_gem_base");
 		this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
-		this.setMaxStackSize(1);
+		this.setMaxStackSize(16);
 	}
 }

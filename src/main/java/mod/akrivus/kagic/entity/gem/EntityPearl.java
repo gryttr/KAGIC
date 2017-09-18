@@ -179,8 +179,10 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
         }
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+    	livingdata = super.onInitialSpawn(difficulty, livingdata);
     	this.setGemCut(GemCuts.CABOCHON.id);
-        return super.onInitialSpawn(difficulty, livingdata);
+    	this.setHairColor(this.getColor());
+        return livingdata;
     }
     public void itemDataToGemData(int data) {
 		this.setColor(data);
