@@ -19,6 +19,25 @@ public class SunkenRuinStructure extends RuinStructure {
 
 	@Override
 	protected boolean checkCorners(World world, BlockPos pos, byte rotation) {
+		int xFar = pos.getX() + ((rotation % 2 == 0) ? this.width : this.length) - 1;
+		int zFar = pos.getZ() + ((rotation % 2 == 0) ? this.length : this.width) - 1;
+		BlockPos corner1 = pos;
+		BlockPos corner2 = new BlockPos(xFar, pos.getY(), pos.getZ());
+		BlockPos corner3 = new BlockPos(pos.getX(), pos.getY(), zFar);
+		BlockPos corner4 = new BlockPos(xFar, pos.getY(), zFar);
+		
+		if (!checkBiome(world, corner1)) {
+			return false;
+		}
+		if (!checkBiome(world, corner2)) {
+			return false;
+		}
+		if (!checkBiome(world, corner3)) {
+			return false;
+		}
+		if (!checkBiome(world, corner4)) {
+			return false;
+		}
 		return true;
 	}
 	

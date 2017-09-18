@@ -80,8 +80,8 @@ public class RuinStructure extends WorldGenerator {
 		int xFar = pos.getX() + ((rotation % 2 == 0) ? this.width : this.length) - 1;
 		int zFar = pos.getZ() + ((rotation % 2 == 0) ? this.length : this.width) - 1;
 		BlockPos corner1 = world.getTopSolidOrLiquidBlock(pos).down();
-		BlockPos corner2 = world.getTopSolidOrLiquidBlock(new BlockPos(xFar, 255, 0)).down();
-		BlockPos corner3 = world.getTopSolidOrLiquidBlock(new BlockPos(0, 255, zFar)).down();
+		BlockPos corner2 = world.getTopSolidOrLiquidBlock(new BlockPos(xFar, 255, pos.getZ())).down();
+		BlockPos corner3 = world.getTopSolidOrLiquidBlock(new BlockPos(pos.getX(), 255, zFar)).down();
 		BlockPos corner4 = world.getTopSolidOrLiquidBlock(new BlockPos(xFar, 255, zFar)).down();
 		
 		if (!allowedBlocks.contains(world.getBlockState(corner1))) {
