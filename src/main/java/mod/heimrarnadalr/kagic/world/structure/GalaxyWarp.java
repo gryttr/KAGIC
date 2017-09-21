@@ -24,7 +24,7 @@ public class GalaxyWarp extends SunkenRuinStructure {
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
-		if (rand.nextInt(10) != 0) {
+		if (rand.nextInt(1000) != 0) {
 			return false;
 		}
 
