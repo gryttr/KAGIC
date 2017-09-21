@@ -70,8 +70,7 @@ public class RuinStructure extends WorldGenerator {
 		if (allowedBiomes.isEmpty()) {
 			return true;
 		}
-		Biome biome = world.getBiome(pos);
-		if (allowedBiomes.contains(biome)) {
+		if (allowedBiomes.contains(world.getBiome(pos))) {
 			return true;
 		}
 		return false;
