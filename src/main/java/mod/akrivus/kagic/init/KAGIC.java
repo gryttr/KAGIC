@@ -13,11 +13,13 @@ import mod.heimrarnadalr.kagic.chunk.KAGICChunkCallback;
 import mod.heimrarnadalr.kagic.crafting.KAGICSmeltingRecipes;
 import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
 import mod.heimrarnadalr.kagic.proxies.CommonProxy;
+import mod.heimrarnadalr.kagic.world.Fogger;
 import mod.heimrarnadalr.kagic.world.KAGICWorldGenerator;
 import mod.heimrarnadalr.kagic.world.structure.LootTables;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -70,6 +72,7 @@ public class KAGIC {
 			ModTESRs.register();
 		}
 		GameRegistry.registerWorldGenerator(worldGen, 50);
+		MinecraftForge.EVENT_BUS.register(new Fogger());
     }
     
     @EventHandler

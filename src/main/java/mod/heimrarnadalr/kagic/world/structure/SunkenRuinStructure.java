@@ -27,17 +27,22 @@ public class SunkenRuinStructure extends RuinStructure {
 		BlockPos corner4 = new BlockPos(xFar, pos.getY(), zFar);
 		
 		if (!checkBiome(world, corner1)) {
+			KAGIC.instance.chatInfoMessage("Test failed for corner 1");
 			return false;
 		}
 		if (!checkBiome(world, corner2)) {
+			KAGIC.instance.chatInfoMessage("Test failed for corner 2");
 			return false;
 		}
 		if (!checkBiome(world, corner3)) {
+			KAGIC.instance.chatInfoMessage("Test failed for corner 3");
 			return false;
 		}
 		if (!checkBiome(world, corner4)) {
+			KAGIC.instance.chatInfoMessage("Test failed for corner 4");
 			return false;
 		}
+		KAGIC.instance.chatInfoMessage("Biome corner check passed");
 		return true;
 	}
 	
