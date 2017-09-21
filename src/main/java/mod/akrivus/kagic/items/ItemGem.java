@@ -33,9 +33,7 @@ public class ItemGem extends Item {
 	public ItemGem(String name, boolean cracked) {
 		this.setUnlocalizedName((cracked ? "cracked_" : "") + name + "_gem");
 		this.setMaxStackSize(1);
-		if (!name.matches(".*\\d.*")) {
-			this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_GEMS);
-		}
+		this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_GEMS);
 		this.isCracked = cracked;
 		this.gemName = new TextComponentTranslation("entity.kagic." + name + ".name").getUnformattedComponentText();
 	}

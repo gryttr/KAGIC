@@ -6,6 +6,7 @@ import mod.akrivus.kagic.entity.ai.EntityAISlagHateLight;
 import mod.akrivus.kagic.init.ModEntities;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -29,6 +30,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.BossInfoServer;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntitySlag extends EntityMob {
@@ -54,7 +56,7 @@ public class EntitySlag extends EntityMob {
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityGem>(this, EntityGem.class, true));
         this.dataManager.register(COUNT, 1);
-        this.dataManager.register(VARIANT, -1);
+        this.dataManager.register(VARIANT, 0);
         this.compatIndex = worldIn.rand.nextInt(4);
     }
 	public void writeEntityToNBT(NBTTagCompound compound) {
@@ -67,13 +69,14 @@ public class EntitySlag extends EntityMob {
         this.dataManager.set(VARIANT, compound.getInteger("variant"));
         this.setCount(compound.getInteger("count"));
 	}
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		ChunkPos c = world.getChunkFromBlockCoords(this.getPosition()).getPos();
+		this.setVariant(Math.abs((c.x + c.z) % ModEntities.MINERALS.size()));
+        return super.onInitialSpawn(difficulty, livingdata);
+    }
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		this.setSize(0.4F * this.getCount(), 0.3F * this.getCount());
-		if (this.ticksExisted < 4 && this.getVariant() < 0) {
-			ChunkPos c = world.getChunkFromBlockCoords(this.getPosition()).getPos();
-			this.setVariant(Math.abs((c.x + c.z) % ModEntities.MINERALS.size()));
-		}
 	}
 	protected void updateAITasks() {
 		super.updateAITasks();
