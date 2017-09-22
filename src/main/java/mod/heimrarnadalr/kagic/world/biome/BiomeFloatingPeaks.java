@@ -52,20 +52,20 @@ public class BiomeFloatingPeaks  extends Biome {
 	}
 
 	@Override
-	public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunkPrimer, int chunkX, int chunkZ, double noiseVal) {
+	public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunkPrimer, int x, int z, double noiseVal) {
 
 		if (this.peakNoise == null || this.peakRoofNoise == null || this.worldSeed != world.getSeed()) {
 			Random peakRandom = new Random(this.worldSeed);
-			this.peakNoise = new NoiseGeneratorPerlin(peakRandom, 4);
-			this.peakRoofNoise = new NoiseGeneratorPerlin(peakRandom, 1);
+			this.peakNoise = new NoiseGeneratorPerlin(peakRandom, 16);
+			this.peakRoofNoise = new NoiseGeneratorPerlin(peakRandom, 4);
 		}
 
 		this.worldSeed = world.getSeed();
 		double peakHeight = 0.0D;
 
-		int i = (chunkX & -128) + (chunkZ & 127);
-		int j = (chunkZ & -128) + (chunkX & 127);
-		double d0 = Math.min(Math.abs(noiseVal) * .9, this.peakNoise.getValue((double)i * 0.5D, (double)j * 0.5D));
+		int i = (x & -16) + (z & 15);
+		int j = (z & -16) + (x & 15);
+		double d0 = Math.min(Math.abs(noiseVal), this.peakNoise.getValue((double)i * 0.5D, (double)j * 0.5D));
 
 		if (d0 > 0.0D) {
 			//0.001953125
@@ -82,40 +82,39 @@ public class BiomeFloatingPeaks  extends Biome {
 			peakHeight = peakHeight + 64.0D;
 		}
 
-		int x = chunkX & 15;
-		int z = chunkZ & 15;
+		int chunkX = x & 15;
+		int chunkZ = z & 15;
 		int seaLevel = world.getSeaLevel();
-		IBlockState fillerState = this.fillerBlock;
 		int l = -1;
 
 		for (int height = 255; height >= 0; --height) {
-			if (chunkPrimer.getBlockState(x, height, z).getMaterial() == Material.AIR && height < (int)peakHeight) {
-				chunkPrimer.setBlockState(x, height, z, STONE);
+			if (chunkPrimer.getBlockState(chunkX, height, chunkZ).getMaterial() == Material.AIR && height < (int)peakHeight) {
+				chunkPrimer.setBlockState(chunkX, height, chunkZ, STONE);
 			}
 
 			if (height <= rand.nextInt(5)) {
-				chunkPrimer.setBlockState(x, height, z, BEDROCK);
+				chunkPrimer.setBlockState(chunkX, height, chunkZ, BEDROCK);
 			}
 			else {
-				IBlockState iblockstate1 = chunkPrimer.getBlockState(x, height, z);
+				IBlockState iblockstate1 = chunkPrimer.getBlockState(chunkX, height, chunkZ);
 
 				if (iblockstate1.getMaterial() == Material.AIR) {
 					l = -1 - this.fillerDepth;
 				}
 				else if (iblockstate1.getBlock() == Blocks.STONE) {
 					if (l == -1 - this.fillerDepth) {
-						chunkPrimer.setBlockState(x, height, z, this.topBlock);
+						chunkPrimer.setBlockState(chunkX, height, chunkZ, this.topBlock);
 						++l;
 					} else if (l < 0) {
-						chunkPrimer.setBlockState(x, height, z, this.fillerBlock);
+						chunkPrimer.setBlockState(chunkX, height, chunkZ, this.fillerBlock);
 						++l;
 					} else if (l == 0) {
 						l = 1;//k + Math.max(0, height - seaLevel);
-						chunkPrimer.setBlockState(x, height, z, this.fillerBlock);
+						chunkPrimer.setBlockState(chunkX, height, chunkZ, this.fillerBlock);
 					}
 					else if (l > 0) {
 						//--l;
-						chunkPrimer.setBlockState(x, height, z, STONE);
+						chunkPrimer.setBlockState(chunkX, height, chunkZ, STONE);
 					}
 				}
 			}

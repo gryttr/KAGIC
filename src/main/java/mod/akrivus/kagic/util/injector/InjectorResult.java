@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.EntitySlag;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModEntities;
 import net.minecraft.block.Block;
@@ -23,6 +24,9 @@ public class InjectorResult {
 	private final boolean createSlags;
 	private final boolean isPrimary;
 	private final ExitHole exitHole;
+	
+	private static final float drainedPercentage = 0.75F;
+	
 	public InjectorResult(EntityGem gem, BlockPos pos, double defectiveRate, boolean createSlags, boolean isPrimary, ExitHole exitHole) {
 		this.gem = gem;
 		this.position = pos;
@@ -95,13 +99,14 @@ public class InjectorResult {
 		HashMap<Class<EntityGem>, Double> resultTable = new HashMap<Class<EntityGem>, Double>();
 		HashMap<Class<EntityGem>, Double> defectivity = new HashMap<Class<EntityGem>, Double>();
 		HashMap<Class<EntityGem>, Double> friction = new HashMap<Class<EntityGem>, Double>();
-		boolean regionIsNotDrained = true;
+		float drainedCount = 0F;
 		for (String gem : ModEntities.GEMS.keySet()) {
     		try {
         		Class<EntityGem> gemClass = (Class<EntityGem>) ModEntities.GEMS.get(gem);
         		HashMap<IBlockState, Double> yield = (HashMap<IBlockState, Double>) gemClass.getField((gem + "_yields").toUpperCase()).get(null);
 				double defectivityRate = 1.0;
 				double frictionFactor = 0.0;
+				drainedCount = 0F;
 				for (int x = -4; x <= 4; ++x) {
 		            for (int y = -4; y <= 4; ++y) {
 		                for (int z = -4; z <= 4; ++z) {
@@ -117,7 +122,8 @@ public class InjectorResult {
 	                			
 	                		}
 	                		if (state.getBlock() == ModBlocks.DRAINED_BLOCK) {
-	                			regionIsNotDrained = false;
+	                			KAGIC.instance.chatInfoMessage("drainedCount is " + drainedCount);
+	                			drainedCount += 1;
 	                		}
 	                		if (state.getMaterial() == Material.GRASS) {
 	                			defectivityRate -= 0.4;
@@ -159,20 +165,23 @@ public class InjectorResult {
 				}
 			}
 		}
-		if (highestYield <= 0.0 && regionIsNotDrained) {
+
+		if (highestYield <= 0.0 && drainedCount / (9F * 9F * 9F) < InjectorResult.drainedPercentage) {
 			ChunkPos c = world.getChunkFromBlockCoords(pos).getPos();
 			int chunkPos = (c.x + c.z) % ModEntities.MINERALS.size();
 			mostLikelyGem = ModEntities.MINERALS.get(Math.abs(chunkPos));
 			canSpawnGem = true;
 		}
 		EntityGem gemSpawned = null;
-		try {
-			gemSpawned = (EntityGem)(mostLikelyGem.getConstructors()[0].newInstance(world));
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Error creating gem: " + e.getMessage());
-			canSpawnGem = false;
+		if (canSpawnGem) {
+			try {
+				gemSpawned = (EntityGem)(mostLikelyGem.getConstructors()[0].newInstance(world));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("Error creating gem: " + e.getMessage());
+				canSpawnGem = false;
+			}
 		}
 		ExitHole exitHole = null;
 		if (drain && gemSpawned != null) {
@@ -192,7 +201,7 @@ public class InjectorResult {
 	            }
 			}
 		}
-		return new InjectorResult(gemSpawned, pos, gemSpawned == null ? 0.0 : defectivity.get(gemSpawned.getClass()), !canSpawnGem, friction.get(gemSpawned.getClass()) >= 1.0F, exitHole);
+		return new InjectorResult(gemSpawned, pos, gemSpawned == null ? 0.0 : defectivity.get(gemSpawned.getClass()), !canSpawnGem, canSpawnGem ? friction.get(gemSpawned.getClass()) >= 1.0F : false, exitHole);
 	}
 	
 	private static void drainBlock(World world, BlockPos ore) {

@@ -542,7 +542,10 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 				if (stack.getItem() == ModItems.GEM_STAFF) {
 					if (this.isTamed()) {
 						if (player.isSneaking()) {
-							this.setSelected(!this.isSelected());
+							if (this.isOwnedBy(player)) {
+								this.setSelected(!this.isSelected());
+							}
+							this.alternateInteract(player);
 							this.playObeySound();
 						}
 						else {
