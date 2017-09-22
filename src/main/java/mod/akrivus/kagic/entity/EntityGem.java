@@ -853,6 +853,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		KAGIC.instance.chatInfoMessage("Cut is " + this.getGemCut() + " and Placement is " + this.getGemPlacement());
 		KAGIC.instance.chatInfoMessage("skinColor is " + this.getSkinColor());
 		KAGIC.instance.chatInfoMessage("hairColor is " + this.getHairColor());
+		KAGIC.instance.chatInfoMessage("Hair style is " + this.getHairStyle());
 		KAGIC.instance.chatInfoMessage("Insignia color is " + this.getInsigniaColor());
 		KAGIC.instance.chatInfoMessage("Uniform color is " + this.getUniformColor());
 		return false;

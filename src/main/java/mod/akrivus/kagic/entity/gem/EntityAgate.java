@@ -179,15 +179,15 @@ public class EntityAgate extends EntityGem {
         	this.setGemCut(GemCuts.TEARDROP.id);
         	this.setSpecial(1);
         } else {
-            this.setHairStyle(this.rand.nextInt(EntityAgate.AGATE_HAIR_STYLES.size()));
+            //this.setHairStyle(this.rand.nextInt(EntityAgate.AGATE_HAIR_STYLES.size()));
+            //KAGIC.instance.chatInfoMessage("Set hairstyle to " + this.getHairStyle());
         	this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.agate_%1$d.name", this.getColor())).getUnformattedComponentText());
         }
         return super.onInitialSpawn(difficulty, livingdata);
     }
     public void itemDataToGemData(int data) {
 		this.dataManager.set(COLOR, data);
-		this.setHairStyle(this.rand.nextInt(EntityAgate.AGATE_HAIR_STYLES.size()));
-    	this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.agate_%1$d.name", data)).getUnformattedComponentText());
+        this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.agate_%1$d.name", data)).getUnformattedComponentText());
     	this.setSpecial(0);
 	}
 
@@ -303,6 +303,14 @@ public class EntityAgate extends EntityGem {
 	/*********************************************************
 	 * Methods related to rendering.                         *
 	 *********************************************************/
+	@Override
+	protected int generateHairStyle() {
+		if (this.isHolly()) {
+			return 0;
+		}
+		return this.rand.nextInt(EntityAgate.AGATE_HAIR_STYLES.size());
+	}
+	
 	@Override
 	public boolean hasCape() {
 		return true;
