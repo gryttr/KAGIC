@@ -144,9 +144,15 @@ public class EntitySlag extends EntityMob {
 		return this.getCount() < 10 && (this.getHealth() / this.getMaxHealth() <= 0.9 || this.getAttackTarget() != null || this.getRevengeTarget() != null);
 	}
 	public EntitySlag fuse(EntitySlag other) {
+		int variant = 0;
+		try {
+			variant = Integer.parseInt(Integer.toString(this.getVariant()) + Integer.toString(other.getVariant()));
+		} catch (Exception e) {
+			return null;
+		}
 		EntitySlag newSlag = new EntitySlag(this.world);
 		newSlag.setCount(this.getCount() + other.getCount());
-		newSlag.setVariant(Integer.parseInt(Integer.toString(this.getVariant()) + Integer.toString(other.getVariant())));
+		newSlag.setVariant(variant);
 		newSlag.setHealth(newSlag.getMaxHealth());
 		newSlag.setLocationAndAngles((this.posX + other.posX) / 2, (this.posY + other.posY) / 2, (this.posZ + other.posZ) / 2, (this.rotationYaw + other.rotationYaw) / 2, (this.rotationPitch + other.rotationPitch) / 2);
 		return newSlag;

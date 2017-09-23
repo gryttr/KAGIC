@@ -1,5 +1,7 @@
 package mod.heimrarnadalr.kagic.world;
 
+import org.lwjgl.opengl.GL11;
+
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModBiomes;
 import net.minecraft.block.state.IBlockState;
@@ -13,22 +15,37 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Fogger {
+	private static final int FADE_TICKS = 60;
+	private int fadeTicksLeft = 0;
 	private float fogColor1;
 	private float fogColor2;
+	
+	private static float[] getBiomeFogColor(Biome biome) {
+		if (biome == ModBiomes.FLOATINGPEAKS) {
+			return new float[] {247F / 255F, 220F / 255F, 218F / 255F};
+		} else if (biome == ModBiomes.KINDERGARTEN) {
+			return new float[] {215F / 255F, 211F / 255F, 221F / 255F};
+		} else {
+			return new float[] {0, 0, 0};
+		}	
+	}
 	
 	@SubscribeEvent
 	public void onFogColor(EntityViewRenderEvent.FogColors event) {
 		this.fogColor2 = this.fogColor1;
 		Entity entity = event.getEntity();
 		World world = entity.world;
-		if (world.getBiome(event.getEntity().getPosition()) == ModBiomes.FLOATINGPEAKS) {
-			float red = 247F / 255F;
-			float green = 220F / 255F;
-			float blue = 218F / 255F;
+		Biome biome = world.getBiome(entity.getPosition());
+		if (biome == ModBiomes.FLOATINGPEAKS || biome == ModBiomes.KINDERGARTEN || this.fadeTicksLeft > 0) {
+			float[] biomeColor = Fogger.getBiomeFogColor(biome);
+			float red = event.getRed() + (biomeColor[0] - event.getRed()) * ((float) this.fadeTicksLeft / (float) Fogger.FADE_TICKS);
+			float green = event.getGreen() + (biomeColor[1] - event.getGreen()) * ((float) this.fadeTicksLeft / (float) Fogger.FADE_TICKS);;
+			float blue = event.getBlue() + (biomeColor[2] - event.getBlue()) * ((float) this.fadeTicksLeft / (float) Fogger.FADE_TICKS);;
 			
 			float partialTicks = (float) event.getRenderPartialTicks();
 			float celestialAngle = world.getCelestialAngle((float)partialTicks);
@@ -177,10 +194,21 @@ public class Fogger {
 			event.setGreen(green);
 			event.setBlue(blue);
 		}
+		if (biome == ModBiomes.FLOATINGPEAKS || biome == ModBiomes.KINDERGARTEN) {
+			this.fadeTicksLeft = Math.min(++this.fadeTicksLeft, Fogger.FADE_TICKS);
+		} else {
+			this.fadeTicksLeft = Math.max(0, --this.fadeTicksLeft);
+		}
 	}
 	
 	@SubscribeEvent
 	public void onFogDensity(EntityViewRenderEvent.FogDensity event) {
-		
+		Entity entity = event.getEntity();
+		World world = entity.world;
+		Biome biome = world.getBiome(entity.getPosition());
+		if (biome == ModBiomes.KINDERGARTEN) {
+			event.setDensity(0.5F);
+			event.setCanceled(true);
+		}
 	}
 }

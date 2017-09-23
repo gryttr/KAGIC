@@ -29,7 +29,7 @@ public class RenderCarnelian extends RenderLivingBase<EntityCarnelian> {
     }
 	protected void preRenderCallback(EntityCarnelian entitylivingbaseIn, float partialTickTime) {
 		if (entitylivingbaseIn.isDefective()) {
-			GlStateManager.scale(0.8F, 0.6F, 0.8F);
+			GlStateManager.scale(0.8F, 0.667F, 0.8F);
 		}
 	}
 	protected ResourceLocation getEntityTexture(EntityCarnelian entity) {

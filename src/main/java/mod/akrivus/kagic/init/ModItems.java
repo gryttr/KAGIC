@@ -106,7 +106,7 @@ public class ModItems {
 	public static final ItemGem GREEN_ZIRCON_GEM = new ItemGem("zircon_4");
 	public static final ItemGem ZIRCON_GEM = new ItemGem("zircon");
 	public static final ItemGem RUTILE_GEM = new ItemGem("rutile");
-	public static final ItemGem CITRINE_GEM = new ItemGem("amethyst_1");
+	//public static final ItemGem CITRINE_GEM = new ItemGem("amethyst_1");
 	public static final ItemGem YELLOW_DIAMOND_GEM = new ItemGem("yellow_diamond");
 	public static final ItemGem BLUE_DIAMOND_GEM = new ItemGem("blue_diamond");
 	public static final ItemGem CRACKED_RUBY_GEM = new ItemGem("ruby", true);
@@ -166,7 +166,7 @@ public class ModItems {
 	public static final ItemGem CRACKED_GREEN_ZIRCON_GEM = new ItemGem("zircon_4", true);
 	public static final ItemGem CRACKED_ZIRCON_GEM = new ItemGem("zircon", true);
 	public static final ItemGem CRACKED_RUTILE_GEM = new ItemGem("rutile", true);
-	public static final ItemGem CRACKED_CITRINE_GEM = new ItemGem("amethyst_1", true);
+	//public static final ItemGem CRACKED_CITRINE_GEM = new ItemGem("amethyst_1", true);
 	public static final ItemGem CRACKED_YELLOW_DIAMOND_GEM = new ItemGem("yellow_diamond", true);
 	public static final ItemGem CRACKED_BLUE_DIAMOND_GEM = new ItemGem("blue_diamond", true);
 	
@@ -223,7 +223,7 @@ public class ModItems {
 		registerGem(BLUE_TOPAZ_GEM, CRACKED_BLUE_TOPAZ_GEM, event);
 		registerGem(ZIRCON_GEM, CRACKED_ZIRCON_GEM, event);
 		registerGem(RUTILE_GEM, CRACKED_RUTILE_GEM, event);
-		registerGem(CITRINE_GEM, CRACKED_CITRINE_GEM, event);
+		//registerGem(CITRINE_GEM, CRACKED_CITRINE_GEM, event);
 		registerGem(YELLOW_DIAMOND_GEM, CRACKED_YELLOW_DIAMOND_GEM, event);
 		registerGem(BLUE_DIAMOND_GEM, CRACKED_BLUE_DIAMOND_GEM, event);
 		registerItem(RECORD_LITTLE_PERIDOT, event);

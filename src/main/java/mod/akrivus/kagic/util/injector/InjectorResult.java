@@ -100,13 +100,13 @@ public class InjectorResult {
 		HashMap<Class<EntityGem>, Double> defectivity = new HashMap<Class<EntityGem>, Double>();
 		HashMap<Class<EntityGem>, Double> friction = new HashMap<Class<EntityGem>, Double>();
 		float drainedCount = 0F;
+		boolean drainedChecked = false;
 		for (String gem : ModEntities.GEMS.keySet()) {
     		try {
         		Class<EntityGem> gemClass = (Class<EntityGem>) ModEntities.GEMS.get(gem);
         		HashMap<IBlockState, Double> yield = (HashMap<IBlockState, Double>) gemClass.getField((gem + "_yields").toUpperCase()).get(null);
 				double defectivityRate = 1.0;
 				double frictionFactor = 0.0;
-				drainedCount = 0F;
 				for (int x = -4; x <= 4; ++x) {
 		            for (int y = -4; y <= 4; ++y) {
 		                for (int z = -4; z <= 4; ++z) {
@@ -121,9 +121,12 @@ public class InjectorResult {
 	                			defectivityRate -= 0.2;
 	                			
 	                		}
-	                		if (state.getBlock() == ModBlocks.DRAINED_BLOCK) {
-	                			KAGIC.instance.chatInfoMessage("drainedCount is " + drainedCount);
-	                			drainedCount += 1;
+	                		if (!drainedChecked) {
+	                			Block block = state.getBlock();
+	                			if (block == ModBlocks.DRAINED_BLOCK || block == Blocks.GRAVEL || block == Blocks.AIR) {
+	                				KAGIC.instance.chatInfoMessage("drainedCount is " + drainedCount);
+	                				drainedCount += 1;
+	                			}
 	                		}
 	                		if (state.getMaterial() == Material.GRASS) {
 	                			defectivityRate -= 0.4;
@@ -131,6 +134,7 @@ public class InjectorResult {
 		                }
 		            }
 				}
+				drainedChecked = true;
 				defectivity.put(gemClass, Math.max(0.0, Math.min(1.0, defectivityRate)));
 				friction.put(gemClass, frictionFactor);
     		}

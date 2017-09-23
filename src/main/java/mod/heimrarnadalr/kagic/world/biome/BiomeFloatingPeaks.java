@@ -6,6 +6,7 @@ import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.EntityLlama;
+import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -24,11 +25,11 @@ public class BiomeFloatingPeaks  extends Biome {
 	private long worldSeed;
 	private NoiseGeneratorPerlin peakNoise;
 	private NoiseGeneratorPerlin peakRoofNoise;
-	private int fillerDepth = 2;
+	private static final int FILLERDEPTH = 1;
 	
 	static {
-		PROPERTIES.setBaseHeight(0.5F);
-		PROPERTIES.setHeightVariation(0.25F);
+		PROPERTIES.setBaseHeight(0.4F);
+		PROPERTIES.setHeightVariation(0.05F);
 		PROPERTIES.setTemperature(0.9F);
 		PROPERTIES.setRainfall(0.5F);
 		PROPERTIES.setWaterColor(0xEAFFFC);
@@ -36,7 +37,7 @@ public class BiomeFloatingPeaks  extends Biome {
 
 	public BiomeFloatingPeaks() {
 		super(BiomeFloatingPeaks.PROPERTIES);
-		
+
 		this.setRegistryName("floatingpeaks");
 		
 		this.topBlock = Blocks.GRASS.getDefaultState();
@@ -53,14 +54,13 @@ public class BiomeFloatingPeaks  extends Biome {
 
 	@Override
 	public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunkPrimer, int x, int z, double noiseVal) {
-
 		if (this.peakNoise == null || this.peakRoofNoise == null || this.worldSeed != world.getSeed()) {
+			this.worldSeed = world.getSeed();
 			Random peakRandom = new Random(this.worldSeed);
-			this.peakNoise = new NoiseGeneratorPerlin(peakRandom, 16);
-			this.peakRoofNoise = new NoiseGeneratorPerlin(peakRandom, 4);
+			this.peakNoise = new NoiseGeneratorPerlin(peakRandom, 12);
+			this.peakRoofNoise = new NoiseGeneratorPerlin(peakRandom, 16);
 		}
 
-		this.worldSeed = world.getSeed();
 		double peakHeight = 0.0D;
 
 		int i = (x & -16) + (z & 15);
@@ -69,10 +69,9 @@ public class BiomeFloatingPeaks  extends Biome {
 
 		if (d0 > 0.0D) {
 			//0.001953125
-			double d2 = Math.abs(this.peakRoofNoise.getValue((double)i * 0.001953125D, (double)j * 0.001953125D));
-			peakHeight = d0 * d0 * 2.5D;
-			//Additive factor was 14.0
-			double peakOffset = Math.ceil(d2 * 50.0D) + 14.0D;
+			double d2 = Math.abs(this.peakRoofNoise.getValue((double)i * 0.05D, (double)j * 0.05D));
+			peakHeight = d0 * d0 * 4D;
+			double peakOffset = Math.ceil(d2 * 50.0D) + 50.0D;
 
 			if (peakHeight > peakOffset)
 			{
@@ -88,33 +87,32 @@ public class BiomeFloatingPeaks  extends Biome {
 		int l = -1;
 
 		for (int height = 255; height >= 0; --height) {
-			if (chunkPrimer.getBlockState(chunkX, height, chunkZ).getMaterial() == Material.AIR && height < (int)peakHeight) {
-				chunkPrimer.setBlockState(chunkX, height, chunkZ, STONE);
+			if (chunkPrimer.getBlockState(chunkZ, height, chunkX).getMaterial() == Material.AIR && height < (int)peakHeight) {
+				chunkPrimer.setBlockState(chunkZ, height, chunkX, STONE);
 			}
 
 			if (height <= rand.nextInt(5)) {
-				chunkPrimer.setBlockState(chunkX, height, chunkZ, BEDROCK);
+				chunkPrimer.setBlockState(chunkZ, height, chunkX, BEDROCK);
 			}
 			else {
-				IBlockState iblockstate1 = chunkPrimer.getBlockState(chunkX, height, chunkZ);
+				IBlockState iblockstate1 = chunkPrimer.getBlockState(chunkZ, height, chunkX);
 
 				if (iblockstate1.getMaterial() == Material.AIR) {
-					l = -1 - this.fillerDepth;
+					l = -this.FILLERDEPTH;
 				}
 				else if (iblockstate1.getBlock() == Blocks.STONE) {
-					if (l == -1 - this.fillerDepth) {
-						chunkPrimer.setBlockState(chunkX, height, chunkZ, this.topBlock);
+					if (l == -this.FILLERDEPTH) {
+						chunkPrimer.setBlockState(chunkZ, height, chunkX, this.topBlock);
 						++l;
 					} else if (l < 0) {
-						chunkPrimer.setBlockState(chunkX, height, chunkZ, this.fillerBlock);
+						chunkPrimer.setBlockState(chunkZ, height, chunkX, this.fillerBlock);
 						++l;
 					} else if (l == 0) {
-						l = 1;//k + Math.max(0, height - seaLevel);
-						chunkPrimer.setBlockState(chunkX, height, chunkZ, this.fillerBlock);
+						l = 1;
+						chunkPrimer.setBlockState(chunkZ, height, chunkX, this.fillerBlock);
 					}
 					else if (l > 0) {
-						//--l;
-						chunkPrimer.setBlockState(chunkX, height, chunkZ, STONE);
+						chunkPrimer.setBlockState(chunkZ, height, chunkX, STONE);
 					}
 				}
 			}
@@ -165,16 +163,34 @@ public class BiomeFloatingPeaks  extends Biome {
 		private static final int OFFSETVARIANCE = 10;
 		
 		private void generateFloats(World world, BlockPos pos, Random random) {
-			float radius = Decorator.MINRADIUS + random.nextInt((int) (Decorator.MAXRADIUS - Decorator.MINRADIUS));
+			float xMinRadius = Decorator.MINRADIUS + random.nextInt((int) (Decorator.MAXRADIUS - Decorator.MINRADIUS));
+			float xMaxRadius = Decorator.MINRADIUS + random.nextInt((int) (Decorator.MAXRADIUS - Decorator.MINRADIUS));
+			float zMinRadius = Decorator.MINRADIUS + random.nextInt((int) (Decorator.MAXRADIUS - Decorator.MINRADIUS));
+			float zMaxRadius = Decorator.MINRADIUS + random.nextInt((int) (Decorator.MAXRADIUS - Decorator.MINRADIUS));
 			float height = Decorator.MINHEIGHT + random.nextInt((int) (Decorator.MAXHEIGHT - Decorator.MINHEIGHT));
 			
-			for (float x = -radius; x <= radius; ++x) {
-				for (float z = -radius; z <= radius; ++z) {
-					float a = (x * x) / (radius * radius);
-					float c = (z * z) / (radius * radius);
+			for (float x = -xMinRadius; x <= xMaxRadius; ++x) {
+				for (float z = -zMinRadius; z <= zMaxRadius; ++z) {
+					float a = ((x + 0.5F) * (x + 0.5F)) / (xMinRadius * xMaxRadius);
+					float c = ((z + 0.5F) * (z + 0.5F)) / (zMinRadius * zMaxRadius);
+					
+					for (float y = 1; y >= -height; --y) {
+						float b = ((y + 0.5F) * (y + 0.5F)) / (height * height);
+						
+						if (a + b + c <= 1 && !world.isAirBlock(pos.add(x, y, z))) {
+							return;
+						}
+					}
+				}
+			}
+
+			for (float x = -xMinRadius; x <= xMaxRadius; ++x) {
+				for (float z = -zMinRadius; z <= zMaxRadius; ++z) {
+					float a = ((x + 0.5F) * (x + 0.5F)) / (xMinRadius * xMaxRadius);
+					float c = ((z + 0.5F) * (z + 0.5F)) / (zMinRadius * zMaxRadius);
 					
 					for (float y = 0; y >= -height; --y) {
-						float b = (y * y) / (height * height);
+						float b = ((y + 0.5F) * (y + 0.5F)) / (height * height);
 						
 						if (a + b + c <= 1) {
 							world.setBlockState(pos.add(x, y, z), STONE);

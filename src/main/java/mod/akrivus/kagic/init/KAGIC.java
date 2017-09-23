@@ -14,6 +14,7 @@ import mod.heimrarnadalr.kagic.crafting.KAGICSmeltingRecipes;
 import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
 import mod.heimrarnadalr.kagic.proxies.CommonProxy;
 import mod.heimrarnadalr.kagic.world.Fogger;
+import mod.heimrarnadalr.kagic.world.GenEventCanceller;
 import mod.heimrarnadalr.kagic.world.KAGICWorldGenerator;
 import mod.heimrarnadalr.kagic.world.structure.LootTables;
 import net.minecraft.server.management.PlayerList;
@@ -73,6 +74,9 @@ public class KAGIC {
 		}
 		GameRegistry.registerWorldGenerator(worldGen, 50);
 		MinecraftForge.EVENT_BUS.register(new Fogger());
+		GenEventCanceller genCanceller = new GenEventCanceller(); 
+		MinecraftForge.EVENT_BUS.register(genCanceller);
+		MinecraftForge.TERRAIN_GEN_BUS.register(genCanceller);
     }
     
     @EventHandler

@@ -3,6 +3,7 @@ package mod.akrivus.kagic.entity.ai;
 import java.util.List;
 
 import mod.akrivus.kagic.entity.EntitySlag;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.entity.ai.EntityAIBase;
 
 public class EntityAISlagFuse extends EntityAIBase {
@@ -27,12 +28,13 @@ public class EntityAISlagFuse extends EntityAIBase {
 	                }
 	            }
 	        }
-	    	return this.otherSlag != null;
+	    	return this.otherSlag != null && this.otherSlag.canFuse();
     	}
+    	this.otherSlag = null;
     	return false;
     }
     public boolean continueExecuting() {
-        return this.otherSlag != null && !this.otherSlag.isDead && this.slag.canEntityBeSeen(this.otherSlag);
+        return this.otherSlag != null && !this.otherSlag.isDead && this.slag.canEntityBeSeen(this.otherSlag) && this.otherSlag.canFuse();
     }
     public void startExecuting() {
 		this.slag.getLookHelper().setLookPositionWithEntity(this.otherSlag, 30.0F, 30.0F);
@@ -46,9 +48,12 @@ public class EntityAISlagFuse extends EntityAIBase {
 			this.slag.getNavigator().tryMoveToEntityLiving(this.otherSlag, this.movementSpeed);
 		}
     	else if (this.slag.compatIndex > this.otherSlag.compatIndex) {
-    		this.slag.world.spawnEntity(this.slag.fuse(this.otherSlag));
-    		this.otherSlag.setDead();
-    		this.slag.setDead();
+    		EntitySlag fusedSlag = this.slag.fuse(this.otherSlag);
+    		if (fusedSlag != null) {
+        		this.slag.world.spawnEntity(fusedSlag);
+        		this.otherSlag.setDead();
+        		this.slag.setDead();    			
+    		}
         	this.resetTask();
     	}
     }

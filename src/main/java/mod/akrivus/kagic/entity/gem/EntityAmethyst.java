@@ -278,14 +278,6 @@ public class EntityAmethyst extends EntityGem {
 		super.attackEntityWithRangedAttack(target, distanceFactor);
 	}
 	public void onDeath(DamageSource cause) {
-		if (this.isCitrine()) {
-			this.droppedGemItem = ModItems.CITRINE_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_CITRINE_GEM;
-		}
-		else {
-			this.droppedGemItem = ModItems.AMETHYST_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_AMETHYST_GEM;
-		}
 		super.onDeath(cause);
 	}
 	
