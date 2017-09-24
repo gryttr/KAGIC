@@ -39,6 +39,11 @@
             { "name": "kagic:records/whats_the_use_of_feeling_blue", "stream": true }
         ]
     },
+    "records.heaven_beetle": {
+        "sounds": [
+            { "name": "kagic:records/heaven_beetle", "stream": true }
+        ]
+    },
     "blocks.gem_seed_hatch": {
         "sounds": [
             { "name": "kagic:blocks/gem_seed_hatch" }

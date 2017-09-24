@@ -124,7 +124,6 @@ public class InjectorResult {
 	                		if (!drainedChecked) {
 	                			Block block = state.getBlock();
 	                			if (block == ModBlocks.DRAINED_BLOCK || block == Blocks.GRAVEL || block == Blocks.AIR) {
-	                				KAGIC.instance.chatInfoMessage("drainedCount is " + drainedCount);
 	                				drainedCount += 1;
 	                			}
 	                		}

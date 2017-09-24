@@ -215,6 +215,9 @@ item.record.blue_diamond.desc=Aivi & Surasshu - Blue Diamond
 item.record_whats_the_use_of_feeling_blue.name=Music Disc
 item.record.whats_the_use_of_feeling_blue.desc=Aivi & Surasshu - What's the Use of Feeling (Blue)?
 
+item.record_heaven_beetle.name=Music Disc
+item.record.heaven_beetle.desc=Aivi & Surasshu - The Heaven Beetle
+
 itemGroup.gems=KAGIC (Gems)
 itemGroup.other=KAGIC (Items & Blocks)
 itemGroup.music=KAGIC (Music Discs)

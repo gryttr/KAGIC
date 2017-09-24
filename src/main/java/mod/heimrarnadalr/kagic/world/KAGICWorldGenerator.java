@@ -7,6 +7,7 @@ import mod.heimrarnadalr.kagic.world.structure.CommunicationHub;
 import mod.heimrarnadalr.kagic.world.structure.DesertWarpPad;
 import mod.heimrarnadalr.kagic.world.structure.GalaxyWarp;
 import mod.heimrarnadalr.kagic.world.structure.RuinStructure;
+import mod.heimrarnadalr.kagic.world.structure.SkySpire;
 import mod.heimrarnadalr.kagic.world.structure.SmallArena;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,6 +24,7 @@ public class KAGICWorldGenerator implements IWorldGenerator {
 		ruins.add(new DesertWarpPad("DesertWarpPad"));
 		ruins.add(new SmallArena("SmallArena"));
 		ruins.add(new GalaxyWarp("GalaxyWarp"));
+		ruins.add(new SkySpire("SkySpire"));
 	}
 	
 	@Override

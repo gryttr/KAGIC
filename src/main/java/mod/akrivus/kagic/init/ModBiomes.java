@@ -21,10 +21,10 @@ public class ModBiomes {
 		//BiomeManager.addBiome(BiomeType.DESERT, new BiomeManager.BiomeEntry(HOMEWORLD, 0));
 		//BiomeManager.addBiome(BiomeType.WARM, new BiomeManager.BiomeEntry(LION, 0));
 		event.getRegistry().register(KINDERGARTEN);
-		BiomeManager.addBiome(BiomeType.DESERT, new BiomeManager.BiomeEntry(KINDERGARTEN, 1000000));
+		BiomeManager.addBiome(BiomeType.DESERT, new BiomeManager.BiomeEntry(KINDERGARTEN, 1));
 		BiomeDictionary.addTypes(KINDERGARTEN, Type.DEAD, Type.DRY, Type.MESA, Type.SPOOKY, Type.WASTELAND, Type.RARE);
 		event.getRegistry().register(FLOATINGPEAKS);
-		BiomeManager.addBiome(BiomeType.WARM, new BiomeManager.BiomeEntry(FLOATINGPEAKS, 1));
+		BiomeManager.addBiome(BiomeType.WARM, new BiomeManager.BiomeEntry(FLOATINGPEAKS, 1000000));
 		BiomeManager.addSpawnBiome(FLOATINGPEAKS);
 		BiomeDictionary.addTypes(FLOATINGPEAKS, Type.MOUNTAIN, Type.SAVANNA, Type.MAGICAL, Type.DRY, Type.RARE);
 	}
