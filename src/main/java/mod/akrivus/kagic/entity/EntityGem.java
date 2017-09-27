@@ -127,6 +127,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public static final int SERVE_WHITE_DIAMOND = 4;
 	public static final int SERVE_REBELLION = 5;
 	public static final int SERVE_ITSELF = 6;
+	public static final int SERVE_HOSTILE = 7;
 	
 	private final EntityAIBase rangedAttack = new EntityAIAttackRangedBow(this, 0.6D, 20, 16.0F);
 	private final EntityAIBase meleeAttack = new EntityAIAttackMelee(this, 1.2D, true);

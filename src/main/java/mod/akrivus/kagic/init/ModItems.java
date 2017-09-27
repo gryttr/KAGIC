@@ -172,6 +172,9 @@ public class ModItems {
 	public static final ItemGem CRACKED_YELLOW_DIAMOND_GEM = new ItemGem("yellow_diamond", true);
 	public static final ItemGem CRACKED_BLUE_DIAMOND_GEM = new ItemGem("blue_diamond", true);
 	
+	public static final ItemGem HANDBODY_GEM = new ItemGem("handbody", false);
+	public static final ItemGem CRACKED_HANDBODY_GEM = new ItemGem("handbody", true);
+	
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		registerGem(RUBY_GEM, CRACKED_RUBY_GEM, event);
 		registerGem(SAPPHIRE_GEM, CRACKED_SAPPHIRE_GEM, event);
@@ -228,6 +231,9 @@ public class ModItems {
 		//registerGem(CITRINE_GEM, CRACKED_CITRINE_GEM, event);
 		registerGem(YELLOW_DIAMOND_GEM, CRACKED_YELLOW_DIAMOND_GEM, event);
 		registerGem(BLUE_DIAMOND_GEM, CRACKED_BLUE_DIAMOND_GEM, event);
+		
+		registerGem(HANDBODY_GEM, CRACKED_HANDBODY_GEM, event);
+		
 		registerItem(RECORD_LITTLE_PERIDOT, event);
 		registerItem(RECORD_ROSES_FOUNTAIN, event);
 		registerItem(RECORD_LAPIS_FLIGHT, event);

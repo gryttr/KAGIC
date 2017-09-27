@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityRuby;
+import mod.akrivus.kagic.entity.shardfusion.EntityShardFusion;
 import mod.akrivus.kagic.init.ModCreativeTabs;
 import mod.akrivus.kagic.init.ModEntities;
 import net.minecraft.entity.item.EntityItem;
@@ -99,7 +100,7 @@ public class ItemGem extends Item {
             	if (matcher.find()) {
             		newGem.itemDataToGemData(Integer.parseInt(matcher.group(1)));
             	}
-	    		if (playerIn != null && !newGem.isDiamond) {
+	    		if (playerIn != null && !newGem.isDiamond && !(newGem instanceof EntityShardFusion)) {
 	    			newGem.setOwnerId(EntityPlayer.getUUID(playerIn.getGameProfile()));
 	    			newGem.setLeader(playerIn);
 	        		newGem.setServitude(EntityGem.SERVE_HUMAN);

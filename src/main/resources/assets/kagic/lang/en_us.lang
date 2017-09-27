@@ -65,6 +65,9 @@ entity.kagic.slag.name=Slag
 entity.kagic.slag.super=Super Slag
 entity.kagic.steven.name=Steven
 
+entity.kagic.handbody.name=Shard Fusion
+entity.kagic.handbody.name.plural=Shard Fusions
+
 item.active_gem_base.name=Active Gem Base
 item.inactive_gem_base.name=Inactive Gem Base
 item.active_gem_shard.name=Active Gem Shard
@@ -198,6 +201,11 @@ item.cracked_topaz_1_gem.name=Cracked Topaz Gem
 item.cracked_rutile_gem.name=Cracked Rutile Gem
 item.cracked_zircon_gem.name=Cracked Zircon Gem
 
+item.handbody_gem.name=Shard Fusion Gem
+item.handbody_gem.desc=Hand Body
+item.cracked_handbody_gem.name=Cracked Shard Fusion Gem
+item.cracked_handbody_gem.desc=Hand Body
+
 item.record_little_peridot.name=Music Disc
 item.record.little_peridot.desc=Aivi & Surasshu - Peridot In The Rain
 item.record_roses_fountain.name=Music Disc
@@ -244,6 +252,7 @@ command.kagic.does_not_serve_you=%1$s does not serve you.
 command.kagic.already_serves_you=%1$s already serves you.
 command.kagic.now_serves_you=%1$s now serves you.
 command.kagic.does_not_serve_signee=%1$s does not serve the signee.
+command.kagic.does_not_understand=The %1$s's shattered mind does not understand this command!
 command.kagic.ownership_transfered=Ownership of %1$s transfered to %2$s.
 command.kagic.joint_ownership_added=Joint ownership of %1$s given to %2$s.
 command.kagic.gem_liberated_by=%1$s has been liberated by %2$s.

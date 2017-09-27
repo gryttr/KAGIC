@@ -12,8 +12,8 @@ public enum GemCuts {
 	DRUM(7),
 	TEARDROP(8),
 	TRIANGULAR(9),
-	DIAMOND(10);
-	
+	DIAMOND(10),
+	SHARD(11);
 	public int id;
 	
 	private static GemCuts[] vals = GemCuts.values();

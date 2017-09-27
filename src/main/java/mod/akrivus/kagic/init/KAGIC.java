@@ -11,12 +11,14 @@ import mod.akrivus.kagic.command.CommandSpawnGems;
 import mod.akrivus.kagic.server.SpaceStuff;
 import mod.heimrarnadalr.kagic.chunk.KAGICChunkCallback;
 import mod.heimrarnadalr.kagic.crafting.KAGICSmeltingRecipes;
+import mod.heimrarnadalr.kagic.dispenser.DispenserBehaviors;
 import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
 import mod.heimrarnadalr.kagic.proxies.CommonProxy;
 import mod.heimrarnadalr.kagic.world.Fogger;
 import mod.heimrarnadalr.kagic.world.GenEventCanceller;
 import mod.heimrarnadalr.kagic.world.KAGICWorldGenerator;
 import mod.heimrarnadalr.kagic.world.structure.LootTables;
+import net.minecraft.block.BlockDispenser;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.ForgeChunkManager;
@@ -77,6 +79,7 @@ public class KAGIC {
 		GenEventCanceller genCanceller = new GenEventCanceller(); 
 		MinecraftForge.EVENT_BUS.register(genCanceller);
 		MinecraftForge.TERRAIN_GEN_BUS.register(genCanceller);
+		DispenserBehaviors.register();
     }
     
     @EventHandler

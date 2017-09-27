@@ -32,6 +32,7 @@ import mod.akrivus.kagic.entity.gem.EntityZircon;
 import mod.akrivus.kagic.entity.pepo.EntityCactus;
 import mod.akrivus.kagic.entity.pepo.EntityMelon;
 import mod.akrivus.kagic.entity.pepo.EntityPumpkin;
+import mod.akrivus.kagic.entity.shardfusion.EntityHandBody;
 import mod.akrivus.kagic.entity.vehicles.EntityRoamingEye;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
@@ -55,6 +56,7 @@ public class ModEntities {
 	public static final ArrayList<Class<? extends EntityGem>> MINERALS = new ArrayList<Class<? extends EntityGem>>();
 	public static final boolean GENERATE_FACTORIES_INSTEAD_OF_INSTANCES = false;	// Switches to the new system, which doesn't work right now.
 	private static int currentID = 0;
+	
 	public static void register() {
 		registerGem("ruby", EntityRuby.class, 0xE52C5C, 0x3A0015, true);
 		registerGem("sapphire", EntitySapphire.class, 0xBAF5FD, 0x7298EC, false);
@@ -74,6 +76,9 @@ public class ModEntities {
 		registerGem("zircon", EntityZircon.class, 0x458FBE, 0x57C7CF, false);
 		registerDiamond("yellow_diamond", EntityYellowDiamond.class);
 		registerDiamond("blue_diamond", EntityBlueDiamond.class);
+		
+		registerGem("handbody", EntityHandBody.class, 0xBED786, 0xB39B77, false);
+		
 		registerMob("melon", EntityMelon.class, 0xB5B128, 0x5A671A);
 		registerMob("pumpkin", EntityPumpkin.class, 0xD58116, 0x744E03);
 		registerMob("cactus", EntityCactus.class, 0x138622, 0xD9DB9F);
