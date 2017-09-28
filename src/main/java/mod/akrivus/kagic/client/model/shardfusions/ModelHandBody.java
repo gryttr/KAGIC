@@ -1,4 +1,4 @@
-package mod.akrivus.kagic.client.model;
+package mod.akrivus.kagic.client.model.shardfusions;
 
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
@@ -25,16 +25,16 @@ public class ModelHandBody extends ModelBiped {
 		this.bipedBody.setRotationPoint(0.0F, 0.0F, 0.0F);
 		
 		this.bipedRightArm = new ModelRenderer(this, 40, 16);
-		this.bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 12, 4);
+		this.bipedRightArm.addBox(-3.0F, -2.0F, -2.0F, 4, 17, 4);
 		this.bipedRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
 		
 		this.secondRightArm = new ModelRenderer(this, 40, 16);
-		this.secondRightArm.addBox(-2.0F, -4.0F, -2.0F, 4, 10, 4);
+		this.secondRightArm.addBox(-2.0F, -4.0F, -2.0F, 4, 15, 4);
 		this.secondRightArm.setRotationPoint(-5.0F, 2.0F, 0.0F);
 		
 		this.bipedLeftArm = new ModelRenderer(this, 40, 16);
 		this.bipedLeftArm.mirror = true;
-		this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 12, 4);
+		this.bipedLeftArm.addBox(-1.0F, -2.0F, -2.0F, 4, 13, 4);
 		this.bipedLeftArm.setRotationPoint(5.0F, 2.0F, 0.0F);
 		
 		this.bipedRightLeg = new ModelRenderer(this, 0, 16);

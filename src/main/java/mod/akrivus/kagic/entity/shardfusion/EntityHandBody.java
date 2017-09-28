@@ -30,12 +30,11 @@ public class EntityHandBody extends EntityShardFusion {
 		this.setCutPlacement(GemCuts.SHARD, GemPlacements.BELLY);
 		
 		// Apply entity attributes.
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.6D);
 		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0D);
 		this.droppedGemItem = ModItems.HANDBODY_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_HANDBODY_GEM;
 	}
-
 }

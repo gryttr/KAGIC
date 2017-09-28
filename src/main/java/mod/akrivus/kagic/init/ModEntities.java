@@ -32,7 +32,9 @@ import mod.akrivus.kagic.entity.gem.EntityZircon;
 import mod.akrivus.kagic.entity.pepo.EntityCactus;
 import mod.akrivus.kagic.entity.pepo.EntityMelon;
 import mod.akrivus.kagic.entity.pepo.EntityPumpkin;
+import mod.akrivus.kagic.entity.shardfusion.EntityFootArm;
 import mod.akrivus.kagic.entity.shardfusion.EntityHandBody;
+import mod.akrivus.kagic.entity.shardfusion.EntityMouthTorso;
 import mod.akrivus.kagic.entity.vehicles.EntityRoamingEye;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
@@ -77,7 +79,9 @@ public class ModEntities {
 		registerDiamond("yellow_diamond", EntityYellowDiamond.class);
 		registerDiamond("blue_diamond", EntityBlueDiamond.class);
 		
-		registerGem("handbody", EntityHandBody.class, 0xBED786, 0xB39B77, false);
+		registerDiamond("handbody", EntityHandBody.class);
+		registerDiamond("footarm", EntityFootArm.class);
+		registerDiamond("mouthtorso", EntityMouthTorso.class);
 		
 		registerMob("melon", EntityMelon.class, 0xB5B128, 0x5A671A);
 		registerMob("pumpkin", EntityPumpkin.class, 0xD58116, 0x744E03);
@@ -299,7 +303,7 @@ public class ModEntities {
 	                    factory = (IRenderFactory<T>) LambdaMetafactory.metafactory(lookup, "getInstance", MethodType.methodType(IRenderFactory.class), type, constructor, type).getTarget().invokeExact();
 	                }
 	                catch (Throwable t) {
-	                	CrashReport.makeCrashReport(t, "Something when wrong registering a Gem.");
+	                	CrashReport.makeCrashReport(t, "Something went wrong registering a Gem.");
 	                }
 	                RenderingRegistry.registerEntityRenderingHandler(entity, factory);
 				}
@@ -330,7 +334,7 @@ public class ModEntities {
 	                    factory = (IRenderFactory<T>) LambdaMetafactory.metafactory(lookup, "getInstance", MethodType.methodType(IRenderFactory.class), type, constructor, type).getTarget().invokeExact();
 	                }
 	                catch (Throwable t) {
-	                	CrashReport.makeCrashReport(t, "Something when wrong registering a Gem.");
+	                	CrashReport.makeCrashReport(t, "Something went wrong registering a Gem.");
 	                }
 	                RenderingRegistry.registerEntityRenderingHandler(entity, factory);
 				}
@@ -366,7 +370,7 @@ public class ModEntities {
 	                    factory = (IRenderFactory<T>) LambdaMetafactory.metafactory(lookup, "getInstance", MethodType.methodType(IRenderFactory.class), type, constructor, type).getTarget().invokeExact();
 	                }
 	                catch (Throwable t) {
-	                	CrashReport.makeCrashReport(t, "Something when wrong registering a Gem.");
+	                	CrashReport.makeCrashReport(t, "Something went wrong registering a mob.");
 	                }
 	                RenderingRegistry.registerEntityRenderingHandler(entity, factory);
 				}
@@ -395,7 +399,7 @@ public class ModEntities {
 	                    factory = (IRenderFactory<T>) LambdaMetafactory.metafactory(lookup, "getInstance", MethodType.methodType(IRenderFactory.class), type, constructor, type).getTarget().invokeExact();
 	                }
 	                catch (Throwable t) {
-	                	CrashReport.makeCrashReport(t, "Something when wrong registering a Gem.");
+	                	CrashReport.makeCrashReport(t, "Something went wrong registering an entity.");
 	                }
 	                RenderingRegistry.registerEntityRenderingHandler(entity, factory);
 				}

@@ -159,12 +159,12 @@ public class EntityAmethyst extends EntityGem {
         this.hit_count = compound.getInteger("hit_count");
     }
 
+    @Override
     public float[] getGemColor() {
-    	if (this.isCitrine()) {
-    		return new float[] { 236F / 255F, 244F / 255F, 4F / 255F };
-    	}
     	return new float[] { 220F / 255F, 100F / 255F, 253F / 255F };
     }
+    
+    @Override
     public void convertGems(int placement) {
     	this.setGemCut(GemCuts.FACETED.id);
     	switch (placement) {

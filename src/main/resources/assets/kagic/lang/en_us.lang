@@ -67,6 +67,10 @@ entity.kagic.steven.name=Steven
 
 entity.kagic.handbody.name=Shard Fusion
 entity.kagic.handbody.name.plural=Shard Fusions
+entity.kagic.footarm.name=Shard Fusion
+entity.kagic.footarm.name.plural=Shard Fusions
+entity.kagic.mouthtorso.name=Shard Fusion
+entity.kagic.mouthtorso.name.plural=Shard Fusions
 
 item.active_gem_base.name=Active Gem Base
 item.inactive_gem_base.name=Inactive Gem Base
@@ -202,9 +206,11 @@ item.cracked_rutile_gem.name=Cracked Rutile Gem
 item.cracked_zircon_gem.name=Cracked Zircon Gem
 
 item.handbody_gem.name=Shard Fusion Gem
-item.handbody_gem.desc=Hand Body
 item.cracked_handbody_gem.name=Cracked Shard Fusion Gem
-item.cracked_handbody_gem.desc=Hand Body
+item.footarm_gem.name=Shard Fusion Gem
+item.cracked_footarm_gem.name=Cracked Shard Fusion Gem
+item.mouthtorso_gem.name=Shard Fusion Gem
+item.cracked_mouthtorso_gem.name=Cracked Shard Fusion Gem
 
 item.record_little_peridot.name=Music Disc
 item.record.little_peridot.desc=Aivi & Surasshu - Peridot In The Rain

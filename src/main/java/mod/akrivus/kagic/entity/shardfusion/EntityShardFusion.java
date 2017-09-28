@@ -30,8 +30,8 @@ import net.minecraft.world.World;
 
 public class EntityShardFusion extends EntityGem {
 
-	public EntityShardFusion(World worldIn) {
-		super(worldIn);
+	public EntityShardFusion(World world) {
+		super(world);
 
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);

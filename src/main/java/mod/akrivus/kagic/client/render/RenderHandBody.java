@@ -1,6 +1,6 @@
 package mod.akrivus.kagic.client.render;
 
-import mod.akrivus.kagic.client.model.ModelHandBody;
+import mod.akrivus.kagic.client.model.shardfusions.ModelHandBody;
 import mod.akrivus.kagic.client.render.layers.LayerShardPlacement;
 import mod.akrivus.kagic.entity.shardfusion.EntityHandBody;
 import net.minecraft.client.Minecraft;
