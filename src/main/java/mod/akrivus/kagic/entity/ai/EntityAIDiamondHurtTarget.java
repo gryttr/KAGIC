@@ -3,6 +3,7 @@ package mod.akrivus.kagic.entity.ai;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityBlueDiamond;
 import mod.akrivus.kagic.entity.gem.EntityYellowDiamond;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAITarget;
 
@@ -29,7 +30,7 @@ public class EntityAIDiamondHurtTarget extends EntityAITarget {
                 this.target = entitylivingbase.getLastAttackedEntity();
                 int i = entitylivingbase.getLastAttackedEntityTime();
                 
-                if (i != this.timestamp && this.isSuitableTarget(this.target, false) && this.gem.shouldAttackEntity(this.target, entitylivingbase)) {
+                if (i != this.timestamp && this.isSuitableTarget(this.target, false) && this.gem.shouldAttackEntity(this.gem, this.target)) {
                 	this.gem.isAttacking = true;
                 }
                 else {
@@ -61,7 +62,8 @@ public class EntityAIDiamondHurtTarget extends EntityAITarget {
     			}
     		}
     	}
-    	return super.isSuitableTarget(target, includeInvincibles);
+    	boolean suitable = super.isSuitableTarget(target, includeInvincibles);
+    	return suitable;
     }
     public EntityLivingBase getDiamond() {
     	int servitude = this.gem.getServitude();
