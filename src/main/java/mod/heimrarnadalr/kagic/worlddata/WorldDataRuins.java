@@ -19,7 +19,7 @@ import net.minecraftforge.common.util.Constants;
 public class WorldDataRuins extends WorldSavedData {
 	private static final String DATA_NAME = KAGIC.MODID + "_ruins";
 	private final Map<ChunkLocation, String> ruins = new HashMap<ChunkLocation, String>();
-	private final ArrayList<BlockPos> locations = new ArrayList<BlockPos>();
+	private final Map<String, ArrayList<BlockPos>> locations = new HashMap<String, ArrayList<BlockPos>>();
 
 	public WorldDataRuins() {
 		super(DATA_NAME);
@@ -55,11 +55,17 @@ public class WorldDataRuins extends WorldSavedData {
 			this.ruins.put(chunk, type);
 		}
 		
-		NBTTagList locationsList = comp.getTagList("locations",  Constants.NBT.TAG_COMPOUND);
-		for (int i = 0; i < ruinsList.tagCount(); ++i) {
-			NBTTagCompound tc = ruinsList.getCompoundTagAt(i);
-			BlockPos location = new BlockPos(tc.getInteger("x"), tc.getInteger("y"), tc.getInteger("z"));
-			this.locations.add(location);
+		NBTTagCompound locationsListList = (NBTTagCompound) comp.getTag("locations");
+		for (String type : locationsListList.getKeySet()) {
+			NBTTagList locationsList = locationsListList.getTagList(type, Constants.NBT.TAG_COMPOUND);
+			
+			ArrayList<BlockPos> locs = new ArrayList<BlockPos>();
+			for (int i = 0; i < locationsList.tagCount(); ++i) {
+				NBTTagCompound tc = locationsList.getCompoundTagAt(i);
+				BlockPos location = new BlockPos(tc.getInteger("x"), tc.getInteger("y"), tc.getInteger("z"));
+				locs.add(location);
+			}
+			this.locations.put(type, locs);
 		}
 	}
 
@@ -77,15 +83,19 @@ public class WorldDataRuins extends WorldSavedData {
 		}
 		comp.setTag("ruins", ruinsList);
 		
-		NBTTagList locationsList = new NBTTagList();
-		for (BlockPos location : this.locations) {
-			NBTTagCompound tc = new NBTTagCompound();
-			tc.setInteger("x", location.getX());
-			tc.setInteger("y", location.getY());
-			tc.setInteger("z", location.getZ());
-			locationsList.appendTag(tc);
+		NBTTagCompound locationsListList = new NBTTagCompound();
+		for (String type : this.locations.keySet()) {
+			NBTTagList locationsList = new NBTTagList();
+			for (BlockPos location : this.locations.get(type)) {
+				NBTTagCompound tc = new NBTTagCompound();
+				tc.setInteger("x", location.getX());
+				tc.setInteger("y", location.getY());
+				tc.setInteger("z", location.getZ());
+				locationsList.appendTag(tc);
+			}
+			locationsListList.setTag(type, locationsList);
 		}
-		comp.setTag("locations", locationsList);
+		comp.setTag("locations", locationsListList);
 		
 		return comp;
 	}
@@ -102,15 +112,23 @@ public class WorldDataRuins extends WorldSavedData {
 		this.markDirty();
 	}
 	
-	public void setLocation(BlockPos location) {
-		this.locations.add(location);
+	public void setLocation(String type, BlockPos location) {
+		if (this.locations.containsKey(type)) {
+			this.locations.get(type).add(location);
+		} else {
+			ArrayList<BlockPos> locs = new ArrayList<BlockPos>();
+			locs.add(location);
+			this.locations.put(type, locs);
+		}
 		this.markDirty();
 	}
 	
-	public boolean checkDistances(BlockPos location, double minDistanceSq) {
-		for (BlockPos ruinPos : this.locations) {
-			if (location.distanceSq(ruinPos) < minDistanceSq) {
-				return false;
+	public boolean checkDistances(String type, BlockPos location, double minDistanceSq) {
+		if (this.locations.containsKey(type)) {
+			for (BlockPos ruinPos : this.locations.get(type)) {
+				if (location.distanceSq(ruinPos) < minDistanceSq) {
+					return false;
+				}
 			}
 		}
 		return true;

@@ -107,7 +107,7 @@ public class RuinStructure extends WorldGenerator {
 	
 	protected boolean checkDistance(World world, BlockPos pos) {
 		WorldDataRuins existingRuins = WorldDataRuins.get(world);
-		return existingRuins.checkDistances(pos, this.minDistance * this.minDistance);
+		return existingRuins.checkDistances(this.type, pos, this.minDistance * this.minDistance);
 	}
 	
 	protected boolean checkHeight(World world, BlockPos pos) {
@@ -203,6 +203,6 @@ public class RuinStructure extends WorldGenerator {
 		for (ChunkLocation chunk : chunks) {
 			existingRuins.setChunk(chunk, this.type);
 		}
-		existingRuins.setLocation(pos);
+		existingRuins.setLocation(this.type, pos);
 	}
 }
