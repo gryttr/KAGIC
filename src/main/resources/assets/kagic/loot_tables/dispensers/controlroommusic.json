@@ -1,0 +1,37 @@
+{
+    "pools": [
+        {
+            "name": "music",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "kagic:record_defective",
+                    "weight": 100
+                }
+            ]
+        },
+        {
+            "name": "music2",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "kagic:record_gem_shards",
+                    "weight": 100
+                }
+            ]
+        },
+        {
+            "name": "special",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "kagic:gem_staff",
+                    "weight": 100
+                }
+            ]
+        }
+    ]
+}

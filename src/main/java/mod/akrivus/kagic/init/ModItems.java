@@ -36,6 +36,8 @@ public class ModItems {
 	public static final ModRecord RECORD_WHATS_THE_USE_OF_FEELING_BLUE = new ModRecord("whats_the_use_of_feeling_blue", ModSounds.RECORD_WHATS_THE_USE_OF_FEELING_BLUE);
 
 	public static final ModRecord RECORD_HEAVEN_BEETLE = new ModRecord("heaven_beetle", ModSounds.RECORD_HEAVEN_BEETLE);
+	public static final ModRecord RECORD_DEFECTIVE = new ModRecord("defective", ModSounds.RECORD_DEFECTIVE);
+	public static final ModRecord RECORD_GEM_SHARDS = new ModRecord("gem_shards", ModSounds.RECORD_GEM_SHARDS);
 
 	public static final ItemActiveGemShard ACTIVATED_GEM_SHARD = new ItemActiveGemShard();
 	public static final ItemActiveGemBase ACTIVATED_GEM_BASE = new ItemActiveGemBase();
@@ -249,6 +251,8 @@ public class ModItems {
 		registerItem(RECORD_BLUE_DIAMOND, event);
 		registerItem(RECORD_WHATS_THE_USE_OF_FEELING_BLUE, event);
 		registerItem(RECORD_HEAVEN_BEETLE, event);
+		registerItem(RECORD_DEFECTIVE, event);
+		registerItem(RECORD_GEM_SHARDS, event);
 		registerItem(ACTIVATED_GEM_SHARD, event);
 		registerItem(ACTIVATED_GEM_BASE, event);
 		registerItem(INACTIVE_GEM_BASE, event);

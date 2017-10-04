@@ -44,6 +44,16 @@
             { "name": "kagic:records/heaven_beetle", "stream": true }
         ]
     },
+    "records.defective": {
+        "sounds": [
+            { "name": "kagic:records/defective", "stream": true }
+        ]
+    },
+    "records.gem_shards": {
+        "sounds": [
+            { "name": "kagic:records/gem_shards", "stream": true }
+        ]
+    },
     "blocks.gem_seed_hatch": {
         "sounds": [
             { "name": "kagic:blocks/gem_seed_hatch" }

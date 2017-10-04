@@ -1,0 +1,28 @@
+{
+    "pools": [
+        {
+            "name": "special",
+            "rolls": {
+                "min": 1,
+                "max": 2
+            },
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "kagic:handbody_gem",
+                    "weight": 33
+                },
+                {
+                    "type": "item",
+                    "name": "kagic:footarm_gem",
+                    "weight": 33
+                },
+                {
+                    "type": "item",
+                    "name": "kagic:mouthtorso_gem",
+                    "weight": 33
+                }
+            ]
+        }
+    ]
+}

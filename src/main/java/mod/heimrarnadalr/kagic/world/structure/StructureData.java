@@ -7,6 +7,8 @@ import java.util.Map;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntityDispenser;
+import net.minecraft.tileentity.TileEntityLockableLoot;
 import net.minecraft.util.math.BlockPos;
 
 public class StructureData {
@@ -16,7 +18,7 @@ public class StructureData {
 	private Map<BlockPos, IBlockState> structureBlocks;
 	private NBTTagList tileEntities;
 	private NBTTagList entities;
-	public List<TileEntityChest> chests = new ArrayList<TileEntityChest>();
+	public List<TileEntityLockableLoot> chests = new ArrayList<TileEntityLockableLoot>();
 	
 	public StructureData(short width, short height, short length, Map<BlockPos, IBlockState> structureBlocks, NBTTagList tileEntities, NBTTagList entities) {
 		this.width = width;

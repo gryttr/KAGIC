@@ -26,6 +26,8 @@ public class ModBlocks {
 	public static final BlockInjector EQUIPPED_INJECTOR = new BlockInjector(true);
 	public static final BlockIncubator INCUBATOR = new BlockIncubator();
 	public static final BlockVarying DRAINED_BLOCK = new BlockVarying("drained_block", 1, 40, 1);
+	public static final BlockVarying DRAINED_BLOCK_2 = new BlockVarying("drained_block_2", 1, 40, 1);
+	public static final BlockVarying DRAINED_BANDS = new BlockVarying("drained_bands", 1, 40, 1);
 	public static final BlockVarying SMOOTH_CARBONITE = new BlockVarying("smooth_carbonite", 2, 80, 1);
 	public static final BlockVarying CHISELED_CARBONITE = new BlockVarying("chiseled_carbonite", 2, 80, 1);
 	public static final BlockRockMelt ROCK_MELT = new BlockRockMelt(true);
@@ -40,6 +42,8 @@ public class ModBlocks {
 		registerBlock(EQUIPPED_INJECTOR, new ResourceLocation("kagic:equipped_injector"), event);
 		registerBlock(INCUBATOR, new ResourceLocation("kagic:incubator"), event);
 		registerBlock(DRAINED_BLOCK, new ResourceLocation("kagic:drained_block"), event);
+		registerBlock(DRAINED_BLOCK_2, new ResourceLocation("kagic:drained_block_2"), event);
+		registerBlock(DRAINED_BANDS, new ResourceLocation("kagic:drained_bands"), event);
 		registerBlock(SMOOTH_CARBONITE, new ResourceLocation("kagic:smooth_carbonite"), event);
 		registerBlock(CHISELED_CARBONITE, new ResourceLocation("kagic:chiseled_carbonite"), event);
 		registerBlock(ROCK_MELT, new ResourceLocation("kagic:rock_melt"), event);
@@ -60,6 +64,8 @@ public class ModBlocks {
 		registerBlockItem(EQUIPPED_INJECTOR, new ResourceLocation("kagic:equipped_injector"), event);
 		registerBlockItem(INCUBATOR, new ResourceLocation("kagic:incubator"), event);
 		registerBlockItem(DRAINED_BLOCK, new ResourceLocation("kagic:drained_block"), event);
+		registerBlockItem(DRAINED_BLOCK_2, new ResourceLocation("kagic:drained_block_2"), event);
+		registerBlockItem(DRAINED_BANDS, new ResourceLocation("kagic:drained_bands"), event);
 		registerBlockItem(SMOOTH_CARBONITE, new ResourceLocation("kagic:smooth_carbonite"), event);
 		registerBlockItem(CHISELED_CARBONITE, new ResourceLocation("kagic:chiseled_carbonite"), event);
 		registerBlockItem(ROCK_MELT, new ResourceLocation("kagic:rock_melt"), event);

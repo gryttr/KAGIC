@@ -18,7 +18,7 @@ public class FloatingRuinStructure extends RuinStructure {
 	}
 
 	@Override
-	protected boolean checkCorners(World world, BlockPos pos, byte rotation) {
+	protected boolean checkCorners(World world, BlockPos pos) {
 		return true;
 	}
 	

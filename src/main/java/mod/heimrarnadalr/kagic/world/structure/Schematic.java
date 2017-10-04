@@ -19,6 +19,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntityDispenser;
+import net.minecraft.tileentity.TileEntityLockableLoot;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -99,9 +101,9 @@ public class Schematic {
 					world.setBlockState(pos.add(tePos), ModBlocks.GALAXY_PAD_CORE.getDefaultState());
 				} else if (te instanceof TileEntityWarpPadCore) {
 					world.setBlockState(pos.add(tePos), ModBlocks.WARP_PAD_CORE.getDefaultState());
-				} else if (te instanceof TileEntityChest) {
+				} else if (te instanceof TileEntityLockableLoot) {
 					KAGIC.instance.chatInfoMessage("Found chest at unrotated pos " + x + ", " + y + ", " + z);
-					structure.chests.add((TileEntityChest) te);
+					structure.chests.add((TileEntityLockableLoot) te);
 				} else {
 					KAGIC.instance.chatInfoMessage("Found tile entity of type " + te.getClass().getName());
 				}

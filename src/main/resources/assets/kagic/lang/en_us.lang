@@ -231,6 +231,10 @@ item.record.whats_the_use_of_feeling_blue.desc=Aivi & Surasshu - What's the Use 
 
 item.record_heaven_beetle.name=Music Disc
 item.record.heaven_beetle.desc=Aivi & Surasshu - The Heaven Beetle
+item.record_defective.name=Music Disc
+item.record.defective.desc=Aivi & Surasshu - Defective
+item.record_gem_shards.name=Music Disc
+item.record.gem_shards.desc=Aivi & Surasshu - Gem Shards
 
 itemGroup.gems=KAGIC (Gems)
 itemGroup.other=KAGIC (Items & Blocks)
@@ -244,6 +248,8 @@ tile.gem_seed.name=Gem Seed
 tile.injector.name=Injector
 tile.incubator.name=Incubator
 tile.drained_block.name=Drained Block
+tile.drained_block_2.name=Drained Block
+tile.drained_bands.name=Drained Block
 tile.smooth_carbonite.name=Carbonite
 tile.chiseled_carbonite.name=Chiseled Carbonite
 tile.rock_melt.name=Frictional Rock Melt

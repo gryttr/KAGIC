@@ -73,9 +73,9 @@ public class KAGIC {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new KTGUIProxy());
 		if (e.getSide() == Side.CLIENT) {
 			ModTESRs.register();
+			MinecraftForge.EVENT_BUS.register(new Fogger());
 		}
 		GameRegistry.registerWorldGenerator(worldGen, 50);
-		MinecraftForge.EVENT_BUS.register(new Fogger());
 		GenEventCanceller genCanceller = new GenEventCanceller(); 
 		MinecraftForge.EVENT_BUS.register(genCanceller);
 		MinecraftForge.TERRAIN_GEN_BUS.register(genCanceller);

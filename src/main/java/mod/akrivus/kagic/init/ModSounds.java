@@ -15,6 +15,8 @@ public class ModSounds {
 	public static final SoundEvent RECORD_WHATS_THE_USE_OF_FEELING_BLUE = new SoundEvent(new ResourceLocation("kagic:records.whats_the_use_of_feeling_blue"));
 
 	public static final SoundEvent RECORD_HEAVEN_BEETLE = new SoundEvent(new ResourceLocation("kagic:records.heaven_beetle"));
+	public static final SoundEvent RECORD_DEFECTIVE = new SoundEvent(new ResourceLocation("kagic:records.defective"));
+	public static final SoundEvent RECORD_GEM_SHARDS = new SoundEvent(new ResourceLocation("kagic:records.gem_shards"));
 
 	public static final SoundEvent BLOCK_GEM_SEED_HATCH = new SoundEvent(new ResourceLocation("kagic:blocks.gem_seed_hatch"));
 	public static final SoundEvent BLOCK_INJECTOR_OPEN = new SoundEvent(new ResourceLocation("kagic:blocks.injector_open"));

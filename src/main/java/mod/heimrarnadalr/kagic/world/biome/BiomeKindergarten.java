@@ -27,6 +27,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BiomeKindergarten extends Biome {
 	private static final BiomeProperties PROPERTIES = new BiomeProperties("Kindergarten");
 	protected static final IBlockState DRAINED_BLOCK = ModBlocks.DRAINED_BLOCK.getDefaultState();
+	protected static final IBlockState DRAINED_BLOCK_2 = ModBlocks.DRAINED_BLOCK_2.getDefaultState();
+	protected static final IBlockState DRAINED_BANDS = ModBlocks.DRAINED_BANDS.getDefaultState(); 
 	protected static final int SEALEVELOFFSET = -10;
 	private long worldSeed;
 	private NoiseGeneratorPerlin cliffNoise;
@@ -36,7 +38,7 @@ public class BiomeKindergarten extends Biome {
 		PROPERTIES.setBaseHeight(0.1F);
 		PROPERTIES.setHeightVariation(0F);
 		PROPERTIES.setRainDisabled();
-		PROPERTIES.setWaterColor(0xEAFFFC);
+		PROPERTIES.setWaterColor(0x646400);
 	}
 	
 	public BiomeKindergarten() {
@@ -117,7 +119,17 @@ public class BiomeKindergarten extends Biome {
 		int seaLevel = world.getSeaLevel();
 		int l = -1;
 
+		IBlockState drainedBlockState = DRAINED_BLOCK;
+		
 		for (int height = 255; height >= 0; --height) {
+			if (height % 6 == 0 || height % 6 == 1) {
+				drainedBlockState = DRAINED_BLOCK_2;
+			} else if (height % 5 == 0) {
+				drainedBlockState = DRAINED_BANDS;
+			} else {
+				drainedBlockState = DRAINED_BLOCK;
+			}
+
 			if (chunkPrimer.getBlockState(chunkZ, height, chunkX).getMaterial() == Material.AIR && height < (int)peakHeight) {
 				chunkPrimer.setBlockState(chunkZ, height, chunkX, STONE);
 			}
@@ -126,8 +138,8 @@ public class BiomeKindergarten extends Biome {
 				chunkPrimer.setBlockState(chunkZ, height, chunkX, BEDROCK);
 			}
 			else {
-				if (chunkPrimer.getBlockState(chunkZ, height, chunkX).getBlock() == Blocks.STONE) {
-					chunkPrimer.setBlockState(chunkZ, height, chunkX, DRAINED_BLOCK);
+				if (chunkPrimer.getBlockState(chunkZ, height, chunkX).getBlock() == Blocks.STONE || chunkPrimer.getBlockState(chunkZ, height, chunkX).getBlock() == WATER) {
+					chunkPrimer.setBlockState(chunkZ, height, chunkX, drainedBlockState);
 				}
 			}
 		}

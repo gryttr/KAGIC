@@ -18,8 +18,8 @@ public class EntityMouthTorso extends EntityShardFusion {
 		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.6D);
 		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0D);
-		this.droppedGemItem = ModItems.HANDBODY_GEM;
-		this.droppedCrackedGemItem = ModItems.CRACKED_HANDBODY_GEM;
+		this.droppedGemItem = ModItems.MOUTHTORSO_GEM;
+		this.droppedCrackedGemItem = ModItems.CRACKED_MOUTHTORSO_GEM;
 	}
 
 

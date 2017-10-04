@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import mod.heimrarnadalr.kagic.world.structure.CommunicationHub;
+import mod.heimrarnadalr.kagic.world.structure.ControlRoom;
 import mod.heimrarnadalr.kagic.world.structure.DesertWarpPad;
 import mod.heimrarnadalr.kagic.world.structure.GalaxyWarp;
 import mod.heimrarnadalr.kagic.world.structure.RuinStructure;
@@ -25,6 +26,7 @@ public class KAGICWorldGenerator implements IWorldGenerator {
 		ruins.add(new SmallArena("SmallArena"));
 		ruins.add(new GalaxyWarp("GalaxyWarp"));
 		ruins.add(new SkySpire("SkySpire"));
+		ruins.add(new ControlRoom("controlroom"));
 	}
 	
 	@Override
