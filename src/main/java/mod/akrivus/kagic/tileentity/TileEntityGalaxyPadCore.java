@@ -40,7 +40,10 @@ import net.minecraftforge.common.ForgeChunkManager.Type;
 
 public class TileEntityGalaxyPadCore extends TileEntityWarpPadCore {
 	private GalaxyPadLocation destination;
-	public GalaxyPadLocation location = new GalaxyPadLocation(this.world.provider.getDimension(), this.pos);
+	
+	protected GalaxyPadLocation getLocation() {
+		return new GalaxyPadLocation(this.world.provider.getDimension(), this.pos);
+	}
 	
 	@Override
 	protected void setDirty() {
@@ -49,7 +52,7 @@ public class TileEntityGalaxyPadCore extends TileEntityWarpPadCore {
 		IBlockState state = this.world.getBlockState(this.pos);
 		world.notifyBlockUpdate(this.pos, state, state, 3);
 		if (!this.world.isRemote) {
-			WorldDataGalaxyPad.get(this.world).addGalaxyPadEntry(name, this.isPadValid, this.isClear, this.location);
+			WorldDataGalaxyPad.get(this.world).addGalaxyPadEntry(name, this.isPadValid, this.isClear, this.getLocation());
 		}
 	}
 
@@ -147,7 +150,7 @@ public class TileEntityGalaxyPadCore extends TileEntityWarpPadCore {
 	
 	@Override
 	public void destroy() {
-		WorldDataGalaxyPad.get(this.world).removeGalaxyPadEntry(this.location);
+		WorldDataGalaxyPad.get(this.world).removeGalaxyPadEntry(this.getLocation());
 	}
 	
 	@Override

@@ -232,7 +232,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			this.validateWarpPad();
 			this.ticksSinceLastCheck = 0;
 		}
-		
+
 		if (this.warpTicksLeft > 0) {
 			--this.warpTicksLeft;
 			if (this.warpTicksLeft <= 0) {
@@ -363,6 +363,8 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		ChunkPos cPos = destPad.world.getChunkFromBlockCoords(destPad.pos).getPos();
 		if (!destPad.isValidPad()) {
 			this.cooldownTicksLeft = 1;
+			this.warping = false;
+			this.cooling = true;
 			return;
 		}
 		
