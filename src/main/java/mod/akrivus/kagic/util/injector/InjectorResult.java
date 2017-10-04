@@ -102,45 +102,45 @@ public class InjectorResult {
 		float drainedCount = 0F;
 		boolean drainedChecked = false;
 		for (String gem : ModEntities.GEMS.keySet()) {
-    		try {
-        		Class<EntityGem> gemClass = (Class<EntityGem>) ModEntities.GEMS.get(gem);
-        		HashMap<IBlockState, Double> yield = (HashMap<IBlockState, Double>) gemClass.getField((gem + "_yields").toUpperCase()).get(null);
+			try {
+				Class<EntityGem> gemClass = (Class<EntityGem>) ModEntities.GEMS.get(gem);
+				HashMap<IBlockState, Double> yield = (HashMap<IBlockState, Double>) gemClass.getField((gem + "_yields").toUpperCase()).get(null);
 				double defectivityRate = 1.0;
 				double frictionFactor = 0.0;
 				for (int x = -4; x <= 4; ++x) {
-		            for (int y = -4; y <= 4; ++y) {
-		                for (int z = -4; z <= 4; ++z) {
-		                	BlockPos ore = pos.add(x, y, z);
-		                	IBlockState state = world.getBlockState(ore);
-	                		if (!resultTable.containsKey(gemClass)) {
-	                			resultTable.put(gemClass, 0.0);
-	                		}
-	                		if (yield.containsKey(state)) {
-	                			resultTable.put(gemClass, resultTable.get(gemClass) + yield.get(state));
-	                			frictionFactor += 0.0036;
-	                			defectivityRate -= 0.2;
-	                			
-	                		}
-	                		if (!drainedChecked) {
-	                			Block block = state.getBlock();
-	                			if (block == ModBlocks.DRAINED_BLOCK || block == Blocks.GRAVEL || block == Blocks.AIR) {
-	                				drainedCount += 1;
-	                			}
-	                		}
-	                		if (state.getMaterial() == Material.GRASS) {
-	                			defectivityRate -= 0.4;
-	                		}
-		                }
-		            }
+					for (int y = -4; y <= 4; ++y) {
+						for (int z = -4; z <= 4; ++z) {
+							BlockPos ore = pos.add(x, y, z);
+							IBlockState state = world.getBlockState(ore);
+							if (!resultTable.containsKey(gemClass)) {
+								resultTable.put(gemClass, 0.0);
+							}
+							if (yield.containsKey(state)) {
+								resultTable.put(gemClass, resultTable.get(gemClass) + yield.get(state));
+								frictionFactor += 0.0036;
+								defectivityRate -= 0.2;
+								
+							}
+							if (!drainedChecked) {
+								Block block = state.getBlock();
+								if (block == ModBlocks.DRAINED_BLOCK || block == Blocks.GRAVEL || block == Blocks.AIR) {
+									drainedCount += 1;
+								}
+							}
+							if (state.getMaterial() == Material.GRASS) {
+								defectivityRate -= 0.4;
+							}
+						}
+					}
 				}
 				drainedChecked = true;
 				defectivity.put(gemClass, Math.max(0.0, Math.min(1.0, defectivityRate)));
 				friction.put(gemClass, frictionFactor);
-    		}
-    		catch (Exception e) {
-    			e.printStackTrace();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
 				System.out.println("Error creating gem: " + e.getMessage());
-    		}
+			}
 		}
 		boolean canSpawnGem = false;
 		Class<? extends EntityGem> mostLikelyGem = null;
@@ -150,20 +150,20 @@ public class InjectorResult {
 				boolean forget = world.rand.nextBoolean();
 				if (resultTable.get(gemClass) > 0.1 && world.rand.nextInt((int)(resultTable.get(gemClass) * 10) + 1) == 0) {
 					highestYield = resultTable.get(gemClass);
-			        mostLikelyGem = gemClass;
-			        canSpawnGem = true;
+					mostLikelyGem = gemClass;
+					canSpawnGem = true;
 				}
 				else {
 					double result = resultTable.get(gemClass);
 					if (result == highestYield && result > 0) {
-			        	highestYield = forget ? resultTable.get(gemClass) : highestYield;
-			        	mostLikelyGem = forget ? gemClass : mostLikelyGem;
-			        	canSpawnGem = true;
-			        }
+						highestYield = forget ? resultTable.get(gemClass) : highestYield;
+						mostLikelyGem = forget ? gemClass : mostLikelyGem;
+						canSpawnGem = true;
+					}
 					else if (result > highestYield && result > 0) {
-				        highestYield = resultTable.get(gemClass);
-				        mostLikelyGem = gemClass;
-				        canSpawnGem = true;
+						highestYield = resultTable.get(gemClass);
+						mostLikelyGem = gemClass;
+						canSpawnGem = true;
 					}
 				}
 			}
@@ -194,36 +194,42 @@ public class InjectorResult {
 		}
 		if (drain) {
 			for (int x = -4; x <= 4; ++x) {
-	            for (int y = -4; y <= 4; ++y) {
-	                for (int z = -4; z <= 4; ++z) {
-	                	if (world.rand.nextBoolean()) {
-		                	BlockPos ore = pos.add(x, y, z);
-	                		drainBlock(world, ore);
-	        			}
-	                }
-	            }
+				for (int y = -4; y <= 4; ++y) {
+					for (int z = -4; z <= 4; ++z) {
+						if (world.rand.nextBoolean()) {
+							BlockPos ore = pos.add(x, y, z);
+							drainBlock(world, ore);
+						}
+					}
+				}
 			}
 		}
 		return new InjectorResult(gemSpawned, pos, gemSpawned == null ? 0.0 : defectivity.get(gemSpawned.getClass()), !canSpawnGem, canSpawnGem ? friction.get(gemSpawned.getClass()) >= 1.0F : false, exitHole);
 	}
 	
 	private static void drainBlock(World world, BlockPos ore) {
-    	IBlockState state = world.getBlockState(ore);
-    	Block block = state.getBlock();
-    	if (block instanceof BlockBush) {
-    		world.destroyBlock(ore, false);
-    	}
-    	//Dirt/grass -> coarse dirt
-    	//Coarse dirt -> gravel
-    	//Stone -> drained stone
-    	if (state == Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT) || state == Blocks.SAND.getDefaultState()) {
-    		world.setBlockState(ore, Blocks.GRAVEL.getDefaultState());
-    	}
-    	else if (state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND) {
-    		world.setBlockState(ore, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT));
-    	}
-    	else if ((state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON) && state.isFullCube()) {
-    		world.setBlockState(ore, ModBlocks.DRAINED_BLOCK.getDefaultState());
-    	}
+		IBlockState state = world.getBlockState(ore);
+		Block block = state.getBlock();
+		if (block instanceof BlockBush) {
+			world.destroyBlock(ore, false);
+		}
+		//Dirt/grass -> coarse dirt
+		//Coarse dirt -> gravel
+		//Stone -> drained stone
+		if (state == Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT) || state == Blocks.SAND.getDefaultState()) {
+			world.setBlockState(ore, Blocks.GRAVEL.getDefaultState());
+		}
+		else if (state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND) {
+			world.setBlockState(ore, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT));
+		}
+		else if ((state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON) && state.isFullCube()) {
+			if (ore.getY() % 6 == 0 || ore.getY() % 6 == 1) {
+				world.setBlockState(ore, ModBlocks.DRAINED_BLOCK_2.getDefaultState());
+			} else if (ore.getY() % 5 == 0) {
+				world.setBlockState(ore, ModBlocks.DRAINED_BANDS.getDefaultState());
+			} else {
+				world.setBlockState(ore, ModBlocks.DRAINED_BLOCK.getDefaultState());
+			}
+		}
 	}
 }
