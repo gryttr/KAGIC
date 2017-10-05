@@ -78,6 +78,7 @@ public class ModItems {
 	public static final ItemGem JASPER_GEM = new ItemGem("jasper");
 	public static final ItemGem OCEAN_JASPER_GEM = new ItemGem("jasper_1");
 	public static final ItemGem BIGGS_JASPER_GEM = new ItemGem("jasper_2");
+	public static final ItemGem GREEN_JASPER_GEM = new ItemGem("jasper_3");
 	public static final ItemGem AMETHYST_GEM = new ItemGem("amethyst");
 	public static final ItemGem ROSE_QUARTZ_GEM = new ItemGem("rose_quartz");
 	public static final ItemGem LAPIS_LAZULI_GEM = new ItemGem("lapis_lazuli");
@@ -138,6 +139,7 @@ public class ModItems {
 	public static final ItemGem CRACKED_JASPER_GEM = new ItemGem("jasper", true);
 	public static final ItemGem CRACKED_OCEAN_JASPER_GEM = new ItemGem("jasper_1", true);
 	public static final ItemGem CRACKED_BIGGS_JASPER_GEM = new ItemGem("jasper_2", true);
+	public static final ItemGem CRACKED_GREEN_JASPER_GEM = new ItemGem("jasper_3", true);
 	public static final ItemGem CRACKED_AMETHYST_GEM = new ItemGem("amethyst", true);
 	public static final ItemGem CRACKED_ROSE_QUARTZ_GEM = new ItemGem("rose_quartz", true);
 	public static final ItemGem CRACKED_LAPIS_LAZULI_GEM = new ItemGem("lapis_lazuli", true);
@@ -207,6 +209,7 @@ public class ModItems {
 		registerGem(JASPER_GEM, CRACKED_JASPER_GEM, event);
 		registerGem(OCEAN_JASPER_GEM, CRACKED_OCEAN_JASPER_GEM, event);
 		registerGem(BIGGS_JASPER_GEM, CRACKED_BIGGS_JASPER_GEM, event);
+		registerGem(GREEN_JASPER_GEM, CRACKED_GREEN_JASPER_GEM, event);
 		registerGem(AMETHYST_GEM, CRACKED_AMETHYST_GEM, event);
 		registerGem(ROSE_QUARTZ_GEM, CRACKED_ROSE_QUARTZ_GEM, event);
 		registerGem(LAPIS_LAZULI_GEM, CRACKED_LAPIS_LAZULI_GEM, event);

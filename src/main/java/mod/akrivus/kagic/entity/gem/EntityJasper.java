@@ -66,14 +66,16 @@ public class EntityJasper extends EntityGem {
 	static {
 		MARK1S.put(0, 6);
 		MARK1S.put(1, 1);
-		MARK1S.put(2, 1);		
+		MARK1S.put(2, 1);
+		MARK1S.put(3, 1);
 	}
 
 	private static final Map<Integer, Integer> MARK2S = new LinkedHashMap<Integer, Integer>();
 	static {
 		MARK2S.put(0, 0);
 		MARK2S.put(1, 1);
-		MARK2S.put(2, 1);		
+		MARK2S.put(2, 1);
+		MARK2S.put(3, 0);
 	}
 
 	private static final Map<Integer, ArrayList<Integer>> SKIN_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -95,6 +97,10 @@ public class EntityJasper extends EntityGem {
 		ArrayList<Integer> biggs = new ArrayList<Integer>();
 		biggs.add(0xBC6A68);
 		SKIN_COLORS.put(2, biggs);
+		
+		ArrayList<Integer> green = new ArrayList<Integer>();
+		green.add(0x4E7E6D);
+		SKIN_COLORS.put(3, green);
 	}
 	
 	private static final Map<Integer, ArrayList<Integer>> HAIR_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -114,6 +120,10 @@ public class EntityJasper extends EntityGem {
 		ArrayList<Integer> biggs = new ArrayList<Integer>();
 		biggs.add(0xFDF8EA);
 		HAIR_COLORS.put(2, biggs);
+		
+		ArrayList<Integer> green = new ArrayList<Integer>();
+		green.add(0xDADCCC);
+		HAIR_COLORS.put(3, green);
 	}
 	
 	private static final Map<Integer, ArrayList<Integer>> MARK_1_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -136,6 +146,10 @@ public class EntityJasper extends EntityGem {
 		biggs.add(0xD7AB85);
 		biggs.add(0xC68976);
 		MARK_1_COLORS.put(2, biggs);
+		
+		ArrayList<Integer> green = new ArrayList<Integer>();
+		green.add(0x6dab98);
+		MARK_1_COLORS.put(3, green);
 	}
 	
 	private static final Map<Integer, ArrayList<Integer>> MARK_2_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -152,6 +166,10 @@ public class EntityJasper extends EntityGem {
 		ArrayList<Integer> biggs = new ArrayList<Integer>();
 		biggs.add(0xA2504E);
 		MARK_2_COLORS.put(2, biggs);
+		
+		ArrayList<Integer> green = new ArrayList<Integer>();
+		green.add(0);
+		MARK_2_COLORS.put(3, green);
 	}
 	
 	public EntityJasper(World worldIn) {
@@ -213,6 +231,8 @@ public class EntityJasper extends EntityGem {
 			return new float[] { 88F / 255F, 211F / 255F, 207F / 255F };
 		case 2:
 			return new float[] { 212F / 255F, 135F / 255F, 104F / 255F };
+		case 3:
+			return new float[] { 186F / 255F, 209F / 255F, 181F / 255F };
 		default:
 			return new float[] { 255F / 255F, 63F / 255F, 1F / 255F };
 		}
@@ -276,7 +296,8 @@ public class EntityJasper extends EntityGem {
     	//0 - normal jasper
     	//1 - ocean jasper
     	//2 - biggs jasper
-        int special = this.rand.nextInt(3);
+    	//3 - green jasper
+        int special = this.rand.nextInt(4);
     	switch (this.world.getBiome(this.getPosition()).getTempCategory()) {
 		case COLD:
 			special = this.rand.nextInt(6) == 0 ? 1 : special;
@@ -339,6 +360,8 @@ public class EntityJasper extends EntityGem {
 			return "ocean_";
 		case 2:
 			return "biggs_";
+		case 3:
+			return "green_";
 		}
 		return null;
 	}
@@ -508,7 +531,7 @@ public class EntityJasper extends EntityGem {
 	}
 	
 	public boolean hasSecondMarking() {
-		return this.getSpecial() != 0;
+		return this.getSpecial() != 0 && this.getSpecial() != 3;
 	}
 	
 	protected int generateMark1Color() {
