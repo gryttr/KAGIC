@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "kagic:blocks/pink_sandstone_top",
+        "side": "kagic:blocks/pink_sandstone_carved"
+    }
+}
