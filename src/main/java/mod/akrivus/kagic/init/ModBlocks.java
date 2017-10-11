@@ -10,13 +10,17 @@ import mod.akrivus.kagic.blocks.BlockPinkSandstoneDoubleSlab;
 import mod.akrivus.kagic.blocks.BlockPinkSandstoneSlab;
 import mod.akrivus.kagic.blocks.BlockPinkSandstoneStairs;
 import mod.akrivus.kagic.blocks.BlockRockMelt;
+import mod.akrivus.kagic.blocks.BlockRoseTears;
 import mod.akrivus.kagic.blocks.BlockVarying;
 import mod.akrivus.kagic.blocks.BlockWarpPadCore;
+import mod.akrivus.kagic.client.model.FluidModelMapper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSandStone;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStaticLiquid;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -30,6 +34,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.BlockFluidFinite;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -54,8 +59,8 @@ public class ModBlocks {
 	public static final BlockPinkSandstoneSlab PINK_SANDSTONE_SLAB = new BlockPinkSandstoneSlab();
 	public static final BlockPinkSandstoneDoubleSlab PINK_SANDSTONE_DOUBLE_SLAB = new BlockPinkSandstoneDoubleSlab();
 	
-	public static final Fluid FLUID_ROSE_TEARS = new Fluid("rose_tears", new ResourceLocation("rose_tears_still"), new ResourceLocation("rose_tears_flowing"));
-	//public static final BlockFluidFinite ROSE_TEARS = new BlockFluidFinite(FLUID_ROSE_TEARS, Material.WATER);
+	public static final Fluid FLUID_ROSE_TEARS = new Fluid("rose_tears", new ResourceLocation("kagic:blocks/rose_tears_still"), new ResourceLocation("kagic:blocks/rose_tears_flowing"));
+	public static BlockRoseTears ROSE_TEARS;
 	
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		registerBlock(GEM_SEED, new ResourceLocation("kagic:gem_seed"), event);
@@ -76,11 +81,23 @@ public class ModBlocks {
 		registerBlock(PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:pink_sandstone_stairs"), event);
 		registerBlock(PINK_SANDSTONE_SLAB, new ResourceLocation("kagic:pink_sandstone_slab"), event);
 		registerBlock(PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_double_slab"), event);
+
+		registerFluid(FLUID_ROSE_TEARS);
+		ROSE_TEARS = new BlockRoseTears(FLUID_ROSE_TEARS, Material.WATER);
+		registerBlock(ROSE_TEARS, new ResourceLocation("kagic:rose_tears"), event);
+		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+			ModelLoader.setCustomStateMapper(ModBlocks.ROSE_TEARS, new FluidModelMapper(ModBlocks.FLUID_ROSE_TEARS));
+		}
 	}
 	
 	public static void registerBlock(Block block, ResourceLocation location, RegistryEvent.Register<Block> event) {
 		block.setRegistryName(location);
 		event.getRegistry().register(block);
+	}
+	
+	public static void registerFluid(Fluid fluid) {
+		FluidRegistry.registerFluid(fluid);
+		FluidRegistry.addBucketForFluid(fluid);
 	}
 	
 	public static void registerBlockItems(RegistryEvent.Register<Item> event) {

@@ -26,6 +26,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -52,6 +53,10 @@ public class KAGIC {
     public static SpaceStuff spaceStuff;
     public static KAGICWorldGenerator worldGen;
 
+    static {
+    	FluidRegistry.enableUniversalBucket();
+    }
+    
     @SidedProxy(clientSide = "mod.heimrarnadalr.kagic.proxies.ClientProxy", serverSide = "mod.heimrarnadalr.kagic.proxies.ServerProxy")
     public static CommonProxy proxy;
     

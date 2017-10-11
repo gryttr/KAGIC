@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import mod.akrivus.kagic.blocks.BlockPinkSandstone;
 import mod.akrivus.kagic.client.gui.GUIGalaxyPadSelection;
 import mod.akrivus.kagic.client.gui.GUIWarpPadSelection;
+import mod.akrivus.kagic.client.model.FluidModelMapper;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModItems;
 import mod.heimrarnadalr.kagic.worlddata.GalaxyPadLocation;

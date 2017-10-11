@@ -18,6 +18,7 @@ import net.minecraft.world.IBlockAccess;
 
 public class BlockPinkSandstone extends Block {
 	//Texture color: EEC2D5
+	//Water color: FFE3F4
 	public static final PropertyEnum<BlockPinkSandstone.EnumType> TYPE = PropertyEnum.<BlockPinkSandstone.EnumType>create("type", BlockPinkSandstone.EnumType.class);
 	
 	public BlockPinkSandstone() {

@@ -297,6 +297,7 @@ public class EntityJasper extends EntityGem {
     	//1 - ocean jasper
     	//2 - biggs jasper
     	//3 - green jasper
+    	//4 - bruneau jasper
         int special = this.rand.nextInt(4);
     	switch (this.world.getBiome(this.getPosition()).getTempCategory()) {
 		case COLD:

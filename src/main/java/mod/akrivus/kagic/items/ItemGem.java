@@ -7,8 +7,10 @@ import java.util.regex.Pattern;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityRuby;
 import mod.akrivus.kagic.entity.shardfusion.EntityShardFusion;
+import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModCreativeTabs;
 import mod.akrivus.kagic.init.ModEntities;
+import mod.akrivus.kagic.init.ModItems;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -122,6 +124,7 @@ public class ItemGem extends Item {
 			return true;
 		}
 	}
+	
 	public boolean onEntityItemUpdate(EntityItem entity) {
 		entity.isDead = false;
 		entity.setEntityInvulnerable(true);
@@ -133,8 +136,18 @@ public class ItemGem extends Item {
 				entity.setDead();
 			}
 		}
-		else if (this.isCracked && entity.ticksExisted > 4800) {
-			entity.setNoDespawn();
+		else if (this.isCracked) { 
+			if (entity.ticksExisted > 4800) {
+				entity.setNoDespawn();
+			}
+			if (!entity.world.isRemote && entity.world.getBlockState(entity.getPosition()).getBlock() == ModBlocks.ROSE_TEARS) {
+				ItemStack crackedGemStack = entity.getItem();
+				ItemStack healedGemStack = new ItemStack(ModItems.GEM_TABLE.get(crackedGemStack.getItem()));
+				healedGemStack.setTagCompound(crackedGemStack.getTagCompound());
+				EntityItem healedGem = new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, healedGemStack);
+				entity.world.spawnEntity(healedGem);
+				entity.setDead();
+			}
 		}
         return false;
     }

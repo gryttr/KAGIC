@@ -259,6 +259,13 @@ tile.rock_melt.name=Frictional Rock Melt
 tile.rutile_trail.name=Rutile Trail
 tile.warp_pad_core.name=Warp Pad Core
 tile.galaxy_pad_core.name=Galaxy Warp Pad Core
+tile.pink_sandstone.default.name=Pink Sandstone
+tile.pink_sandstone.chiseled.name=Chiseled Pink Sandstone
+tile.pink_sandstone.smooth.name=Smooth Pink Sandstone
+tile.pink_sandstone_stairs.name=Pink Sandstone Stairs
+tile.pink_sandstone_slab.pink_sandstone.name=Pink Sandstone Slab
+
+fluid.rose_tears=Healing Tears
 
 command.kagic.will_follow_you=%1$s will follow you.
 command.kagic.will_not_follow_you=%1$s will not follow you.
