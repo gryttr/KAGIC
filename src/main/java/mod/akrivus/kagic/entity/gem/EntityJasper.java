@@ -68,6 +68,8 @@ public class EntityJasper extends EntityGem {
 		MARK1S.put(1, 1);
 		MARK1S.put(2, 1);
 		MARK1S.put(3, 1);
+		MARK1S.put(4, 1);
+		MARK1S.put(5, 1);
 	}
 
 	private static final Map<Integer, Integer> MARK2S = new LinkedHashMap<Integer, Integer>();
@@ -76,6 +78,8 @@ public class EntityJasper extends EntityGem {
 		MARK2S.put(1, 1);
 		MARK2S.put(2, 1);
 		MARK2S.put(3, 0);
+		MARK2S.put(4, 1);
+		MARK2S.put(5, 0);
 	}
 
 	private static final Map<Integer, ArrayList<Integer>> SKIN_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -101,6 +105,14 @@ public class EntityJasper extends EntityGem {
 		ArrayList<Integer> green = new ArrayList<Integer>();
 		green.add(0x4E7E6D);
 		SKIN_COLORS.put(3, green);
+
+		ArrayList<Integer> bruneau = new ArrayList<Integer>();
+		bruneau.add(0xB36935);
+		SKIN_COLORS.put(4, bruneau);
+		
+		ArrayList<Integer> purple = new ArrayList<Integer>();
+		purple.add(0x8A6087);
+		SKIN_COLORS.put(5, purple);
 	}
 	
 	private static final Map<Integer, ArrayList<Integer>> HAIR_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -124,6 +136,14 @@ public class EntityJasper extends EntityGem {
 		ArrayList<Integer> green = new ArrayList<Integer>();
 		green.add(0xDADCCC);
 		HAIR_COLORS.put(3, green);
+
+		ArrayList<Integer> bruneau = new ArrayList<Integer>();
+		bruneau.add(0xFACDA1);
+		HAIR_COLORS.put(4, bruneau);
+
+		ArrayList<Integer> purple = new ArrayList<Integer>();
+		purple.add(0xDECDD1);
+		HAIR_COLORS.put(5, purple);
 	}
 	
 	private static final Map<Integer, ArrayList<Integer>> MARK_1_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -150,6 +170,14 @@ public class EntityJasper extends EntityGem {
 		ArrayList<Integer> green = new ArrayList<Integer>();
 		green.add(0x6dab98);
 		MARK_1_COLORS.put(3, green);
+
+		ArrayList<Integer> bruneau = new ArrayList<Integer>();
+		bruneau.add(0xE59F54);
+		MARK_1_COLORS.put(4, bruneau);
+
+		ArrayList<Integer> purple = new ArrayList<Integer>();
+		purple.add(0x82838A);
+		MARK_1_COLORS.put(5, purple);
 	}
 	
 	private static final Map<Integer, ArrayList<Integer>> MARK_2_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -170,6 +198,14 @@ public class EntityJasper extends EntityGem {
 		ArrayList<Integer> green = new ArrayList<Integer>();
 		green.add(0);
 		MARK_2_COLORS.put(3, green);
+
+		ArrayList<Integer> bruneau = new ArrayList<Integer>();
+		bruneau.add(0x8A511B);
+		MARK_2_COLORS.put(4, bruneau);
+		
+		ArrayList<Integer> purple = new ArrayList<Integer>();
+		purple.add(0);
+		MARK_2_COLORS.put(5, purple);
 	}
 	
 	public EntityJasper(World worldIn) {
@@ -233,6 +269,10 @@ public class EntityJasper extends EntityGem {
 			return new float[] { 212F / 255F, 135F / 255F, 104F / 255F };
 		case 3:
 			return new float[] { 186F / 255F, 209F / 255F, 181F / 255F };
+		case 4:
+			return new float[] { 255F / 255F, 197F / 255F, 131F / 255F };
+		case 5:
+			return new float[] { 215F / 255F, 163F / 255F, 230F / 255F };
 		default:
 			return new float[] { 255F / 255F, 63F / 255F, 1F / 255F };
 		}
@@ -298,7 +338,8 @@ public class EntityJasper extends EntityGem {
     	//2 - biggs jasper
     	//3 - green jasper
     	//4 - bruneau jasper
-        int special = this.rand.nextInt(4);
+    	//5 - purple jasper
+        int special = this.rand.nextInt(6);
     	switch (this.world.getBiome(this.getPosition()).getTempCategory()) {
 		case COLD:
 			special = this.rand.nextInt(6) == 0 ? 1 : special;
@@ -363,6 +404,10 @@ public class EntityJasper extends EntityGem {
 			return "biggs_";
 		case 3:
 			return "green_";
+		case 4:
+			return "bruneau_";
+		case 5:
+			return "purple_";
 		}
 		return null;
 	}
@@ -475,6 +520,14 @@ public class EntityJasper extends EntityGem {
     		this.droppedGemItem = ModItems.GREEN_JASPER_GEM;
     		this.droppedCrackedGemItem = ModItems.CRACKED_GREEN_JASPER_GEM;
     		break;
+    	case 4:
+    		this.droppedGemItem = ModItems.BRUNEAU_JASPER_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_BRUNEAU_JASPER_GEM;
+    		break;
+    	case 5:
+    		this.droppedGemItem = ModItems.PURPLE_JASPER_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_PURPLE_JASPER_GEM;
+    		break;
 		}
 		super.onDeath(cause);
 	}
@@ -536,7 +589,22 @@ public class EntityJasper extends EntityGem {
 	}
 	
 	public boolean hasSecondMarking() {
-		return this.getSpecial() != 0 && this.getSpecial() != 3;
+		switch(this.getSpecial()) {
+		case 0:
+			return false;
+		case 1:
+			return true;
+		case 2:
+			return true;
+		case 3: 
+			return false;
+		case 4:
+			return true;
+		case 5:
+			return false;
+		default:
+			return false;
+		}
 	}
 	
 	protected int generateMark1Color() {
