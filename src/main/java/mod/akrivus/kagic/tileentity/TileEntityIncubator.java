@@ -37,8 +37,10 @@ public class TileEntityIncubator extends TileEntityLockableLoot implements ITick
     	if (this.world.getBlockState(this.pos.down()).getBlock() == ModBlocks.INJECTOR && !this.world.isBlockPowered(this.pos.down())) {
     		boolean containsBase = false;
     		for (int i = 0; i < this.chestContents.size(); ++i) {
-    			if (this.chestContents.get(i).getItem() == ModItems.ACTIVATED_GEM_BASE) {
-    				this.chestContents.set(i, ItemStack.EMPTY);
+    			ItemStack stack = this.chestContents.get(i);
+    			if (stack.getItem() == ModItems.ACTIVATED_GEM_BASE) {
+    				stack.shrink(1);
+    				this.chestContents.set(i, stack);
     				containsBase = true;
     				break;
     			}
