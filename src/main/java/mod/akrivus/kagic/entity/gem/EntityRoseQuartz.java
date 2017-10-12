@@ -15,6 +15,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.entity.pepo.EntityCactus;
 import mod.akrivus.kagic.entity.pepo.EntityMelon;
 import mod.akrivus.kagic.entity.pepo.EntityPumpkin;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
@@ -37,7 +38,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -147,12 +150,12 @@ public class EntityRoseQuartz extends EntityGem {
 	 *********************************************************/
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (hand == EnumHand.MAIN_HAND && !this.world.isRemote) {
-			ItemStack stack = player.getHeldItemMainhand();
 			if (this.isTamed() && this.isOwner(player)) {
-				if (stack.getItem() instanceof ItemGem) {
-					if (((ItemGem) stack.getItem()).isCracked) {
-						Item gem = stack.getItem();
-						ItemStack result = new ItemStack(ModItems.GEM_TABLE.get(gem));
+				ItemStack stack = player.getHeldItemMainhand();
+				Item item = stack.getItem();
+				if (item instanceof ItemGem) {
+					if (((ItemGem) item).isCracked) {
+						ItemStack result = new ItemStack(ModItems.GEM_TABLE.get(item));
 						result.setTagCompound(stack.getTagCompound());
 						this.entityDropItem(result, 1);
 						if (!player.capabilities.isCreativeMode) {
@@ -161,7 +164,7 @@ public class EntityRoseQuartz extends EntityGem {
 						this.playObeySound();
 						return true;
 					}
-				} else if (stack.getItem() == Items.BUCKET && !this.isDefective()) {
+				} else if (item == Items.BUCKET && !this.isDefective()) {
 					stack.shrink(1);
 
 					if (stack.isEmpty()) {
@@ -171,7 +174,18 @@ public class EntityRoseQuartz extends EntityGem {
 					}
 					this.playObeySound();
 					return true;
+				} else if (item instanceof ItemArmor && ((ItemArmor)item).armorType == EntityEquipmentSlot.HEAD || player.isSneaking() && stack.isEmpty()) {
+					KAGIC.instance.chatInfoMessage("Equipping helmet");
+					this.playEquipSound(stack);
+					this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.HEAD), 0.0F);
+					this.setItemStackToSlot(EntityEquipmentSlot.HEAD, stack.copy());
+					if (!player.isCreative()) {
+						stack.shrink(1);
+					}
+					this.playObeySound();
+					return true;
 				}
+
 			}
 		}
 		return super.processInteract(player, hand);

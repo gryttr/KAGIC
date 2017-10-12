@@ -12,6 +12,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
@@ -31,12 +32,17 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -182,12 +188,38 @@ public class EntityCarnelian extends EntityGem {
     /*********************************************************
      * Methods related to entity interaction.                *
      *********************************************************/
+    @Override
+	public boolean processInteract(EntityPlayer player, EnumHand hand) {
+		if (!this.world.isRemote) {
+			if (hand == EnumHand.MAIN_HAND) {
+				if (this.isTamed() && this.isOwnedBy(player)) {
+					ItemStack stack = player.getHeldItemMainhand();
+					Item item = stack.getItem();
+					if (item instanceof ItemArmor && ((ItemArmor)item).armorType == EntityEquipmentSlot.HEAD || player.isSneaking() && stack.isEmpty()) {
+						KAGIC.instance.chatInfoMessage("Equipping helmet");
+						this.playEquipSound(stack);
+						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.HEAD), 0.0F);
+						this.setItemStackToSlot(EntityEquipmentSlot.HEAD, stack.copy());
+						if (!player.isCreative()) {
+							stack.shrink(1);
+						}
+						this.playObeySound();
+						return true;
+					}
+				}
+			}
+		}
+		return super.processInteract(player, hand);
+    }
+
     public boolean isCharged() {
 		return this.dataManager.get(CHARGED);
     }
 	public void setCharged(boolean charged) {
 		this.dataManager.set(CHARGED, charged);
 	}
+	
+	@Override
 	public void whenDefective() {
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);

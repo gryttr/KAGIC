@@ -54,13 +54,15 @@ public class RenderJasper extends RenderBiped<EntityJasper> {
 		};
 		this.addLayer(jasperArmor);
 	}
-	
+		
+	@Override
 	protected void preRenderCallback(EntityJasper entitylivingbaseIn, float partialTickTime) {
 		if (entitylivingbaseIn.isDefective()) {
 			GlStateManager.scale(0.7F, 1.0F, 0.7F);
 		}
-	}
+	}	
 	
+	@Override
 	protected ResourceLocation getEntityTexture(EntityJasper entity) {
 		return new ResourceLocation("kagic:textures/entities/jasper/" + entity.getSpecialSkin() + "jasper.png");
 	}
