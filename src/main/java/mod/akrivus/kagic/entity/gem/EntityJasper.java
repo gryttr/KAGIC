@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.common.base.Predicate;
 
@@ -34,18 +35,26 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -70,6 +79,8 @@ public class EntityJasper extends EntityGem {
 		MARK1S.put(3, 1);
 		MARK1S.put(4, 1);
 		MARK1S.put(5, 1);
+		MARK1S.put(6, 1);
+		MARK1S.put(7, 1);
 	}
 
 	private static final Map<Integer, Integer> MARK2S = new LinkedHashMap<Integer, Integer>();
@@ -80,6 +91,8 @@ public class EntityJasper extends EntityGem {
 		MARK2S.put(3, 0);
 		MARK2S.put(4, 1);
 		MARK2S.put(5, 0);
+		MARK2S.put(6, 1);
+		MARK2S.put(7, 1);
 	}
 
 	private static final Map<Integer, ArrayList<Integer>> SKIN_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -113,6 +126,14 @@ public class EntityJasper extends EntityGem {
 		ArrayList<Integer> purple = new ArrayList<Integer>();
 		purple.add(0x8A6087);
 		SKIN_COLORS.put(5, purple);
+		
+		ArrayList<Integer> flame = new ArrayList<Integer>();
+		flame.add(0xA84B3D);
+		SKIN_COLORS.put(6, flame);
+		
+		ArrayList<Integer> picture = new ArrayList<Integer>();
+		picture.add(0xDF8A69);
+		SKIN_COLORS.put(7, picture);
 	}
 	
 	private static final Map<Integer, ArrayList<Integer>> HAIR_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -144,6 +165,14 @@ public class EntityJasper extends EntityGem {
 		ArrayList<Integer> purple = new ArrayList<Integer>();
 		purple.add(0xDECDD1);
 		HAIR_COLORS.put(5, purple);
+
+		ArrayList<Integer> flame = new ArrayList<Integer>();
+		flame.add(0xF0D2C6);
+		HAIR_COLORS.put(6, flame);
+
+		ArrayList<Integer> picture = new ArrayList<Integer>();
+		picture.add(0xEBDCCA);
+		HAIR_COLORS.put(7, picture);
 	}
 	
 	private static final Map<Integer, ArrayList<Integer>> MARK_1_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -178,6 +207,14 @@ public class EntityJasper extends EntityGem {
 		ArrayList<Integer> purple = new ArrayList<Integer>();
 		purple.add(0x82838A);
 		MARK_1_COLORS.put(5, purple);
+
+		ArrayList<Integer> flame = new ArrayList<Integer>();
+		flame.add(0xE07769);
+		MARK_1_COLORS.put(6, flame);
+
+		ArrayList<Integer> picture = new ArrayList<Integer>();
+		picture.add(0xCA6C63);
+		MARK_1_COLORS.put(7, picture);
 	}
 	
 	private static final Map<Integer, ArrayList<Integer>> MARK_2_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -206,6 +243,14 @@ public class EntityJasper extends EntityGem {
 		ArrayList<Integer> purple = new ArrayList<Integer>();
 		purple.add(0);
 		MARK_2_COLORS.put(5, purple);
+		
+		ArrayList<Integer> flame = new ArrayList<Integer>();
+		flame.add(0xFFAD92);
+		MARK_2_COLORS.put(6, flame);
+		
+		ArrayList<Integer> picture = new ArrayList<Integer>();
+		picture.add(0x91818B);
+		MARK_2_COLORS.put(7, picture);
 	}
 	
 	public EntityJasper(World worldIn) {
@@ -224,6 +269,16 @@ public class EntityJasper extends EntityGem {
 		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.BACK);
 		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.CHEST);
 		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.BELLY);
+
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BACK_OF_HEAD);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.FOREHEAD);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_EYE);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_EYE);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.LEFT_CHEEK);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_CHEEK);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BACK);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.CHEST);
+		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BELLY);
 
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
@@ -273,6 +328,10 @@ public class EntityJasper extends EntityGem {
 			return new float[] { 255F / 255F, 197F / 255F, 131F / 255F };
 		case 5:
 			return new float[] { 215F / 255F, 163F / 255F, 230F / 255F };
+		case 6:
+			return new float[] { 199F / 255F, 136F / 255F, 115F / 255F };
+		case 7:
+			return new float[] { 243F / 255F, 242F / 255F, 249F / 255F };
 		default:
 			return new float[] { 255F / 255F, 63F / 255F, 1F / 255F };
 		}
@@ -292,6 +351,7 @@ public class EntityJasper extends EntityGem {
 	/*********************************************************
 	 * Methods related to entity loading.                    *
 	 *********************************************************/
+	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
         compound.setBoolean("charged", this.dataManager.get(CHARGED).booleanValue());
@@ -302,6 +362,8 @@ public class EntityJasper extends EntityGem {
         compound.setInteger("mark2color", this.getMark2Color());
         compound.setInteger("mark2", this.getMark2());
     }
+	
+	@Override
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
         this.dataManager.set(CHARGED, compound.getBoolean("charged"));
@@ -339,21 +401,30 @@ public class EntityJasper extends EntityGem {
     	//3 - green jasper
     	//4 - bruneau jasper
     	//5 - purple jasper
-        int special = this.rand.nextInt(6);
-    	switch (this.world.getBiome(this.getPosition()).getTempCategory()) {
-		case COLD:
-			special = this.rand.nextInt(6) == 0 ? 1 : special;
-			break;
-		case MEDIUM:
-			special = this.rand.nextInt(6) == 0 ? 2 : special;
-			break;
-		case OCEAN:
-			special = this.rand.nextInt(6) == 0 ? 1 : special;
-			break;
-		case WARM:
-			special = this.rand.nextInt(6) == 0 ? 0 : special;
-			break;
-    	}
+    	//6 - flame jasper
+    	//7 - picture jasper
+        int special = this.rand.nextInt(8);
+        int biomeSpecial = 0;
+        Biome biome = this.world.getBiome(this.getPosition());
+        if (BiomeDictionary.hasType(biome, Type.MESA)) {
+        	biomeSpecial = 0;
+        } else if (BiomeDictionary.hasType(biome, Type.OCEAN)) {
+        	biomeSpecial = 1;
+        } else if (BiomeDictionary.hasType(biome, Type.SANDY) && BiomeDictionary.hasType(biome, Type.DRY)) {
+        	biomeSpecial = 2;
+        } else if (BiomeDictionary.hasType(biome, Type.FOREST)) {
+        	biomeSpecial = 3;
+        } else if (BiomeDictionary.hasType(biome, Type.RIVER)) {
+        	biomeSpecial = 4;
+        } else if (BiomeDictionary.hasType(biome, Type.MOUNTAIN)) {
+        	biomeSpecial = 5;
+        } else if (BiomeDictionary.hasType(biome, Type.NETHER)) {
+        	biomeSpecial = 6;
+        } else if (BiomeDictionary.hasType(biome, Type.HILLS)) {
+        	biomeSpecial = 7;
+        }
+        special = this.rand.nextFloat() < 0.9 ? biomeSpecial : special;
+
     	this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", special)).getUnformattedComponentText());
         this.setSpecial(special);
 		this.setMark1(this.generateMark1());
@@ -364,6 +435,8 @@ public class EntityJasper extends EntityGem {
 		}
 		return super.onInitialSpawn(difficulty, livingdata);
     }
+    
+    @Override
     public void itemDataToGemData(int data) {
     	this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", data)).getUnformattedComponentText());
         this.setSpecial(data);
@@ -376,9 +449,51 @@ public class EntityJasper extends EntityGem {
 		this.setSkinColor(this.generateSkinColor());
 	}
 	
+    @Override
+	public void setNewCutPlacement() {
+		GemCuts cut;
+		if (this.isPrimary()) {
+			cut = GemCuts.TINY;
+		} else {
+			cut = this.getSpecial() == 0 ? GemCuts.CABOCHON : GemCuts.FACETED;
+		}
+		
+		ArrayList<GemPlacements> placements = this.cutPlacements.get(cut);
+		int placementIndex = this.rand.nextInt(placements.size());
+		GemPlacements placement = placements.get(placementIndex);
+		
+		this.setGemCut(cut.id);
+		this.setGemPlacement(placement.id);		
+	}
+
 	/*********************************************************
 	 * Methods related to entity interaction.                *
 	 *********************************************************/
+    @Override
+	public boolean processInteract(EntityPlayer player, EnumHand hand) {
+		if (!this.world.isRemote) {
+			if (hand == EnumHand.MAIN_HAND) {
+				if (this.isTamed() && this.isOwnedBy(player)) {
+					ItemStack stack = player.getHeldItemMainhand();
+					Item item = stack.getItem();
+					if (item instanceof ItemArmor && ((ItemArmor)item).armorType == EntityEquipmentSlot.HEAD || player.isSneaking() && stack.isEmpty()) {
+						KAGIC.instance.chatInfoMessage("Equipping helmet");
+						this.playEquipSound(stack);
+						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.HEAD), 0.0F);
+						this.setItemStackToSlot(EntityEquipmentSlot.HEAD, stack.copy());
+						if (!player.isCreative()) {
+							stack.shrink(1);
+						}
+						this.playObeySound();
+						return true;
+					}
+				}
+			}
+		}
+		return super.processInteract(player, hand);
+    }
+    
+    @Override
 	public boolean alternateInteract(EntityPlayer player) {
 		super.alternateInteract(player);
 		KAGIC.instance.chatInfoMessage("mark1Color is " + this.getMark1Color());
@@ -408,6 +523,10 @@ public class EntityJasper extends EntityGem {
 			return "bruneau_";
 		case 5:
 			return "purple_";
+		case 6:
+			return "flame_";
+		case 7:
+			return "picture_";
 		}
 		return null;
 	}
@@ -528,6 +647,12 @@ public class EntityJasper extends EntityGem {
     		this.droppedGemItem = ModItems.PURPLE_JASPER_GEM;
     		this.droppedCrackedGemItem = ModItems.CRACKED_PURPLE_JASPER_GEM;
     		break;
+    	case 6:
+    		this.droppedGemItem = ModItems.FLAME_JASPER_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_FLAME_JASPER_GEM;
+    	case 7:
+    		this.droppedGemItem = ModItems.PICTURE_JASPER_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_PICTURE_JASPER_GEM;
 		}
 		super.onDeath(cause);
 	}
@@ -602,6 +727,10 @@ public class EntityJasper extends EntityGem {
 			return true;
 		case 5:
 			return false;
+		case 6:
+			return true;
+		case 7:
+			return true;
 		default:
 			return false;
 		}

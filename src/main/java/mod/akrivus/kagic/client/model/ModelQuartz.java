@@ -14,39 +14,47 @@ public class ModelQuartz extends ModelBiped {
     private final ModelRenderer bipedCape;
 
     public ModelQuartz() {
-		super(0.0F, 0.0F, 64, 64);
+    	this(0F, false);
+    }
+    
+    public ModelQuartz(float modelSize, boolean isArmor) {
+		super(modelSize, 0.0F, 64, isArmor ? 32 : 64);
 		// Head.
 		this.bipedHead = new ModelRenderer(this, 0, 0);
-		this.bipedHead.addBox(-4F, -12F, -4F, 8, 8, 8);
+		if (!isArmor) {
+			this.bipedHead.addBox(-4F, -12F, -4F, 8, 8, 8, modelSize);
+		} else {
+			this.bipedHead.addBox(-4F, -12F, -4F, 8, 8, 8, modelSize + 0.5F);
+		}
 		this.bipedHead.setRotationPoint(0F, 0F, 0F);
 	    // Hair.
 		this.bipedHeadwear = new ModelRenderer(this, 32, 0);
-		this.bipedHeadwear.addBox(-4F, -12F, -4F, 8, 8, 8, 1.1F);
+		this.bipedHeadwear.addBox(-4F, -12F, -4F, 8, 8, 8, modelSize + 1.1F);
 		this.bipedHeadwear.setRotationPoint(0F, 0F, 0F);
 		// Body.
 		this.bipedBody = new ModelRenderer(this, 16, 16);
-		this.bipedBody.addBox(-5F, -4F, -3F, 10, 16, 6);
+		this.bipedBody.addBox(-5F, -4F, -3F, 10, 16, 6, modelSize);
 		this.bipedBody.setRotationPoint(0F, 0F, 0F);
 	    // Right arm.
 		this.bipedRightArm = new ModelRenderer(this, 48, 16);
-		this.bipedRightArm.addBox(-4F, -4F, -2F, 4, 14, 4);
+		this.bipedRightArm.addBox(-4F, -4F, -2F, 4, 14, 4, modelSize);
 		this.bipedRightArm.setRotationPoint(0F, 0F, 0F);
 	    // Left arm.
 		this.bipedLeftArm = new ModelRenderer(this, 48, 34);
-		this.bipedLeftArm.addBox(0F, -4F, -2F, 4, 14, 4);
+		this.bipedLeftArm.addBox(0F, -4F, -2F, 4, 14, 4, modelSize);
 		this.bipedLeftArm.setRotationPoint(0F, 0F, 0F);
 		// Right leg.
 		this.bipedRightLeg = new ModelRenderer(this, 0, 16);
-		this.bipedRightLeg.addBox(1F, 0F, -2F, 4, 12, 4);
+		this.bipedRightLeg.addBox(1F, 0F, -2F, 4, 12, 4, modelSize);
 		this.bipedRightLeg.setRotationPoint(0F, 0F, 0F);
 	  	// Left leg.
 		this.bipedLeftLeg = new ModelRenderer(this, 0, 32);
-		this.bipedLeftLeg.addBox(-5F, 0F, -2F, 4, 12, 4);
+		this.bipedLeftLeg.addBox(-5F, 0F, -2F, 4, 12, 4, modelSize);
 		this.bipedLeftLeg.setRotationPoint(0F, 0F, 0F);
 
         this.bipedCape = new ModelRenderer(this, 0, 0);
         this.bipedCape.setTextureSize(64, 32);
-        this.bipedCape.addBox(-5.0F, -4.0F, -2.f, 10, 20, 1);
+        this.bipedCape.addBox(-5.0F, -4.0F, -2.f, 10, 20, 1, modelSize);
     }
     
 	public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {

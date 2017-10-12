@@ -186,7 +186,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	private float pitch = 1.0F;
 	protected int visorChanceReciprocal = 3; // 1 in visorChanceReciprocal gems will have a visor
-	private HashMap<GemCuts, ArrayList<GemPlacements>> cutPlacements = new HashMap<GemCuts, ArrayList<GemPlacements>>();
+	protected HashMap<GemCuts, ArrayList<GemPlacements>> cutPlacements = new HashMap<GemCuts, ArrayList<GemPlacements>>();
 	
 	public EntityGem(World worldIn) {
 		super(worldIn);
@@ -1583,7 +1583,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 									this.unfuse();
 								}
 								else {
-									this.attackEntityFrom(new PoofDamage(), this.getHealth());
+									this.attackEntityFrom(new PoofDamage(), this.getHealth() * 2);
 								}
 							}
 						}
@@ -1594,7 +1594,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 								this.unfuse();
 							}
 							else {
-								this.attackEntityFrom(new PoofDamage(), this.getHealth());
+								this.attackEntityFrom(new PoofDamage(), this.getHealth() * 2);
 							}
 						}
 					}
