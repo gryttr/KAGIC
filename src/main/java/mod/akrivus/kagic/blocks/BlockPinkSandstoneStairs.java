@@ -7,12 +7,12 @@ import net.minecraft.block.SoundType;
 
 public class BlockPinkSandstoneStairs extends BlockStairs {
 
-	public BlockPinkSandstoneStairs() {
+	public BlockPinkSandstoneStairs(String name) {
 		super(ModBlocks.PINK_SANDSTONE.getDefaultState());
 		this.setSoundType(SoundType.STONE);
 		this.setHardness(0.8F);
 		this.setResistance(4F);
-		this.setUnlocalizedName("pink_sandstone_stairs");
+		this.setUnlocalizedName(name);
 		this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
 	}
 

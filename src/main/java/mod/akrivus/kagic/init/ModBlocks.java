@@ -55,7 +55,8 @@ public class ModBlocks {
 	public static final BlockWarpPadCore WARP_PAD_CORE = new BlockWarpPadCore();
 	public static final BlockGalaxyPadCore GALAXY_PAD_CORE = new BlockGalaxyPadCore();
 	public static final BlockPinkSandstone PINK_SANDSTONE = new BlockPinkSandstone();
-	public static final BlockPinkSandstoneStairs PINK_SANDSTONE_STAIRS = new BlockPinkSandstoneStairs();
+	public static final BlockPinkSandstoneStairs PINK_SANDSTONE_STAIRS = new BlockPinkSandstoneStairs("pink_sandstone_stairs");
+	public static final BlockPinkSandstoneStairs WAVY_PINK_SANDSTONE_STAIRS = new BlockPinkSandstoneStairs("wavy_pink_sandstone_stairs");
 	public static final BlockPinkSandstoneSlab PINK_SANDSTONE_SLAB = new BlockPinkSandstoneSlab();
 	public static final BlockPinkSandstoneDoubleSlab PINK_SANDSTONE_DOUBLE_SLAB = new BlockPinkSandstoneDoubleSlab();
 	
@@ -79,6 +80,7 @@ public class ModBlocks {
 		registerBlock(GALAXY_PAD_CORE, new ResourceLocation("kagic:galaxy_pad_core"), event);
 		registerBlock(PINK_SANDSTONE, new ResourceLocation("kagic:pink_sandstone"), event);
 		registerBlock(PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:pink_sandstone_stairs"), event);
+		registerBlock(WAVY_PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:wavy_pink_sandstone_stairs"), event);
 		registerBlock(PINK_SANDSTONE_SLAB, new ResourceLocation("kagic:pink_sandstone_slab"), event);
 		registerBlock(PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_double_slab"), event);
 
@@ -117,6 +119,7 @@ public class ModBlocks {
 		registerBlockItem(GALAXY_PAD_CORE, new ResourceLocation("kagic:galaxy_pad_core"), event);		
 		registerPinkSandstoneItems(event);
 		registerBlockItem(PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:pink_sandstone_stairs"), event);		
+		registerBlockItem(WAVY_PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:wavy_pink_sandstone_stairs"), event);		
 		registerBlockItemSlab(PINK_SANDSTONE_SLAB, PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_slab"), event);		
 	}
 	
@@ -152,6 +155,7 @@ public class ModBlocks {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation("kagic:pink_sandstone", "inventory"));
 			ModelLoader.setCustomModelResourceLocation(item, 1, new ModelResourceLocation("kagic:chiseled_pink_sandstone", "inventory"));
 			ModelLoader.setCustomModelResourceLocation(item, 2, new ModelResourceLocation("kagic:smooth_pink_sandstone", "inventory"));
+			ModelLoader.setCustomModelResourceLocation(item, 3, new ModelResourceLocation("kagic:wavy_pink_sandstone", "inventory"));
 		}
 	}
 }

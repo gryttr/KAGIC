@@ -65,7 +65,8 @@ public class BlockPinkSandstone extends Block {
 	public static enum EnumType implements IStringSerializable {
 		DEFAULT(0, "pink_sandstone", "default"),
 		CHISELED(1, "chiseled_pink_sandstone", "chiseled"),
-		SMOOTH(2, "smooth_pink_sandstone", "smooth");
+		SMOOTH(2, "smooth_pink_sandstone", "smooth"),
+		WAVY(3, "wavy_pink_sandstone", "wavy");
 
 		private static final BlockPinkSandstone.EnumType[] META_LOOKUP = new BlockPinkSandstone.EnumType[values().length];
 		private final int metadata;

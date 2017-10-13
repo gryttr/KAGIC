@@ -274,7 +274,9 @@ tile.galaxy_pad_core.name=Galaxy Warp Pad Core
 tile.pink_sandstone.default.name=Pink Sandstone
 tile.pink_sandstone.chiseled.name=Chiseled Pink Sandstone
 tile.pink_sandstone.smooth.name=Smooth Pink Sandstone
+tile.pink_sandstone.wavy.name=Wavy Pink Sandstone
 tile.pink_sandstone_stairs.name=Pink Sandstone Stairs
+tile.wavy_pink_sandstone_stairs.name=Wavy Pink Sandstone Stairs
 tile.pink_sandstone_slab.pink_sandstone.name=Pink Sandstone Slab
 
 fluid.rose_tears=Healing Tears
