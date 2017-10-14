@@ -650,9 +650,15 @@ public class EntityJasper extends EntityGem {
     	case 6:
     		this.droppedGemItem = ModItems.FLAME_JASPER_GEM;
     		this.droppedCrackedGemItem = ModItems.CRACKED_FLAME_JASPER_GEM;
+    		break;
     	case 7:
     		this.droppedGemItem = ModItems.PICTURE_JASPER_GEM;
     		this.droppedCrackedGemItem = ModItems.CRACKED_PICTURE_JASPER_GEM;
+    		break;
+    	default:
+			this.droppedGemItem = ModItems.JASPER_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_JASPER_GEM;
+			break;
 		}
 		super.onDeath(cause);
 	}
