@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "kagic:pink_sandstone",
+    "data": 1
+  },
+  "pattern": [
+    "s",
+    "s"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "kagic:pink_sandstone_slab",
+      "data": 0
+    }
+  }
+}

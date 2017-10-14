@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "kagic:pink_sandstone",
+    "data": 0,
+    "count": 8
+  },
+  "pattern": [
+    "sss",
+    "sps",
+    "sss"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:sandstone",
+      "data": 0
+    },
+    "p": {
+      "item": "minecraft:dye",
+      "data": 9
+    }
+  }
+}

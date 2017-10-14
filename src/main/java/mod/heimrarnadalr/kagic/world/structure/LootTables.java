@@ -10,6 +10,7 @@ public class LootTables {
 	public static ResourceLocation SKY_SPIRE;
 	public static ResourceLocation CONTROL_ROOM;
 	public static ResourceLocation CONTROL_ROOM_MUSIC;
+	public static ResourceLocation ROSE_FOUNTAIN;
 	
 	public static void register() {
 		SMALL_ARENA = LootTableList.register(new ResourceLocation(KAGIC.MODID, "chests/smallarena"));
@@ -17,6 +18,7 @@ public class LootTables {
 		SKY_SPIRE = LootTableList.register(new ResourceLocation(KAGIC.MODID, "chests/skyspire"));
 		CONTROL_ROOM = LootTableList.register(new ResourceLocation(KAGIC.MODID, "dispensers/controlroom"));
 		CONTROL_ROOM_MUSIC = LootTableList.register(new ResourceLocation(KAGIC.MODID, "dispensers/controlroommusic"));
+		ROSE_FOUNTAIN = LootTableList.register(new ResourceLocation(KAGIC.MODID, "chests/rosefountain"));
 	}
 
 }

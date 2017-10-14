@@ -34,6 +34,7 @@ public class BlockPinkSandstoneSlab extends BlockSlab {
 		this.setUnlocalizedName("pink_sandstone_slab");
 		this.setDefaultState(defaultState.withProperty(VARIANT, BlockPinkSandstoneSlab.EnumType.PINK));
 		this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
+		this.useNeighborBrightness = true;
 	}
 
 	@Override

@@ -14,6 +14,7 @@ public class BlockPinkSandstoneStairs extends BlockStairs {
 		this.setResistance(4F);
 		this.setUnlocalizedName(name);
 		this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
+		this.useNeighborBrightness = true;
 	}
 
 }
