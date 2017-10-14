@@ -141,7 +141,7 @@ public class RuinStructure extends WorldGenerator {
 		}
 		
 		if (!checkDistance(world, pos)) {
-			KAGIC.instance.chatInfoMessage("Distance check failed");
+			//KAGIC.instance.chatInfoMessage("Distance check failed");
 			return false;
 		}
 		
