@@ -10,9 +10,11 @@ import mod.akrivus.kagic.init.ModEntities;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockDirt;
+import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -222,7 +224,15 @@ public class InjectorResult {
 		else if (state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND) {
 			world.setBlockState(ore, Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT));
 		}
-		else if ((state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON) && state.isFullCube()) {
+		else if ((state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON) && (state.isFullCube() || block instanceof BlockShulkerBox)) {
+			if (block instanceof BlockShulkerBox) {
+				TileEntityShulkerBox shulker = (TileEntityShulkerBox) world.getTileEntity(ore);
+				shulker.clear();
+				shulker.setDestroyedByCreativePlayer(true);
+				shulker.setCustomName(null);
+				shulker.setLootTable(null, 0);
+			}
+
 			if (ore.getY() % 6 == 0 || ore.getY() % 6 == 1) {
 				world.setBlockState(ore, ModBlocks.DRAINED_BLOCK_2.getDefaultState());
 			} else if (ore.getY() % 5 == 0) {

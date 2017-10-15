@@ -115,6 +115,24 @@ public class ModEntities {
 		EntityPearl.PEARL_YIELDS.put(Blocks.WATER.getDefaultState(), 0.55);
 		EntityPearl.PEARL_YIELDS.put(Blocks.BONE_BLOCK.getDefaultState(), 1.99);
 		EntityPearl.PEARL_YIELDS.put(Blocks.COAL_BLOCK.getDefaultState(), 5.99);
+		
+		EntityPearl.PEARL_YIELDS.put(Blocks.BLACK_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.BLUE_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.RED_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.YELLOW_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.GREEN_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.LIME_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.LIGHT_BLUE_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.WHITE_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.ORANGE_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.BROWN_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.GRAY_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.SILVER_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.CYAN_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.MAGENTA_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.PINK_SHULKER_BOX.getDefaultState(), 5.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.PURPLE_SHULKER_BOX.getDefaultState(), 5.99);
+		
 		ModEntities.registerWithOreDictionary(EntityPearl.PEARL_YIELDS, "Pearl", "Salt", "Calcite", "Amber");
 		EntityBismuth.BISMUTH_YIELDS.put(Blocks.DIAMOND_ORE.getDefaultState(), 0.99);
 		EntityBismuth.BISMUTH_YIELDS.put(Blocks.GOLD_ORE.getDefaultState(), 0.99);
