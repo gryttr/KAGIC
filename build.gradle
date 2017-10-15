@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 def minecraft_version = "[1.12,1.12.2]"
-version = "1.10a9"
+version = "1.10a10"
 group = "mod.akrivus.kagic"
 archivesBaseName = "kagic"
 

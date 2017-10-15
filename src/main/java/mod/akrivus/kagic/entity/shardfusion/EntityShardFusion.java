@@ -32,6 +32,7 @@ public class EntityShardFusion extends EntityGem {
 
 	public EntityShardFusion(World world) {
 		super(world);
+		this.isImmuneToFire = true;
 
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
