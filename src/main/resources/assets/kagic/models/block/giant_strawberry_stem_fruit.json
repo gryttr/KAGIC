@@ -1,0 +1,7 @@
+{
+    "parent": "block/stem_fruit",
+    "textures": {
+        "stem": "kagic:blocks/giant_strawberry_stem_disconnected",
+        "upperstem": "kagic:blocks/giant_strawberry_stem_connected"
+    }
+}

@@ -17,6 +17,7 @@ import mod.akrivus.kagic.items.ItemWarDeclaration;
 import mod.akrivus.kagic.items.ItemWarpWhistle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -52,6 +53,7 @@ public class ModItems {
 	public static final ItemVehicle ROAMING_EYE = new ItemVehicle("roaming_eye");
 	public static final Item LASER_BEAM = new Item().setUnlocalizedName("laser_beam");
 	public static final ItemWarpWhistle WARP_WHISTLE = new ItemWarpWhistle();
+	public static final ItemFood STRAWBERRY_SLICE = (ItemFood) new ItemFood(2, 0.3F, false).setUnlocalizedName("strawberryslice");
 	
 	public static final ItemGem RUBY_GEM = new ItemGem("ruby");
 	public static final ItemGem SAPPHIRE_GEM = new ItemGem("sapphire");
@@ -282,6 +284,7 @@ public class ModItems {
 		registerItem(ROAMING_EYE, event);
 		registerItem(LASER_BEAM, event);
 		registerItem(WARP_WHISTLE, event);
+		registerItem(STRAWBERRY_SLICE, event);
 	}
 	public static void registerGem(ItemGem normal, ItemGem broken, RegistryEvent.Register<Item> event) {
 		GEM_TABLE.put(normal, broken);

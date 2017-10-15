@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "kagic:giant_strawberry" },
+        "inventory": { "model": "kagic:giant_strawberry" }
+    }
+}

@@ -1320,6 +1320,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	public void seePastDoors() {
+		((PathNavigateGround) this.getNavigator()).setBreakDoors(true);
 		((PathNavigateGround) this.getNavigator()).setEnterDoors(true);
 	}
 	

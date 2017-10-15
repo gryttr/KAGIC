@@ -3,6 +3,8 @@ package mod.akrivus.kagic.init;
 import mod.akrivus.kagic.blocks.BlockGalaxyPadCore;
 import mod.akrivus.kagic.blocks.BlockGemDrill;
 import mod.akrivus.kagic.blocks.BlockGemSeed;
+import mod.akrivus.kagic.blocks.BlockGiantStrawberry;
+import mod.akrivus.kagic.blocks.BlockGiantStrawberryStem;
 import mod.akrivus.kagic.blocks.BlockIncubator;
 import mod.akrivus.kagic.blocks.BlockInjector;
 import mod.akrivus.kagic.blocks.BlockPinkSandstone;
@@ -18,6 +20,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSandStone;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStaticLiquid;
+import net.minecraft.block.BlockStem;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLiquid;
@@ -59,6 +62,8 @@ public class ModBlocks {
 	public static final BlockPinkSandstoneStairs WAVY_PINK_SANDSTONE_STAIRS = new BlockPinkSandstoneStairs("wavy_pink_sandstone_stairs");
 	public static final BlockPinkSandstoneSlab PINK_SANDSTONE_SLAB = new BlockPinkSandstoneSlab();
 	public static final BlockPinkSandstoneDoubleSlab PINK_SANDSTONE_DOUBLE_SLAB = new BlockPinkSandstoneDoubleSlab();
+	public static final BlockGiantStrawberry GIANT_STRAWBERRY = new BlockGiantStrawberry();
+	public static final BlockGiantStrawberryStem GIANT_STRAWBERRY_STEM = new BlockGiantStrawberryStem(GIANT_STRAWBERRY);
 	
 	public static final Fluid FLUID_ROSE_TEARS = new Fluid("rose_tears", new ResourceLocation("kagic:blocks/rose_tears_still"), new ResourceLocation("kagic:blocks/rose_tears_flowing"));
 	public static BlockRoseTears ROSE_TEARS;
@@ -83,6 +88,8 @@ public class ModBlocks {
 		registerBlock(WAVY_PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:wavy_pink_sandstone_stairs"), event);
 		registerBlock(PINK_SANDSTONE_SLAB, new ResourceLocation("kagic:pink_sandstone_slab"), event);
 		registerBlock(PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_double_slab"), event);
+		registerBlock(GIANT_STRAWBERRY, new ResourceLocation("kagic:giant_strawberry_block"), event);
+		registerBlock(GIANT_STRAWBERRY_STEM, new ResourceLocation("kagic:giant_strawberry_stem"), event);
 
 		registerFluid(FLUID_ROSE_TEARS);
 		ROSE_TEARS = new BlockRoseTears(FLUID_ROSE_TEARS, Material.WATER);

@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "blocks/kagic:giant_strawberry_top",
+        "side": "blocks/kagic:giant_strawberry_side"
+    }
+}
