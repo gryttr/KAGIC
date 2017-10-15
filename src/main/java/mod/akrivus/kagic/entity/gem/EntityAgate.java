@@ -171,8 +171,10 @@ public class EntityAgate extends EntityGem {
         	this.setGemCut(GemCuts.TEARDROP.id);
         }
     }
+    
+    @Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
-    	boolean holly = this.rand.nextInt(9) == 0;
+    	boolean holly = this.rand.nextInt(9) == 0 || this.getSpecial() == 1;
         if (holly) {
         	this.setCustomNameTag(new TextComponentTranslation("entity.kagic.agate_16.name").getUnformattedComponentText());
         	this.setGemPlacement(GemPlacements.BACK_OF_HEAD.id);
@@ -185,10 +187,18 @@ public class EntityAgate extends EntityGem {
         }
         return super.onInitialSpawn(difficulty, livingdata);
     }
+    
+    @Override
     public void itemDataToGemData(int data) {
 		this.dataManager.set(COLOR, data);
         this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.agate_%1$d.name", data)).getUnformattedComponentText());
-    	this.setSpecial(0);
+        if (data == 16) {
+        	this.setGemPlacement(GemPlacements.BACK_OF_HEAD.id);
+        	this.setGemCut(GemCuts.TEARDROP.id);
+        	this.setSpecial(1);
+        } else {
+        	this.setSpecial(0);
+        }
 	}
 
     /*********************************************************
@@ -317,6 +327,10 @@ public class EntityAgate extends EntityGem {
 	}
 	
 	public boolean hasBands() {
+		if (this.isHolly()) {
+			return false;
+		}
+		
 		switch(this.getColor()) {
 		case 2: return true;
 		case 3: return true;

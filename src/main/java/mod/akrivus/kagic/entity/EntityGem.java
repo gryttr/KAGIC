@@ -98,6 +98,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.DyeUtils;
 
 public class EntityGem extends EntityCreature implements IEntityOwnable, IRangedAttackMob {
 	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityGem.class, DataSerializers.OPTIONAL_UNIQUE_ID);
@@ -827,16 +828,16 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 						}
 					}
 				}
-				else if (stack.getItem() == Items.DYE && this.canChangeUniformColorByDefault() && player.isSneaking()) {
+				else if (DyeUtils.isDye(stack) && this.canChangeUniformColorByDefault() && player.isSneaking()) {
 					if (this.isTamed() && this.isOwner(player)) {
-						this.setUniformColor(15 - stack.getItemDamage());
+						this.setUniformColor(DyeUtils.metaFromStack(stack).orElse(0));
 						return true;
 					}
 				}
-				else if (stack.getItem() == Items.DYE && this.canChangeInsigniaColorByDefault()) {
+				else if (DyeUtils.isDye(stack) && this.canChangeInsigniaColorByDefault()) {
 					if (this.isTamed()) {
 						if (this.isOwner(player)) {
-							this.setInsigniaColor(15 - stack.getItemDamage());
+							this.setInsigniaColor(DyeUtils.metaFromStack(stack).orElse(0));
 							return true;
 						}
 					}
@@ -1105,7 +1106,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		if (stack.getItem() == ModItems.CRACKED_BLUE_DIAMOND_GEM || stack.getItem() == ModItems.CRACKED_YELLOW_DIAMOND_GEM || stack.getItem() == ModItems.BLUE_DIAMOND_GEM || stack.getItem() == ModItems.YELLOW_DIAMOND_GEM) {
 			return true;
 		}
-		else if (stack.getItem() == Items.DYE && (this.canChangeInsigniaColorByDefault() || this.canChangeUniformColorByDefault())) {
+		else if (DyeUtils.isDye(stack) && (this.canChangeInsigniaColorByDefault() || this.canChangeUniformColorByDefault())) {
 			return true;
 		}
 		else if (stack.getItem() == ModItems.GEM_STAFF) {

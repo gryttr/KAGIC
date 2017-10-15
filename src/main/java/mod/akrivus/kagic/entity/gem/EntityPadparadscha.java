@@ -24,6 +24,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
@@ -111,18 +112,32 @@ public class EntityPadparadscha extends EntityGem {
             }
         }
     }
+
+	@Override
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.PADPARADSCHA_LIVING;
 	}
+
+	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.SAPPHIRE_HURT;
 	}
+
+	@Override
 	protected SoundEvent getObeySound() {
 		return ModSounds.SAPPHIRE_OBEY;
 	}
+
+	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.SAPPHIRE_DEATH;
 	}
+
+	@Override
+	protected void playStepSound(BlockPos pos, Block block) {
+		//Sapphires have no legs and are thus completely silent
+	}
+	
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
 			if (hand == EnumHand.MAIN_HAND) {

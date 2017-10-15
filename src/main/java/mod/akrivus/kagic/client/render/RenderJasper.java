@@ -13,7 +13,9 @@ import mod.akrivus.kagic.client.render.layers.LayerQuartzItem;
 import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerUniform;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
+import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.entity.gem.EntityJasper;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.renderer.GlStateManager;
@@ -44,7 +46,10 @@ public class RenderJasper extends RenderBiped<EntityJasper> {
 		this.addLayer(new LayerVisor(this));
 		this.addLayer(new LayerQuartzCape(this));
 		this.addLayer(new LayerGemPlacement(this));
-
+		if (KAGIC.isHalloween()) {
+			this.addLayer(new LayerWitchHat(this));
+		}
+		
 		LayerBipedArmor jasperArmor = new LayerBipedArmor(this) {
 			@Override
 			protected void initArmor() {

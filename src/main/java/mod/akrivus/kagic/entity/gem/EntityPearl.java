@@ -53,6 +53,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.oredict.DyeUtils;
 
 public class EntityPearl extends EntityGem implements IInventoryChangedListener {
 	public static final HashMap<IBlockState, Double> PEARL_YIELDS = new HashMap<IBlockState, Double>();
@@ -225,10 +226,10 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 			        		}
 			        		return true;
 		        		}
-		    			else if (stack.getItem() == Items.DYE) {
+		    			else if (DyeUtils.isDye(stack)) {
 		    				if (player.isSneaking()) {
 		    					int oldColor = this.getHairColor();
-				        		this.setHairColor(15 - stack.getItemDamage());
+				        		this.setHairColor(DyeUtils.metaFromStack(stack).orElse(0));
 				        		if (!player.capabilities.isCreativeMode && oldColor != this.getHairColor()) {
 				        			stack.shrink(1);
 				        		}

@@ -119,19 +119,29 @@ public class KAGIC {
     	boolean sameDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH) == day;
     	return sameMonth && sameDay;
     }
+    
     public static boolean isFireworksDay() {
     	return KAGIC.isDayToday(1, 1) || KAGIC.isDayToday(3, 21) || KAGIC.isDayToday(7, 4);
     }
+    
     public static boolean isHalloween() {
-    	return KAGIC.isDayToday(10, 31);
+    	for (int day = 25; day <= 31; ++day) {
+    		if (KAGIC.isDayToday(10, day)) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
+    
     public static boolean isAprilFools() {
     	return KAGIC.isDayToday(4, 1);
     }
+    
     public static boolean isChristmas() {
     	return KAGIC.isDayToday(12, 25);
     }
+    
     public static boolean isBirthday() {
-    	return KAGIC.isDayToday(1, 17) || KAGIC.isDayToday(10, 24);
+    	return KAGIC.isDayToday(1, 17) || KAGIC.isDayToday(10, 24) || KAGIC.isDayToday(10, 22);
     }
 }

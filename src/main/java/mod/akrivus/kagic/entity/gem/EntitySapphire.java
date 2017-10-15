@@ -12,6 +12,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -98,18 +99,33 @@ public class EntitySapphire extends EntityGem {
     		break;
     	}
     }
+	
+	@Override
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.SAPPHIRE_LIVING;
 	}
+	
+	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.SAPPHIRE_HURT;
 	}
+	
+	@Override
 	protected SoundEvent getObeySound() {
 		return ModSounds.SAPPHIRE_OBEY;
 	}
+	
+	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.SAPPHIRE_DEATH;
 	}
+	
+	@Override
+	protected void playStepSound(BlockPos pos, Block block) {
+		//Sapphires have no legs and are thus completely silent
+	}
+	
+	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
 			if (hand == EnumHand.MAIN_HAND) {

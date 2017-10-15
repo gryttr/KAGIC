@@ -11,8 +11,10 @@ import mod.akrivus.kagic.client.render.layers.LayerQuartzItem;
 import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerUniform;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
+import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.entity.gem.EntityAmethyst;
 import mod.akrivus.kagic.entity.gem.EntityJasper;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderBiped;
@@ -40,6 +42,9 @@ public class RenderAmethyst extends RenderBiped<EntityAmethyst> {
         this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerQuartzCape(this));
         this.addLayer(new LayerGemPlacement(this));
+		if (KAGIC.isHalloween()) {
+			this.addLayer(new LayerWitchHat(this));
+		}
 
 		LayerBipedArmor amethystArmor = new LayerBipedArmor(this) {
 			@Override
