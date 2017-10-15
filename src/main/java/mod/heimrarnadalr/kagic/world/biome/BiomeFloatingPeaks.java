@@ -212,7 +212,6 @@ public class BiomeFloatingPeaks  extends Biome {
 				int offset = random.nextInt(OFFSETVARIANCE) + (int) (Decorator.MAXHEIGHT + Decorator.VERTICALOFFSET);
 				BlockPos floatPos = world.getTopSolidOrLiquidBlock(this.chunkPos.add(j, 0, k)).up(offset);
 				if (floatPos.getY() < 175) {
-					KAGIC.instance.chatInfoMessage("Generating float");
 					this.generateFloats(world, floatPos, random);
 				}
 			}

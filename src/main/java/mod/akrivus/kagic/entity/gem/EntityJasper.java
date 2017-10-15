@@ -477,7 +477,6 @@ public class EntityJasper extends EntityGem {
 					ItemStack stack = player.getHeldItemMainhand();
 					Item item = stack.getItem();
 					if (item instanceof ItemArmor && ((ItemArmor)item).armorType == EntityEquipmentSlot.HEAD || player.isSneaking() && stack.isEmpty()) {
-						KAGIC.instance.chatInfoMessage("Equipping helmet");
 						this.playEquipSound(stack);
 						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.HEAD), 0.0F);
 						this.setItemStackToSlot(EntityEquipmentSlot.HEAD, stack.copy());

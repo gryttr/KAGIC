@@ -175,7 +175,6 @@ public class EntityRoseQuartz extends EntityGem {
 					this.playObeySound();
 					return true;
 				} else if (item instanceof ItemArmor && ((ItemArmor)item).armorType == EntityEquipmentSlot.HEAD || player.isSneaking() && stack.isEmpty()) {
-					KAGIC.instance.chatInfoMessage("Equipping helmet");
 					this.playEquipSound(stack);
 					this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.HEAD), 0.0F);
 					this.setItemStackToSlot(EntityEquipmentSlot.HEAD, stack.copy());
