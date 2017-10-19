@@ -7,7 +7,7 @@
     "grg",
     "pep"
   ],
-  "type": "minecraft:crafting_shaped",
+  "type": "forge:ore_shaped",
   "key": {
     "p": {
       "item": "minecraft:blaze_powder"
@@ -21,8 +21,223 @@
     "r": {
       "item": "minecraft:redstone"
     },
-    "e": {
-      "item": "minecraft:emerald"
-    }
+    "e": [
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemAgate"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemAlexandrite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemAmber"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemAmethyst"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemAmetrine"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemAmmolite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemApatite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemAquamarine"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemBeryl"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemBlackDiamond"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemBlueTopaz"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemCarnelian"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemCatsEye"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemChrysoprase"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemCitrine"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemCoral"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemDiamond"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemEmerald"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemFluorite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemGarnet"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemGoldenBeryl"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemHeliodor"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemIndicolite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemIolite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemJade"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemJasper"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemKunzite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemKyanite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemLapis"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemLepidolite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemMalachite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemMoldavite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemMoonstone"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemMorganite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemOnyx"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemOpal"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemPearl"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemPeridot"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemPrismarine"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemPyrope"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemQuartz"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemRoseQuartz"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemRuby"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemRutile"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemSapphire"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemSpinel"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemSodalite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemSunstone"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemTanzanite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemTektite"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemTopaz"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemTurquoise"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemVioletSapphire"
+        },
+        {
+          "type": "forge:ore_dict",
+          "ore": "gemZircon"
+        }
+    ]
   }
 }
