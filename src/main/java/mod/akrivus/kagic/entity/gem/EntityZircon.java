@@ -41,10 +41,7 @@ public class EntityZircon extends EntityGem {
 		//Define valid gem cuts and placements
 		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.BACK_OF_HEAD);
 		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.FOREHEAD);
-		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.LEFT_EYE);
 		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.RIGHT_EYE);
-		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.LEFT_CHEEK);
-		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.RIGHT_CHEEK);
 		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.BACK);
 		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.CHEST);
 		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.BELLY);
