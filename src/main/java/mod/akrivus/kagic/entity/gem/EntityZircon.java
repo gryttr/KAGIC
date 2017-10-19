@@ -55,19 +55,19 @@ public class EntityZircon extends EntityGem {
 			public boolean apply(EntityCreeper input) {
 				return ((EntityCreeper) input).getCreeperState() == 1;
 			}
-        }, 6.0F, 1.0D, 1.2D));
+		}, 6.0F, 1.0D, 1.2D));
 		this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
-        this.tasks.addTask(3, new EntityAIOpenDoor(this, true));
-        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
-        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
-        this.tasks.addTask(6, new EntityAIStandGuard(this, 0.6D));
-        this.tasks.addTask(7, new EntityAILookIdle(this));
-        
-        // Apply entity attributes.
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
-        this.droppedGemItem = ModItems.ZIRCON_GEM;
+		this.tasks.addTask(3, new EntityAIOpenDoor(this, true));
+		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
+		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
+		this.tasks.addTask(6, new EntityAIStandGuard(this, 0.6D));
+		this.tasks.addTask(7, new EntityAILookIdle(this));
+		
+		// Apply entity attributes.
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
+		this.droppedGemItem = ModItems.ZIRCON_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_ZIRCON_GEM;
 	}
 
@@ -79,35 +79,128 @@ public class EntityZircon extends EntityGem {
 			return new float[] { 7F / 255F, 68F / 255F, 100F / 255F };
 		}
 		return new float[] { 7F / 255F, 68F / 255F, 100F / 255F };
-    }
-	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-    	livingdata = super.onInitialSpawn(difficulty, livingdata);
-    	this.setInsigniaColor(this.rand.nextInt(16));
-		this.setHasVisor(true);
-    	return livingdata;
 	}
+	
+	@Override
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		livingdata = super.onInitialSpawn(difficulty, livingdata);
+		this.setInsigniaColor(this.rand.nextInt(16));
+		this.setHasVisor(true);
+		return livingdata;
+	}
+	
+	@Override
 	public void itemDataToGemData(int data) {
 		this.setInsigniaColor(data);
 	}
+	
+	/*********************************************************
+	 * Methods related to death.							 *
+	 *********************************************************/
+	@Override
+	public void onDeath(DamageSource cause) {
+		switch (this.getInsigniaColor()) {
+		case 0:
+			this.droppedGemItem = ModItems.WHITE_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_WHITE_ZIRCON_GEM;
+			break;
+		case 1:
+			this.droppedGemItem = ModItems.ORANGE_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_ORANGE_ZIRCON_GEM;
+			break;
+		case 2:
+			this.droppedGemItem = ModItems.MAGENTA_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_MAGENTA_ZIRCON_GEM;
+			break;
+		case 3:
+			this.droppedGemItem = ModItems.LIGHT_BLUE_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_LIGHT_BLUE_ZIRCON_GEM;
+			break;
+		case 4:
+			this.droppedGemItem = ModItems.YELLOW_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_YELLOW_ZIRCON_GEM;
+			break;
+		case 5:
+			this.droppedGemItem = ModItems.LIME_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_LIME_ZIRCON_GEM;
+			break;
+		case 6:
+			this.droppedGemItem = ModItems.PINK_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_PINK_ZIRCON_GEM;
+			break;
+		case 7:
+			this.droppedGemItem = ModItems.GRAY_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_GRAY_ZIRCON_GEM;
+			break;
+		case 8:
+			this.droppedGemItem = ModItems.SILVER_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_SILVER_ZIRCON_GEM;
+			break;
+		case 9:
+			this.droppedGemItem = ModItems.CYAN_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_CYAN_ZIRCON_GEM;
+			break;
+		case 10:
+			this.droppedGemItem = ModItems.PURPLE_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_PURPLE_ZIRCON_GEM;
+			break;
+		case 11:
+			this.droppedGemItem = ModItems.BLUE_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_BLUE_ZIRCON_GEM;
+			break;
+		case 12:
+			this.droppedGemItem = ModItems.BROWN_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_BROWN_ZIRCON_GEM;
+			break;
+		case 13:
+			this.droppedGemItem = ModItems.GREEN_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_GREEN_ZIRCON_GEM;
+			break;
+		case 14:
+			this.droppedGemItem = ModItems.RED_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_RED_ZIRCON_GEM;
+			break;
+		case 15:
+			this.droppedGemItem = ModItems.BLACK_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_BLACK_ZIRCON_GEM;
+			break;
+		default:
+			this.droppedGemItem = ModItems.ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_ZIRCON_GEM;
+		}
+		super.onDeath(cause);
+	}
+	
+	@Override
 	protected int generateHairStyle() {
-    	return this.rand.nextInt(EntityZircon.ZIRCON_HAIR_STYLES.size());
-    }
+		return this.rand.nextInt(EntityZircon.ZIRCON_HAIR_STYLES.size());
+	}
 
+	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.ZIRCON_HURT;
 	}
+
+	@Override
 	protected SoundEvent getObeySound() {
 		return ModSounds.ZIRCON_OBEY;
 	}
+
+	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.ZIRCON_DEATH;
 	}
+
+	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		return super.processInteract(player, hand);
-    }
+	}
+
+	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 	}
+	
 	public String getSpecialSkin() {
 		return "0";
 	}

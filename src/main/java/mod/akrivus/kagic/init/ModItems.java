@@ -110,12 +110,25 @@ public class ModItems {
 	public static final ItemGem AQUAMARINE_GEM = new ItemGem("aquamarine");
 	public static final ItemGem TOPAZ_GEM = new ItemGem("topaz");
 	public static final ItemGem BLUE_TOPAZ_GEM = new ItemGem("topaz_1");
+	
 	public static final ItemGem WHITE_ZIRCON_GEM = new ItemGem("zircon_0");
 	public static final ItemGem ORANGE_ZIRCON_GEM = new ItemGem("zircon_1");
-	public static final ItemGem YELLOW_ZIRCON_GEM = new ItemGem("zircon_2");
-	public static final ItemGem BLUE_ZIRCON_GEM = new ItemGem("zircon_3");
-	public static final ItemGem GREEN_ZIRCON_GEM = new ItemGem("zircon_4");
+	public static final ItemGem MAGENTA_ZIRCON_GEM = new ItemGem("zircon_2");
+	public static final ItemGem LIGHT_BLUE_ZIRCON_GEM = new ItemGem("zircon_3");
+	public static final ItemGem YELLOW_ZIRCON_GEM = new ItemGem("zircon_4");
+	public static final ItemGem LIME_ZIRCON_GEM = new ItemGem("zircon_5");
+	public static final ItemGem PINK_ZIRCON_GEM = new ItemGem("zircon_6");
+	public static final ItemGem GRAY_ZIRCON_GEM = new ItemGem("zircon_7");
+	public static final ItemGem SILVER_ZIRCON_GEM = new ItemGem("zircon_8");
+	public static final ItemGem CYAN_ZIRCON_GEM = new ItemGem("zircon_9");
+	public static final ItemGem PURPLE_ZIRCON_GEM = new ItemGem("zircon_10");
+	public static final ItemGem BLUE_ZIRCON_GEM = new ItemGem("zircon_11");
+	public static final ItemGem BROWN_ZIRCON_GEM = new ItemGem("zircon_12");
+	public static final ItemGem GREEN_ZIRCON_GEM = new ItemGem("zircon_13");
+	public static final ItemGem RED_ZIRCON_GEM = new ItemGem("zircon_14");
+	public static final ItemGem BLACK_ZIRCON_GEM = new ItemGem("zircon_15");
 	public static final ItemGem ZIRCON_GEM = new ItemGem("zircon");
+	
 	public static final ItemGem RUTILE_GEM = new ItemGem("rutile");
 
 	public static final ItemGem YELLOW_DIAMOND_GEM = new ItemGem("yellow_diamond");
@@ -176,12 +189,25 @@ public class ModItems {
 	public static final ItemGem CRACKED_AQUAMARINE_GEM = new ItemGem("aquamarine", true);
 	public static final ItemGem CRACKED_TOPAZ_GEM = new ItemGem("topaz", true);
 	public static final ItemGem CRACKED_BLUE_TOPAZ_GEM = new ItemGem("topaz_1", true);
+
 	public static final ItemGem CRACKED_WHITE_ZIRCON_GEM = new ItemGem("zircon_0", true);
 	public static final ItemGem CRACKED_ORANGE_ZIRCON_GEM = new ItemGem("zircon_1", true);
-	public static final ItemGem CRACKED_YELLOW_ZIRCON_GEM = new ItemGem("zircon_2", true);
-	public static final ItemGem CRACKED_BLUE_ZIRCON_GEM = new ItemGem("zircon_3", true);
-	public static final ItemGem CRACKED_GREEN_ZIRCON_GEM = new ItemGem("zircon_4", true);
+	public static final ItemGem CRACKED_MAGENTA_ZIRCON_GEM = new ItemGem("zircon_2", true);
+	public static final ItemGem CRACKED_LIGHT_BLUE_ZIRCON_GEM = new ItemGem("zircon_3", true);
+	public static final ItemGem CRACKED_YELLOW_ZIRCON_GEM = new ItemGem("zircon_4", true);
+	public static final ItemGem CRACKED_LIME_ZIRCON_GEM = new ItemGem("zircon_5", true);
+	public static final ItemGem CRACKED_PINK_ZIRCON_GEM = new ItemGem("zircon_6", true);
+	public static final ItemGem CRACKED_GRAY_ZIRCON_GEM = new ItemGem("zircon_7", true);
+	public static final ItemGem CRACKED_SILVER_ZIRCON_GEM = new ItemGem("zircon_8", true);
+	public static final ItemGem CRACKED_CYAN_ZIRCON_GEM = new ItemGem("zircon_9", true);
+	public static final ItemGem CRACKED_PURPLE_ZIRCON_GEM = new ItemGem("zircon_10", true);
+	public static final ItemGem CRACKED_BLUE_ZIRCON_GEM = new ItemGem("zircon_11", true);
+	public static final ItemGem CRACKED_BROWN_ZIRCON_GEM = new ItemGem("zircon_12", true);
+	public static final ItemGem CRACKED_GREEN_ZIRCON_GEM = new ItemGem("zircon_13", true);
+	public static final ItemGem CRACKED_RED_ZIRCON_GEM = new ItemGem("zircon_14", true);
+	public static final ItemGem CRACKED_BLACK_ZIRCON_GEM = new ItemGem("zircon_15", true);
 	public static final ItemGem CRACKED_ZIRCON_GEM = new ItemGem("zircon", true);
+	
 	public static final ItemGem CRACKED_RUTILE_GEM = new ItemGem("rutile", true);
 
 	public static final ItemGem CRACKED_YELLOW_DIAMOND_GEM = new ItemGem("yellow_diamond", true);
@@ -250,6 +276,23 @@ public class ModItems {
 		registerGem(AQUAMARINE_GEM, CRACKED_AQUAMARINE_GEM, event);
 		registerGem(TOPAZ_GEM, CRACKED_TOPAZ_GEM, event);
 		registerGem(BLUE_TOPAZ_GEM, CRACKED_BLUE_TOPAZ_GEM, event);
+		
+		registerGem(WHITE_ZIRCON_GEM, CRACKED_WHITE_ZIRCON_GEM, event);
+		registerGem(ORANGE_ZIRCON_GEM, CRACKED_ORANGE_ZIRCON_GEM, event);
+		registerGem(MAGENTA_ZIRCON_GEM, CRACKED_MAGENTA_ZIRCON_GEM, event);
+		registerGem(LIGHT_BLUE_ZIRCON_GEM, CRACKED_LIGHT_BLUE_ZIRCON_GEM, event);
+		registerGem(YELLOW_ZIRCON_GEM, CRACKED_YELLOW_ZIRCON_GEM, event);
+		registerGem(LIME_ZIRCON_GEM, CRACKED_LIME_ZIRCON_GEM, event);
+		registerGem(PINK_ZIRCON_GEM, CRACKED_PINK_ZIRCON_GEM, event);
+		registerGem(GRAY_ZIRCON_GEM, CRACKED_GRAY_ZIRCON_GEM, event);
+		registerGem(SILVER_ZIRCON_GEM, CRACKED_SILVER_ZIRCON_GEM, event);
+		registerGem(CYAN_ZIRCON_GEM, CRACKED_CYAN_ZIRCON_GEM, event);
+		registerGem(PURPLE_ZIRCON_GEM, CRACKED_PURPLE_ZIRCON_GEM, event);
+		registerGem(BLUE_ZIRCON_GEM, CRACKED_BLUE_ZIRCON_GEM, event);
+		registerGem(BROWN_ZIRCON_GEM, CRACKED_BROWN_ZIRCON_GEM, event);
+		registerGem(GREEN_ZIRCON_GEM, CRACKED_GREEN_ZIRCON_GEM, event);
+		registerGem(RED_ZIRCON_GEM, CRACKED_RED_ZIRCON_GEM, event);
+		registerGem(BLACK_ZIRCON_GEM, CRACKED_BLACK_ZIRCON_GEM, event);
 		registerGem(ZIRCON_GEM, CRACKED_ZIRCON_GEM, event);
 		registerGem(RUTILE_GEM, CRACKED_RUTILE_GEM, event);
 
