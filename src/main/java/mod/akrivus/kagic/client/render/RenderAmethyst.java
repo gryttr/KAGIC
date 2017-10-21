@@ -24,15 +24,9 @@ import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderAmethyst extends RenderBiped<EntityAmethyst> {
+public class RenderAmethyst extends RenderGemBase<EntityAmethyst> {
 	public RenderAmethyst() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelQuartz(), 0.5F);
-		for (Iterator<LayerRenderer<EntityAmethyst>> iter = this.layerRenderers.iterator(); iter.hasNext();) {
-			LayerRenderer layer = iter.next();
-			if (layer instanceof LayerHeldItem) {
-				iter.remove();
-			}
-		}
 
 		this.addLayer(new LayerQuartzItem(this));
         this.addLayer(new LayerSkin(this));

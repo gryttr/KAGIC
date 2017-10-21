@@ -13,10 +13,16 @@ import net.minecraft.util.ResourceLocation;
 public class LayerSkin implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
+	private float offset;
 	
-	public LayerSkin(RenderLivingBase<?> gemRendererIn) {
-		this.gemRenderer = gemRendererIn;
-		this.gemModel = gemRendererIn.getMainModel();
+	public LayerSkin(RenderLivingBase<?> gemRenderer) {
+		this(gemRenderer, 0F);
+	}
+
+	public LayerSkin(RenderLivingBase<?> gemRenderer, float offset) {
+		this.gemRenderer = gemRenderer;
+		this.gemModel = gemRenderer.getMainModel();
+		this.offset = offset;
 	}
 
 	@Override
@@ -27,7 +33,7 @@ public class LayerSkin implements LayerRenderer<EntityGem> {
 		float g = (float) ((skin & 65280) >> 8) / 255f;
 		float b = (float) ((skin & 255) >> 0) / 255f;
 		//KAGIC.instance.chatInfoMessage("Skin color is " + r + " , " + g + " , " + b);
-		GlStateManager.color(r, g, b, 1f);
+		GlStateManager.color(r+ this.offset, g + this.offset, b + this.offset, 1f);
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());

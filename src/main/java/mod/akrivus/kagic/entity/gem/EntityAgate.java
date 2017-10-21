@@ -25,12 +25,17 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -204,12 +209,36 @@ public class EntityAgate extends EntityGem {
     /*********************************************************
 	 * Methods related to interaction.                       *
 	 *********************************************************/
+	@Override
+	public boolean processInteract(EntityPlayer player, EnumHand hand) {
+		if (!this.world.isRemote) {
+			if (hand == EnumHand.MAIN_HAND) {
+				if (this.isTamed() && this.isOwnedBy(player)) {
+					ItemStack stack = player.getHeldItemMainhand();
+					Item item = stack.getItem();
+					if (item instanceof ItemArmor && ((ItemArmor)item).armorType == EntityEquipmentSlot.HEAD || player.isSneaking() && stack.isEmpty()) {
+						this.playEquipSound(stack);
+						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.HEAD), 0.0F);
+						this.setItemStackToSlot(EntityEquipmentSlot.HEAD, stack.copy());
+						if (!player.isCreative()) {
+							stack.shrink(1);
+						}
+						this.playObeySound();
+						return true;
+					}
+				}
+			}
+		}
+		return super.processInteract(player, hand);
+    }
+
 	public int getColor() {
 		if (this.isHolly()) {
 			return 3;
 		}
 		return this.dataManager.get(COLOR);
 	}
+	
 	public boolean isHolly() {
 		return this.getSpecial() == 1 || this.getName().toLowerCase().contains("holly");
 	}
@@ -220,6 +249,7 @@ public class EntityAgate extends EntityGem {
 		KAGIC.instance.chatInfoMessage("Agate type is " + this.getColor());
 		return false;
 	}
+	
 	/*********************************************************
      * Methods related to death.                             *
      *********************************************************/
@@ -321,6 +351,16 @@ public class EntityAgate extends EntityGem {
 		return this.rand.nextInt(EntityAgate.AGATE_HAIR_STYLES.size());
 	}
 	
+	@Override
+	public boolean hasUniformVariant(GemPlacements placement) {
+		switch(placement) {
+		case BELLY:
+			return true;
+		default:
+			return false;
+		}
+	}
+
 	@Override
 	public boolean hasCape() {
 		return true;

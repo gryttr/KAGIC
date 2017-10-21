@@ -26,7 +26,7 @@ import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderJasper extends RenderBiped<EntityJasper> {
+public class RenderJasper extends RenderGemBase<EntityJasper> {
 	public RenderJasper() {
 		super(Minecraft.getMinecraft().getRenderManager(), new ModelQuartz(), 0.25F);
 		for (Iterator<LayerRenderer<EntityJasper>> iter = this.layerRenderers.iterator(); iter.hasNext();) {
@@ -46,10 +46,6 @@ public class RenderJasper extends RenderBiped<EntityJasper> {
 		this.addLayer(new LayerVisor(this));
 		this.addLayer(new LayerQuartzCape(this));
 		this.addLayer(new LayerGemPlacement(this));
-		if (KAGIC.isHalloween()) {
-			this.addLayer(new LayerWitchHat(this));
-		}
-		
 		LayerBipedArmor jasperArmor = new LayerBipedArmor(this) {
 			@Override
 			protected void initArmor() {
@@ -58,6 +54,10 @@ public class RenderJasper extends RenderBiped<EntityJasper> {
 			}
 		};
 		this.addLayer(jasperArmor);
+		
+		if (KAGIC.isHalloween()) {
+			this.addLayer(new LayerWitchHat(this));
+		}
 	}
 		
 	@Override

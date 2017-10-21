@@ -7,17 +7,20 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 
-public class ModelLapisLazuli extends ModelBiped {
+public class ModelLapisLazuli extends ModelGem {
 	private ModelRenderer bipedLeftWing;
 	private ModelRenderer bipedRightWing;
-	private final ModelRenderer witchHat;
 	
 	public ModelLapisLazuli() {
-		super(0.0F, 0.0F, 64, 64);
+		super(0.0F, 0.0F, 64, 64, false, -1F);
 		// Head.
 		this.bipedHead = (new ModelRenderer(this, 0, 0)).setTextureSize(64, 128);
 		this.bipedHead.addBox(-4F, -8F, -4F, 8, 8, 8);
 		this.bipedHead.setRotationPoint(0F, 0F, 0F);
+		if (KAGIC.isHalloween() || KAGIC.isBirthday() || KAGIC.isChristmas()) {
+			this.bipedHead.addChild(this.witchHat);
+		}
+		
 		// Hair.
 		this.bipedHeadwear = (new ModelRenderer(this, 32, 0)).setTextureSize(64, 128);
 		this.bipedHeadwear.addBox(-4F, -8F, -4F, 8, 8, 8, 1.1F);
@@ -50,34 +53,6 @@ public class ModelLapisLazuli extends ModelBiped {
 		this.bipedLeftLeg = (new ModelRenderer(this, 28, 16)).setTextureSize(64, 128);
 		this.bipedLeftLeg.addBox(-3F, 0F, -1F, 2, 12, 2);
 		this.bipedLeftLeg.setRotationPoint(0F, 12F, 0F);
-
-        if (KAGIC.isHalloween()) {
-	        float hatHeight = -1F;
-	        this.witchHat = (new ModelRenderer(this)).setTextureSize(64, 128);
-	        this.witchHat.setRotationPoint(-6.0F, -10.03125F, -6.0F);
-	        this.witchHat.setTextureOffset(0, 64).addBox(0.0F, hatHeight, 0.0F, 12, 2, 12);
-	        this.bipedHead.addChild(this.witchHat);
-	        ModelRenderer middle = (new ModelRenderer(this)).setTextureSize(64, 128);
-	        middle.setRotationPoint(2.75F, -4.0F, 3.0F);
-	        middle.setTextureOffset(0, 78).addBox(0.0F, hatHeight, 0.0F, 7, 4, 7);
-	        middle.rotateAngleX = -0.05235988F;
-	        middle.rotateAngleZ = 0.02617994F;
-	        this.witchHat.addChild(middle);
-	        ModelRenderer top = (new ModelRenderer(this)).setTextureSize(64, 128);
-	        top.setRotationPoint(1.75F, -4.0F, 2.0F);
-	        top.setTextureOffset(0, 89).addBox(0.0F, hatHeight, 0.0F, 4, 4, 4);
-	        top.rotateAngleX = -0.10471976F;
-	        top.rotateAngleZ = 0.05235988F;
-	        middle.addChild(top);
-	        ModelRenderer tip = (new ModelRenderer(this)).setTextureSize(64, 128);
-	        tip.setRotationPoint(1.75F, -2.0F, 2.0F);
-	        tip.setTextureOffset(0, 97).addBox(0.0F, hatHeight, 0.0F, 1, 2, 1, 0.25F);
-	        tip.rotateAngleX = -0.20943952F;
-	        tip.rotateAngleZ = 0.10471976F;
-	        top.addChild(tip);
-        } else {
-        	this.witchHat = null;
-        }
 	}
 	
 	@Override

@@ -189,10 +189,10 @@ public class EntityAmethyst extends EntityGem {
     	}
     }
 	
-    /*********************************************************
-     * Methods related to entity interaction.                *
-     *********************************************************/
-    @Override
+	/*********************************************************
+	 * Methods related to entity interaction.                *
+	*********************************************************/
+	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
 			if (hand == EnumHand.MAIN_HAND) {

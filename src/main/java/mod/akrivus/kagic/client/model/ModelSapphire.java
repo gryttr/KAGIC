@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.client.model;
 
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -7,14 +8,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ModelSapphire extends ModelBiped {
+public class ModelSapphire extends ModelGem {
 	private ModelRenderer bipedSkirt;
-	public ModelSapphire() {
-		super(0.0F, 0.0F, 64, 64);
+
+    public ModelSapphire() {
+		super(0.0F, 0.0F, 64, 64, false, 7F);
 		// Head.
 		this.bipedHead = new ModelRenderer(this, 0, 0);
 		this.bipedHead.addBox(-4.0F, 0.0F, -4.0F, 8, 8, 8);
 	    this.bipedHead.setRotationPoint(0F, 0F, 0F);
+		if (KAGIC.isHalloween() || KAGIC.isBirthday() || KAGIC.isChristmas()) {
+			this.bipedHead.addChild(this.witchHat);
+		}
+		
 	    // Hair.
 	    this.bipedHeadwear = new ModelRenderer(this, 32, 0);
 		this.bipedHeadwear.addBox(-4.0F, 0.0F, -4.0F, 8, 8, 8, 1.1F);
@@ -44,6 +50,8 @@ public class ModelSapphire extends ModelBiped {
 	    this.bipedLeftLeg.addBox(1F, 8F, -1F, 2, 4, 2);
 	    this.bipedLeftLeg.setRotationPoint(0F, 0F, 0F);
     }
+    
+    @Override
 	public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
 		this.bipedHead.render(scale);
@@ -55,6 +63,8 @@ public class ModelSapphire extends ModelBiped {
 		this.bipedRightLeg.render(scale);
 		this.bipedLeftLeg.render(scale);
 	}
+    
+    @Override
 	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
 	    super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
 	    super.copyModelAngles(this.bipedBody, this.bipedSkirt);

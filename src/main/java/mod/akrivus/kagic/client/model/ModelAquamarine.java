@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.client.model;
 
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -8,16 +9,20 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ModelAquamarine extends ModelBiped {
+public class ModelAquamarine extends ModelGem {
 	private ModelRenderer bipedSkirt;
 	private ModelRenderer bipedLeftWing;
 	private ModelRenderer bipedRightWing;
 	public ModelAquamarine() {
-		super(0.0F, 0.0F, 64, 64);
+		super(0.0F, 0.0F, 64, 64, false, 7F);
 		// Head.
 		this.bipedHead = new ModelRenderer(this, 0, 0);
 		this.bipedHead.addBox(-4F, 0F, -4F, 8, 8, 8);
 	    this.bipedHead.setRotationPoint(0F, 0F, 0F);
+		if (KAGIC.isHalloween() || KAGIC.isBirthday() || KAGIC.isChristmas()) {
+			this.bipedHead.addChild(this.witchHat);
+		}
+		
 	    // Hair.
 	    this.bipedHeadwear = new ModelRenderer(this, 32, 0);
 		this.bipedHeadwear.addBox(-4F, 0F, -4F, 8, 8, 8, 1.1F);

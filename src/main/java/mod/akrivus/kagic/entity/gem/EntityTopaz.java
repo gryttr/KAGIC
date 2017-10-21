@@ -60,19 +60,12 @@ public class EntityTopaz extends EntityGem {
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.FOREHEAD);
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_EYE);
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_EYE);
+		//Cheeks are actually the ear positions
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_CHEEK);
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_CHEEK);
-		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_SHOULDER);
-		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_SHOULDER);
-		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_HAND);
-		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_HAND);
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.BACK);
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.CHEST);
 		this.setCutPlacement(GemCuts.DRUM, GemPlacements.BELLY);
-		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_THIGH);
-		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_THIGH);
-		this.setCutPlacement(GemCuts.DRUM, GemPlacements.LEFT_KNEE);
-		this.setCutPlacement(GemCuts.DRUM, GemPlacements.RIGHT_KNEE);
 
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);

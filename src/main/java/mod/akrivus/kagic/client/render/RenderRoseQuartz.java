@@ -24,7 +24,7 @@ import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderRoseQuartz extends RenderBiped<EntityRoseQuartz> {
+public class RenderRoseQuartz extends RenderGemBase<EntityRoseQuartz> {
 	public RenderRoseQuartz() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelQuartz(), 0.25F);
 		for (Iterator<LayerRenderer<EntityRoseQuartz>> iter = this.layerRenderers.iterator(); iter.hasNext();) {

@@ -1,5 +1,7 @@
 package mod.akrivus.kagic.client.render.layers;
 
+import mod.akrivus.kagic.client.model.ModelGem;
+import mod.akrivus.kagic.client.render.RenderGemBase;
 import mod.akrivus.kagic.entity.EntityGem;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -13,12 +15,12 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 
 public class LayerWitchHat implements LayerRenderer<EntityGem> {
-	private final RenderLivingBase<?> gemRenderer;
-	private final ModelBase gemModel;
+	private final RenderGemBase<?> gemRenderer;
+	private final ModelGem gemModel;
 	
-	public LayerWitchHat(RenderLivingBase<?> gemRendererIn) {
-		this.gemRenderer = gemRendererIn;
-		this.gemModel = gemRendererIn.getMainModel();
+	public LayerWitchHat(RenderGemBase<?> gemRenderer) {
+		this.gemRenderer = gemRenderer;
+		this.gemModel = (ModelGem) gemRenderer.getMainModel();
 	}
 
 	@Override
@@ -29,7 +31,7 @@ public class LayerWitchHat implements LayerRenderer<EntityGem> {
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
-        this.gemModel.render(gem, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+        this.gemModel.renderWitchHat(scale);
 		GlStateManager.disableBlend();
 	}
 

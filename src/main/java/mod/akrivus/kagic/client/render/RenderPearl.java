@@ -8,7 +8,9 @@ import mod.akrivus.kagic.client.render.layers.LayerPearlDress;
 import mod.akrivus.kagic.client.render.layers.LayerPearlHair;
 import mod.akrivus.kagic.client.render.layers.LayerPearlItem;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
+import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.entity.gem.EntityPearl;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
@@ -16,7 +18,7 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderPearl extends RenderLivingBase<EntityPearl> {
+public class RenderPearl extends RenderGemBase<EntityPearl> {
 	private static final float OFFSET = .75f;
 
 	public RenderPearl() {
@@ -28,13 +30,20 @@ public class RenderPearl extends RenderLivingBase<EntityPearl> {
         this.addLayer(new LayerPearlDress(this));
         this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerGemPlacement(this));
+		if (KAGIC.isHalloween()) {
+			this.addLayer(new LayerWitchHat(this));
+		}
     }
+	
+	@Override
 	protected void preRenderCallback(EntityPearl gem, float partialTickTime) {
 		if (gem.getSpecialSkin().equals("_0")) {
 			float[] afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[((EntityPearl) gem).getColor()]);
 			GlStateManager.color(afloat[0] + OFFSET, afloat[1] + OFFSET, afloat[2] + OFFSET);
 		}
 	}
+	
+	@Override
 	protected ResourceLocation getEntityTexture(EntityPearl entity) {
 		return new ResourceLocation("kagic:textures/entities/pearl/pearl" + entity.getSpecialSkin() + ".png");
 	}

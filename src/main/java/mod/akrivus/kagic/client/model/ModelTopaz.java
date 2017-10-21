@@ -1,16 +1,21 @@
 package mod.akrivus.kagic.client.model;
 
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelTopaz extends ModelBiped {
+public class ModelTopaz extends ModelGem {
 	public ModelTopaz() {
-		super(0.0F, 0.0F, 64, 64);
+		super(0.0F, 0.0F, 64, 64, false, -3.5F);
 		// Head.
 		this.bipedHead = new ModelRenderer(this, 0, 0);
 		this.bipedHead.addBox(-4F, -12F, -4F, 8, 10, 8);
 		this.bipedHead.setRotationPoint(0F, 0F, 0F);
+		if (KAGIC.isHalloween() || KAGIC.isBirthday() || KAGIC.isChristmas()) {
+			this.bipedHead.addChild(this.witchHat);
+		}
+		
 	    // Hair.
 		this.bipedHeadwear = new ModelRenderer(this, 32, 0);
 		this.bipedHeadwear.addBox(-4F, -12F, -4F, 8, 10, 8, 1.1F);

@@ -9,13 +9,15 @@ import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerTopazItem;
 import mod.akrivus.kagic.client.render.layers.LayerUniform;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
+import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.entity.gem.EntityTopaz;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderTopaz extends RenderLivingBase<EntityTopaz> {
+public class RenderTopaz extends RenderGemBase<EntityTopaz> {
 	public RenderTopaz() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelTopaz(), 0.25F);
         this.addLayer(new LayerTopazItem(this));
@@ -26,12 +28,19 @@ public class RenderTopaz extends RenderLivingBase<EntityTopaz> {
         this.addLayer(new LayerGemPlacement(this));
         this.addLayer(new LayerFusionPlacement(this));
         this.addLayer(new LayerVisor(this));
-    }
+		if (KAGIC.isHalloween()) {
+			this.addLayer(new LayerWitchHat(this));
+		}
+	}
+	
+	@Override
 	protected void preRenderCallback(EntityTopaz gem, float partialTickTime) {
 		if (gem.isFusion()) {
 			GlStateManager.scale(gem.getFusionCount(), gem.getFusionCount(), gem.getFusionCount());
 		}
 	}
+	
+	@Override
 	protected ResourceLocation getEntityTexture(EntityTopaz entity) {
 		return new ResourceLocation("kagic:textures/entities/topaz/topaz.png");
 	}

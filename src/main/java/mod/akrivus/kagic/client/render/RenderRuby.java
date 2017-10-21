@@ -9,13 +9,15 @@ import mod.akrivus.kagic.client.render.layers.LayerRubyItem;
 import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerUniform;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
+import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.entity.gem.EntityRuby;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderRuby extends RenderLivingBase<EntityRuby> {
+public class RenderRuby extends RenderGemBase<EntityRuby> {
 	public RenderRuby() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelRuby(), 0.25F);
         this.addLayer(new LayerRubyItem(this));
@@ -26,7 +28,12 @@ public class RenderRuby extends RenderLivingBase<EntityRuby> {
         this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerGemPlacement(this));
         this.addLayer(new LayerFusionPlacement(this));
+		if (KAGIC.isHalloween()) {
+			this.addLayer(new LayerWitchHat(this));
+		}
     }
+	
+	@Override
 	protected void preRenderCallback(EntityRuby gem, float partialTickTime) {
 		if (gem.isFusion()) {
 			GlStateManager.scale(gem.getFusionCount(), gem.getFusionCount(), gem.getFusionCount());
@@ -35,6 +42,8 @@ public class RenderRuby extends RenderLivingBase<EntityRuby> {
 			GlStateManager.scale(0.5F, 0.5F, 0.5F);
 		}
 	}
+	
+	@Override
 	protected ResourceLocation getEntityTexture(EntityRuby entity) {
 		return new ResourceLocation("kagic:textures/entities/ruby/ruby.png");
 	}

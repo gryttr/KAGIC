@@ -1,5 +1,7 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -25,10 +28,13 @@ import net.minecraft.entity.ai.EntityAIRestrictOpenDoor;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
@@ -37,13 +43,25 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class EntitySapphire extends EntityGem {
 	public static final HashMap<IBlockState, Double> SAPPHIRE_YIELDS = new HashMap<IBlockState, Double>();
 	public static final HashMap<Integer, ResourceLocation> SAPPHIRE_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private boolean spawnedPadparadscha;
 	private int luckTicks = 0;
+
+	private static final List<Integer> SKIN_COLORS = new ArrayList<Integer>(Arrays.asList(
+			4, 4, 4, 4,						//Yellow
+			6, 6, 6,						//Pink
+			10,	10,							//Purple
+			11, 11, 11, 11, 11,	11, 11, 11, //Blue
+			13,	13,							//Green
+			15								//Black
+	)); 
+
 	public EntitySapphire(World worldIn) {
 		super(worldIn);
 		//Width must be 0.6, or she will get stuck trying to pass through doors
@@ -85,9 +103,55 @@ public class EntitySapphire extends EntityGem {
 		this.droppedCrackedGemItem = ModItems.CRACKED_SAPPHIRE_GEM;
 	}
 
+	@Override
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		livingdata = super.onInitialSpawn(difficulty, livingdata);
+		int color = this.SKIN_COLORS.get(this.rand.nextInt(this.SKIN_COLORS.size()));
+		this.setSpecial(color);
+		this.setSkinColor(this.generateSkinColor());
+		this.setHairColor(this.getSkinColor());
+		this.setUniformColor(color);
+		this.setInsigniaColor(color);
+		return livingdata;
+	}
+	
+	@Override
+	public void itemDataToGemData(int data) {
+		this.setSpecial(data);
+		this.setSkinColor(this.generateSkinColor());
+		this.setHairColor(this.getSkinColor());
+		this.setUniformColor(data);
+		this.setInsigniaColor(data);
+	}
+	
+	@Override
 	public float[] getGemColor() {
-    	return new float[] { 155F / 255F, 202F / 255F, 255F / 255F };
+		return EntitySheep.getDyeRgb(EnumDyeColor.values()[this.getSpecial()]);
     }
+	
+	@Override
+	public void readEntityFromNBT(NBTTagCompound compound) {
+		super.readEntityFromNBT(compound);
+
+		if (compound.hasKey("skinColor")) {
+			if (compound.getInteger("skinColor") == 0) {
+				this.setSpecial(11);
+				this.setSkinColor(this.generateSkinColor());
+				this.setHairColor(this.getSkinColor());
+				this.setUniformColor(11);
+				this.setInsigniaColor(11);
+			}
+		}
+		else {
+			this.setSpecial(11);
+			this.setSkinColor(this.generateSkinColor());
+			this.setHairColor(this.getSkinColor());
+			this.setUniformColor(11);
+			this.setInsigniaColor(11);
+		}
+	}
+	
+	@Override
 	public void convertGems(int placement) {
     	this.setGemCut(GemCuts.FACETED.id);
     	switch (placement) {
@@ -141,6 +205,8 @@ public class EntitySapphire extends EntityGem {
 		}
 		return super.processInteract(player, hand);
     }
+	
+	@Override
 	public void onLivingUpdate() {
         if (this.isDefective()) {
         	if (this.spawnedPadparadscha) {
@@ -180,6 +246,7 @@ public class EntitySapphire extends EntityGem {
         }
 		super.onLivingUpdate();
 	}
+	
 	private void futureVision() {
         if (!this.world.isRemote) {
             AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, (this.posX + 1), (this.posY + 1), (this.posZ + 1))).grow(8.0, (double) this.world.getHeight(), 8.0);
@@ -206,4 +273,55 @@ public class EntitySapphire extends EntityGem {
             }
         }
     }
+
+	/*********************************************************
+	 * Methods related to death.							 *
+	 *********************************************************/
+	@Override
+	public void onDeath(DamageSource cause) {
+		switch (this.getSpecial()) {
+		case 4:
+			this.droppedGemItem = ModItems.YELLOW_SAPPHIRE_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_YELLOW_SAPPHIRE_GEM;
+			break;
+		case 6:
+			this.droppedGemItem = ModItems.PINK_SAPPHIRE_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_PINK_SAPPHIRE_GEM;
+			break;
+		case 10:
+			this.droppedGemItem = ModItems.PURPLE_SAPPHIRE_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_PURPLE_SAPPHIRE_GEM;
+			break;
+		case 11:
+			this.droppedGemItem = ModItems.BLUE_SAPPHIRE_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_BLUE_SAPPHIRE_GEM;
+			break;
+		case 13:
+			this.droppedGemItem = ModItems.GREEN_SAPPHIRE_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_GREEN_SAPPHIRE_GEM;
+			break;
+		case 15:
+			this.droppedGemItem = ModItems.BLACK_SAPPHIRE_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_BLACK_SAPPHIRE_GEM;
+			break;
+		default:
+			this.droppedGemItem = ModItems.SAPPHIRE_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_SAPPHIRE_GEM;
+		}
+		super.onDeath(cause);
+	}
+
+	/*********************************************************
+	 * Methods related to rendering.                         *
+	 *********************************************************/
+	@Override
+	protected int generateSkinColor() {
+		int colorIndex = this.getSpecial();
+		EnumDyeColor color = EnumDyeColor.values()[colorIndex];
+		int colorValue = 0;
+		try {
+			colorValue = ReflectionHelper.getPrivateValue(EnumDyeColor.class, color, "colorValue", "field_193351_w", "w");
+		} catch (Exception e) {}
+		return colorValue;
+	}
 }
