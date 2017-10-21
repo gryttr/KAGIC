@@ -72,9 +72,11 @@ public class ModelAgate extends ModelQuartz {
 		this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
 		this.bipedHead.render(scale);
 		this.bipedHeadwear.render(scale);
-		this.bipedSideBuns.render(scale);
-		this.bipedTopBun.render(scale);
-		this.bipedBackBun.render(scale);
+		if (this.bipedTopBun != null) {
+			this.bipedSideBuns.render(scale);
+			this.bipedTopBun.render(scale);
+			this.bipedBackBun.render(scale);
+		}
 		this.bipedBody.render(scale);
 		this.bipedRightArm.render(scale);
 		this.bipedLeftArm.render(scale);

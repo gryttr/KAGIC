@@ -400,6 +400,7 @@ command.kagic.padparadscha_interact=I predict you will approach me!
 
 command.kagic.sapphire_rebel=Keep an eye on %1$s, I see them rebelling...
 command.kagic.sapphire_attacker=Get ready, %1$s is about to attack.
+command.kagic.sapphire_birthday=A special day will soon be here!
 
 command.kagic.aquamarine_entities=I sense a %1$s not too far from us.
 command.kagic.aquamarine_blocks_below=I sense %1$s below us.

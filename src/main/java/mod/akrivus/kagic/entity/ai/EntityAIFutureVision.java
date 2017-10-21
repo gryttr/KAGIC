@@ -4,6 +4,7 @@ import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntitySapphire;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.EntityMob;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.World;
 
 public class EntityAIFutureVision extends EntityAIBase {
 	private final EntitySapphire gem;
@@ -21,10 +23,21 @@ public class EntityAIFutureVision extends EntityAIBase {
 		this.gem = gem;
 		this.setMutexBits(0);
 	}
+	
+	@Override
 	public boolean shouldExecute() {
-		return this.gem.getOwner() != null && this.gem.getOwner().getDistanceToEntity(this.gem) < 16 && this.gem.world.getTotalWorldTime() - this.lastPrediction > 100 + this.gem.world.rand.nextInt(100);
+		boolean execute = this.gem.getOwner() != null && this.gem.getOwner().getDistanceToEntity(this.gem) < 16 && this.gem.world.getTotalWorldTime() - this.lastPrediction > 200 + this.gem.world.rand.nextInt(200);
+		//KAGIC.instance.chatInfoMessage("Execute is " + execute);
+		return execute;
 	}
+	
+	@Override
 	public void startExecuting() {
+		World world = this.gem.world;
+		if (world.rand.nextInt(100) == 0 && world.rand.nextBoolean() && KAGIC.isBirthdayTomorrow() /*&& !this.lastMessage.equals("birthday")*/) {
+			this.sendMessage("birthday");
+		}
+		
 		List<EntityLivingBase> list = this.gem.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.gem.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D));
         double maxDistance = Double.MAX_VALUE;
         for (EntityLivingBase weirdo : list) {
@@ -34,21 +47,21 @@ public class EntityAIFutureVision extends EntityAIBase {
                 if (!this.gem.isOwner(weirdo)) {
                 	if (weirdo instanceof EntityGem) {
                 		EntityGem possibleRebel = (EntityGem) weirdo;
-                		if (this.gem.isOwner(possibleRebel.getOwner()) && possibleRebel.isTraitor() && !this.lastMessage.equals(possibleRebel.getUniqueID())) {
+                		if (this.gem.isOwner(possibleRebel.getOwner()) && possibleRebel.isTraitor() && !this.lastMessage.equals(possibleRebel.getUniqueID().toString())) {
                 			this.sendMessage("rebel", possibleRebel.getName());
                 			this.lastMessage = possibleRebel.getUniqueID().toString();
                 		}
                 	}
                 	else if (weirdo instanceof EntityMob) {
                 		EntityMob possibleAttacker = (EntityMob) weirdo;
-                		if (possibleAttacker.getAttackTarget() != null && possibleAttacker.getAttackTarget().equals(this.gem.getOwner()) && !this.lastMessage.equals(possibleAttacker.getUniqueID())) {
+                		if (possibleAttacker.getAttackTarget() != null && possibleAttacker.getAttackTarget().equals(this.gem.getOwner()) && !this.lastMessage.equals(possibleAttacker.getUniqueID().toString())) {
                 			this.sendMessage("attacker", possibleAttacker.getName());
                 			this.lastMessage = possibleAttacker.getUniqueID().toString();
                 		}
                 	}
                 	else if (weirdo instanceof EntityPlayer) {
                 		EntityPlayer possibleAttacker = (EntityPlayer) weirdo;
-                		if ((possibleAttacker.getHeldItemMainhand().getItem() instanceof ItemSword || possibleAttacker.getHeldItemMainhand().getItem() instanceof ItemBow) && !this.lastMessage.equals(possibleAttacker.getUniqueID())) {
+                		if ((possibleAttacker.getHeldItemMainhand().getItem() instanceof ItemSword || possibleAttacker.getHeldItemMainhand().getItem() instanceof ItemBow) && !this.lastMessage.equals(possibleAttacker.getUniqueID().toString())) {
                 			this.sendMessage("attacker", possibleAttacker.getName());
                 			this.lastMessage = possibleAttacker.getUniqueID().toString();
                 		}
@@ -57,10 +70,23 @@ public class EntityAIFutureVision extends EntityAIBase {
             }
         }
 	}
-	private void sendMessage(String line, String formatting) {
+
+	@Override
+    public boolean shouldContinueExecuting() {
+		return false;
+    }
+    
+    private void sendMessage(String line, String formatting) {
 		this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.sapphire_" + line, formatting).getUnformattedComponentText()));
 		//this.gem.getOwner().addStat(ModAchievements.YOUR_CLARITY);
 		this.lastPrediction = this.gem.world.getTotalWorldTime();
 		this.lastMessage = formatting;
+	}
+    
+	private void sendMessage(String line) {
+		this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.sapphire_" + line).getUnformattedComponentText()));
+		//this.gem.getOwner().addStat(ModAchievements.WHAT_A_MYSTERY);
+		this.lastPrediction = this.gem.world.getTotalWorldTime();
+		this.lastMessage = line;
 	}
 }

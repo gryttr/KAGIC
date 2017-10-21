@@ -14,9 +14,13 @@ public class EntityAIRetroVision extends EntityAIBase {
 		this.gem = gem;
 		this.setMutexBits(0);
 	}
+	
+	@Override
 	public boolean shouldExecute() {
 		return this.gem.getOwner() != null && this.gem.getOwner().getDistanceToEntity(this.gem) < 16 && this.gem.world.getTotalWorldTime() - this.lastPrediction > 200 + this.gem.world.rand.nextInt(200);
 	}
+	
+	@Override
 	public void startExecuting() {
 		World world = this.gem.world;
 		if (world.rand.nextInt(100) == 0 && world.rand.nextBoolean() && !this.lastMessage.equals("wallbreaker")) {
@@ -65,12 +69,19 @@ public class EntityAIRetroVision extends EntityAIBase {
 			this.sendMessage("moonset");
 		}
 	}
+	
+	@Override
+    public boolean shouldContinueExecuting() {
+		return false;
+    }
+    
 	private void sendMessage(String line, String formatting) {
 		this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.padparadscha_" + line, formatting).getUnformattedComponentText()));
 		//this.gem.getOwner().addStat(ModAchievements.WHAT_A_MYSTERY);
 		this.lastPrediction = this.gem.world.getTotalWorldTime();
 		this.lastMessage = formatting;
 	}
+	
 	private void sendMessage(String line) {
 		this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.padparadscha_" + line).getUnformattedComponentText()));
 		//this.gem.getOwner().addStat(ModAchievements.WHAT_A_MYSTERY);
