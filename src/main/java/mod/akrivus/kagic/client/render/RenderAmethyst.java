@@ -3,6 +3,7 @@ package mod.akrivus.kagic.client.render;
 import java.util.Iterator;
 
 import mod.akrivus.kagic.client.model.ModelQuartz;
+import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerHair;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
@@ -36,7 +37,9 @@ public class RenderAmethyst extends RenderGemBase<EntityAmethyst> {
         this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerQuartzCape(this));
         this.addLayer(new LayerGemPlacement(this));
-		if (KAGIC.isHalloween()) {
+		if (KAGIC.isBirthday()) {
+			this.addLayer(new LayerBirthdayHat(this));
+		} else if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
 		}
 

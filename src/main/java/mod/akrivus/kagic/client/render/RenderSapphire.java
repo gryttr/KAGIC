@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.client.render;
 
 import mod.akrivus.kagic.client.model.ModelSapphire;
+import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerHair;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
@@ -26,7 +27,9 @@ public class RenderSapphire extends RenderGemBase<EntitySapphire> {
         this.addLayer(new LayerHair(this, 0.5F));
         this.addLayer(new LayerGemPlacement(this));
 
-		if (KAGIC.isHalloween()) {
+		if (KAGIC.isBirthday()) {
+			this.addLayer(new LayerBirthdayHat(this));
+		} else if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
 		}
 	}

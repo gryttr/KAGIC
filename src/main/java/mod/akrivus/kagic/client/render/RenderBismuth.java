@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.client.render;
 
 import mod.akrivus.kagic.client.model.ModelBismuth;
+import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
 import mod.akrivus.kagic.client.render.layers.LayerBismuthItem;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
@@ -23,7 +24,9 @@ public class RenderBismuth extends RenderGemBase<EntityBismuth> {
         this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerInsignia(this));
         this.addLayer(new LayerGemPlacement(this));
-		if (KAGIC.isHalloween()) {
+		if (KAGIC.isBirthday()) {
+			this.addLayer(new LayerBirthdayHat(this));
+		} else if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
 		}
     }

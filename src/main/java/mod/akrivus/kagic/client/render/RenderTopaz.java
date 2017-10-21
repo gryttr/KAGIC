@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.client.render;
 
 import mod.akrivus.kagic.client.model.ModelTopaz;
+import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
 import mod.akrivus.kagic.client.render.layers.LayerFusionPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerHair;
@@ -29,7 +30,9 @@ public class RenderTopaz extends RenderGemBase<EntityTopaz> {
         this.addLayer(new LayerGemPlacement(this));
         this.addLayer(new LayerFusionPlacement(this));
         this.addLayer(new LayerVisor(this));
-		if (KAGIC.isHalloween()) {
+		if (KAGIC.isBirthday()) {
+			this.addLayer(new LayerBirthdayHat(this));
+		} else if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
 		}
 

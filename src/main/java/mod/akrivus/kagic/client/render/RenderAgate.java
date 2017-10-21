@@ -7,6 +7,7 @@ import mod.akrivus.kagic.client.model.ModelQuartz;
 import mod.akrivus.kagic.client.render.layers.LayerAgateBand;
 import mod.akrivus.kagic.client.render.layers.LayerAgateHair;
 import mod.akrivus.kagic.client.render.layers.LayerAgateItem;
+import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
 import mod.akrivus.kagic.client.render.layers.LayerNoDyeOverlay;
@@ -48,7 +49,9 @@ public class RenderAgate extends RenderGemBase<EntityAgate> {
         this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerQuartzCape(this));
         this.addLayer(new LayerGemPlacement(this));
-		if (KAGIC.isHalloween()) {
+		if (KAGIC.isBirthday()) {
+			this.addLayer(new LayerBirthdayHat(this));
+		} else if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
 		}
 
@@ -67,6 +70,9 @@ public class RenderAgate extends RenderGemBase<EntityAgate> {
 		if (!agate.isHolly()) {
 			float[] afloat = EntityAgate.AGATECOLORS[agate.getColor()];
 			GlStateManager.color(afloat[0] + OFFSET, afloat[1] + OFFSET, afloat[2] + OFFSET);
+		}
+		if (agate.isDefective()) {
+			GlStateManager.scale(0.8F, 0.8F, 0.8F);
 		}
 	}
 	

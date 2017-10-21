@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.client.render;
 
 import mod.akrivus.kagic.client.model.ModelRuby;
+import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
 import mod.akrivus.kagic.client.render.layers.LayerFusionPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerHair;
@@ -28,7 +29,9 @@ public class RenderRuby extends RenderGemBase<EntityRuby> {
         this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerGemPlacement(this));
         this.addLayer(new LayerFusionPlacement(this));
-		if (KAGIC.isHalloween()) {
+		if (KAGIC.isBirthday()) {
+			this.addLayer(new LayerBirthdayHat(this));
+		} else if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
 		}
     }

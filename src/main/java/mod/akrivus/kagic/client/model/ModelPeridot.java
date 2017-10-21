@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.client.model;
 
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -7,15 +8,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ModelPeridot extends ModelBiped {
+public class ModelPeridot extends ModelGem {
 	private ModelRenderer squareHair;
 	
 	public ModelPeridot() {
-		super(0.0F, 0.0F, 64, 64);
+		super(0.0F, 0.0F, 64, 64, false, -0F);
 		// Head.
 		this.bipedHead = new ModelRenderer(this, 0, 0);
 		this.bipedHead.addBox(-4F, -2F, -4F, 2, 2, 2);
 	    this.bipedHead.setRotationPoint(0F, 0F, 0F);
+		if (KAGIC.isHalloween() || KAGIC.isBirthday() || KAGIC.isChristmas()) {
+			this.bipedHead.addChild(this.witchHat);
+		}
+
 		// Hair.
 		this.bipedHeadwear = new ModelRenderer(this, 0, 0);
 		this.bipedHeadwear.addBox(-6F, -6F, -4F, 12, 12, 8);
@@ -67,5 +72,13 @@ public class ModelPeridot extends ModelBiped {
 		this.bipedHeadwear.rotateAngleX = 0;
 		this.bipedHeadwear.rotateAngleY = 0;
 		this.bipedHeadwear.rotateAngleZ = 0.7853982f;
+	}
+	
+	@Override
+	public void renderWitchHat(float scale) {
+		boolean isHidden = this.squareHair.isHidden;
+		this.squareHair.isHidden = true;;
+		this.bipedHead.render(scale);
+		this.squareHair.isHidden = isHidden;
 	}
 }

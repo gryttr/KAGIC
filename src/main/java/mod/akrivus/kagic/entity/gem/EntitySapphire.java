@@ -61,6 +61,7 @@ public class EntitySapphire extends EntityGem {
 			13,	13,							//Green
 			15								//Black
 	)); 
+	private static final int NUM_HAIRSTYLES = 2;
 
 	public EntitySapphire(World worldIn) {
 		super(worldIn);
@@ -323,5 +324,22 @@ public class EntitySapphire extends EntityGem {
 			colorValue = ReflectionHelper.getPrivateValue(EnumDyeColor.class, color, "colorValue", "field_193351_w", "w");
 		} catch (Exception e) {}
 		return colorValue;
+	}
+
+	@Override
+	protected int generateHairStyle() {
+		return this.rand.nextInt(EntitySapphire.NUM_HAIRSTYLES);
+	}
+
+	@Override
+	public boolean hasHairVariant(GemPlacements placement) {
+		switch(placement) {
+		case RIGHT_EYE:
+			return true;
+		case LEFT_EYE:
+			return true;
+		default:
+			return false;
+		}
 	}
 }

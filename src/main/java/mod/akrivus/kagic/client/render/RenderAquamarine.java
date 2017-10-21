@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.client.render;
 
 import mod.akrivus.kagic.client.model.ModelAquamarine;
+import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
@@ -18,7 +19,9 @@ public class RenderAquamarine extends RenderGemBase<EntityAquamarine> {
         this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerInsignia(this));
         this.addLayer(new LayerGemPlacement(this));
-		if (KAGIC.isHalloween()) {
+		if (KAGIC.isBirthday()) {
+			this.addLayer(new LayerBirthdayHat(this));
+		} else if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
 		}
     }

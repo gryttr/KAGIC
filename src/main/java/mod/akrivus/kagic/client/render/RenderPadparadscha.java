@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.client.render;
 
 import mod.akrivus.kagic.client.model.ModelSapphire;
+import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
@@ -15,7 +16,9 @@ public class RenderPadparadscha extends RenderGemBase<EntityPadparadscha> {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelSapphire(), 0.25F);
         this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerGemPlacement(this));
-		if (KAGIC.isHalloween()) {
+		if (KAGIC.isBirthday()) {
+			this.addLayer(new LayerBirthdayHat(this));
+		} else if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
 		}
     }

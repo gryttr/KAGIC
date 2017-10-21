@@ -10,7 +10,7 @@ public class ModelGem extends ModelBiped {
 	public ModelGem(float modelSize, float p_i1149_2_, int textureWidth, int textureHeight, boolean isArmor, float hatHeight) {
 		super(modelSize, p_i1149_2_, textureWidth, textureHeight);
 
-        if (!isArmor && KAGIC.isHalloween()) {
+        if (!isArmor && (KAGIC.isHalloween() || KAGIC.isBirthday() || KAGIC.isChristmas())) {
 	        this.witchHat = (new ModelRenderer(this)).setTextureSize(64, 128);
 	        this.witchHat.setRotationPoint(-6.0F, -10.03125F, -6.0F);
 	        this.witchHat.setTextureOffset(0, 64).addBox(0.0F, hatHeight, 0.0F, 12, 2, 12);
