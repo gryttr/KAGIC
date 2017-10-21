@@ -15,6 +15,7 @@ import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
+import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderTopaz extends RenderGemBase<EntityTopaz> {
@@ -31,6 +32,15 @@ public class RenderTopaz extends RenderGemBase<EntityTopaz> {
 		if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
 		}
+
+		LayerBipedArmor topazArmor = new LayerBipedArmor(this) {
+			@Override
+			protected void initArmor() {
+				this.modelLeggings = new ModelTopaz(0.5F, true);
+				this.modelArmor = new ModelTopaz(1F, true);
+			}
+		};
+		this.addLayer(topazArmor);
 	}
 	
 	@Override

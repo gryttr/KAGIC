@@ -27,6 +27,9 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
@@ -146,14 +149,37 @@ public class EntityTopaz extends EntityGem {
     /*********************************************************
      * Methods related to entity interaction.                *
      *********************************************************/
+    @Override
     public boolean processInteract(EntityPlayer player, EnumHand hand) {
-    	return super.processInteract(player, hand);
+		if (!this.world.isRemote) {
+			if (hand == EnumHand.MAIN_HAND) {
+				if (this.isTamed() && this.isOwnedBy(player)) {
+					ItemStack stack = player.getHeldItemMainhand();
+					Item item = stack.getItem();
+					if (item instanceof ItemArmor && ((ItemArmor)item).armorType == EntityEquipmentSlot.HEAD || player.isSneaking() && stack.isEmpty()) {
+						this.playEquipSound(stack);
+						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.HEAD), 0.0F);
+						this.setItemStackToSlot(EntityEquipmentSlot.HEAD, stack.copy());
+						if (!player.isCreative()) {
+							stack.shrink(1);
+						}
+						this.playObeySound();
+						return true;
+					}
+				}
+			}
+		}
+		return super.processInteract(player, hand);
     }
+    
+    @Override
     public boolean alternateInteract(EntityPlayer player) {
     	super.alternateInteract(player);
     	this.wantsToFuse = true;
     	return true;
     }
+    
+    @Override
     public boolean onSpokenTo(EntityPlayer player, String message) {
     	boolean spokenTo = super.onSpokenTo(player, message);
     	if (!spokenTo) {
@@ -177,6 +203,7 @@ public class EntityTopaz extends EntityGem {
     	}
     	return spokenTo;
     }
+    
     public void whenFused() {
 		this.setSize(0.9F * this.getFusionCount(), 2.3F * this.getFusionCount());
     }

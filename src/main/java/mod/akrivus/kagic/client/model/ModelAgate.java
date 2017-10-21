@@ -5,9 +5,9 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelAgate extends ModelQuartz {
-	private ModelRenderer bipedSideBuns;
-	private ModelRenderer bipedTopBun;
-	private ModelRenderer bipedBackBun;
+	private ModelRenderer bipedSideBuns = null;
+	private ModelRenderer bipedTopBun = null;
+	private ModelRenderer bipedBackBun = null;
 
     public ModelAgate() {
     	this(0F, false);
@@ -85,8 +85,10 @@ public class ModelAgate extends ModelQuartz {
     @Override
 	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
-		super.copyModelAngles(this.bipedHead, this.bipedSideBuns);
-		super.copyModelAngles(this.bipedHead, this.bipedTopBun);
-		super.copyModelAngles(this.bipedHead, this.bipedBackBun);
+		if (this.bipedTopBun != null) {
+			super.copyModelAngles(this.bipedHead, this.bipedSideBuns);
+			super.copyModelAngles(this.bipedHead, this.bipedTopBun);
+			super.copyModelAngles(this.bipedHead, this.bipedBackBun);
+		}
 	}
 }

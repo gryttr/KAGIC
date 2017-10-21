@@ -21,8 +21,8 @@ public class RenderSapphire extends RenderGemBase<EntitySapphire> {
 
 		this.addLayer(new LayerSkin(this, 0.25F));
         this.addLayer(new LayerUniform(this));
-        this.addLayer(new LayerInsignia(this));
         this.addLayer(new LayerNoDyeOverlay(this));
+        this.addLayer(new LayerInsignia(this));
         this.addLayer(new LayerHair(this, 0.5F));
         this.addLayer(new LayerGemPlacement(this));
 
