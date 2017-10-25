@@ -17,6 +17,7 @@ import mod.akrivus.kagic.entity.gem.EntityAquamarine;
 import mod.akrivus.kagic.entity.gem.EntityBismuth;
 import mod.akrivus.kagic.entity.gem.EntityBlueDiamond;
 import mod.akrivus.kagic.entity.gem.EntityCarnelian;
+import mod.akrivus.kagic.entity.gem.EntityHessonite;
 import mod.akrivus.kagic.entity.gem.EntityJasper;
 import mod.akrivus.kagic.entity.gem.EntityLapisLazuli;
 import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
@@ -36,6 +37,7 @@ import mod.akrivus.kagic.entity.shardfusion.EntityFootArm;
 import mod.akrivus.kagic.entity.shardfusion.EntityHandBody;
 import mod.akrivus.kagic.entity.shardfusion.EntityMouthTorso;
 import mod.akrivus.kagic.entity.vehicles.EntityRoamingEye;
+import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.entity.Render;
@@ -44,6 +46,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -76,6 +79,7 @@ public class ModEntities {
 		registerGem("topaz", EntityTopaz.class, 0xF5FC51, 0xFDFEA4, false);
 		registerGem("rutile", EntityRutile.class, 0xD2508C, 0x23020D, false);
 		registerGem("zircon", EntityZircon.class, 0x458FBE, 0x57C7CF, false);
+		registerGem("hessonite", EntityHessonite.class, 0xBE331C, 0xEDCC41, false);
 		registerDiamond("yellow_diamond", EntityYellowDiamond.class);
 		registerDiamond("blue_diamond", EntityBlueDiamond.class);
 		
@@ -113,7 +117,9 @@ public class ModEntities {
 		EntityPearl.PEARL_YIELDS.put(Blocks.SAND.getDefaultState(), 0.77);
 		EntityPearl.PEARL_YIELDS.put(Blocks.SOUL_SAND.getDefaultState(), 0.44);
 		EntityPearl.PEARL_YIELDS.put(Blocks.WATER.getDefaultState(), 0.55);
-		EntityPearl.PEARL_YIELDS.put(Blocks.BONE_BLOCK.getDefaultState(), 1.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.BONE_BLOCK.getDefaultState().withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.X), 1.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.BONE_BLOCK.getDefaultState().withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Y), 1.99);
+		EntityPearl.PEARL_YIELDS.put(Blocks.BONE_BLOCK.getDefaultState().withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Z), 1.99);
 		EntityPearl.PEARL_YIELDS.put(Blocks.COAL_BLOCK.getDefaultState(), 5.99);
 		
 		EntityPearl.PEARL_YIELDS.put(Blocks.BLACK_SHULKER_BOX.getDefaultState(), 5.99);
@@ -198,6 +204,20 @@ public class ModEntities {
 		EntityAquamarine.AQUAMARINE_YIELDS.put(Blocks.PRISMARINE.getDefaultState(), 1.99);
 		EntityAquamarine.AQUAMARINE_YIELDS.put(Blocks.WATER.getDefaultState(), 0.11);
 		ModEntities.registerWithOreDictionary(EntityAquamarine.AQUAMARINE_YIELDS, "Aquamarine", "Beryl");
+		
+		EntityHessonite.HESSONITE_YIELDS.put(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE), 0.33);
+		EntityHessonite.HESSONITE_YIELDS.put(Blocks.IRON_ORE.getDefaultState(), 0.33);
+		EntityHessonite.HESSONITE_YIELDS.put(Blocks.IRON_BLOCK.getDefaultState(), 0.66);
+		EntityHessonite.HESSONITE_YIELDS.put(Blocks.BONE_BLOCK.getDefaultState().withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.X), 0.99);
+		EntityHessonite.HESSONITE_YIELDS.put(Blocks.BONE_BLOCK.getDefaultState().withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Y), 0.99);
+		EntityHessonite.HESSONITE_YIELDS.put(Blocks.BONE_BLOCK.getDefaultState().withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Z), 0.99);
+		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 1.99, "oreGarnet");
+		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 1.99, "oreAluminum");
+		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 1.99, "oreAluminium");
+		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 5.99, "oreGarnet");
+		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 5.99, "oreAluminum");
+		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 5.99, "oreAluminium");
+		
 		EntityTopaz.TOPAZ_YIELDS.put(Blocks.END_STONE.getDefaultState(), 0.22);
 		EntityTopaz.TOPAZ_YIELDS.put(Blocks.GLOWSTONE.getDefaultState(), 0.99);
 		EntityTopaz.TOPAZ_YIELDS.put(Blocks.GOLD_ORE.getDefaultState(), 0.45);
@@ -214,6 +234,7 @@ public class ModEntities {
 		EntityZircon.ZIRCON_YIELDS.put(Blocks.DIAMOND_BLOCK.getDefaultState(), 5.99);
 		ModEntities.registerWithOreDictionary(EntityZircon.ZIRCON_YIELDS, "Zircon");
 	}
+	
 	public static void registerWithOreDictionary(HashMap<IBlockState, Double> yields, String... keys) {
 		NonNullList<ItemStack> totalCruxes = NonNullList.create();
 		for (String suffix : keys) {
@@ -236,6 +257,17 @@ public class ModEntities {
 			}
 		}
 	}
+	
+	public static void registerOreDictValue(HashMap<IBlockState, Double> yields, double value, String key) {
+		NonNullList<ItemStack> cruxes = OreDictionary.getOres(key);
+		for (ItemStack stack : cruxes) {
+			if (stack.getItem() instanceof ItemBlock) {
+				IBlockState blockState = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
+				yields.put(blockState, value);
+			}
+		}
+	}
+	
 	public static void registerGemAddons() {
 		EntityAgate.AGATE_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/agate/hair/holly.png"));
 		EntityAgate.AGATE_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/agate/hair/back.png"));

@@ -73,6 +73,7 @@ public class ModelQuartz extends ModelGem {
 		this.bipedLeftLeg.render(scale);
 	}
 	
+	@Override
 	public void renderCape(float scale)
 	{
 		this.bipedCape.render(scale);

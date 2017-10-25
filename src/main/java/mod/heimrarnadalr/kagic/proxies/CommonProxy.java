@@ -2,6 +2,7 @@ package mod.heimrarnadalr.kagic.proxies;
 
 import java.util.LinkedHashMap;
 
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModBiomes;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModEnchantments;
@@ -46,6 +47,10 @@ public class CommonProxy {
 	@SubscribeEvent
 	public static void registerBiomes(RegistryEvent.Register<Biome> event) {
 		ModBiomes.register(event);
+	}
+	
+	public void registerStateMappers() {
+
 	}
 	
 	public void openWarpPadSelectionGUI(LinkedHashMap<BlockPos, WarpPadDataEntry> padData, int x, int y, int z) {

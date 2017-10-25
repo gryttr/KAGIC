@@ -1,7 +1,9 @@
 package mod.akrivus.kagic.client.render.layers;
 
+import mod.akrivus.kagic.client.model.ModelGem;
 import mod.akrivus.kagic.client.model.ModelQuartz;
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.gem.EntityHessonite;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
@@ -16,14 +18,22 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class LayerQuartzCape implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<?> gemRenderer;
+	private final boolean isBack;
+	private final boolean useInsigniaColors;
 
-	public LayerQuartzCape(RenderLivingBase<?> gemRendererIn) {
-		this.gemRenderer = gemRendererIn;
+	public LayerQuartzCape(RenderLivingBase<?> gemRenderer) {
+		this(gemRenderer, false, false);
 	}
 
+	public LayerQuartzCape(RenderLivingBase<?> gemRenderer, boolean isBack, boolean useInsigniaColors) {
+		this.gemRenderer = gemRenderer;
+		this.isBack = isBack;
+		this.useInsigniaColors = useInsigniaColors;
+	}
+
+	@Override
 	public void doRenderLayer(EntityGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		if (gem.isPrimary() && !gem.isInvisible() && gem.hasCape())	{
-			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+		if ((gem.isPrimary() || gem instanceof EntityHessonite) && !gem.isInvisible() && gem.hasCape())	{
 			this.gemRenderer.bindTexture(this.getTexture(gem));
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(0.0F, 0.0F, 0.125F);
@@ -52,9 +62,14 @@ public class LayerQuartzCape implements LayerRenderer<EntityGem> {
 			GlStateManager.rotate(f3 / 2.0F, 0.0F, 0.0F, 1.0F);
 			GlStateManager.rotate(-f3 / 2.0F, 0.0F, 1.0F, 0.0F);
 			GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-			float[] afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[gem.getUniformColor()]);
+			float[] afloat;
+			if (useInsigniaColors) {
+				afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[gem.getInsigniaColor()]);
+			} else {
+				afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[gem.getUniformColor()]);
+			}
 			GlStateManager.color(afloat[0] * 2, afloat[1] * 2, afloat[2] * 2);
-			((ModelQuartz) this.gemRenderer.getMainModel()).renderCape(0.0625F);
+			((ModelGem) this.gemRenderer.getMainModel()).renderCape(0.0625F);
 			GlStateManager.popMatrix();
 		}
 	}
@@ -71,7 +86,11 @@ public class LayerQuartzCape implements LayerRenderer<EntityGem> {
 	
 	public ResourceLocation getTexture(EntityGem gem) {
 		ResourceLocation loc = EntityList.getKey(gem);
-		return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/cape.png");
+		if (isBack) {
+			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/cape_back.png");
+		} else {
+			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/cape.png");
+		}
 	}
 	
 	public boolean shouldCombineTextures() {

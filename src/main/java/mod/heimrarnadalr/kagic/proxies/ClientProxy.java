@@ -25,9 +25,10 @@ import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy {
-	@SubscribeEvent
-	public static void registerBlocks(RegistryEvent.Register<Block> event) {
+	@Override
+	public void registerStateMappers() {
 		ModelLoader.setCustomStateMapper(ModBlocks.PINK_SANDSTONE, (new StateMap.Builder()).withName(BlockPinkSandstone.TYPE).build());
+		ModelLoader.setCustomStateMapper(ModBlocks.ROSE_TEARS, new FluidModelMapper(ModBlocks.FLUID_ROSE_TEARS));
 	}
 
 	/*@SubscribeEvent

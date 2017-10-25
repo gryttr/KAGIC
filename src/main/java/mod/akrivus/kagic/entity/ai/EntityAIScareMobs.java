@@ -2,13 +2,14 @@ package mod.akrivus.kagic.entity.ai;
 
 import java.util.List;
 
+import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityAgate;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.monster.EntityMob;
 
 public class EntityAIScareMobs extends EntityAIBase {
-	private final EntityAgate agate;
-	public EntityAIScareMobs(EntityAgate agate) {
+	private final EntityGem agate;
+	public EntityAIScareMobs(EntityGem agate) {
 		this.agate = agate;
 		this.setMutexBits(0);
 	}

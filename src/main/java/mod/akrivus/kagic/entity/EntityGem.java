@@ -1966,6 +1966,11 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.world.spawnEntity(firework);
 	}
 	
+	@Override
+	public boolean getAlwaysRenderNameTag() {
+		return true;
+	}
+	
 	/*********************************************************
 	 * Methods related to entity sound.					  *
 	 *********************************************************/

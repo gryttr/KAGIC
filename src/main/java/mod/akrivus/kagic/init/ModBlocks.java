@@ -94,9 +94,7 @@ public class ModBlocks {
 		registerFluid(FLUID_ROSE_TEARS);
 		ROSE_TEARS = new BlockRoseTears(FLUID_ROSE_TEARS, Material.WATER);
 		registerBlock(ROSE_TEARS, new ResourceLocation("kagic:rose_tears"), event);
-		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
-			ModelLoader.setCustomStateMapper(ModBlocks.ROSE_TEARS, new FluidModelMapper(ModBlocks.FLUID_ROSE_TEARS));
-		}
+		KAGIC.proxy.registerStateMappers();
 	}
 	
 	public static void registerBlock(Block block, ResourceLocation location, RegistryEvent.Register<Block> event) {

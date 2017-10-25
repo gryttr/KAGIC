@@ -41,4 +41,6 @@ public class ModelGem extends ModelBiped {
 	public void renderWitchHat(float scale) {
 		this.bipedHead.render(scale);
 	}
+
+	public void renderCape(float scale)	{}
 }

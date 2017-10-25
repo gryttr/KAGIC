@@ -60,6 +60,8 @@ entity.kagic.roaming_eye.name=Roaming Eye
 entity.kagic.laser.name=Laser Beam
 entity.kagic.aquamarine.name=Aquamarine
 entity.kagic.aquamarine.name.plural=Aquamarines
+entity.kagic.hessonite.name=Hessonite
+entity.kagic.hessonite.name.plural=Hessonites
 entity.kagic.topaz.name=Topaz
 entity.kagic.topaz.name.plural=Topazes
 entity.kagic.rutile.name=Rutile
@@ -153,6 +155,7 @@ item.agate_16_gem.name=Holly Blue Agate Gem
 item.yellow_diamond_gem.name=Yellow Diamond Gem
 item.blue_diamond_gem.name=Blue Diamond Gem
 item.aquamarine_gem.name=Aquamarine Gem
+item.hessonite_gem.name=Hessonite Gem
 
 item.sapphire_gem.name=Sapphire Gem
 item.sapphire_4_gem.name=Yellow Sapphire Gem
@@ -240,6 +243,7 @@ item.cracked_agate_16_gem.name=Cracked Holly Blue Agate Gem
 item.cracked_yellow_diamond_gem.name=Cracked Yellow Diamond Gem
 item.cracked_blue_diamond_gem.name=Cracked Blue Diamond Gem
 item.cracked_aquamarine_gem.name=Cracked Aquamarine Gem
+item.cracked_hessonite_gem.name=Cracked Hessonite Gem
 
 item.cracked_sapphire_gem.name=Cracked Sapphire Gem
 item.cracked_sapphire_4_gem.name=Cracked Yellow Sapphire Gem
