@@ -44,6 +44,6 @@ public class LayerJasperMark2 implements LayerRenderer<EntityJasper> {
 
 	@Override
 	public boolean shouldCombineTextures() {
-		return false;
+		return true;
 	}
 }

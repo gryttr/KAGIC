@@ -42,6 +42,6 @@ public class LayerFusionPlacement implements LayerRenderer<EntityGem> {
 		}
 	}
 	public boolean shouldCombineTextures() {
-		return false;
+		return true;
 	}
 }

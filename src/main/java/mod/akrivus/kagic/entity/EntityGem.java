@@ -155,7 +155,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public boolean wantsToFuse;
 	public int compatIndex;
 	
-	private ArrayList<UUID> jointOwners = new ArrayList<UUID>();
+	protected ArrayList<UUID> jointOwners = new ArrayList<UUID>();
 	private UUID leader = null;
 	private BlockPos restPosition;
 	
@@ -1516,7 +1516,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	public void unfuse() {
-		
+		this.playSound(ModSounds.GEM_POOF, 3.0F, 1.0F);
 	}
 	
 	public boolean isFusion() {
@@ -1545,6 +1545,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		}
 	}
 	
+	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (!this.world.isRemote) {
 			if (this.isDead || this.getHealth() <= 0.0F) {
@@ -1721,7 +1722,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public boolean isOwnedBySamePeople(EntityGem gem) {
 		if (gem != null) {
-			return this.isOwnedBy(this.getOwner()) && gem.isOwnedBy(gem.getOwner());
+			return this.isOwnedById(gem.getOwnerId()) && gem.isOwnedById(this.getOwnerId());
 		}
 		return false;
 	}

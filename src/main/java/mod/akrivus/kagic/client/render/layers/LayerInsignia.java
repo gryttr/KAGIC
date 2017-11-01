@@ -51,6 +51,6 @@ public class LayerInsignia implements LayerRenderer<EntityGem> {
 	}
 	
 	public boolean shouldCombineTextures() {
-		return false;
+		return true;
 	}
 }

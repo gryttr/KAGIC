@@ -30,6 +30,7 @@ import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import mod.akrivus.kagic.entity.gem.EntityTopaz;
 import mod.akrivus.kagic.entity.gem.EntityYellowDiamond;
 import mod.akrivus.kagic.entity.gem.EntityZircon;
+import mod.akrivus.kagic.entity.gem.fusion.EntityOpal;
 import mod.akrivus.kagic.entity.pepo.EntityCactus;
 import mod.akrivus.kagic.entity.pepo.EntityMelon;
 import mod.akrivus.kagic.entity.pepo.EntityPumpkin;
@@ -86,6 +87,8 @@ public class ModEntities {
 		registerDiamond("handbody", EntityHandBody.class);
 		registerDiamond("footarm", EntityFootArm.class);
 		registerDiamond("mouthtorso", EntityMouthTorso.class);
+		
+		registerDiamond("opal", EntityOpal.class);
 		
 		registerMob("melon", EntityMelon.class, 0xB5B128, 0x5A671A);
 		registerMob("pumpkin", EntityPumpkin.class, 0xD58116, 0x744E03);
@@ -206,6 +209,7 @@ public class ModEntities {
 		ModEntities.registerWithOreDictionary(EntityAquamarine.AQUAMARINE_YIELDS, "Aquamarine", "Beryl");
 		
 		EntityHessonite.HESSONITE_YIELDS.put(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE), 0.33);
+		EntityHessonite.HESSONITE_YIELDS.put(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE_SMOOTH), 0.33);
 		EntityHessonite.HESSONITE_YIELDS.put(Blocks.IRON_ORE.getDefaultState(), 0.33);
 		EntityHessonite.HESSONITE_YIELDS.put(Blocks.IRON_BLOCK.getDefaultState(), 0.66);
 		EntityHessonite.HESSONITE_YIELDS.put(Blocks.BONE_BLOCK.getDefaultState().withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.X), 0.99);
@@ -214,9 +218,7 @@ public class ModEntities {
 		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 1.99, "oreGarnet");
 		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 1.99, "oreAluminum");
 		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 1.99, "oreAluminium");
-		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 5.99, "oreGarnet");
-		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 5.99, "oreAluminum");
-		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 5.99, "oreAluminium");
+		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 5.99, "blockGarnet");
 		
 		EntityTopaz.TOPAZ_YIELDS.put(Blocks.END_STONE.getDefaultState(), 0.22);
 		EntityTopaz.TOPAZ_YIELDS.put(Blocks.GLOWSTONE.getDefaultState(), 0.99);

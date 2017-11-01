@@ -26,6 +26,6 @@ public class LayerAgateHair implements LayerRenderer<EntityAgate> {
 		}
 	}
 	public boolean shouldCombineTextures() {
-		return false;
+		return true;
 	}
 }

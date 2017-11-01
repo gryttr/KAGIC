@@ -13,6 +13,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIPickUpItems;
 import mod.akrivus.kagic.entity.ai.EntityAISitStill;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.block.state.IBlockState;
@@ -451,7 +452,20 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 		if (!this.canPickUpLoot()) {
 			this.setCanPickUpLoot(this.isTamed());
 		}
+		/*
+		if (!this.world.isRemote) {
+			if (this.getRevengeTarget() != null) {
+				KAGIC.instance.chatInfoMessage("Revenge target is " + this.getRevengeTarget());
+			} else {
+				KAGIC.instance.chatInfoMessage("Revenge target is null");
+			}
+		}*/
 		super.onLivingUpdate();
+	}
+	
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		return super.attackEntityFrom(source, amount);
 	}
 	
 	/*********************************************************

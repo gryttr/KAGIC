@@ -1,5 +1,8 @@
 package mod.akrivus.kagic.client.render.layers;
 
+import java.util.ArrayList;
+
+import mod.akrivus.kagic.entity.EntityFusionGem;
 import mod.akrivus.kagic.entity.EntityGem;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -8,16 +11,20 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
 
-public class LayerGemPlacement implements LayerRenderer<EntityGem> {
+public class LayerCrossFusionGemPlacement implements LayerRenderer<EntityFusionGem> {
 	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
-	public LayerGemPlacement(RenderLivingBase<?> gemRendererIn) {
+	public LayerCrossFusionGemPlacement(RenderLivingBase<?> gemRendererIn) {
 		this.gemRenderer = gemRendererIn;
 		this.gemModel = gemRendererIn.getMainModel();
 	}
-	public void doRenderLayer(EntityGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		if (!gem.isFusion()) {
-			this.gemRenderer.bindTexture(this.getTexture(gem));
+	
+	@Override
+	public void doRenderLayer(EntityFusionGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+		String[] types = gem.getFusionTypes().split(" ");
+		String[] cutPlacements = gem.getFusionPlacements().split(" ");
+		for (int i = 0; i < gem.getFusionCount(); ++i) {
+			this.gemRenderer.bindTexture(this.getTexture(gem, types[i], cutPlacements[i]));
 			float[] colors = gem.getGemColor();
 			GlStateManager.color(colors[0], colors[1], colors[2]);
 			this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
@@ -25,10 +32,12 @@ public class LayerGemPlacement implements LayerRenderer<EntityGem> {
 	        GlStateManager.disableBlend();
 		}
 	}
-	public ResourceLocation getTexture(EntityGem gem) {
+	
+	public ResourceLocation getTexture(EntityGem gem, String type, String cutPlacement) {
 		ResourceLocation loc = EntityList.getKey(gem);
-		return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/gems/" + gem.getGemPlacement().id + "_" + gem.getGemCut().id + ".png");
+		return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/gems/" + type + "/" + cutPlacement + ".png");
 	}
+	
 	public String getName(EntityGem gem) {
 		ResourceLocation loc = EntityList.getKey(gem);
 		if (loc.getResourceDomain().equals("kagic")) {
@@ -38,6 +47,8 @@ public class LayerGemPlacement implements LayerRenderer<EntityGem> {
 	        return loc.getResourcePath();
 		}
 	}
+	
+	@Override
 	public boolean shouldCombineTextures() {
 		return true;
 	}

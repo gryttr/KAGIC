@@ -24,6 +24,6 @@ public class LayerZirconHair implements LayerRenderer<EntityZircon> {
 		}
 	}
 	public boolean shouldCombineTextures() {
-		return false;
+		return true;
 	}
 }

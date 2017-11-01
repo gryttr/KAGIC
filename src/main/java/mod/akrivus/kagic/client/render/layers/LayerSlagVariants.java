@@ -24,6 +24,6 @@ public class LayerSlagVariants implements LayerRenderer<EntitySlag> {
 		}
 	}
 	public boolean shouldCombineTextures() {
-		return false;
+		return true;
 	}
 }

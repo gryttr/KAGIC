@@ -25,6 +25,6 @@ public class LayerPearlHair implements LayerRenderer<EntityPearl> {
 		}
 	}
 	public boolean shouldCombineTextures() {
-		return false;
+		return true;
 	}
 }

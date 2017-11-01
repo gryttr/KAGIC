@@ -502,9 +502,6 @@ public class EntityRuby extends EntityGem {
 		return this.getSpecial();
 	}
 	
-	/*********************************************************
-	 * Methods related to sounds.                            *
-	 *********************************************************/
 	@Override
 	protected int generateSkinColor() {
 		ArrayList<Integer> skinColors = new ArrayList<Integer>();
@@ -560,15 +557,26 @@ public class EntityRuby extends EntityGem {
 		}
 	}
 	
+	/*********************************************************
+	 * Methods related to sounds.                            *
+	 *********************************************************/
+
+	@Override
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.RUBY_LIVING;
 	}
+	
+	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.RUBY_HURT;
 	}
+	
+	@Override
 	protected SoundEvent getObeySound() {
 		return ModSounds.RUBY_OBEY;
 	}
+	
+	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.RUBY_DEATH;
 	}

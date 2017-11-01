@@ -43,6 +43,6 @@ public class LayerVisor implements LayerRenderer<EntityGem> {
 		}
 	}
 	public boolean shouldCombineTextures() {
-		return false;
+		return true;
 	}
 }

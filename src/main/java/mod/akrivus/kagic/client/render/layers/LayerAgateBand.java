@@ -32,6 +32,6 @@ public class LayerAgateBand implements LayerRenderer<EntityAgate> {
 
 	@Override
 	public boolean shouldCombineTextures() {
-		return false;
+		return true;
 	}
 }

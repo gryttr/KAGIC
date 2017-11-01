@@ -31,21 +31,28 @@ public class EntityAIRubyFuse extends EntityAIBase {
     	}
     	return false;
     }
-    public boolean continueExecuting() {
+    
+    @Override
+    public boolean shouldContinueExecuting() {
         return this.otherRuby != null && !this.otherRuby.isDead && this.ruby.canEntityBeSeen(this.otherRuby);
     }
+    
+    @Override
     public void startExecuting() {
 		this.ruby.getLookHelper().setLookPositionWithEntity(this.otherRuby, 30.0F, 30.0F);
     }
+    
+    @Override
     public void resetTask() {
     	this.ruby.getNavigator().clearPathEntity();
         this.otherRuby = null;
     }
+    
+    @Override
     public void updateTask() {
     	if (this.ruby.getDistanceSqToEntity(this.otherRuby) > this.otherRuby.width * 2) {
 			this.ruby.getNavigator().tryMoveToEntityLiving(this.otherRuby, this.movementSpeed);
-		}
-    	else if (this.ruby.compatIndex > this.otherRuby.compatIndex) {
+		} else if (this.ruby.compatIndex > this.otherRuby.compatIndex) {
     		this.ruby.world.spawnEntity(this.ruby.fuse(this.otherRuby));
 	    	this.otherRuby.setDead();
 	    	this.ruby.setDead();
