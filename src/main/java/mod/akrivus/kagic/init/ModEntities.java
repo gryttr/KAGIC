@@ -18,6 +18,7 @@ import mod.akrivus.kagic.entity.gem.EntityBismuth;
 import mod.akrivus.kagic.entity.gem.EntityBlueDiamond;
 import mod.akrivus.kagic.entity.gem.EntityCarnelian;
 import mod.akrivus.kagic.entity.gem.EntityHessonite;
+import mod.akrivus.kagic.entity.gem.EntityHoloPearl;
 import mod.akrivus.kagic.entity.gem.EntityJasper;
 import mod.akrivus.kagic.entity.gem.EntityLapisLazuli;
 import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
@@ -93,6 +94,7 @@ public class ModEntities {
 		registerDiamond("opal", EntityOpal.class);
 		registerDiamond("garnet", EntityGarnet.class);
 		registerDiamond("rhodonite", EntityRhodonite.class);
+		registerDiamond("holopearl", EntityHoloPearl.class);
 		
 		registerMob("melon", EntityMelon.class, 0xB5B128, 0x5A671A);
 		registerMob("pumpkin", EntityPumpkin.class, 0xD58116, 0x744E03);

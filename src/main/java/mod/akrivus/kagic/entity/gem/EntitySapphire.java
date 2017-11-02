@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.google.common.base.Predicate;
 
+import mod.akrivus.kagic.blocks.BlockRoseTears;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIFutureVision;
@@ -229,7 +230,7 @@ public class EntitySapphire extends EntityGem {
 	                IBlockState iblockstate = this.world.getBlockState(blockpos);
 	                if (iblockstate.getMaterial() == Material.AIR) {
 	                    IBlockState iblockstate1 = this.world.getBlockState(blockpos1);
-	                    if (iblockstate1.getMaterial() == Material.WATER && ((Integer)iblockstate1.getValue(BlockLiquid.LEVEL)).intValue() == 0 && this.world.mayPlace(Blocks.FROSTED_ICE, blockpos1, false, EnumFacing.DOWN, null)) {
+	                    if (iblockstate1.getMaterial() == Material.WATER && !(iblockstate1.getBlock() instanceof BlockRoseTears) && ((Integer)iblockstate1.getValue(BlockLiquid.LEVEL)).intValue() == 0 && this.world.mayPlace(Blocks.FROSTED_ICE, blockpos1, false, EnumFacing.DOWN, null)) {
 	                        this.world.setBlockState(blockpos1, Blocks.FROSTED_ICE.getDefaultState());
 	                        this.world.scheduleUpdate(blockpos1.toImmutable(), Blocks.FROSTED_ICE, this.rand.nextInt(60) + 60);
 	                    }

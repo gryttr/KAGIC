@@ -60,6 +60,13 @@ public class EntityRoseQuartz extends EntityGem {
 	private BlockPos lastSurgeLocation;
 	private int regenTicks = 0;
 
+	private static HashMap<Item, Item> ROSE_RECIPES = new HashMap<Item, Item>();
+	static {
+		ROSE_RECIPES.put(Items.POISONOUS_POTATO, Items.POTATO);
+		ROSE_RECIPES.put(Items.ROTTEN_FLESH, Items.LEATHER);
+		ROSE_RECIPES.put(Items.WHEAT, Items.BREAD);
+	}
+	
 	private static final int SKIN_COLOR_BEGIN = 0xFEDED3;
 	
 	private static final int SKIN_COLOR_END = 0xFEDED3;
@@ -164,6 +171,11 @@ public class EntityRoseQuartz extends EntityGem {
 						this.playObeySound();
 						return true;
 					}
+				} else if (ROSE_RECIPES.containsKey(item)) {
+					if (!player.capabilities.isCreativeMode) {
+						stack.shrink(1);
+					}
+					this.entityDropItem(new ItemStack(ROSE_RECIPES.get(item)), 1);
 				} else if (item == Items.BUCKET && !this.isDefective()) {
 					stack.shrink(1);
 

@@ -51,6 +51,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -307,13 +308,16 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 						this.playObeySound();
 					}
 					return found;
-				}
-				else if (this.isMatching("regex.kagic.take", message)) {
+				} else if (this.isMatching("regex.kagic.take", message)) {
 					this.gemStorage.addItem(player.getHeldItemMainhand());
 					this.playObeySound();
 					return true;
-				}
-				else if (this.isDefective()) {
+				} else if (this.isMatching("regex.kagic.train", message)) {
+					this.spawnHoloPearl();
+					this.talkTo(player, new TextComponentTranslation("notify.kagic.train").getUnformattedComponentText());
+					this.playObeySound();
+					return true;
+				} else if (this.isDefective()) {
 					if (this.isMatching("regex.kagic.kill", message)) {
 						ArrayList<String> args = this.getArgsFrom("regex.kagic.kill", message);
 						if (args.size() > 0) {
@@ -391,15 +395,20 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 		}
 		super.setDefective(defective);
 	}
+	
 	public void setColor(int color) {
 		this.dataManager.set(COLOR, color);
 	}
 	public int getColor() {
 		return this.dataManager.get(COLOR);
 	}
+	
+	@Override
 	public void setHairColor(int color) {
 		this.dataManager.set(HAIR_COLOR, color);
 	}
+	
+	@Override
 	public int getHairColor() {
 		return this.dataManager.get(HAIR_COLOR);
 	}
@@ -466,6 +475,12 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		return super.attackEntityFrom(source, amount);
+	}
+	
+	public void spawnHoloPearl() {
+		EntityHoloPearl holoPearl = new EntityHoloPearl(this.world, this);
+		holoPearl.onInitialSpawn(this.world.getDifficultyForLocation(this.getPosition()), null);
+		this.world.spawnEntity(holoPearl);
 	}
 	
 	/*********************************************************

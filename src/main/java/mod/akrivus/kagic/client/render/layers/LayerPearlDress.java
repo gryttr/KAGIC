@@ -1,6 +1,8 @@
 package mod.akrivus.kagic.client.render.layers;
 
 import mod.akrivus.kagic.client.model.ModelPearl;
+import mod.akrivus.kagic.client.render.RenderGemBase;
+import mod.akrivus.kagic.client.render.RenderHoloPearl;
 import mod.akrivus.kagic.client.render.RenderPearl;
 import mod.akrivus.kagic.entity.gem.EntityPearl;
 import net.minecraft.client.renderer.GlStateManager;
@@ -15,6 +17,8 @@ public class LayerPearlDress implements LayerRenderer<EntityPearl> {
 	public LayerPearlDress(RenderPearl pearlRendererIn) {
 		this.pearlRenderer = pearlRendererIn;
 	}
+	
+	@Override
 	public void doRenderLayer(EntityPearl gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		if (gem.getSpecialSkin().equals("_0") && !gem.isNaked()) {
 			this.pearlRenderer.bindTexture(EntityPearl.PEARL_DRESS_STYLES.get(gem.getDressStyle()));
@@ -24,6 +28,8 @@ public class LayerPearlDress implements LayerRenderer<EntityPearl> {
 			this.pearlModel.render(gem, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 		}
 	}
+	
+	@Override
 	public boolean shouldCombineTextures() {
 		return true;
 	}
