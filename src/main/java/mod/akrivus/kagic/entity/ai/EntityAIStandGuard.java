@@ -11,20 +11,28 @@ import net.minecraft.entity.ai.EntityAIWander;
 public class EntityAIStandGuard extends EntityAIBase {
 	private final EntityAIBase wanderAI;
 	private final EntityGem gem;
-	public EntityAIStandGuard(EntityGem gem, double movementSpeed) {
+
+public EntityAIStandGuard(EntityGem gem, double movementSpeed) {
 		this.wanderAI = new EntityAIWander(gem, movementSpeed);
 		this.gem = gem;
 		this.setMutexBits(5);
 	}
+	
+	@Override
 	public boolean shouldExecute() {
 		return this.noNearbyAuthorities() && this.wanderAI.shouldExecute();
 	}
-	public boolean continueExecuting() {
+	
+	@Override
+	public boolean shouldContinueExecuting() {
 		return (this.gem.ticksExisted % 20 == 0 && this.noNearbyAuthorities() || true) && this.wanderAI.shouldContinueExecuting();
 	}
+	
+	@Override
 	public void startExecuting() {
 		this.wanderAI.startExecuting();
 	}
+
 	private boolean noNearbyAuthorities() {
 		List<EntityLivingBase> list = this.gem.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.gem.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D));
 		for (EntityLivingBase entity : list) {

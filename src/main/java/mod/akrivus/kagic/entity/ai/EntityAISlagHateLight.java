@@ -14,6 +14,7 @@ public class EntityAISlagHateLight extends EntityAIBase {
 	private double posY;
 	private double posZ;
 	private int delay;
+	
 	public EntityAISlagHateLight(EntitySlag slagIn, double speedIn, int radius) {
 		this.slag = slagIn;
 		this.movementSpeed = speedIn;
@@ -21,6 +22,8 @@ public class EntityAISlagHateLight extends EntityAIBase {
 		this.delay = 0;
 		this.setMutexBits(1);
 	}
+	
+	@Override
 	public boolean shouldExecute() {
 		if (this.delay > 0) {
 			--this.delay;
@@ -31,6 +34,8 @@ public class EntityAISlagHateLight extends EntityAIBase {
 			return true;
 		}
 	}
+	
+	@Override
 	public void startExecuting() {
 		this.currentLight = this.slag.world.getLightFor(EnumSkyBlock.BLOCK, this.slag.getPosition());
 		for (int x = -searchRadius; x <= searchRadius; ++x) {
@@ -51,12 +56,18 @@ public class EntityAISlagHateLight extends EntityAIBase {
 		}
 		this.slag.getNavigator().tryMoveToXYZ(this.posX, this.posY, this.posZ, this.movementSpeed);
 	}
-	public boolean continueExecuting() {
+	
+	@Override
+	public boolean shouldContinueExecuting() {
 		return !this.slag.getNavigator().noPath();
 	}
+	
+	@Override
 	public void resetTask() {
 		this.slag.getNavigator().clearPathEntity();
 	}
+	
+	@Override
 	public void updateTask() {
 		this.slag.getNavigator().tryMoveToXYZ(this.posX, this.posY, this.posZ, this.movementSpeed);
 	}
