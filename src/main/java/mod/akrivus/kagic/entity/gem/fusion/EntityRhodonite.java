@@ -4,25 +4,28 @@ import java.util.ArrayList;
 
 import mod.akrivus.kagic.entity.EntityFusionGem;
 import mod.akrivus.kagic.entity.EntityGem;
-import mod.akrivus.kagic.entity.gem.EntityAmethyst;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
 
-public class EntityOpal extends EntityFusionGem {
-	private static final int OPAL_SKIN_COLOR = 0xD3D9EE;
-	private static final int OPAL_HAIR_COLOR = 0xF9FEEE;
-	private static final int NUM_HAIRSTYLES = 1;
-	
-	public EntityOpal(World world) {
-		super(world);
-		this.setSize(.9F, 4.75F);
+public class EntityRhodonite extends EntityFusionGem {
+	private static final int SKIN_COLOR_BEGIN = 0xD35990; 
+	private static final int SKIN_COLOR_END = 0xD35990; 
 
-        // Apply entity attributes.
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(300.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(12.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
-        this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(2.0D);
+	private static final int HAIR_COLOR_BEGIN = 0x724476;
+	private static final int HAIR_COLOR_END = 0x724476; 
+	
+	private static final int NUM_HAIRSTYLES = 1;
+
+	public EntityRhodonite(World world) {
+		super(world);
+		this.setSize(0.7F, 2.8F);
+
+		// Apply entity attributes.
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(150.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10D);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
+		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(2.0D);
 	}
 
 	//=========================================================================
@@ -43,25 +46,26 @@ public class EntityOpal extends EntityFusionGem {
 	 *********************************************************/
 	@Override
 	public float[] getGemColor() {
-		return new float[] { 1, 1, 1 };
+		return new float[] { 120F/ 255F, 93F / 255F, 145F / 255F };
 	}
-	
+
 	@Override
 	protected int generateSkinColor() {
 		ArrayList<Integer> skinColors = new ArrayList<Integer>();
-		skinColors.add(EntityOpal.OPAL_SKIN_COLOR);
-		return Colors.arbiLerp(skinColors);
-	}
+		skinColors.add(EntityRhodonite.SKIN_COLOR_BEGIN);
+		skinColors.add(EntityRhodonite.SKIN_COLOR_END);
+		return Colors.arbiLerp(skinColors);	}
 	
 	@Override
 	protected int generateHairStyle() {
-		return this.rand.nextInt(EntityOpal.NUM_HAIRSTYLES);
+		return this.rand.nextInt(EntityRhodonite.NUM_HAIRSTYLES);
 	}
 	
 	@Override
 	protected int generateHairColor() {
 		ArrayList<Integer> hairColors = new ArrayList<Integer>();
-		hairColors.add(EntityOpal.OPAL_HAIR_COLOR);
+		hairColors.add(EntityRhodonite.HAIR_COLOR_BEGIN);
+		hairColors.add(EntityRhodonite.HAIR_COLOR_END);
 		return Colors.arbiLerp(hairColors);
 	}
 }
