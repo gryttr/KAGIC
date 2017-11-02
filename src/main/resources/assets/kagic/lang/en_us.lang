@@ -365,6 +365,7 @@ command.kagic.peridot_cant_find_gem=You'll find nothing but slag here.
 command.kagic.peridot_harvest=Here are all the crops I've harvested.
 command.kagic.peridot_no_harvest=Sorry, I haven't harvested enough crop yet.
 command.kagic.peridot_inventory=%1$s's Harvest
+command.kagic.peridot_seeds=%1$s's Seeds
 command.kagic.spawning_all_nearby_gems=Spawning all nearby Gems...
 command.kagic.spawned_all_nearby_gems=Spawned all nearby Gems.
 command.kagic.meteor_ruby=Meteor Ruby spawning at coodinates X=%1$d, Y=%2$d, Z=%3$d

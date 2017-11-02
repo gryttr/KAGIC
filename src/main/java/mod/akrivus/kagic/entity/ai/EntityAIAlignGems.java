@@ -31,7 +31,7 @@ public class EntityAIAlignGems extends EntityAIBase {
 					}
 				}
 			}
-			return this.unalignedGem != null;
+			return this.unalignedGem != null && this.alignedGem.getNavigator().getPathToEntityLiving(unalignedGem) != null;
 		}
 		return false;
 	}
@@ -41,7 +41,8 @@ public class EntityAIAlignGems extends EntityAIBase {
 		return this.unalignedGem != null 
 				&& !this.unalignedGem.isDead 
 				&& !this.unalignedGem.isTamed() 
-				/*&& this.alignedGem.canEntityBeSeen(this.unalignedGem)*/;
+				/*&& this.alignedGem.canEntityBeSeen(this.unalignedGem)*/
+				&& !this.alignedGem.getNavigator().noPath();
 	}
 	
 	@Override

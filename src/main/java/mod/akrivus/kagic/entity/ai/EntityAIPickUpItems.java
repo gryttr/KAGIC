@@ -28,12 +28,15 @@ public class EntityAIPickUpItems extends EntityAIBase {
 				this.item = item;
 			}
 		}
-		return this.item != null && !this.item.isDead;
+		return this.item != null && !this.item.isDead && this.gem.canPickUpLoot();
 	}
 	
 	@Override
 	public boolean shouldContinueExecuting() {
-		return this.item != null && !this.item.isDead && this.gem.canEntityBeSeen(this.item) && !this.gem.getNavigator().noPath();
+		return this.item != null 
+				&& !this.item.isDead 
+				&& this.gem.canEntityBeSeen(this.item) 
+				&& !this.gem.getNavigator().noPath();
 	}
 	
 	@Override
@@ -49,7 +52,7 @@ public class EntityAIPickUpItems extends EntityAIBase {
 	
 	@Override
 	public void updateTask() {
-		if (this.gem.getDistanceSqToEntity(this.item) > 1) {
+		if (this.gem.getDistanceSqToEntity(this.item) > 1F) {
 		   	this.gem.getNavigator().tryMoveToEntityLiving(this.item, this.movementSpeed);
 		}
 	}

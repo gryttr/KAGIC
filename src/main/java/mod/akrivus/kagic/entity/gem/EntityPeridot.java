@@ -39,7 +39,10 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.IInventoryChangedListener;
 import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemSeedFood;
+import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -93,176 +96,176 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 			public boolean apply(EntityCreeper input) {
 				return ((EntityCreeper) input).getCreeperState() == 1;
 			}
-        }, 6.0F, 1.0D, 1.2D));
+		}, 6.0F, 1.0D, 1.2D));
 		this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
-        this.tasks.addTask(3, new EntityAIOpenDoor(this, true));
-        this.tasks.addTask(4, new EntityAIAlignGems(this, 0.9D));
-        this.tasks.addTask(4, new EntityAIHarvestFarmland(this, 0.6D));
-        this.tasks.addTask(4, new EntityAIPickUpItems(this, 0.9D));
-        this.tasks.addTask(5, new EntityAIAttackMelee(this, 1.0D, true));
-        this.tasks.addTask(5, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
-        this.tasks.addTask(7, new EntityAIStandGuard(this, 0.6D));
-        this.tasks.addTask(8, new EntityAILookIdle(this));
-        
-        // Apply target AI.
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntitySlag>(this, EntitySlag.class, true, true));
-        
-        // Apply entity attributes.
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(400.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
-        this.droppedGemItem = ModItems.PERIDOT_GEM;
+		this.tasks.addTask(3, new EntityAIOpenDoor(this, true));
+		this.tasks.addTask(4, new EntityAIAlignGems(this, 0.9D));
+		this.tasks.addTask(4, new EntityAIHarvestFarmland(this, 0.6D));
+		this.tasks.addTask(4, new EntityAIPickUpItems(this, 0.9D));
+		this.tasks.addTask(5, new EntityAIAttackMelee(this, 1.0D, true));
+		this.tasks.addTask(5, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
+		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
+		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
+		this.tasks.addTask(7, new EntityAIStandGuard(this, 0.6D));
+		this.tasks.addTask(8, new EntityAILookIdle(this));
+		
+		// Apply target AI.
+		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntitySlag>(this, EntitySlag.class, true, true));
+		
+		// Apply entity attributes.
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(400.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
+		this.droppedGemItem = ModItems.PERIDOT_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_PERIDOT_GEM;
 	}
 	
 	public float[] getGemColor() {
-    	return new float[] { 47F / 255F, 248F / 255F, 42F / 255F };
-    }
+		return new float[] { 47F / 255F, 248F / 255F, 42F / 255F };
+	}
 	
 	public void convertGems(int placement) {
-    	switch (placement) {
-    	case 0:
-    		this.setGemPlacement(GemPlacements.FOREHEAD.id);
-    		this.setGemCut(GemCuts.PERIDOT.id);
-    		break;
-    	case 1:
-    		this.setGemPlacement(GemPlacements.CHEST.id);
-    		this.setGemCut(GemCuts.TRIANGULAR.id);
-    		break;
-    	}
-    }
-	
-	/*********************************************************
-	 * Methods related to loading.                           *
-	 *********************************************************/
-    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-        return super.onInitialSpawn(difficulty, livingdata);
-    }
-
-    public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
-        NBTTagList nbttaglist = new NBTTagList();
-        for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
-            ItemStack itemstack = this.gemStorage.getStackInSlot(i);
-            NBTTagCompound nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setByte("slot", (byte) i);
-            itemstack.writeToNBT(nbttagcompound);
-            nbttaglist.appendTag(nbttagcompound);
-        }
-        compound.setTag("items", nbttaglist);
-        nbttaglist = new NBTTagList();
-        for (int i = 0; i < this.harvest.getSizeInventory(); ++i) {
-            ItemStack itemstack = this.harvest.getStackInSlot(i);
-            NBTTagCompound nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setByte("slot", (byte) i);
-            itemstack.writeToNBT(nbttagcompound);
-            nbttaglist.appendTag(nbttagcompound);
-        }
-        compound.setTag("harvestItems", nbttaglist);
-        compound.setInteger("harvestTimer", this.harvestTimer);
+		switch (placement) {
+		case 0:
+			this.setGemPlacement(GemPlacements.FOREHEAD.id);
+			this.setGemCut(GemCuts.PERIDOT.id);
+			break;
+		case 1:
+			this.setGemPlacement(GemPlacements.CHEST.id);
+			this.setGemCut(GemCuts.TRIANGULAR.id);
+			break;
+		}
 	}
-    
-    public void readEntityFromNBT(NBTTagCompound compound) {
-        super.readEntityFromNBT(compound);
-        NBTTagList nbttaglist = compound.getTagList("items", 10);
-        this.initGemStorage();
-        for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-            NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
-            int j = nbttagcompound.getByte("slot") & 255;
-            if (j >= 0 && j < this.gemStorage.getSizeInventory()) {
-                this.gemStorage.setInventorySlotContents(j, new ItemStack(nbttagcompound));
-            }
-        }
-        nbttaglist = compound.getTagList("harvestItems", 10);
-        for (int i = 0; i < nbttaglist.tagCount(); ++i) {
-            NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
-            int j = nbttagcompound.getByte("slot") & 255;
-            if (j >= 0 && j < this.harvest.getSizeInventory()) {
-                this.harvest.setInventorySlotContents(j, new ItemStack(nbttagcompound));
-            }
-        }
-        this.harvestTimer = compound.getInteger("harvestTimer");
-    }
 	
 	/*********************************************************
-	 * Methods related to interaction.                       *
+	 * Methods related to loading.						   *
+	 *********************************************************/
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		return super.onInitialSpawn(difficulty, livingdata);
+	}
+
+	public void writeEntityToNBT(NBTTagCompound compound) {
+		super.writeEntityToNBT(compound);
+		NBTTagList nbttaglist = new NBTTagList();
+		for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
+			ItemStack itemstack = this.gemStorage.getStackInSlot(i);
+			NBTTagCompound nbttagcompound = new NBTTagCompound();
+			nbttagcompound.setByte("slot", (byte) i);
+			itemstack.writeToNBT(nbttagcompound);
+			nbttaglist.appendTag(nbttagcompound);
+		}
+		compound.setTag("items", nbttaglist);
+		nbttaglist = new NBTTagList();
+		for (int i = 0; i < this.harvest.getSizeInventory(); ++i) {
+			ItemStack itemstack = this.harvest.getStackInSlot(i);
+			NBTTagCompound nbttagcompound = new NBTTagCompound();
+			nbttagcompound.setByte("slot", (byte) i);
+			itemstack.writeToNBT(nbttagcompound);
+			nbttaglist.appendTag(nbttagcompound);
+		}
+		compound.setTag("harvestItems", nbttaglist);
+		compound.setInteger("harvestTimer", this.harvestTimer);
+	}
+	
+	public void readEntityFromNBT(NBTTagCompound compound) {
+		super.readEntityFromNBT(compound);
+		NBTTagList nbttaglist = compound.getTagList("items", 10);
+		this.initGemStorage();
+		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
+			NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
+			int j = nbttagcompound.getByte("slot") & 255;
+			if (j >= 0 && j < this.gemStorage.getSizeInventory()) {
+				this.gemStorage.setInventorySlotContents(j, new ItemStack(nbttagcompound));
+			}
+		}
+		nbttaglist = compound.getTagList("harvestItems", 10);
+		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
+			NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
+			int j = nbttagcompound.getByte("slot") & 255;
+			if (j >= 0 && j < this.harvest.getSizeInventory()) {
+				this.harvest.setInventorySlotContents(j, new ItemStack(nbttagcompound));
+			}
+		}
+		this.harvestTimer = compound.getInteger("harvestTimer");
+	}
+	
+	/*********************************************************
+	 * Methods related to interaction.					   *
 	 *********************************************************/
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
 			if (hand == EnumHand.MAIN_HAND) {
 				ItemStack stack = player.getHeldItemMainhand();
 				if (this.isTamed()) {
-		        	if (this.isOwner(player)) {
-		        		if (this.isCoreItem(stack)) {
-		        			return super.processInteract(player, hand);
-		        		}
-		        		else if (stack.getItem() instanceof ItemHoe) {
-		        			boolean toolChanged = true;
+					if (this.isOwner(player)) {
+						if (this.isCoreItem(stack)) {
+							return super.processInteract(player, hand);
+						}
+						else if (stack.getItem() instanceof ItemHoe) {
+							boolean toolChanged = true;
 							if (!this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqualIgnoreDurability(stack)) {
 								this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
 							}
 							else {
 								toolChanged = false;
 							}
-		        			if (toolChanged) {
+							if (toolChanged) {
 								ItemStack heldItem = stack.copy();
 								this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, heldItem);
 								this.playObeySound();
 								if (!player.capabilities.isCreativeMode) {
 									stack.shrink(1);
 								}
-		        			}
+							}
 							return true;
-		        		}
-		        		else if (this.isFarmer()) {
-	        				for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
-	        	                ItemStack itemstack = this.gemStorage.getStackInSlot(i);
-        	                	this.setCanPickUpLoot(false);
-        	                	this.dropTimer = 0;
-        	                	if (itemstack.getItem() == Items.WHEAT || itemstack.getItem() == Items.BEETROOT) {
-        	                		this.gemStorage.setInventorySlotContents(i, ItemStack.EMPTY);
-        	                		this.harvest.addItem(itemstack);
-        	                	}
-        	                	else if (itemstack.getCount() > 1) {
-        	                		ItemStack newstack = itemstack.splitStack(itemstack.getCount() - 8);
-        	                		this.gemStorage.setInventorySlotContents(i, itemstack);
-        	                		this.harvest.addItem(newstack);
-	        	                }
-	        	            }
-	        				if (this.harvest.isEmpty()) {
-	        					player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_no_harvest").getUnformattedComponentText()));
-	        				}
-	        				else {
-	        					player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_harvest").getUnformattedComponentText()));
-	        				}
-	        				//player.addStat(ModAchievements.HELLO_CORN);
-	        				this.openGUI(player);
-	        				this.playObeySound();
-	        				return true;
-		        		}
-		        		else {
-		        			this.checkSurroundings(this.world, this.getPosition());
-		        			//player.addStat(ModAchievements.IM_REPORTING_THIS);
-		        			this.playObeySound();
-		        			return true;
-		        		}
-		        	}
-		        	else {
-		        		player.sendMessage(new TextComponentTranslation("command.kagic.does_not_serve_you", this.getName()));
-		        		return true;
-		        	}
+						}
+						else if (this.isFarmer()) {
+							for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
+								ItemStack itemstack = this.gemStorage.getStackInSlot(i);
+								this.setCanPickUpLoot(false);
+								this.dropTimer = 0;
+								if (itemstack.getItem() == Items.WHEAT || itemstack.getItem() instanceof ItemFood) {
+									this.gemStorage.setInventorySlotContents(i, ItemStack.EMPTY);
+									this.harvest.addItem(itemstack);
+								}
+								else if (itemstack.getCount() > 1) {
+									ItemStack newstack = itemstack.splitStack(itemstack.getCount() - 8);
+									this.gemStorage.setInventorySlotContents(i, itemstack);
+									this.harvest.addItem(newstack);
+								}
+							}
+							if (this.harvest.isEmpty()) {
+								player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_no_harvest").getUnformattedComponentText()));
+							}
+							else {
+								player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_harvest").getUnformattedComponentText()));
+							}
+							//player.addStat(ModAchievements.HELLO_CORN);
+							this.openGUI(player);
+							this.playObeySound();
+							return true;
+						}
+						else {
+							this.checkSurroundings(this.world, this.getPosition());
+							//player.addStat(ModAchievements.IM_REPORTING_THIS);
+							this.playObeySound();
+							return true;
+						}
+					}
+					else {
+						player.sendMessage(new TextComponentTranslation("command.kagic.does_not_serve_you", this.getName()));
+						return true;
+					}
 				}
 			}
 		}
-        return super.processInteract(player, hand);
-    }
+		return super.processInteract(player, hand);
+	}
 	public boolean onSpokenTo(EntityPlayer player, String message) {
-    	boolean spokenTo = super.onSpokenTo(player, message);
-    	message = message.toLowerCase();
-    	if (this.isBeingCalledBy(player, message)) {
+		boolean spokenTo = super.onSpokenTo(player, message);
+		message = message.toLowerCase();
+		if (this.isBeingCalledBy(player, message)) {
 			this.getLookHelper().setLookPositionWithEntity(player, 30.0F, 30.0F);
 			if (this.isOwner(player)) {
 				if (this.isMatching("regex.kagic.harvest", message)) {
@@ -274,9 +277,9 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 				}
 				this.playObeySound();
 			}
-    	}
-    	return spokenTo;
-    }
+		}
+		return spokenTo;
+	}
 	public void checkSurroundings(World worldIn, BlockPos pos) {
 		if (!worldIn.isRemote) {
 			InjectorResult result = ((this.lastCheckPos != null && this.getDistanceSq(this.lastCheckPos) > 32.0F) || this.lastCheckPos == null || this.world.getTotalWorldTime() - this.lastCheckTime > 2400) ? InjectorResult.create(worldIn, pos, false) : this.lastResult;
@@ -294,7 +297,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	}
 	
 	/*********************************************************
-	 * Methods related to living.                            *
+	 * Methods related to living.							*
 	 *********************************************************/
 	public void onLivingUpdate() {
 		if ((!this.canPickUpLoot() && this.dropTimer > 40) && this.isFarmer()) {
@@ -310,70 +313,85 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	}
 	
 	/*********************************************************
-     * Methods related to death.                             *
-     *********************************************************/
-    public void onDeath(DamageSource cause) {
-    	this.setCanPickUpLoot(false);
-    	super.onDeath(cause);
-    }
+	 * Methods related to death.							 *
+	 *********************************************************/
+	public void onDeath(DamageSource cause) {
+		this.setCanPickUpLoot(false);
+		super.onDeath(cause);
+	}
 	
 	/*********************************************************
-	 * Methods related to storage.                           *
+	 * Methods related to storage.						   *
 	 *********************************************************/
-    public void onInventoryChanged(IInventory inventory) {
+	@Override
+	public void onInventoryChanged(IInventory inventory) {
 		this.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, this.gemStorage.getStackInSlot(0));
 	}
-    public void openGUI(EntityPlayer playerEntity) {
-        if (!this.world.isRemote && this.isTamed()) {
-            this.harvest.setCustomName(new TextComponentTranslation("command.kagic.peridot_inventory", this.getName()).getUnformattedComponentText());
-            playerEntity.displayGUIChest(this.harvest);
-        }
-    }
-    private void initGemStorage() {
-        InventoryBasic gemStorage = this.gemStorage;
-        this.gemStorage = new InventoryBasic("gemStorage", false, 36);
-        if (gemStorage != null) {
-            for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
-                ItemStack itemstack = gemStorage.getStackInSlot(i);
-                this.gemStorage.setInventorySlotContents(i, itemstack.copy());
-            }
-        }
-        this.gemStorageHandler = new InvWrapper(this.gemStorage);
-        InventoryBasic harvest = this.harvest;
-        this.harvest = new InventoryBasic("harvest", true, 36);
-        if (harvest != null) {
-        	harvest.removeInventoryChangeListener(this);
-            for (int i = 0; i < this.harvest.getSizeInventory(); ++i) {
-                ItemStack itemstack = harvest.getStackInSlot(i);
-                this.harvest.setInventorySlotContents(i, itemstack.copy());
-            }
-        }
-        this.harvest.addInventoryChangeListener(this);
-        this.harvestHandler = new InvWrapper(this.harvest);
-        this.setCanPickUpLoot(this.isTamed());
-    }
+	
+	public void openGUI(EntityPlayer playerEntity) {
+		if (!this.world.isRemote && this.isTamed()) {
+			if (playerEntity.isSneaking()) {
+				this.gemStorage.setCustomName(new TextComponentTranslation("command.kagic.peridot_seeds", this.getName()).getUnformattedComponentText());
+				playerEntity.displayGUIChest(this.gemStorage);
+			} else {
+				this.harvest.setCustomName(new TextComponentTranslation("command.kagic.peridot_inventory", this.getName()).getUnformattedComponentText());
+				playerEntity.displayGUIChest(this.harvest);
+			}
+		}
+	}
+	
+	private void initGemStorage() {
+		InventoryBasic gemStorage = this.gemStorage;
+		this.gemStorage = new InventoryBasic("gemStorage", true, 36);
+		if (gemStorage != null) {
+			for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
+				ItemStack itemstack = gemStorage.getStackInSlot(i);
+				this.gemStorage.setInventorySlotContents(i, itemstack.copy());
+			}
+		}
+		
+		this.gemStorageHandler = new InvWrapper(this.gemStorage);
+		InventoryBasic harvest = this.harvest;
+		this.harvest = new InventoryBasic("harvest", true, 36);
+		if (harvest != null) {
+			harvest.removeInventoryChangeListener(this);
+			for (int i = 0; i < this.harvest.getSizeInventory(); ++i) {
+				ItemStack itemstack = harvest.getStackInSlot(i);
+				this.harvest.setInventorySlotContents(i, itemstack.copy());
+			}
+		}
+		
+		this.harvest.addInventoryChangeListener(this);
+		this.harvestHandler = new InvWrapper(this.harvest);
+		this.setCanPickUpLoot(this.isTamed());
+	}
+	
+	@Override
 	protected void updateEquipmentIfNeeded(EntityItem itementity) {
-        ItemStack itemstack = itementity.getItem();
-        if (this.canPickupItem(itemstack.getItem()) && this.isFarmer()) {
-	        ItemStack itemstack1 = this.gemStorage.addItem(itemstack);
-	        if (itemstack1.isEmpty()) {
-	            itementity.setDead();
-	        }
-	        else {
-	            itemstack.setCount(itemstack1.getCount());
-	        }
-        }
-    }
+		ItemStack itemstack = itementity.getItem();
+		if (this.canPickupItem(itemstack.getItem()) && this.isFarmer()) {
+			ItemStack itemstack1 = this.gemStorage.addItem(itemstack);
+			if (itemstack1.isEmpty()) {
+				itementity.setDead();
+			}
+			else {
+				itemstack.setCount(itemstack1.getCount());
+			}
+		}
+	}
+	
 	public boolean canPickupItem(Item itemIn) {
-        return this.isFarmer() && (itemIn == Items.POTATO || itemIn == Items.CARROT || itemIn == Items.WHEAT || itemIn == Items.WHEAT_SEEDS || itemIn == Items.BEETROOT || itemIn == Items.BEETROOT_SEEDS || itemIn == Items.NETHER_WART);
-    }
+		return this.isFarmer() && (itemIn instanceof ItemSeeds || itemIn instanceof ItemSeedFood || itemIn instanceof ItemFood || itemIn == Items.WHEAT);
+	}
+	
 	public boolean isFarmer() {
 		return this.isTamed() && this.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemHoe;
 	}
 	
 	/*********************************************************
-	 * Methods related to combat.                            *
+	 * Methods related to combat.							*
 	 *********************************************************/
+	@Override
 	public void onStruckByLightning(EntityLightningBolt lightningBolt) {
 		if (!this.world.isRemote && !this.isDead) {
 			this.dropItem(ModItems.RECORD_LITTLE_PERIDOT, 1);
@@ -381,7 +399,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	}
 
 	/*********************************************************
-	 * Methods related to sounds.                            *
+	 * Methods related to sounds.							*
 	 *********************************************************/
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.PERIDOT_LIVING;
@@ -397,7 +415,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	}
 
 	/*********************************************************
-	 * Methods related to rendering.                         *
+	 * Methods related to rendering.						 *
 	 *********************************************************/
 	@Override
 	protected int generateSkinColor() {
