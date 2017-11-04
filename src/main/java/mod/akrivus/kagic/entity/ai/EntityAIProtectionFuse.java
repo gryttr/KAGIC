@@ -85,11 +85,12 @@ public class EntityAIProtectionFuse<P extends EntityGem, F extends EntityFusionG
 	}
 	
 	private boolean checkInitiator() {
-		return !this.initiator.isFusion() && this.initiator.getHealth() > 0 && !this.initiator.isDead;
+		return this.initiator.isTamed() && !this.initiator.isFusion() && this.initiator.getHealth() > 0 && !this.initiator.isDead;
 	}
 
 	private boolean checkTarget(P target) {
-		return target != null 
+		return target != null
+				&& target.isTamed()
 				&& !target.isFusion()
 				&& target.getHealth() > 0
 				&& !target.isDead 

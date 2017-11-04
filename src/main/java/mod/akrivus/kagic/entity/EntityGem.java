@@ -1735,8 +1735,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	public boolean isOwnedById(UUID possibleOwner) {
-		if (possibleOwner != null) {
-			boolean match = this.getOwnerId().equals(possibleOwner);
+		UUID owner = this.getOwnerId();
+		if (possibleOwner != null && owner != null) {
+			boolean match = owner.equals(possibleOwner);
 			for (int i = 0; i < this.jointOwners.size() && match; ++i) {
 				match = this.getOwnerId().equals(this.jointOwners.get(i));
 			}
