@@ -15,11 +15,19 @@ import net.minecraft.util.ResourceLocation;
 public class LayerInsignia implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
-	public LayerInsignia(RenderLivingBase<?> gemRendererIn) {
-		this.gemRenderer = gemRendererIn;
-		this.gemModel = gemRendererIn.getMainModel();
+	private final String name;
+	
+	public LayerInsignia(RenderLivingBase<?> gemRenderer) {
+		this(gemRenderer, null);
 	}
 	
+	public LayerInsignia(RenderLivingBase<?> gemRenderer, String name) {
+		this.gemRenderer = gemRenderer;
+		this.gemModel = gemRenderer.getMainModel();
+		this.name = name;
+	}
+	
+	@Override
 	public void doRenderLayer(EntityGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		this.gemRenderer.bindTexture(this.getTexture(gem));
 		float[] insigniaColor = EntitySheep.getDyeRgb(EnumDyeColor.values()[gem.getInsigniaColor()]);
@@ -41,15 +49,20 @@ public class LayerInsignia implements LayerRenderer<EntityGem> {
 	}
 	
 	public String getName(EntityGem gem) {
-		ResourceLocation loc = EntityList.getKey(gem);
-		if (loc.getResourceDomain().equals("kagic")) {
-	        return loc.getResourcePath().replaceFirst("kagic.", "");
-		}
-		else {
-	        return loc.getResourcePath();
+		if (this.name == null) {
+			ResourceLocation loc = EntityList.getKey(gem);
+			if (loc.getResourceDomain().equals("kagic")) {
+		        return loc.getResourcePath().replaceFirst("kagic.", "");
+			}
+			else {
+		        return loc.getResourcePath();
+			}
+		} else {
+			return this.name;
 		}
 	}
 	
+	@Override
 	public boolean shouldCombineTextures() {
 		return true;
 	}

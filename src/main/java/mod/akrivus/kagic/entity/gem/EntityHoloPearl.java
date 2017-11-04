@@ -35,6 +35,8 @@ public class EntityHoloPearl extends EntityGem {
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
 		IEntityLivingData data = super.onInitialSpawn(difficulty, livingdata);
 		this.setPosition(this.creator.posX + this.creator.getLookVec().x, this.creator.posY, this.creator.posZ + this.creator.getLookVec().z);
+		this.setGemCut(this.creator.getGemCut().id);
+		this.setGemPlacement(this.creator.getGemPlacement().id);
 		this.setHairColor(this.creator.getHairColor());
 		this.setColor(this.creator.getColor());
 		this.setUniformColor(this.creator.getUniformColor());

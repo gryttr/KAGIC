@@ -13,10 +13,16 @@ import net.minecraft.util.ResourceLocation;
 public class LayerNoDyeOverlay implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
+	private final String name;
 	
-	public LayerNoDyeOverlay(RenderLivingBase<?> gemRendererIn) {
-		this.gemRenderer = gemRendererIn;
-		this.gemModel = gemRendererIn.getMainModel();
+	public LayerNoDyeOverlay(RenderLivingBase<?> gemRenderer) {
+		this(gemRenderer, null);
+	}
+	
+	public LayerNoDyeOverlay(RenderLivingBase<?> gemRenderer, String name) {
+		this.gemRenderer = gemRenderer;
+		this.gemModel = gemRenderer.getMainModel();
+		this.name = name;
 	}
 	
 	@Override
@@ -36,12 +42,16 @@ public class LayerNoDyeOverlay implements LayerRenderer<EntityGem> {
 	}
 	
 	public String getName(EntityGem gem) {
-		ResourceLocation loc = EntityList.getKey(gem);
-		if (loc.getResourceDomain().equals("kagic")) {
-	        return loc.getResourcePath().replaceFirst("kagic.", "");
-		}
-		else {
-	        return loc.getResourcePath();
+		if (this.name == null) {
+			ResourceLocation loc = EntityList.getKey(gem);
+			if (loc.getResourceDomain().equals("kagic")) {
+		        return loc.getResourcePath().replaceFirst("kagic.", "");
+			}
+			else {
+		        return loc.getResourcePath();
+			}
+		} else {
+			return this.name;
 		}
 	}
 	

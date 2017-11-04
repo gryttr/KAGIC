@@ -11,10 +11,18 @@ import net.minecraft.util.ResourceLocation;
 public class LayerGemPlacement implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
-	public LayerGemPlacement(RenderLivingBase<?> gemRendererIn) {
-		this.gemRenderer = gemRendererIn;
-		this.gemModel = gemRendererIn.getMainModel();
+	private final String name;
+
+	public LayerGemPlacement(RenderLivingBase<?> gemRenderer) {
+		this(gemRenderer, null);
 	}
+	public LayerGemPlacement(RenderLivingBase<?> gemRenderer, String name) {
+		this.gemRenderer = gemRenderer;
+		this.gemModel = gemRenderer.getMainModel();
+		this.name = name;
+	}
+	
+	@Override
 	public void doRenderLayer(EntityGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		if (!gem.isFusion()) {
 			this.gemRenderer.bindTexture(this.getTexture(gem));
@@ -25,19 +33,27 @@ public class LayerGemPlacement implements LayerRenderer<EntityGem> {
 	        GlStateManager.disableBlend();
 		}
 	}
+	
 	public ResourceLocation getTexture(EntityGem gem) {
 		ResourceLocation loc = EntityList.getKey(gem);
 		return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/gems/" + gem.getGemPlacement().id + "_" + gem.getGemCut().id + ".png");
 	}
+	
 	public String getName(EntityGem gem) {
-		ResourceLocation loc = EntityList.getKey(gem);
-		if (loc.getResourceDomain().equals("kagic")) {
-	        return loc.getResourcePath().replaceFirst("kagic.", "");
-		}
-		else {
-	        return loc.getResourcePath();
+		if (this.name == null) {
+			ResourceLocation loc = EntityList.getKey(gem);
+			if (loc.getResourceDomain().equals("kagic")) {
+		        return loc.getResourcePath().replaceFirst("kagic.", "");
+			}
+			else {
+		        return loc.getResourcePath();
+			}
+		} else {
+			return this.name;
 		}
 	}
+	
+	@Override
 	public boolean shouldCombineTextures() {
 		return true;
 	}
