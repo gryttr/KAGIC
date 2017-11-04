@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.google.common.base.Predicate;
 
+import io.netty.buffer.ByteBuf;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
@@ -37,15 +38,18 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
-public class EntityFusionGem  extends EntityGem {
+public class EntityFusionGem  extends EntityGem implements IEntityAdditionalSpawnData {
 	private NBTTagList fusionGems = new NBTTagList();
 	private ArrayList<Class<? extends EntityGem>> gemTypes = new ArrayList<Class<? extends EntityGem>>();
 	private ArrayList<GemCuts> fusionGemCuts = new ArrayList<GemCuts>();
 	private ArrayList<GemPlacements> fusionGemPlacements = new ArrayList<GemPlacements>();
 	
-	protected static final DataParameter<String> FUSION_TYPES = EntityDataManager.<String>createKey(EntityGem.class, DataSerializers.STRING);
-
+	protected static final DataParameter<String> FUSION_TYPES = EntityDataManager.<String>createKey(EntityFusionGem.class, DataSerializers.STRING);
+	protected static final DataParameter<Integer> DEFECTIVE_COUNT = EntityDataManager.<Integer>createKey(EntityFusionGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> PRIME_COUNT = EntityDataManager.<Integer>createKey(EntityFusionGem.class, DataSerializers.VARINT);
+	
 	public EntityFusionGem(World world) {
 		super(world);
 		
@@ -72,6 +76,8 @@ public class EntityFusionGem  extends EntityGem {
 
 		this.isSoldier = true;
 		this.dataManager.register(FUSION_TYPES, "");
+		this.dataManager.register(DEFECTIVE_COUNT, 0);
+		this.dataManager.register(PRIME_COUNT, 0);
 		this.setFusionCount(0);
 	}
 
@@ -107,6 +113,9 @@ public class EntityFusionGem  extends EntityGem {
 		}
 		comp.setTag("places", placements);
 		
+		comp.setInteger("defectiveCount", this.getDefectiveCount());
+		comp.setInteger("primeCount", this.getPrimeCount());
+		
 		return super.writeToNBT(comp);
 	}
 	
@@ -134,6 +143,10 @@ public class EntityFusionGem  extends EntityGem {
 			this.fusionGemPlacements.add(GemPlacements.getPlacement(placements.getIntAt(i)));
 		}
 
+		this.setDefectiveCount(comp.getInteger("defectiveCount"));
+		this.setPrimeCount(comp.getInteger("primeCount"));
+		this.setAdjustedSize();
+		
 		this.setFusionCount(types.tagCount());
 		this.setFusionPlacements(this.generateFusionPlacements());
 		this.setFusionTypes(this.generateFusionTypes());
@@ -180,6 +193,14 @@ public class EntityFusionGem  extends EntityGem {
 			second = gem.getHeldItem(EnumHand.OFF_HAND);
 			this.setFusionWeapon(second);
 		}
+		
+		if (gem.isDefective()) {
+			this.setDefectiveCount(this.getDefectiveCount() + 1);
+		}
+		if (gem.isPrimary()) {
+			this.setPrimeCount(this.getPrimeCount() + 1);
+		}
+		this.setAdjustedSize();
 		
 		this.setFusionCount(this.getFusionCount() + 1);
 		this.setFusionPlacements(this.generateFusionPlacements());
@@ -228,6 +249,22 @@ public class EntityFusionGem  extends EntityGem {
 		this.dataManager.set(FUSION_TYPES, fusionTypes);
 	}
 	
+	public int getDefectiveCount() {
+		return this.dataManager.get(DEFECTIVE_COUNT);
+	}
+	
+	public void setDefectiveCount(int defectiveCount) {
+		this.dataManager.set(DEFECTIVE_COUNT, defectiveCount);
+	}
+	
+	public int getPrimeCount() {
+		return this.dataManager.get(PRIME_COUNT);
+	}
+	
+	public void setPrimeCount(int primeCount) {
+		this.dataManager.set(PRIME_COUNT, primeCount);
+	}
+	
 	public String generateFusionTypes() {
 		String fusionTypes = "";
 		
@@ -258,10 +295,12 @@ public class EntityFusionGem  extends EntityGem {
 		return true;
 	}
 
+	@Override
 	public boolean isGemPlacementDefined() {
 		return !this.fusionGemPlacements.isEmpty();
 	}
 
+	@Override
 	public boolean isGemCutDefined() {
 		return !this.fusionGemCuts.isEmpty();
 	}
@@ -276,5 +315,26 @@ public class EntityFusionGem  extends EntityGem {
 	
 	public ArrayList<GemPlacements> getGemPlacements() {
 		return this.fusionGemPlacements;
+	}
+	
+	public float getSizeFactor() {
+		float sizeMultiplier = this.getFusionCount() - this.getDefectiveCount() + this.getPrimeCount();
+		return sizeMultiplier / this.getFusionCount();
+	}
+	
+	public void setAdjustedSize() {
+		
+	}
+
+	@Override
+	public void writeSpawnData(ByteBuf buffer) {
+		buffer.writeFloat(this.width);
+		buffer.writeFloat(this.height);
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf buffer) {
+		this.width = buffer.readFloat();
+		this.height = buffer.readFloat();
 	}
 }

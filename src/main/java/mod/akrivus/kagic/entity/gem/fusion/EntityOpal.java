@@ -20,7 +20,7 @@ public class EntityOpal extends EntityFusionGem {
 
         // Apply entity attributes.
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(300.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(12.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(15.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(2.0D);
 	}
@@ -63,5 +63,18 @@ public class EntityOpal extends EntityFusionGem {
 		ArrayList<Integer> hairColors = new ArrayList<Integer>();
 		hairColors.add(EntityOpal.OPAL_HAIR_COLOR);
 		return Colors.arbiLerp(hairColors);
+	}
+	
+	@Override
+	public float getSizeFactor() {
+		return super.getSizeFactor() + (1F - super.getSizeFactor()) / 2;
+	}
+	
+	@Override
+	public void setAdjustedSize() {
+		float sizeModifier = this.getPrimeCount() - this.getDefectiveCount();
+		this.setSize(.9F, 4.75F + sizeModifier);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(300.0D + sizeModifier * 50D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(15D + sizeModifier * 2.5D);
 	}
 }

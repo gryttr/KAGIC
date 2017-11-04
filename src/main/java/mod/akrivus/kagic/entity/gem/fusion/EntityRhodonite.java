@@ -19,7 +19,7 @@ public class EntityRhodonite extends EntityFusionGem {
 
 	public EntityRhodonite(World world) {
 		super(world);
-		this.setSize(0.7F, 2.8F);
+		this.setSize(0.7F, 2.5F);
 		this.isImmuneToFire = true;
 
 		// Apply entity attributes.
@@ -68,5 +68,18 @@ public class EntityRhodonite extends EntityFusionGem {
 		hairColors.add(EntityRhodonite.HAIR_COLOR_BEGIN);
 		hairColors.add(EntityRhodonite.HAIR_COLOR_END);
 		return Colors.arbiLerp(hairColors);
+	}
+	
+	@Override
+	public float getSizeFactor() {
+		return super.getSizeFactor() + (1F - super.getSizeFactor()) / 2;
+	}
+	
+	@Override
+	public void setAdjustedSize() {
+		float sizeModifier = this.getPrimeCount() - this.getDefectiveCount();
+		this.setSize(.7F, 2.5F + sizeModifier * 0.75F);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getMaxHealth() + sizeModifier * 50D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10D + sizeModifier * 2.5D);
 	}
 }

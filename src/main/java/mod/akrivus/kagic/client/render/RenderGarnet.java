@@ -28,7 +28,7 @@ public class RenderGarnet extends RenderGemBase<EntityGarnet> {
 
 	@Override
 	protected void preRenderCallback(EntityGarnet garnet, float partialTickTime) {
-		GlStateManager.scale(1.25F, 1.25F, 1.25F);
+		GlStateManager.scale(1.125F * garnet.getSizeFactor(), 1.125F * garnet.getSizeFactor(), 1.125F * garnet.getSizeFactor());
 	}
 
 	@Override

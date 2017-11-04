@@ -26,7 +26,7 @@ public class RenderOpal extends RenderGemBase<EntityOpal> {
 
 	@Override
 	protected void preRenderCallback(EntityOpal opal, float partialTickTime) {
-		GlStateManager.scale(1.8F, 1.8F, 1.8F);
+		GlStateManager.scale(1.8F * opal.getSizeFactor(), 1.8F * opal.getSizeFactor(), 1.8F * opal.getSizeFactor());
 	}
 
 	@Override

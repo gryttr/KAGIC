@@ -19,7 +19,7 @@ public class EntityGarnet extends EntityFusionGem {
 
 	public EntityGarnet(World world) {
 		super(world);
-		this.setSize(0.7F, 2.8F);
+		this.setSize(0.7F, 2.5F);
 		this.visorChanceReciprocal = 1;
 		this.isImmuneToFire = true;
 		
@@ -69,5 +69,18 @@ public class EntityGarnet extends EntityFusionGem {
 		hairColors.add(EntityGarnet.HAIR_COLOR_BEGIN);
 		hairColors.add(EntityGarnet.HAIR_COLOR_END);
 		return Colors.arbiLerp(hairColors);
+	}
+	
+	@Override
+	public float getSizeFactor() {
+		return super.getSizeFactor() + (1F - super.getSizeFactor()) / 2;
+	}
+	
+	@Override
+	public void setAdjustedSize() {
+		float sizeModifier = this.getPrimeCount() - this.getDefectiveCount();
+		this.setSize(.7F, 2.5F + sizeModifier * 0.75F);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(200.0D + sizeModifier * 50D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(12.5D + sizeModifier * 2.5D);
 	}
 }
