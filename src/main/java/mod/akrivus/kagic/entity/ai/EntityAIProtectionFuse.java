@@ -68,6 +68,8 @@ public class EntityAIProtectionFuse<P extends EntityGem, F extends EntityFusionG
 				fusion.addGem(this.target);
 				if (this.initiator.world.spawnEntity(fusion)) {
 					fusion.onInitialSpawn(this.initiator.world.getDifficultyForLocation(this.initiator.getPosition()), null);
+					fusion.isSitting = true;
+					fusion.setRestPosition(fusion.getPosition());
 					this.initiator.world.removeEntity(this.initiator);
 					this.target.world.removeEntity(this.target);
 				}
