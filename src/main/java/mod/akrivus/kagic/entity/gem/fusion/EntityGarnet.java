@@ -21,6 +21,7 @@ public class EntityGarnet extends EntityFusionGem {
 		super(world);
 		this.setSize(0.7F, 2.8F);
 		this.visorChanceReciprocal = 1;
+		this.isImmuneToFire = true;
 		
 		// Apply entity attributes.
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(200.0D);

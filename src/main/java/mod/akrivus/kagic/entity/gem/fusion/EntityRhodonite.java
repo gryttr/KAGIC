@@ -20,6 +20,7 @@ public class EntityRhodonite extends EntityFusionGem {
 	public EntityRhodonite(World world) {
 		super(world);
 		this.setSize(0.7F, 2.8F);
+		this.isImmuneToFire = true;
 
 		// Apply entity attributes.
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(150.0D);

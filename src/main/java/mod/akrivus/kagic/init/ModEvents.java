@@ -185,7 +185,7 @@ public class ModEvents {
 				ex.printStackTrace();
 			}
 		}
-		ModMetrics.sendMetrics();
+		//ModMetrics.sendMetrics();
 	}
 	@SubscribeEvent
 	public void onWorldSave(WorldEvent.Save e) {

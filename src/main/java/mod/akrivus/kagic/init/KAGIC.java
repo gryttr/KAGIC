@@ -92,14 +92,14 @@ public class KAGIC {
     
     @EventHandler
 	public void serverStarting(FMLServerStartingEvent e) {
-    	if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
+    	/*if (FMLCommonHandler.instance().getSide() == Side.SERVER) {
 	    	try {
 	    		ModMetrics.sendMetrics();
 	    	}
 	    	catch (Exception x) {
 	    		x.printStackTrace();
 	    	}
-    	}
+    	}*/
     	e.registerServerCommand(new CommandMeteorRuby());
 		e.registerServerCommand(new CommandSpawnGems());
 		e.registerServerCommand(new CommandScanGems());
