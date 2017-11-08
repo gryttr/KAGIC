@@ -13,8 +13,10 @@ import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
+import mod.akrivus.kagic.entity.ai.EntityAIProtectionFuse;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.entity.gem.fusion.EntityMalachite;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
@@ -283,6 +285,7 @@ public class EntityJasper extends EntityGem {
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
         this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
+		this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntityLapisLazuli.class, EntityMalachite.class, 16D));
         this.tasks.addTask(3, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(4, new EntityAIFollowDiamond(this, 1.0D));
         this.tasks.addTask(5, new EntityAIStandGuard(this, 0.6D));

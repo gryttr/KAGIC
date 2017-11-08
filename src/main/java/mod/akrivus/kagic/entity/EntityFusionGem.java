@@ -183,6 +183,11 @@ public class EntityFusionGem  extends EntityGem implements IEntityAdditionalSpaw
 			this.setLocationAndAngles((this.posX + gem.posX) / 2, (this.posY + gem.posY) / 2, (this.posZ + gem.posZ) / 2, this.rotationYaw, this.rotationPitch);
 		}
 		
+		if (gem.isSoldier) {
+			this.setInsigniaColor(gem.getInsigniaColor());
+			this.setUniformColor(gem.getUniformColor());
+		}
+		
 		ItemStack weapon = this.getHeldItem(EnumHand.MAIN_HAND);
 		if (weapon.getItem() == Items.AIR) {
 			weapon = gem.getHeldItem(EnumHand.MAIN_HAND);

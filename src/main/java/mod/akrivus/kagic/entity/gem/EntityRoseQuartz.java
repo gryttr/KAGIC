@@ -11,7 +11,9 @@ import mod.akrivus.kagic.entity.EntityPepo;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
+import mod.akrivus.kagic.entity.ai.EntityAIProtectionFuse;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.entity.gem.fusion.EntityRainbowQuartz;
 import mod.akrivus.kagic.entity.pepo.EntityCactus;
 import mod.akrivus.kagic.entity.pepo.EntityMelon;
 import mod.akrivus.kagic.entity.pepo.EntityPumpkin;
@@ -105,6 +107,7 @@ public class EntityRoseQuartz extends EntityGem {
 		this.stayAI = new EntityAIStay(this);
 		this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
 		this.tasks.addTask(3, new EntityAIMoveTowardsRestriction(this, 1.0D));
+		//this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntityPearl.class, EntityRainbowQuartz.class, 16D));
 		this.tasks.addTask(4, new EntityAIFollowDiamond(this, 1.0D));
 		this.tasks.addTask(5, new EntityAIWander(this, 0.6D));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));

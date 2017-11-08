@@ -1,13 +1,11 @@
 package mod.akrivus.kagic.client.render;
 
-import mod.akrivus.kagic.client.model.fusions.ModelGarnet;
 import mod.akrivus.kagic.client.model.fusions.ModelRhodonite;
 import mod.akrivus.kagic.client.render.layers.LayerCrossFusionGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerHair;
 import mod.akrivus.kagic.client.render.layers.LayerNoDyeOverlay;
 import mod.akrivus.kagic.client.render.layers.LayerRhodoniteItem;
 import mod.akrivus.kagic.client.render.layers.LayerSkin;
-import mod.akrivus.kagic.entity.gem.fusion.EntityGarnet;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRhodonite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
