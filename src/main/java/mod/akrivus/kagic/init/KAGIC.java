@@ -9,6 +9,7 @@ import mod.akrivus.kagic.client.gui.KTGUIProxy;
 import mod.akrivus.kagic.command.CommandMeteorRuby;
 import mod.akrivus.kagic.command.CommandScanGems;
 import mod.akrivus.kagic.command.CommandSpawnGems;
+import mod.akrivus.kagic.entity.gem.fusion.FusionSpawnHandler;
 import mod.akrivus.kagic.server.SpaceStuff;
 import mod.heimrarnadalr.kagic.chunk.KAGICChunkCallback;
 import mod.heimrarnadalr.kagic.crafting.KAGICSmeltingRecipes;
@@ -87,6 +88,7 @@ public class KAGIC {
 		GenEventCanceller genCanceller = new GenEventCanceller(); 
 		MinecraftForge.EVENT_BUS.register(genCanceller);
 		MinecraftForge.TERRAIN_GEN_BUS.register(genCanceller);
+		MinecraftForge.EVENT_BUS.register(new FusionSpawnHandler());
 		DispenserBehaviors.register();
     }
     

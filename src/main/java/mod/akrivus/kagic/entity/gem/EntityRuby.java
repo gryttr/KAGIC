@@ -135,6 +135,7 @@ public class EntityRuby extends EntityGem {
 		this.tasks.addTask(2, new EntityAIPickUpItems(this, 1.0D));
         this.tasks.addTask(3, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
         this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntitySapphire.class, EntityGarnet.class, 16D));
+        this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntityPadparadscha.class, EntityGarnet.class, 16D));
         this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntityPearl.class, EntityRhodonite.class, 16D));
         this.tasks.addTask(4, new EntityAIFollowDiamond(this, 1.0D));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));

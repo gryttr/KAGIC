@@ -62,6 +62,7 @@ public class EntityPadparadscha extends EntityGem {
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3D);
         this.droppedGemItem = ModItems.PADPARADSCHA_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_PADPARADSCHA_GEM;
+		this.setDefective(true);
 	}
 
 	public float[] getGemColor() {

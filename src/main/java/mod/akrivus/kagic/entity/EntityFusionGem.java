@@ -217,15 +217,21 @@ public class EntityFusionGem  extends EntityGem implements IEntityAdditionalSpaw
 	public void unfuse() {
 		super.unfuse();
 		KAGIC.instance.chatInfoMessage("Fusion poofed");
-		for (int i = 0; i < this.fusionGems.tagCount(); ++i) {
-			try {
-				EntityGem gem = this.gemTypes.get(i).getDeclaredConstructor(World.class).newInstance(this.world);
-				gem.readFromNBT(this.fusionGems.getCompoundTagAt(i));
-				gem.setPosition(this.posX, this.posY, this.posZ);
-				this.world.spawnEntity(gem);
-			} catch (Exception e) {
-				KAGIC.instance.chatInfoMessage("ERROR: could not properly unfuse gem. See game log for details.");
-				e.printStackTrace();
+		if (this.fusionGems == null) {
+			KAGIC.instance.chatInfoMessage("ERROR: no fusion data found!");
+			KAGIC.instance.chatInfoMessage("Did you use the /summon command to get this fusion?");
+			KAGIC.instance.chatInfoMessage("Fusions can only be properly obtained by combining two existing gems.");
+		} else {
+			for (int i = 0; i < this.fusionGems.tagCount(); ++i) {
+				try {
+					EntityGem gem = this.gemTypes.get(i).getDeclaredConstructor(World.class).newInstance(this.world);
+					gem.readFromNBT(this.fusionGems.getCompoundTagAt(i));
+					gem.setPosition(this.posX, this.posY, this.posZ);
+					this.world.spawnEntity(gem);
+				} catch (Exception e) {
+					KAGIC.instance.chatInfoMessage("ERROR: could not properly unfuse gem. See game log for details.");
+					e.printStackTrace();
+				}
 			}
 		}
 		this.world.removeEntity(this);
