@@ -19,7 +19,7 @@ public class EntityGarnet extends EntityFusionGem {
 
 	public EntityGarnet(World world) {
 		super(world);
-		this.setSize(0.7F, 2.5F);
+		this.setSize(0.7F, 2.1F);
 		this.visorChanceReciprocal = 1;
 		this.isImmuneToFire = true;
 		
@@ -79,7 +79,7 @@ public class EntityGarnet extends EntityFusionGem {
 	@Override
 	public void setAdjustedSize() {
 		float sizeModifier = this.getPrimeCount() - this.getDefectiveCount();
-		this.setSize(.7F, 2.5F + sizeModifier * 0.75F);
+		this.setSize(.7F, 2.1F + sizeModifier * 0.75F);
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(200.0D + sizeModifier * 50D);
 		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(12.5D + sizeModifier * 2.5D);
 	}

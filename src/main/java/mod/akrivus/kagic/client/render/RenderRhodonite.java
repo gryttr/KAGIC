@@ -25,7 +25,7 @@ public class RenderRhodonite extends RenderGemBase<EntityRhodonite> {
 
 	@Override
 	protected void preRenderCallback(EntityRhodonite rhodonite, float partialTickTime) {
-		GlStateManager.scale(1.125F * rhodonite.getSizeFactor(), 1.125F * rhodonite.getSizeFactor(), 1.125F * rhodonite.getSizeFactor());
+		GlStateManager.scale(1F * rhodonite.getSizeFactor(), 1F * rhodonite.getSizeFactor(), 1F * rhodonite.getSizeFactor());
 	}
 
 	@Override
