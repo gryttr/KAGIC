@@ -212,9 +212,15 @@ public class InjectorResult {
 	private static void drainBlock(World world, BlockPos ore) {
 		IBlockState state = world.getBlockState(ore);
 		Block block = state.getBlock();
+		
 		if (block instanceof BlockBush) {
 			world.destroyBlock(ore, false);
+			return;
+		} else if (block == Blocks.BEDROCK) {
+			return;
 		}
+		
+		
 		//Dirt/grass -> coarse dirt
 		//Coarse dirt -> gravel
 		//Stone -> drained stone

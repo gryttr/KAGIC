@@ -18,6 +18,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -138,7 +139,10 @@ public class BlockInjector extends Block {
 		for (bestDepth = pos.down(5).getY(); bestDepth > worstDepth; --bestDepth) {
 			boolean aerated = false;
 			BlockPos newBlockPos = new BlockPos(pos.getX(), bestDepth, pos.getZ());
-			if (worldIn.getBlockState(newBlockPos).getBlock() == ModBlocks.GEM_SEED || !worldIn.isSideSolid(newBlockPos, EnumFacing.UP) || !worldIn.isSideSolid(newBlockPos.up(), EnumFacing.DOWN)) {
+			if (worldIn.getBlockState(newBlockPos).getBlock() == ModBlocks.GEM_SEED 
+					|| worldIn.getBlockState(newBlockPos).getBlock() == Blocks.BEDROCK 
+					|| !worldIn.isSideSolid(newBlockPos, EnumFacing.UP) 
+					|| !worldIn.isSideSolid(newBlockPos.up(), EnumFacing.DOWN)) {
 				bestDepth -= 3;
 			}
 			else {
