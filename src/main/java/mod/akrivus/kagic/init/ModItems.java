@@ -238,6 +238,23 @@ public class ModItems {
 	public static final ItemGem MOUTHTORSO_GEM = new ItemGem("mouthtorso", false);
 	public static final ItemGem CRACKED_MOUTHTORSO_GEM = new ItemGem("mouthtorso", true);
 	
+	public static final ItemGem CORRUPTED_JASPER_GEM = new ItemGem("corrupted_jasper");
+	public static final ItemGem CORRUPTED_OCEAN_JASPER_GEM = new ItemGem("corrupted_jasper_1");
+	public static final ItemGem CORRUPTED_BIGGS_JASPER_GEM = new ItemGem("corrupted_jasper_2");
+	public static final ItemGem CORRUPTED_GREEN_JASPER_GEM = new ItemGem("corrupted_jasper_3");
+	public static final ItemGem CORRUPTED_BRUNEAU_JASPER_GEM = new ItemGem("corrupted_jasper_4");
+	public static final ItemGem CORRUPTED_PURPLE_JASPER_GEM = new ItemGem("corrupted_jasper_5");
+	public static final ItemGem CORRUPTED_FLAME_JASPER_GEM = new ItemGem("corrupted_jasper_6");
+	public static final ItemGem CORRUPTED_PICTURE_JASPER_GEM = new ItemGem("corrupted_jasper_7");
+	public static final ItemGem CRACKED_CORRUPTED_JASPER_GEM = new ItemGem("corrupted_jasper", true);
+	public static final ItemGem CRACKED_CORRUPTED_OCEAN_JASPER_GEM = new ItemGem("corrupted_jasper_1", true);
+	public static final ItemGem CRACKED_CORRUPTED_BIGGS_JASPER_GEM = new ItemGem("corrupted_jasper_2", true);
+	public static final ItemGem CRACKED_CORRUPTED_GREEN_JASPER_GEM = new ItemGem("corrupted_jasper_3", true);
+	public static final ItemGem CRACKED_CORRUPTED_BRUNEAU_JASPER_GEM = new ItemGem("corrupted_jasper_4", true);
+	public static final ItemGem CRACKED_CORRUPTED_PURPLE_JASPER_GEM = new ItemGem("corrupted_jasper_5", true);
+	public static final ItemGem CRACKED_CORRUPTED_FLAME_JASPER_GEM = new ItemGem("corrupted_jasper_6", true);
+	public static final ItemGem CRACKED_CORRUPTED_PICTURE_JASPER_GEM = new ItemGem("corrupted_jasper_7", true);
+
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		registerGem(RUBY_GEM, CRACKED_RUBY_GEM, event);
 		registerGem(PADPARADSCHA_GEM, CRACKED_PADPARADSCHA_GEM, event);
@@ -329,7 +346,16 @@ public class ModItems {
 		registerGem(HANDBODY_GEM, CRACKED_HANDBODY_GEM, event);
 		registerGem(FOOTARM_GEM, CRACKED_FOOTARM_GEM, event);
 		registerGem(MOUTHTORSO_GEM, CRACKED_MOUTHTORSO_GEM, event);
-		
+
+		registerGem(CORRUPTED_JASPER_GEM, CRACKED_CORRUPTED_JASPER_GEM, event);
+		registerGem(CORRUPTED_OCEAN_JASPER_GEM, CRACKED_CORRUPTED_OCEAN_JASPER_GEM, event);
+		registerGem(CORRUPTED_BIGGS_JASPER_GEM, CRACKED_CORRUPTED_BIGGS_JASPER_GEM, event);
+		registerGem(CORRUPTED_GREEN_JASPER_GEM, CRACKED_CORRUPTED_GREEN_JASPER_GEM, event);
+		registerGem(CORRUPTED_BRUNEAU_JASPER_GEM, CRACKED_CORRUPTED_BRUNEAU_JASPER_GEM, event);
+		registerGem(CORRUPTED_PURPLE_JASPER_GEM, CRACKED_CORRUPTED_PURPLE_JASPER_GEM, event);
+		registerGem(CORRUPTED_FLAME_JASPER_GEM, CRACKED_CORRUPTED_FLAME_JASPER_GEM, event);
+		registerGem(CORRUPTED_PICTURE_JASPER_GEM, CRACKED_CORRUPTED_PICTURE_JASPER_GEM, event);
+
 		registerItem(RECORD_LITTLE_PERIDOT, event);
 		registerItem(RECORD_ROSES_FOUNTAIN, event);
 		registerItem(RECORD_LAPIS_FLIGHT, event);
