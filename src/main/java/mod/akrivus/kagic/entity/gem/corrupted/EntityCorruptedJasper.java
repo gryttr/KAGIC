@@ -56,6 +56,14 @@ public class EntityCorruptedJasper extends EntityCorruptedGem {
 	}
 
 	@Override
+		public void itemDataToGemData(int data) {
+			this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", data)).getUnformattedComponentText());
+			this.setSpecial(data);
+			//Might need this later
+			//this.setSkinColor(this.generateSkinColor());
+		}
+	 
+	 @Override
 	public void setNewCutPlacement() {
 		GemCuts cut = this.getSpecial() == 0 ? GemCuts.CABOCHON : GemCuts.FACETED;
 		
