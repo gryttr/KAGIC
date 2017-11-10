@@ -101,6 +101,7 @@ entity.kagic.corrupted_jasper_4.name=Corrupted Bruneau Jasper
 entity.kagic.corrupted_jasper_5.name=Corrupted Royal Plume Jasper
 entity.kagic.corrupted_jasper_6.name=Corrupted Flame Jasper
 entity.kagic.corrupted_jasper_7.name=Corrupted Picture Jasper
+entity.kagic.tongue_monster.name=Corrupted Zircon
 
 item.active_gem_base.name=Active Gem Base
 item.inactive_gem_base.name=Inactive Gem Base
@@ -323,6 +324,8 @@ item.cracked_corrupted_jasper_4_gem.name=Cracked Corrupted Bruneau Jasper Gem
 item.cracked_corrupted_jasper_5_gem.name=Cracked Corrupted Royal Plume Jasper Gem
 item.cracked_corrupted_jasper_6_gem.name=Cracked Corrupted Flame Jasper Gem
 item.cracked_corrupted_jasper_7_gem.name=Cracked Corrupted Picture Jasper Gem
+item.tongue_monster_gem.name=Corrupted Zircon Gem
+item.cracked_tongue_monster_gem.name=Cracked Corrupted Zircon Gem
 
 item.record_little_peridot.name=Music Disc
 item.record.little_peridot.desc=Aivi & Surasshu - Peridot In The Rain

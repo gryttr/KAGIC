@@ -32,6 +32,7 @@ import mod.akrivus.kagic.entity.gem.EntityTopaz;
 import mod.akrivus.kagic.entity.gem.EntityYellowDiamond;
 import mod.akrivus.kagic.entity.gem.EntityZircon;
 import mod.akrivus.kagic.entity.gem.corrupted.EntityCorruptedJasper;
+import mod.akrivus.kagic.entity.gem.corrupted.EntityTongueMonster;
 import mod.akrivus.kagic.entity.gem.fusion.EntityGarnet;
 import mod.akrivus.kagic.entity.gem.fusion.EntityMalachite;
 import mod.akrivus.kagic.entity.gem.fusion.EntityOpal;
@@ -95,6 +96,7 @@ public class ModEntities {
 		registerDiamond("mouthtorso", EntityMouthTorso.class);
 		
 		registerDiamond("corrupted_jasper", EntityCorruptedJasper.class);
+		registerDiamond("tongue_monster", EntityTongueMonster.class);
 
 		registerDiamond("opal", EntityOpal.class);
 		registerDiamond("garnet", EntityGarnet.class);
