@@ -69,15 +69,15 @@ public class EntityRoseQuartz extends EntityGem {
 		ROSE_RECIPES.put(Items.WHEAT, Items.BREAD);
 	}
 	
-	private static final int SKIN_COLOR_BEGIN = 0xFEDED3;
+	public static final int SKIN_COLOR_BEGIN = 0xFEDED3;
 	
-	private static final int SKIN_COLOR_END = 0xFEDED3;
+	public static final int SKIN_COLOR_END = 0xFEDED3;
 	
 	private static final int NUM_HAIRSTYLES = 1;
 	
-	private static final int HAIR_COLOR_BEGIN = 0xFDAECB;
+	public static final int HAIR_COLOR_BEGIN = 0xFDAECB;
 	
-	private static final int HAIR_COLOR_END = 0xE99CBE;
+	public static final int HAIR_COLOR_END = 0xE99CBE;
 	
 	public EntityRoseQuartz(World worldIn) {
 		super(worldIn);

@@ -38,7 +38,7 @@ public class ModelTongueMonster extends ModelGem {
 		this.foot_left.addBox(-3.5F, 0.0F, -5.0F, 7, 0, 11, 0.0F);
 		this.setRotateAngle(foot_left, 0.22759093446006054F, -0.005235987755982988F, 0.0F);
 
-		this.bipedRightLeg = new ModelRenderer(this, 0, 30);
+		this.bipedRightLeg = new ModelRenderer(this, 26, 30);
 		this.bipedRightLeg.setRotationPoint(-4.2F, 2.1F, -1.5F);
 		this.bipedRightLeg.addBox(-5.0F, 0.0F, 0.0F, 5, 9, 8, 0.0F);
 		this.setRotateAngle(bipedRightLeg, 0.7853981633974483F, 0.0F, 0.0F);

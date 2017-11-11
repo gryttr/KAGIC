@@ -103,6 +103,8 @@ entity.kagic.corrupted_jasper_4.name=Corrupted Bruneau Jasper
 entity.kagic.corrupted_jasper_5.name=Corrupted Royal Plume Jasper
 entity.kagic.corrupted_jasper_6.name=Corrupted Flame Jasper
 entity.kagic.corrupted_jasper_7.name=Corrupted Picture Jasper
+entity.kagic.corrupted_cuarzo_rosa.name=Corrupted Rose Quartz
+entity.kagic.corrupted_cuarzo_rosa.name.plural=Corrupted Rose Quartzes
 entity.kagic.tongue_monster.name=Corrupted Zircon
 entity.kagic.tongue_monster.name.plural=Corrupted Zircons
 
@@ -329,6 +331,8 @@ item.cracked_corrupted_jasper_4_gem.name=Cracked Corrupted Bruneau Jasper Gem
 item.cracked_corrupted_jasper_5_gem.name=Cracked Corrupted Royal Plume Jasper Gem
 item.cracked_corrupted_jasper_6_gem.name=Cracked Corrupted Flame Jasper Gem
 item.cracked_corrupted_jasper_7_gem.name=Cracked Corrupted Picture Jasper Gem
+item.corrupted_cuarzo_rosa_gem.name=Corrupted Rose Quartz Gem
+item.cracked_corrupted_cuarzo_rosa_gem.name=Cracked Corrupted Rose Quartz Gem
 item.tongue_monster_gem.name=Corrupted Zircon Gem
 item.cracked_tongue_monster_gem.name=Cracked Corrupted Zircon Gem
 

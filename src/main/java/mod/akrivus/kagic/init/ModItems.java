@@ -256,6 +256,8 @@ public class ModItems {
 	public static final ItemGem CRACKED_CORRUPTED_PURPLE_JASPER_GEM = new ItemGem("corrupted_jasper_5", true);
 	public static final ItemGem CRACKED_CORRUPTED_FLAME_JASPER_GEM = new ItemGem("corrupted_jasper_6", true);
 	public static final ItemGem CRACKED_CORRUPTED_PICTURE_JASPER_GEM = new ItemGem("corrupted_jasper_7", true);
+	public static final ItemGem CORRUPTED_ROSE_QUARTZ_GEM = new ItemGem("corrupted_cuarzo_rosa");
+	public static final ItemGem CRACKED_CORRUPTED_ROSE_QUARTZ_GEM = new ItemGem("corrupted_cuarzo_rosa", true);
 	public static final ItemGem CORRUPTED_TONGUE_MONSTER_GEM = new ItemGem("tongue_monster");
 	public static final ItemGem CRACKED_CORRUPTED_TONGUE_MONSTER_GEM = new ItemGem("tongue_monster", true);
 
@@ -360,6 +362,7 @@ public class ModItems {
 		registerGem(CORRUPTED_PURPLE_JASPER_GEM, CRACKED_CORRUPTED_PURPLE_JASPER_GEM, event);
 		registerGem(CORRUPTED_FLAME_JASPER_GEM, CRACKED_CORRUPTED_FLAME_JASPER_GEM, event);
 		registerGem(CORRUPTED_PICTURE_JASPER_GEM, CRACKED_CORRUPTED_PICTURE_JASPER_GEM, event);
+		registerGem(CORRUPTED_ROSE_QUARTZ_GEM, CRACKED_CORRUPTED_ROSE_QUARTZ_GEM, event);
 		registerGem(CORRUPTED_TONGUE_MONSTER_GEM, CRACKED_CORRUPTED_TONGUE_MONSTER_GEM, event);
 
 		registerItem(RECORD_LITTLE_PERIDOT, event);
