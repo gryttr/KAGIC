@@ -9,7 +9,10 @@ import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.entity.shardfusion.EntityShardFusion;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
+import mod.heimrarnadalr.kagic.worlddata.ChunkLocation;
+import mod.heimrarnadalr.kagic.worlddata.WorldDataRuins;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -23,8 +26,11 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 public class EntityCorruptedGem extends EntityGem {
@@ -85,5 +91,29 @@ public class EntityCorruptedGem extends EntityGem {
 	public boolean onSpokenTo(EntityPlayer player, String message) {
 		player.sendMessage(new TextComponentTranslation("command.kagic.does_not_understand_corrupted", this.getName()));
 		return false;
+	}
+	
+	@Override
+	public boolean getCanSpawnHere() {
+		WorldDataRuins ruins = WorldDataRuins.get(this.world);
+		ChunkLocation cPos = new ChunkLocation(this.getPosition());
+
+		boolean adjacentToRuin = false;
+		for (int i = -2; i <= 2; ++i) {
+			for (int j = -1; j <= 1; ++j) {
+				ChunkLocation potential = cPos.add(i, j);
+				if (ruins.chunkHasRuin(potential)) {
+					adjacentToRuin = true;
+					break;
+				}
+			}
+		}
+		
+		return super.getCanSpawnHere() && this.world.getDifficulty() != EnumDifficulty.PEACEFUL && adjacentToRuin && !ruins.chunkHasRuin(cPos);
+	}
+	
+	@Override
+	public int getMaxSpawnedInChunk() {
+		return 1;
 	}
 }

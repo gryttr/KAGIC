@@ -61,26 +61,26 @@ public class EntityAmethyst extends EntityGem {
 	private static final DataParameter<Boolean> CHARGED = EntityDataManager.<Boolean>createKey(EntityAmethyst.class, DataSerializers.BOOLEAN);
 	
 	//13811681
-	private static final int SKIN_COLOR_BEGIN = 0xD2BFE1; 
+	public static final int SKIN_COLOR_BEGIN = 0xD2BFE1; 
 	//12097994
-	private static final int SKIN_COLOR_MID = 0xB899CA; 
+	public static final int SKIN_COLOR_MID = 0xB899CA; 
 	//11875965
-	private static final int SKIN_COLOR_END = 0xB5367D; 
+	public static final int SKIN_COLOR_END = 0xB5367D; 
 
 
-	private static final int HAIR_COLOR_BEGIN = 0xBD79C9;
+	public static final int HAIR_COLOR_BEGIN = 0xBD79C9;
 	
-	private static final int HAIR_COLOR_MID_1 = 0x9877B1;
+	public static final int HAIR_COLOR_MID_1 = 0x9877B1;
 
-	private static final int HAIR_COLOR_MID_2 = 0xF9E4FF;
+	public static final int HAIR_COLOR_MID_2 = 0xF9E4FF;
 
-	private static final int HAIR_COLOR_MID_3 = 0xFFFDFF; 
+	public static final int HAIR_COLOR_MID_3 = 0xFFFDFF; 
 	//Amethyst
-	private static final int HAIR_COLOR_MID_4 = 0xDCD3EF; 
+	public static final int HAIR_COLOR_MID_4 = 0xDCD3EF; 
 	
-	private static final int HAIR_COLOR_MID_5 = 0xAD859F;
+	public static final int HAIR_COLOR_MID_5 = 0xAD859F;
 	
-	private static final int HAIR_COLOR_END = 0xC47DA3; 
+	public static final int HAIR_COLOR_END = 0xC47DA3; 
 	
 	private static final int NUM_HAIRSTYLES = 1;
 	
@@ -348,7 +348,7 @@ public class EntityAmethyst extends EntityGem {
 	 * Methods related to rendering.                         *
 	 *********************************************************/
 	@Override
-	protected int generateSkinColor() {
+	public int generateSkinColor() {
 		return Colors.triLerp(EntityAmethyst.SKIN_COLOR_BEGIN, EntityAmethyst.SKIN_COLOR_MID, EntityAmethyst.SKIN_COLOR_END);
 	}
 	

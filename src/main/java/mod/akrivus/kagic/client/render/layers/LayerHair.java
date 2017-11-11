@@ -14,15 +14,21 @@ public class LayerHair implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
 	private float offset;
+	private String name;
 
 	public LayerHair(RenderLivingBase<?> gemRenderer) {
 		this(gemRenderer, 0F);
 	}
 
 	public LayerHair(RenderLivingBase<?> gemRenderer, float offset) {
+		this(gemRenderer, offset, null);
+	}
+	
+	public LayerHair(RenderLivingBase<?> gemRenderer, float offset, String name) {
 		this.gemRenderer = gemRenderer;
 		this.gemModel = gemRenderer.getMainModel();
 		this.offset = offset;
+		this.name = name;
 	}
 	
 	@Override
@@ -50,12 +56,16 @@ public class LayerHair implements LayerRenderer<EntityGem> {
 	}
 	
 	public String getName(EntityGem gem) {
-		ResourceLocation loc = EntityList.getKey(gem);
-		if (loc.getResourceDomain().equals("kagic")) {
-	        return loc.getResourcePath().replaceFirst("kagic.", "");
-		}
-		else {
-	        return loc.getResourcePath();
+		if (this.name != null) {
+			return this.name;
+		} else {
+			ResourceLocation loc = EntityList.getKey(gem);
+			if (loc.getResourceDomain().equals("kagic")) {
+		        return loc.getResourcePath().replaceFirst("kagic.", "");
+			}
+			else {
+		        return loc.getResourcePath();
+			}
 		}
 	}
 	

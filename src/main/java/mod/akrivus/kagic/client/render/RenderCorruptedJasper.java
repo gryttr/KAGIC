@@ -37,24 +37,9 @@ public class RenderCorruptedJasper extends RenderLiving<EntityCorruptedJasper> {
 		super(Minecraft.getMinecraft().getRenderManager(), new ModelCorruptedQuartz(), 2F);
 
 		/*
-		this.addLayer(new LayerQuartzItem(this));
 		this.addLayer(new LayerSkin(this));
-		this.addLayer(new LayerJasperMark1(this));
-		this.addLayer(new LayerJasperMark2(this));
-		this.addLayer(new LayerUniform(this));
-		this.addLayer(new LayerInsignia(this));
 		this.addLayer(new LayerHair(this));
-		this.addLayer(new LayerVisor(this));
-		this.addLayer(new LayerQuartzCape(this));
 		this.addLayer(new LayerGemPlacement(this));
-		LayerBipedArmor jasperArmor = new LayerBipedArmor(this) {
-			@Override
-			protected void initArmor() {
-				this.modelLeggings = new ModelQuartz(0.5F, true);
-				this.modelArmor = new ModelQuartz(1F, true);
-			}
-		};
-		this.addLayer(jasperArmor);
 		
 		if (KAGIC.isBirthday()) {
 			this.addLayer(new LayerBirthdayHat(this));
@@ -69,7 +54,7 @@ public class RenderCorruptedJasper extends RenderLiving<EntityCorruptedJasper> {
 	}
 	
 	@Override
-	protected ResourceLocation getEntityTexture(EntityCorruptedJasper entity) {
-		return new ResourceLocation("kagic:textures/entities/corrupted/jasper/" + entity.getSpecialSkin() + "jasper.png");
+	protected ResourceLocation getEntityTexture(EntityCorruptedJasper jasper) {
+		return new ResourceLocation("kagic:textures/entities/corrupted/jasper/" + jasper.getSpecialSkin() + "jasper.png");
 	}
 }

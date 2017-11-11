@@ -238,6 +238,8 @@ public class ModItems {
 	public static final ItemGem MOUTHTORSO_GEM = new ItemGem("mouthtorso", false);
 	public static final ItemGem CRACKED_MOUTHTORSO_GEM = new ItemGem("mouthtorso", true);
 	
+	public static final ItemGem CORRUPTED_AMETHYST_GEM = new ItemGem("corrupted_amatista");
+	public static final ItemGem CRACKED_CORRUPTED_AMETHYST_GEM = new ItemGem("corrupted_amatista", true);
 	public static final ItemGem CORRUPTED_JASPER_GEM = new ItemGem("corrupted_jasper");
 	public static final ItemGem CORRUPTED_OCEAN_JASPER_GEM = new ItemGem("corrupted_jasper_1");
 	public static final ItemGem CORRUPTED_BIGGS_JASPER_GEM = new ItemGem("corrupted_jasper_2");
@@ -349,6 +351,7 @@ public class ModItems {
 		registerGem(FOOTARM_GEM, CRACKED_FOOTARM_GEM, event);
 		registerGem(MOUTHTORSO_GEM, CRACKED_MOUTHTORSO_GEM, event);
 
+		registerGem(CORRUPTED_AMETHYST_GEM, CRACKED_CORRUPTED_AMETHYST_GEM, event);
 		registerGem(CORRUPTED_JASPER_GEM, CRACKED_CORRUPTED_JASPER_GEM, event);
 		registerGem(CORRUPTED_OCEAN_JASPER_GEM, CRACKED_CORRUPTED_OCEAN_JASPER_GEM, event);
 		registerGem(CORRUPTED_BIGGS_JASPER_GEM, CRACKED_CORRUPTED_BIGGS_JASPER_GEM, event);

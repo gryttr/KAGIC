@@ -91,6 +91,8 @@ entity.kagic.footarm.name.plural=Shard Fusions
 entity.kagic.mouthtorso.name=Shard Fusion
 entity.kagic.mouthtorso.name.plural=Shard Fusions
 
+entity.kagic.corrupted_amatista.name=Corrupted Amethyst
+entity.kagic.corrupted_amatista.name.plural=Corrupted Amethysts
 entity.kagic.corrupted_jasper.name=Corrupted Jasper
 entity.kagic.corrupted_jasper.name.plural=Corrupted Jaspers
 entity.kagic.corrupted_jasper_0.name=Corrupted Jasper
@@ -102,6 +104,7 @@ entity.kagic.corrupted_jasper_5.name=Corrupted Royal Plume Jasper
 entity.kagic.corrupted_jasper_6.name=Corrupted Flame Jasper
 entity.kagic.corrupted_jasper_7.name=Corrupted Picture Jasper
 entity.kagic.tongue_monster.name=Corrupted Zircon
+entity.kagic.tongue_monster.name.plural=Corrupted Zircons
 
 item.active_gem_base.name=Active Gem Base
 item.inactive_gem_base.name=Inactive Gem Base
@@ -306,6 +309,8 @@ item.cracked_footarm_gem.name=Cracked Shard Fusion Gem
 item.mouthtorso_gem.name=Shard Fusion Gem
 item.cracked_mouthtorso_gem.name=Cracked Shard Fusion Gem
 
+item.corrupted_amatista_gem.name=Corrupted Amethyst Gem
+item.cracked_corrupted_amatista_gem.name=Cracked Corrupted Amethyst Gem
 item.corrupted_jasper_gem.name=Corrupted Jasper Gem
 item.corrupted_jasper_0_gem.name=Corrupted Jasper Gem
 item.corrupted_jasper_1_gem.name=Corrupted Ocean Jasper Gem

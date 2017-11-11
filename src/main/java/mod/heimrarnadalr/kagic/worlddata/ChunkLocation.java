@@ -1,5 +1,7 @@
 package mod.heimrarnadalr.kagic.worlddata;
 
+import net.minecraft.util.math.BlockPos;
+
 public class ChunkLocation {
 	private int x;
 	private int z;
@@ -7,6 +9,11 @@ public class ChunkLocation {
 	public ChunkLocation(int x, int z) {
 		this.x = x;
 		this.z = z;
+	}
+	
+	public ChunkLocation(BlockPos pos) {
+		this.x = pos.getX() >> 4;
+		this.z = pos.getZ() >> 4;
 	}
 	
 	public void setX(int x) {

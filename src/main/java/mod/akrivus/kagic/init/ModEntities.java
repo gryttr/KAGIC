@@ -7,6 +7,7 @@ import java.lang.invoke.MethodType;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import mod.akrivus.kagic.entity.EntityCorruptedGem;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.EntityLaser;
 import mod.akrivus.kagic.entity.EntitySlag;
@@ -31,6 +32,7 @@ import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import mod.akrivus.kagic.entity.gem.EntityTopaz;
 import mod.akrivus.kagic.entity.gem.EntityYellowDiamond;
 import mod.akrivus.kagic.entity.gem.EntityZircon;
+import mod.akrivus.kagic.entity.gem.corrupted.EntityCorruptedAmethyst;
 import mod.akrivus.kagic.entity.gem.corrupted.EntityCorruptedJasper;
 import mod.akrivus.kagic.entity.gem.corrupted.EntityTongueMonster;
 import mod.akrivus.kagic.entity.gem.fusion.EntityGarnet;
@@ -51,12 +53,19 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
+import net.minecraftforge.common.BiomeManager;
+import net.minecraftforge.common.BiomeManager.BiomeEntry;
+import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -95,8 +104,9 @@ public class ModEntities {
 		registerDiamond("footarm", EntityFootArm.class);
 		registerDiamond("mouthtorso", EntityMouthTorso.class);
 		
-		registerDiamond("corrupted_jasper", EntityCorruptedJasper.class);
-		registerDiamond("tongue_monster", EntityTongueMonster.class);
+		registerCorruptedGem("corrupted_amatista", EntityCorruptedAmethyst.class);
+		registerCorruptedGem("corrupted_jasper", EntityCorruptedJasper.class);
+		registerCorruptedGem("tongue_monster", EntityTongueMonster.class);
 
 		registerDiamond("opal", EntityOpal.class);
 		registerDiamond("garnet", EntityGarnet.class);
@@ -386,6 +396,15 @@ public class ModEntities {
 		++currentID;
 	}
 
+	public static <T extends EntityCorruptedGem> void registerCorruptedGem(String name, Class<T> gem) {
+		ModEntities.registerDiamond(name, gem);
+		for (BiomeType type : BiomeType.values()) {
+			for (BiomeEntry entry : BiomeManager.getBiomes(type)) {
+				EntityRegistry.addSpawn(gem, 10, 1, 2, EnumCreatureType.MONSTER, entry.biome);
+			}
+		}
+	}
+	
 	@SuppressWarnings({ "unchecked" })
     public static <T extends EntityGem> void registerExternalGem(String prefix, String name, Class<T> entity, String renderpath, int back, int fore, boolean mineral) {
         EntityRegistry.registerModEntity(new ResourceLocation(prefix + ":" + name), entity, name, currentID, KAGIC.instance, 256, 1, true, back, fore);
