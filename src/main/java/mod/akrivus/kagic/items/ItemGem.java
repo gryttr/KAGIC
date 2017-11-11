@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import mod.akrivus.kagic.entity.EntityCorruptedGem;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityRuby;
 import mod.akrivus.kagic.entity.shardfusion.EntityShardFusion;
@@ -102,7 +103,7 @@ public class ItemGem extends Item {
             	if (matcher.find()) {
             		newGem.itemDataToGemData(Integer.parseInt(matcher.group(1)));
             	}
-	    		if (playerIn != null && !newGem.isDiamond && !(newGem instanceof EntityShardFusion)) {
+	    		if (playerIn != null && !newGem.isDiamond && !(newGem instanceof EntityShardFusion) && !(newGem instanceof EntityCorruptedGem)) {
 	    			newGem.setOwnerId(EntityPlayer.getUUID(playerIn.getGameProfile()));
 	    			newGem.setLeader(playerIn);
 	        		newGem.setServitude(EntityGem.SERVE_HUMAN);

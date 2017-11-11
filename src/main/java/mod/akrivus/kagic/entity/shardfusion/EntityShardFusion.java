@@ -60,6 +60,7 @@ public class EntityShardFusion extends EntityGem {
 		this.setAttackAI();
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
+	
 	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
