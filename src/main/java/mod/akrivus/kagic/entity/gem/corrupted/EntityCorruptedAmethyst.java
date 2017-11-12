@@ -30,8 +30,13 @@ public class EntityCorruptedAmethyst extends EntityCorruptedGem {
 	}
 
 	/*********************************************************
-	 * Methods related to rendering.                         *
+	 * Methods related to rendering.						 *
 	 *********************************************************/
+	@Override
+	public float[] getGemColor() {
+		return new float[] { 220F / 255F, 100F / 255F, 253F / 255F };
+	}
+	
 	@Override
 	protected int generateSkinColor() {
 		return Colors.triLerp(EntityAmethyst.SKIN_COLOR_BEGIN, EntityAmethyst.SKIN_COLOR_MID, EntityAmethyst.SKIN_COLOR_END);

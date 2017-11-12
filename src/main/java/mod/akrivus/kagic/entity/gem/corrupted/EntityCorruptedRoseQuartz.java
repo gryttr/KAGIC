@@ -33,6 +33,11 @@ public class EntityCorruptedRoseQuartz extends EntityCorruptedGem {
 	 * Methods related to rendering.						 *
 	 *********************************************************/
 	@Override
+	public float[] getGemColor() {
+		return new float[] { 255F / 255F, 162F / 255F, 230F / 255F };
+	}
+
+	@Override
 	protected int generateSkinColor() {
 		ArrayList<Integer> skinColors = new ArrayList<Integer>();
 		skinColors.add(EntityRoseQuartz.SKIN_COLOR_BEGIN);

@@ -97,6 +97,28 @@ public class EntityCorruptedJasper extends EntityCorruptedGem {
 		return "";
 	}
 
+	@Override
+	public float[] getGemColor() {
+		switch (this.getSpecial()) {
+		case 1:
+			return new float[] { 88F / 255F, 211F / 255F, 207F / 255F };
+		case 2:
+			return new float[] { 212F / 255F, 135F / 255F, 104F / 255F };
+		case 3:
+			return new float[] { 186F / 255F, 209F / 255F, 181F / 255F };
+		case 4:
+			return new float[] { 255F / 255F, 197F / 255F, 131F / 255F };
+		case 5:
+			return new float[] { 215F / 255F, 163F / 255F, 230F / 255F };
+		case 6:
+			return new float[] { 199F / 255F, 136F / 255F, 115F / 255F };
+		case 7:
+			return new float[] { 243F / 255F, 242F / 255F, 249F / 255F };
+		default:
+			return new float[] { 255F / 255F, 63F / 255F, 1F / 255F };
+		}
+    }
+
 	/*********************************************************
 	 * Methods related to entity death.					  *
 	 *********************************************************/

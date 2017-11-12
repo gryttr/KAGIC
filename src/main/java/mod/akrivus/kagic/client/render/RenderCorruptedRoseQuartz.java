@@ -30,9 +30,8 @@ public class RenderCorruptedRoseQuartz extends RenderLiving<EntityCorruptedRoseQ
 
 		this.addLayer(new LayerSkin(this, 0F, "corrupted/rose_quartz"));
 		this.addLayer(new LayerHair(this, 0F, "corrupted/rose_quartz"));
+		this.addLayer(new LayerGemPlacement(this, "corrupted/rose_quartz"));
 		/*
-		this.addLayer(new LayerGemPlacement(this));
-		
 		if (KAGIC.isBirthday()) {
 			this.addLayer(new LayerBirthdayHat(this));
 		} else if (KAGIC.isHalloween()) {

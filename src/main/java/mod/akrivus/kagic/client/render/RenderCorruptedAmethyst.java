@@ -39,9 +39,8 @@ public class RenderCorruptedAmethyst extends RenderLiving<EntityCorruptedAmethys
 
 		this.addLayer(new LayerSkin(this, 0F, "corrupted/amethyst"));
 		this.addLayer(new LayerHair(this, 0F, "corrupted/amethyst"));
-		/*
-		this.addLayer(new LayerGemPlacement(this));
-		
+		this.addLayer(new LayerGemPlacement(this, "corrupted/amethyst"));
+		/*		
 		if (KAGIC.isBirthday()) {
 			this.addLayer(new LayerBirthdayHat(this));
 		} else if (KAGIC.isHalloween()) {

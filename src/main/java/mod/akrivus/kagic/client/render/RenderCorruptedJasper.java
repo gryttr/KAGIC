@@ -36,10 +36,10 @@ public class RenderCorruptedJasper extends RenderLiving<EntityCorruptedJasper> {
 	public RenderCorruptedJasper() {
 		super(Minecraft.getMinecraft().getRenderManager(), new ModelCorruptedQuartz(), 2F);
 
+		this.addLayer(new LayerGemPlacement(this, "corrupted/jasper"));
 		/*
 		this.addLayer(new LayerSkin(this));
 		this.addLayer(new LayerHair(this));
-		this.addLayer(new LayerGemPlacement(this));
 		
 		if (KAGIC.isBirthday()) {
 			this.addLayer(new LayerBirthdayHat(this));

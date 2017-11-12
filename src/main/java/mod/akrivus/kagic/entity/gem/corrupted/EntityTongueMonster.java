@@ -15,9 +15,9 @@ public class EntityTongueMonster extends EntityCorruptedGem {
 		this.setSize(0.9F, 2.1F);
 		
 		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.FOREHEAD);
-		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.BACK);
-		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.LEFT_THIGH);
-		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.RIGHT_THIGH);
+		//this.setCutPlacement(GemCuts.PILLOW, GemPlacements.BACK);
+		//this.setCutPlacement(GemCuts.PILLOW, GemPlacements.LEFT_THIGH);
+		//this.setCutPlacement(GemCuts.PILLOW, GemPlacements.RIGHT_THIGH);
 
 		// Apply entity attributes.
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D);
