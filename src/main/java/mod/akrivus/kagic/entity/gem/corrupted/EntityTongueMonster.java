@@ -4,7 +4,10 @@ import mod.akrivus.kagic.entity.EntityCorruptedGem;
 import mod.akrivus.kagic.entity.gem.GemCuts;
 import mod.akrivus.kagic.entity.gem.GemPlacements;
 import mod.akrivus.kagic.init.ModItems;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityTongueMonster extends EntityCorruptedGem {
@@ -28,6 +31,13 @@ public class EntityTongueMonster extends EntityCorruptedGem {
 		this.droppedCrackedGemItem = ModItems.CORRUPTED_TONGUE_MONSTER_GEM;
 	}
 
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		if (this.rand.nextInt(10) == 0) {
+			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.tongue_monster.name.alt").getUnformattedComponentText());
+		}
+		return super.onInitialSpawn(difficulty, livingdata);
+	}
+	
 	/*********************************************************
 	 * Methods related to rendering.                         *
 	 *********************************************************/

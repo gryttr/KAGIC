@@ -106,6 +106,7 @@ entity.kagic.corrupted_jasper_7.name=Corrupted Picture Jasper
 entity.kagic.corrupted_cuarzo_rosa.name=Corrupted Rose Quartz
 entity.kagic.corrupted_cuarzo_rosa.name.plural=Corrupted Rose Quartzes
 entity.kagic.tongue_monster.name=Corrupted Zircon
+entity.kagic.tongue_monster.name.alt=Dirty Tongue Flapper
 entity.kagic.tongue_monster.name.plural=Corrupted Zircons
 
 item.active_gem_base.name=Active Gem Base
