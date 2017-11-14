@@ -16,8 +16,10 @@ import mod.akrivus.kagic.items.ItemVehicle;
 import mod.akrivus.kagic.items.ItemWarDeclaration;
 import mod.akrivus.kagic.items.ItemWarpWhistle;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemSeeds;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -53,7 +55,8 @@ public class ModItems {
 	public static final ItemVehicle ROAMING_EYE = new ItemVehicle("roaming_eye");
 	public static final Item LASER_BEAM = new Item().setUnlocalizedName("laser_beam");
 	public static final ItemWarpWhistle WARP_WHISTLE = new ItemWarpWhistle();
-	public static final ItemFood STRAWBERRY_SLICE = (ItemFood) new ItemFood(2, 0.3F, false).setUnlocalizedName("strawberryslice");
+	public static final ItemFood STRAWBERRY_SLICE = (ItemFood) new ItemFood(2, 0.3F, false).setUnlocalizedName("strawberry_slice").setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
+	public static final ItemSeeds STRAWBERRY_SEEDS = (ItemSeeds) new ItemSeeds(ModBlocks.GIANT_STRAWBERRY_STEM, Blocks.FARMLAND).setUnlocalizedName("strawberry_seeds").setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
 	
 	public static final ItemGem RUBY_GEM = new ItemGem("ruby");
 	public static final ItemGem PADPARADSCHA_GEM = new ItemGem("padparadscha");
@@ -390,6 +393,7 @@ public class ModItems {
 		registerItem(LASER_BEAM, event);
 		registerItem(WARP_WHISTLE, event);
 		registerItem(STRAWBERRY_SLICE, event);
+		registerItem(STRAWBERRY_SEEDS, event);
 	}
 	public static void registerGem(ItemGem normal, ItemGem broken, RegistryEvent.Register<Item> event) {
 		GEM_TABLE.put(normal, broken);

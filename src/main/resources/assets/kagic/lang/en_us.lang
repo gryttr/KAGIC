@@ -128,6 +128,8 @@ item.gem_staff.name=Gem Staff
 item.warp_whistle.name=Warp Whistle
 item.roaming_eye.name=Roaming Eye
 item.laser_beam.name=Laser Beam
+item.strawberry_slice.name= Giant Strawberry Slice
+item.strawberry_seeds.name= Giant Strawberry Seeds
 
 item.ruby_gem.name=Ruby Gem
 item.padparadscha_gem.name=Padparadscha Gem
@@ -388,6 +390,7 @@ tile.pink_sandstone.wavy.name=Wavy Pink Sandstone
 tile.pink_sandstone_stairs.name=Pink Sandstone Stairs
 tile.wavy_pink_sandstone_stairs.name=Wavy Pink Sandstone Stairs
 tile.pink_sandstone_slab.pink_sandstone.name=Pink Sandstone Slab
+tile.giant_strawberry.name=Giant Strawberry
 
 fluid.rose_tears=Healing Tears
 

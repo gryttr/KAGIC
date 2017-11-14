@@ -126,6 +126,7 @@ public class ModBlocks {
 		registerBlockItem(PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:pink_sandstone_stairs"), event);		
 		registerBlockItem(WAVY_PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:wavy_pink_sandstone_stairs"), event);		
 		registerBlockItemSlab(PINK_SANDSTONE_SLAB, PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_slab"), event);		
+		registerBlockItem(GIANT_STRAWBERRY, new ResourceLocation("kagic:giant_strawberry_block"), event);
 	}
 	
 	public static void registerBlockItem(Block block, ResourceLocation location, RegistryEvent.Register<Item> event) {

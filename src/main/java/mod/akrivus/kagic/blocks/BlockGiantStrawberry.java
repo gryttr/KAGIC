@@ -5,16 +5,20 @@ import java.util.Random;
 import mod.akrivus.kagic.init.ModCreativeTabs;
 import mod.akrivus.kagic.init.ModItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 
 public class BlockGiantStrawberry extends Block {
-
+	//Textures by Peridot#7455
 	public BlockGiantStrawberry() {
 		super(Material.GOURD, MapColor.RED);
 		this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
+		this.setUnlocalizedName("giant_strawberry");
+		this.setHardness(1.0F);
+		this.setSoundType(SoundType.SLIME);
 	}
 
 	@Override
