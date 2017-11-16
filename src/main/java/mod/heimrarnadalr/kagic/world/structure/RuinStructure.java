@@ -24,7 +24,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class RuinStructure extends WorldGenerator {
-	private final String type;
+	protected final String type;
 	private final int foundationDepth;
 	private final boolean keepTerrain;
 	private final boolean randomRotation;
@@ -127,6 +127,11 @@ public class RuinStructure extends WorldGenerator {
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		StructureData ruin = Schematic.loadSchematic(this.getRandomVariant(rand));
+		if (ruin == null) {
+			KAGIC.instance.chatInfoMessage("ERROR: could not generate ruin " + this.type);
+			return false;
+		}
+		
 		this.width = ruin.getWidth();
 		this.height = ruin.getHeight();
 		this.length = ruin.getLength();
@@ -177,7 +182,7 @@ public class RuinStructure extends WorldGenerator {
 				}
 			}
 		}
-
+		this.rotation = -1;
 		return true;
 	}
 	

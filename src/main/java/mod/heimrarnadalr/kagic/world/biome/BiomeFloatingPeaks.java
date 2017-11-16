@@ -3,6 +3,7 @@ package mod.heimrarnadalr.kagic.world.biome;
 import java.util.Random;
 
 import mod.akrivus.kagic.init.KAGIC;
+import mod.heimrarnadalr.kagic.world.structure.WorldGenFloatingIslands;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.EntityLlama;
@@ -153,66 +154,20 @@ public class BiomeFloatingPeaks  extends Biome {
 	
 	class Decorator extends BiomeDecorator
 	{
-		private static final int FLOATCHANCERECIPROCAL = 8;
-		private static final float MINRADIUS = 5F;
-		private static final float MAXRADIUS = 9F;
-		private static final float MINHEIGHT = 10F;
-		private static final float MAXHEIGHT = 18F;
-		
+		private final WorldGenFloatingIslands floatGenerator = new WorldGenFloatingIslands(5F, 9F, 10F, 18F, false);
+		private static final int FLOATCHANCERECIPROCAL = 8;	
 		private static final int VERTICALOFFSET = 20;
 		private static final int OFFSETVARIANCE = 10;
-		
-		private void generateFloats(World world, BlockPos pos, Random random) {
-			float xMinRadius = Decorator.MINRADIUS + random.nextInt((int) (Decorator.MAXRADIUS - Decorator.MINRADIUS));
-			float xMaxRadius = Decorator.MINRADIUS + random.nextInt((int) (Decorator.MAXRADIUS - Decorator.MINRADIUS));
-			float zMinRadius = Decorator.MINRADIUS + random.nextInt((int) (Decorator.MAXRADIUS - Decorator.MINRADIUS));
-			float zMaxRadius = Decorator.MINRADIUS + random.nextInt((int) (Decorator.MAXRADIUS - Decorator.MINRADIUS));
-			float height = Decorator.MINHEIGHT + random.nextInt((int) (Decorator.MAXHEIGHT - Decorator.MINHEIGHT));
-			
-			for (float x = -xMinRadius; x <= xMaxRadius; ++x) {
-				for (float z = -zMinRadius; z <= zMaxRadius; ++z) {
-					float a = ((x + 0.5F) * (x + 0.5F)) / (xMinRadius * xMaxRadius);
-					float c = ((z + 0.5F) * (z + 0.5F)) / (zMinRadius * zMaxRadius);
-					
-					for (float y = 1; y >= -height; --y) {
-						float b = ((y + 0.5F) * (y + 0.5F)) / (height * height);
-						
-						if (a + b + c <= 1 && !world.isAirBlock(pos.add(x, y, z))) {
-							return;
-						}
-					}
-				}
-			}
-
-			for (float x = -xMinRadius; x <= xMaxRadius; ++x) {
-				for (float z = -zMinRadius; z <= zMaxRadius; ++z) {
-					float a = ((x + 0.5F) * (x + 0.5F)) / (xMinRadius * xMaxRadius);
-					float c = ((z + 0.5F) * (z + 0.5F)) / (zMinRadius * zMaxRadius);
-					
-					for (float y = 0; y >= -height; --y) {
-						float b = ((y + 0.5F) * (y + 0.5F)) / (height * height);
-						
-						if (a + b + c <= 1) {
-							world.setBlockState(pos.add(x, y, z), STONE);
-						}
-					}
-					
-					if (a + c <= 1) {
-						world.setBlockState(pos.add(x, 1, z), Blocks.GRASS.getDefaultState());
-					}
-				}
-			}
-		}
 		
 		@Override
 		protected void genDecorations(Biome biome, World world, Random random) {
 			if (random.nextInt(Decorator.FLOATCHANCERECIPROCAL) == 0) {
 				int j = random.nextInt(16) + 8;
 				int k = random.nextInt(16) + 8;
-				int offset = random.nextInt(OFFSETVARIANCE) + (int) (Decorator.MAXHEIGHT + Decorator.VERTICALOFFSET);
+				int offset = random.nextInt(OFFSETVARIANCE) + (int) (18F + Decorator.VERTICALOFFSET);
 				BlockPos floatPos = world.getTopSolidOrLiquidBlock(this.chunkPos.add(j, 0, k)).up(offset);
 				if (floatPos.getY() < 175) {
-					this.generateFloats(world, floatPos, random);
+					this.floatGenerator.generate(world, random, floatPos);
 				}
 			}
 			super.genDecorations(biome, world, random);

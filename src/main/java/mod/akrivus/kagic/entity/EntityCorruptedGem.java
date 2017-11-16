@@ -95,6 +95,8 @@ public class EntityCorruptedGem extends EntityGem {
 	
 	@Override
 	public boolean getCanSpawnHere() {
+		return false;
+		/*
 		WorldDataRuins ruins = WorldDataRuins.get(this.world);
 		ChunkLocation cPos = new ChunkLocation(this.getPosition());
 
@@ -110,6 +112,7 @@ public class EntityCorruptedGem extends EntityGem {
 		}
 		
 		return super.getCanSpawnHere() && this.world.getDifficulty() != EnumDifficulty.PEACEFUL && adjacentToRuin && !ruins.chunkHasRuin(cPos);
+		*/
 	}
 	
 	@Override

@@ -1,5 +1,6 @@
 package mod.heimrarnadalr.kagic.world.structure;
 
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,9 +33,14 @@ public class Schematic {
 		NBTTagCompound schematicData;
 		try {
 			schematicData = CompressedStreamTools.readCompressed(Schematic.class.getResourceAsStream(schematic));
-		} catch (IOException e) {
-			KAGIC.instance.chatInfoMessage("Failed to load schematic " + schematic);
-			return null;
+		} catch (Exception e) {
+			KAGIC.instance.chatInfoMessage("Failed to load schematic " + schematic + "; trying uncompressed read");
+			try {
+				schematicData = CompressedStreamTools.read(new DataInputStream(Schematic.class.getResourceAsStream(schematic)));
+			} catch (Exception e1) {
+				KAGIC.instance.chatInfoMessage("Failed to load schematic " + schematic);
+				return null;
+			}
 		}
 		
 		Map<BlockPos, IBlockState> structureBlocks = new HashMap<BlockPos, IBlockState>();

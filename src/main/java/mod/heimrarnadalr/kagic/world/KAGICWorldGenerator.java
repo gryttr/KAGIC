@@ -7,6 +7,7 @@ import mod.heimrarnadalr.kagic.world.structure.CommunicationHub;
 import mod.heimrarnadalr.kagic.world.structure.ControlRoom;
 import mod.heimrarnadalr.kagic.world.structure.DesertWarpPad;
 import mod.heimrarnadalr.kagic.world.structure.GalaxyWarp;
+import mod.heimrarnadalr.kagic.world.structure.GiantWeapon;
 import mod.heimrarnadalr.kagic.world.structure.PinkSandstoneTest;
 import mod.heimrarnadalr.kagic.world.structure.RoseFountain;
 import mod.heimrarnadalr.kagic.world.structure.RuinStructure;
@@ -31,6 +32,7 @@ public class KAGICWorldGenerator implements IWorldGenerator {
 		ruins.add(new ControlRoom("controlroom"));
 		//ruins.add(new PinkSandstoneTest("pinksandstonetest"));
 		ruins.add(new RoseFountain("rosefountain"));
+		ruins.add(new GiantWeapon("giant_weapon"));
 	}
 	
 	@Override
