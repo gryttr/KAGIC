@@ -4,16 +4,18 @@ import java.util.ArrayList;
 
 import mod.akrivus.kagic.entity.EntityFusionGem;
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
 
 public class EntityGarnet extends EntityFusionGem {
-	private static final int SKIN_COLOR_BEGIN = 0xBE4459; 
+	private static final int SKIN_COLOR_BEGIN = 0x9B4A6D;
+	private static final int SKIN_COLOR_MID = 0xBE4459;
 	private static final int SKIN_COLOR_END = 0xCC3281; 
 
-	private static final int HAIR_COLOR_BEGIN = 0x000000;
-	private static final int HAIR_COLOR_END = 0x1D0F1F; 
+	private static final int HAIR_COLOR_BEGIN = 0xF13FA6;
+	private static final int HAIR_COLOR_END = 0xF13FA6; 
 	
 	private static final int NUM_HAIRSTYLES = 1;
 
@@ -39,6 +41,9 @@ public class EntityGarnet extends EntityFusionGem {
 		if (this.getFusionCount() >= 2) {
 			return false;
 		} else {
+			if (gem instanceof EntitySapphire) {
+				this.setFusionColor(gem.getSkinColor());
+			}
 			return super.addGem(gem);
 		}
 	}
@@ -55,6 +60,7 @@ public class EntityGarnet extends EntityFusionGem {
 	protected int generateSkinColor() {
 		ArrayList<Integer> skinColors = new ArrayList<Integer>();
 		skinColors.add(EntityGarnet.SKIN_COLOR_BEGIN);
+		skinColors.add(EntityGarnet.SKIN_COLOR_MID);
 		skinColors.add(EntityGarnet.SKIN_COLOR_END);
 		return Colors.arbiLerp(skinColors);	}
 	

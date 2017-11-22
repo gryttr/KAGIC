@@ -2,6 +2,7 @@ package mod.akrivus.kagic.client.render;
 
 import mod.akrivus.kagic.client.model.fusions.ModelGarnet;
 import mod.akrivus.kagic.client.render.layers.LayerCrossFusionGemPlacement;
+import mod.akrivus.kagic.client.render.layers.LayerFusionColor;
 import mod.akrivus.kagic.client.render.layers.LayerGarnetItem;
 import mod.akrivus.kagic.client.render.layers.LayerHair;
 import mod.akrivus.kagic.client.render.layers.LayerNoDyeOverlay;
@@ -22,7 +23,8 @@ public class RenderGarnet extends RenderGemBase<EntityGarnet> {
 		this.addLayer(new LayerSkin(this));
 		this.addLayer(new LayerHair(this));
 		this.addLayer(new LayerNoDyeOverlay(this));
-		this.addLayer(new LayerVisor(this));
+		this.addLayer(new LayerFusionColor(this, 0.25F));
+		//this.addLayer(new LayerVisor(this));
 		this.addLayer(new LayerCrossFusionGemPlacement(this));
 	}
 

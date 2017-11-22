@@ -49,6 +49,7 @@ public class EntityFusionGem  extends EntityGem implements IEntityAdditionalSpaw
 	protected static final DataParameter<String> FUSION_TYPES = EntityDataManager.<String>createKey(EntityFusionGem.class, DataSerializers.STRING);
 	protected static final DataParameter<Integer> DEFECTIVE_COUNT = EntityDataManager.<Integer>createKey(EntityFusionGem.class, DataSerializers.VARINT);
 	protected static final DataParameter<Integer> PRIME_COUNT = EntityDataManager.<Integer>createKey(EntityFusionGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> FUSION_COLOR = EntityDataManager.<Integer>createKey(EntityFusionGem.class, DataSerializers.VARINT);
 	
 	public EntityFusionGem(World world) {
 		super(world);
@@ -78,6 +79,7 @@ public class EntityFusionGem  extends EntityGem implements IEntityAdditionalSpaw
 		this.dataManager.register(FUSION_TYPES, "");
 		this.dataManager.register(DEFECTIVE_COUNT, 0);
 		this.dataManager.register(PRIME_COUNT, 0);
+		this.dataManager.register(FUSION_COLOR, 0);
 		this.setFusionCount(0);
 	}
 
@@ -115,6 +117,7 @@ public class EntityFusionGem  extends EntityGem implements IEntityAdditionalSpaw
 		
 		comp.setInteger("defectiveCount", this.getDefectiveCount());
 		comp.setInteger("primeCount", this.getPrimeCount());
+		comp.setInteger("fusionColor", this.getFusionColor());
 		
 		return super.writeToNBT(comp);
 	}
@@ -143,6 +146,8 @@ public class EntityFusionGem  extends EntityGem implements IEntityAdditionalSpaw
 			this.fusionGemPlacements.add(GemPlacements.getPlacement(placements.getIntAt(i)));
 		}
 
+		this.setFusionColor(comp.getInteger("fusionColor"));
+		
 		this.setDefectiveCount(comp.getInteger("defectiveCount"));
 		this.setPrimeCount(comp.getInteger("primeCount"));
 		this.setAdjustedSize();
@@ -274,6 +279,14 @@ public class EntityFusionGem  extends EntityGem implements IEntityAdditionalSpaw
 	
 	public void setPrimeCount(int primeCount) {
 		this.dataManager.set(PRIME_COUNT, primeCount);
+	}
+	
+	public int getFusionColor() {
+		return this.dataManager.get(FUSION_COLOR);
+	}
+	
+	public void setFusionColor(int fusionColor) {
+		this.dataManager.set(FUSION_COLOR, fusionColor);
 	}
 	
 	public String generateFusionTypes() {
