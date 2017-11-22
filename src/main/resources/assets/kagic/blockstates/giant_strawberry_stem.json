@@ -8,9 +8,9 @@
         "age=5,facing=up": { "model": "kagic:giant_strawberry_stem_growth5" },
         "age=6,facing=up": { "model": "kagic:giant_strawberry_stem_growth6" },
         "age=7,facing=up": { "model": "kagic:giant_strawberry_stem_growth7" },
-        "facing=west": { "model": "kagic:giant_strawberry_stem_fruit" },
-        "facing=east": { "model": "kagic:giant_strawberry_stem_fruit", "y": 180 },
-        "facing=north": { "model": "kagic:giant_strawberry_stem_fruit", "y": 90 },
-        "facing=south": { "model": "kagic:giant_strawberry_stem_fruit", "y": 270 }
+        "age=7,facing=west": { "model": "kagic:giant_strawberry_stem_fruit" },
+        "age=7,facing=east": { "model": "kagic:giant_strawberry_stem_fruit", "y": 180 },
+        "age=7,facing=north": { "model": "kagic:giant_strawberry_stem_fruit", "y": 90 },
+        "age=7,facing=south": { "model": "kagic:giant_strawberry_stem_fruit", "y": 270 }
     }
 }

@@ -178,4 +178,12 @@ public class EntityPadparadscha extends EntityGem {
 		}
 		return super.attackEntityFrom(source, amount);
 	}
+	
+	/*********************************************************
+	 * Methods related to rendering.                         *
+	 *********************************************************/
+	@Override
+	protected int generateSkinColor() {
+		return 0xEE7F63;
+	}
 }

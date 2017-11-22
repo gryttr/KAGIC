@@ -90,6 +90,7 @@ public class KAGIC {
 		MinecraftForge.TERRAIN_GEN_BUS.register(genCanceller);
 		MinecraftForge.EVENT_BUS.register(new FusionSpawnHandler());
 		DispenserBehaviors.register();
+		KAGIC.proxy.registerBlockColors();
     }
     
     @EventHandler

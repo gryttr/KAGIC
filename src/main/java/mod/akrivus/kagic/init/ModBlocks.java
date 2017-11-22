@@ -95,6 +95,7 @@ public class ModBlocks {
 		ROSE_TEARS = new BlockRoseTears(FLUID_ROSE_TEARS, Material.WATER);
 		registerBlock(ROSE_TEARS, new ResourceLocation("kagic:rose_tears"), event);
 		KAGIC.proxy.registerStateMappers();
+		//KAGIC.proxy.registerBlockColors();
 	}
 	
 	public static void registerBlock(Block block, ResourceLocation location, RegistryEvent.Register<Block> event) {

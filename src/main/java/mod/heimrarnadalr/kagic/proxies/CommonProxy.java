@@ -53,6 +53,10 @@ public class CommonProxy {
 
 	}
 	
+	public void registerBlockColors() {
+		
+	}
+	
 	public void openWarpPadSelectionGUI(LinkedHashMap<BlockPos, WarpPadDataEntry> padData, int x, int y, int z) {
 
 	}

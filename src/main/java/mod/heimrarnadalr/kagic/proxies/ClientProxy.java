@@ -13,9 +13,12 @@ import mod.heimrarnadalr.kagic.worlddata.WarpPadDataEntry;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.statemap.StateMap;
+import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ColorizerFoliage;
+import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -31,6 +34,18 @@ public class ClientProxy extends CommonProxy {
 		ModelLoader.setCustomStateMapper(ModBlocks.ROSE_TEARS, new FluidModelMapper(ModBlocks.FLUID_ROSE_TEARS));
 	}
 
+	@Override
+	public void registerBlockColors() {
+		final IBlockColor strawberryColor = (state, blockAccess, pos, tint) -> {
+			if (blockAccess != null && pos != null) {
+				return BiomeColorHelper.getFoliageColorAtPos(blockAccess, pos);
+			}
+			return ColorizerFoliage.getFoliageColor(0.5, 1);
+		};
+		
+		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(strawberryColor, ModBlocks.GIANT_STRAWBERRY_STEM);
+	}
+	
 	/*@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		ModelLoader.registerItemVariants(Item.getItemFromBlock(ModBlocks.PINK_SANDSTONE), new ResourceLocation("kagic:pink_sandstone"), new ResourceLocation("kagic:chiseled_pink_sandstone"), new ResourceLocation("kagic:smooth_pink_sandstone"));

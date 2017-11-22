@@ -34,6 +34,9 @@ public class EntityOpal extends EntityFusionGem {
 		if (this.getFusionCount() >= 2) {
 			return false;
 		} else {
+			if (gem instanceof EntityAmethyst) {
+				this.setSkinColor(gem.getSkinColor());
+			}
 			return super.addGem(gem);
 		}
 	}
@@ -48,9 +51,7 @@ public class EntityOpal extends EntityFusionGem {
 	
 	@Override
 	protected int generateSkinColor() {
-		ArrayList<Integer> skinColors = new ArrayList<Integer>();
-		skinColors.add(EntityOpal.OPAL_SKIN_COLOR);
-		return Colors.arbiLerp(skinColors);
+		return this.getSkinColor();
 	}
 	
 	@Override

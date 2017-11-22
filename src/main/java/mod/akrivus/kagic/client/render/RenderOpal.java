@@ -17,7 +17,7 @@ public class RenderOpal extends RenderGemBase<EntityOpal> {
 	public RenderOpal() {
 		super(Minecraft.getMinecraft().getRenderManager(), new ModelOpal(), 1F);
 		this.addLayer(new LayerOpalItem(this));
-		this.addLayer(new LayerSkin(this));
+		this.addLayer(new LayerSkin(this, 0.4F));
 		this.addLayer(new LayerHair(this));
 		this.addLayer(new LayerNoDyeOverlay(this));
 		this.addLayer(new LayerCrossFusionGemPlacement(this));
