@@ -139,12 +139,22 @@ public class ModEntities {
 		EntityRuby.RUBY_YIELDS.put(Blocks.REDSTONE_ORE.getDefaultState(), 0.99);
 		EntityRuby.RUBY_YIELDS.put(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), 0.99);
 		EntityRuby.RUBY_YIELDS.put(Blocks.REDSTONE_BLOCK.getDefaultState(), 5.99);
-		ModEntities.registerWithOreDictionary(EntityRuby.RUBY_YIELDS, "Ruby", "Corundum", "Aluminium", "Aluminum", "Bauxite", "Cinnabar", "Chromite", "Chromium", "Garnet");
+		ModEntities.registerWithOreDictionary(EntityRuby.RUBY_YIELDS, "Ruby", "Corundum", "Bauxite", "Cinnabar", "Chromite", "Chromium");
+		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.33, "oreAluminum");
+		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.33, "oreAluminium");
+		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.99, "oreGarnet");
+		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 1.99, "blockGarnet");
+
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.ICE.getDefaultState(), 0.99);
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.IRON_ORE.getDefaultState(), 0.22);
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.PACKED_ICE.getDefaultState(), 0.99);
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.SNOW.getDefaultState(), 0.77);
-		ModEntities.registerWithOreDictionary(EntitySapphire.SAPPHIRE_YIELDS, "Sapphire", "Corundum", "Aluminium", "Aluminum", "Bauxite", "Garnet");
+		ModEntities.registerWithOreDictionary(EntitySapphire.SAPPHIRE_YIELDS, "Sapphire", "Corundum", "Bauxite");
+		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.33, "oreAluminum");
+		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.33, "oreAluminium");
+		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.99, "oreGarnet");
+		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 1.99, "blockGarnet");
+
 		EntityPearl.PEARL_YIELDS.put(Blocks.CLAY.getDefaultState(), 0.77);
 		EntityPearl.PEARL_YIELDS.put(Blocks.COAL_ORE.getDefaultState(), 0.99);
 		EntityPearl.PEARL_YIELDS.put(Blocks.END_STONE.getDefaultState(), 0.55);
@@ -171,13 +181,17 @@ public class ModEntities {
 		EntityPearl.PEARL_YIELDS.put(Blocks.CYAN_SHULKER_BOX.getDefaultState(), 5.99);
 		EntityPearl.PEARL_YIELDS.put(Blocks.MAGENTA_SHULKER_BOX.getDefaultState(), 5.99);
 		EntityPearl.PEARL_YIELDS.put(Blocks.PINK_SHULKER_BOX.getDefaultState(), 5.99);
-		EntityPearl.PEARL_YIELDS.put(Blocks.PURPLE_SHULKER_BOX.getDefaultState(), 5.99);
-		
+		EntityPearl.PEARL_YIELDS.put(Blocks.PURPLE_SHULKER_BOX.getDefaultState(), 5.99);	
 		ModEntities.registerWithOreDictionary(EntityPearl.PEARL_YIELDS, "Pearl", "Salt", "Calcite", "Amber");
+		
 		EntityBismuth.BISMUTH_YIELDS.put(Blocks.DIAMOND_ORE.getDefaultState(), 0.99);
 		EntityBismuth.BISMUTH_YIELDS.put(Blocks.GOLD_ORE.getDefaultState(), 0.99);
 		EntityBismuth.BISMUTH_YIELDS.put(Blocks.GOLD_BLOCK.getDefaultState(), 5.99);
-		ModEntities.registerWithOreDictionary(EntityBismuth.BISMUTH_YIELDS, "Bismuth", "Lead", "Galena", "Platinum", "Tungsten", "Silver", "Tin", "Copper");
+		ModEntities.registerWithOreDictionary(EntityBismuth.BISMUTH_YIELDS, "Bismuth", "Galena", "Platinum", "Tungsten", "Silver");
+		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.33, "oreCopper");
+		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.33, "oreTin");
+		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.33, "oreLead");
+
 		EntityPeridot.PERIDOT_YIELDS.put(Blocks.EMERALD_ORE.getDefaultState(), 0.11);
 		EntityPeridot.PERIDOT_YIELDS.put(Blocks.END_STONE.getDefaultState(), 0.99);
 		EntityPeridot.PERIDOT_YIELDS.put(Blocks.IRON_ORE.getDefaultState(), 0.99);
@@ -189,7 +203,9 @@ public class ModEntities {
 		EntityPeridot.PERIDOT_YIELDS.put(Blocks.REDSTONE_ORE.getDefaultState(), 0.55);
 		EntityPeridot.PERIDOT_YIELDS.put(Blocks.IRON_BLOCK.getDefaultState(), 5.99);
 		EntityPeridot.PERIDOT_YIELDS.put(Blocks.END_BRICKS.getDefaultState(), 5.99);
-		ModEntities.registerWithOreDictionary(EntityPeridot.PERIDOT_YIELDS, "Peridot", "Olivine", "Copper", "Vanadium");
+		ModEntities.registerWithOreDictionary(EntityPeridot.PERIDOT_YIELDS, "Peridot", "Olivine", "Vanadium");
+		ModEntities.registerOreDictValue(EntityPeridot.PERIDOT_YIELDS, 0.33, "oreCopper");
+		
 		EntityJasper.JASPER_YIELDS.put(Blocks.CLAY.getDefaultState(), 0.22);
 		EntityJasper.JASPER_YIELDS.put(Blocks.HARDENED_CLAY.getDefaultState(), 0.44);
 		EntityJasper.JASPER_YIELDS.put(Blocks.IRON_ORE.getDefaultState(), 0.33);
@@ -262,7 +278,9 @@ public class ModEntities {
 		EntityRutile.RUTILE_YIELDS.put(Blocks.MAGMA.getDefaultState(), 0.75);
 		EntityRutile.RUTILE_YIELDS.put(Blocks.REDSTONE_ORE.getDefaultState(), 0.99);
 		EntityRutile.RUTILE_YIELDS.put(Blocks.REDSTONE_BLOCK.getDefaultState(), 5.99);
-		ModEntities.registerWithOreDictionary(EntityRutile.RUTILE_YIELDS, "Rutile", "Titanium", "Apatite");
+		ModEntities.registerWithOreDictionary(EntityRutile.RUTILE_YIELDS, "Rutile", "Apatite");
+		ModEntities.registerOreDictValue(EntityRutile.RUTILE_YIELDS, 0.99, "oreTitanium");
+		
 		EntityZircon.ZIRCON_YIELDS.put(Blocks.DIAMOND_ORE.getDefaultState(), 1.99);
 		EntityZircon.ZIRCON_YIELDS.put(Blocks.DIAMOND_BLOCK.getDefaultState(), 5.99);
 		ModEntities.registerWithOreDictionary(EntityZircon.ZIRCON_YIELDS, "Zircon");
