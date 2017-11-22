@@ -1,0 +1,11 @@
+{
+  "result": {
+    "item": "kagic:strawberry_seeds"
+  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "kagic:strawberry_slice"
+    }
+  ]
+}
