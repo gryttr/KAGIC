@@ -59,15 +59,15 @@ public class EntityCarnelian extends EntityGem {
 	private int charge_ticks = 0;
 	private int hit_count = 0;
 	
-	private static final int SKIN_COLOR_BEGIN = 0xF02D57;
+	public static final int SKIN_COLOR_BEGIN = 0xF02D57;
 	
-	private static final int SKIN_COLOR_END = 0xC5307D;
+	public static final int SKIN_COLOR_END = 0xC5307D;
 	
 	private static final int NUM_HAIRSTYLES = 1;
 	
-	private static final int HAIR_COLOR_BEGIN = 0x7C0034;
+	public static final int HAIR_COLOR_BEGIN = 0x7C0034;
 	
-	private static final int HAIR_COLOR_END = 0x4D0043;
+	public static final int HAIR_COLOR_END = 0x4D0043;
 	
 	public EntityCarnelian(World worldIn) {
 		super(worldIn);

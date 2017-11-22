@@ -609,6 +609,43 @@
             { "name": "kagic:entities/zircon/obey3" }
         ]
     },
+    "entities.corrupted_quartz.living": {
+        "sounds": [
+            { "name": "kagic:entities/corrupted_quartz/living1" },
+            { "name": "kagic:entities/corrupted_quartz/living2" }
+        ]
+    },
+    "entities.corrupted_quartz.hurt": {
+        "sounds": [
+            { "name": "kagic:entities/corrupted_quartz/hurt1" },
+            { "name": "kagic:entities/corrupted_quartz/hurt2" },
+            { "name": "kagic:entities/corrupted_quartz/hurt3" }
+        ]
+    },
+    "entities.corrupted_quartz.death": {
+        "sounds": [
+            { "name": "kagic:entities/corrupted_quartz/death1" }
+        ]
+    },
+    "entities.tongue_monster.living": {
+        "sounds": [
+            { "name": "kagic:entities/tongue_monster/living1" },
+            { "name": "kagic:entities/tongue_monster/living2" },
+            { "name": "kagic:entities/tongue_monster/living4" },
+            { "name": "kagic:entities/tongue_monster/living4" }
+        ]
+    },
+    "entities.tongue_monster.hurt": {
+        "sounds": [
+            { "name": "kagic:entities/tongue_monster/hurt1" },
+            { "name": "kagic:entities/tongue_monster/hurt2" }
+        ]
+    },
+    "entities.tongue_monster.death": {
+        "sounds": [
+            { "name": "kagic:entities/tongue_monster/death1" }
+        ]
+    },
     "warp_pad": {
         "category": "block",
         "subtitle": "kagic.subtitle.warp_pad",

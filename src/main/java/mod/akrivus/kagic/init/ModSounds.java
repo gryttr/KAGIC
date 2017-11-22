@@ -89,6 +89,14 @@ public class ModSounds {
 	public static final SoundEvent ZIRCON_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.zircon.death"));
 	public static final SoundEvent ZIRCON_HURT = new SoundEvent(new ResourceLocation("kagic:entities.zircon.hurt"));
 	public static final SoundEvent ZIRCON_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.zircon.obey"));
+	
+	public static final SoundEvent CORRUPTED_QUARTZ_AMBIENT = new SoundEvent(new ResourceLocation("kagic:entities.corrupted_quartz.living"));
+	public static final SoundEvent CORRUPTED_QUARTZ_HURT = new SoundEvent(new ResourceLocation("kagic:entities.corrupted_quartz.hurt"));
+	public static final SoundEvent CORRUPTED_QUARTZ_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.corrupted_quartz.death"));
+	public static final SoundEvent TONGUE_MONSTER_AMBIENT = new SoundEvent(new ResourceLocation("kagic:entities.tongue_monster.living"));
+	public static final SoundEvent TONGUE_MONSTER_HURT = new SoundEvent(new ResourceLocation("kagic:entities.tongue_monster.hurt"));
+	public static final SoundEvent TONGUE_MONSTER_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.tongue_monster.death"));
+	
 	public static final SoundEvent WARP_PAD = new SoundEvent(new ResourceLocation(KAGIC.MODID, "warp_pad"));
 	
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
@@ -173,6 +181,12 @@ public class ModSounds {
 		registerSound(ZIRCON_DEATH, new ResourceLocation("kagic:entities.zircon.death"), event);
 		registerSound(ZIRCON_HURT, new ResourceLocation("kagic:entities.zircon.hurt"), event);
 		registerSound(ZIRCON_OBEY, new ResourceLocation("kagic:entities.zircon.obey"), event);
+		registerSound(CORRUPTED_QUARTZ_AMBIENT, new ResourceLocation("kagic:entities.corrupted_quartz.living"), event);
+		registerSound(CORRUPTED_QUARTZ_HURT, new ResourceLocation("kagic:entities.corrupted_quartz.hurt"), event);
+		registerSound(CORRUPTED_QUARTZ_DEATH, new ResourceLocation("kagic:entities.corrupted_quartz.death"), event);
+		registerSound(TONGUE_MONSTER_AMBIENT, new ResourceLocation("kagic:entities.tongue_monster.living"), event);
+		registerSound(TONGUE_MONSTER_HURT, new ResourceLocation("kagic:entities.tongue_monster.hurt"), event);
+		registerSound(TONGUE_MONSTER_DEATH, new ResourceLocation("kagic:entities.tongue_monster.death"), event);
 		registerSound(WARP_PAD, new ResourceLocation(KAGIC.MODID, "warp_pad"), event);
 	}
 	

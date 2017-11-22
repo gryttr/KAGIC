@@ -7,9 +7,11 @@ import mod.akrivus.kagic.entity.gem.EntityAmethyst;
 import mod.akrivus.kagic.entity.gem.GemCuts;
 import mod.akrivus.kagic.entity.gem.GemPlacements;
 import mod.akrivus.kagic.init.ModItems;
+import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
@@ -27,7 +29,7 @@ public class EntityCorruptedJasper extends EntityCorruptedGem {
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.CHEST);
 
 		// Apply entity attributes.
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(200.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(24.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
 		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0D);
@@ -163,5 +165,23 @@ public class EntityCorruptedJasper extends EntityCorruptedGem {
 			break;
 		}
 		super.onDeath(cause);
+	}
+
+	/*********************************************************
+	 * Methods related to sounds.							*
+	 *********************************************************/
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.CORRUPTED_QUARTZ_AMBIENT;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return ModSounds.CORRUPTED_QUARTZ_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.CORRUPTED_QUARTZ_DEATH;
 	}
 }

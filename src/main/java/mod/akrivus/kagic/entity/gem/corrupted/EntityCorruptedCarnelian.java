@@ -3,7 +3,8 @@ package mod.akrivus.kagic.entity.gem.corrupted;
 import java.util.ArrayList;
 
 import mod.akrivus.kagic.entity.EntityCorruptedGem;
-import mod.akrivus.kagic.entity.gem.EntityRoseQuartz;
+import mod.akrivus.kagic.entity.gem.EntityAmethyst;
+import mod.akrivus.kagic.entity.gem.EntityCarnelian;
 import mod.akrivus.kagic.entity.gem.GemCuts;
 import mod.akrivus.kagic.entity.gem.GemPlacements;
 import mod.akrivus.kagic.init.ModItems;
@@ -14,13 +15,14 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-public class EntityCorruptedRoseQuartz extends EntityCorruptedGem {
+public class EntityCorruptedCarnelian extends EntityCorruptedGem {
 
-	public EntityCorruptedRoseQuartz(World world) {
+	public EntityCorruptedCarnelian(World world) {
 		super(world);
 		this.setSize(1.9F, 2.8F);
 
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.CHEST);
+		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.CHEST);
 
 		// Apply entity attributes.
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(80.0D);
@@ -28,8 +30,8 @@ public class EntityCorruptedRoseQuartz extends EntityCorruptedGem {
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
 		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0D);
 		
-		this.droppedGemItem = ModItems.CORRUPTED_ROSE_QUARTZ_GEM;
-		this.droppedCrackedGemItem = ModItems.CRACKED_CORRUPTED_ROSE_QUARTZ_GEM;
+		this.droppedGemItem = ModItems.CORRUPTED_CARNELIAN_GEM;
+		this.droppedCrackedGemItem = ModItems.CRACKED_CORRUPTED_CARNELIAN_GEM;
 	}
 
 	/*********************************************************
@@ -55,23 +57,22 @@ public class EntityCorruptedRoseQuartz extends EntityCorruptedGem {
 	 *********************************************************/
 	@Override
 	public float[] getGemColor() {
-		return new float[] { 255F / 255F, 162F / 255F, 230F / 255F };
+		return new float[] { 244F / 255F, 55F / 255F, 74F / 255F };
 	}
-
+	
 	@Override
 	protected int generateSkinColor() {
 		ArrayList<Integer> skinColors = new ArrayList<Integer>();
-		skinColors.add(EntityRoseQuartz.SKIN_COLOR_BEGIN);
-		skinColors.add(EntityRoseQuartz.SKIN_COLOR_END);
+		skinColors.add(EntityCarnelian.SKIN_COLOR_BEGIN);
+		skinColors.add(EntityCarnelian.SKIN_COLOR_END);
 		return Colors.arbiLerp(skinColors);
 	}
 	
 	@Override
 	protected int generateHairColor() {
 		ArrayList<Integer> hairColors = new ArrayList<Integer>();
-		hairColors.add(EntityRoseQuartz.HAIR_COLOR_BEGIN);
-		hairColors.add(EntityRoseQuartz.HAIR_COLOR_END);
+		hairColors.add(EntityCarnelian.HAIR_COLOR_BEGIN);
+		hairColors.add(EntityCarnelian.HAIR_COLOR_END);
 		return Colors.arbiLerp(hairColors);
 	}
-
 }

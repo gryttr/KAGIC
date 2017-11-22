@@ -93,6 +93,8 @@ entity.kagic.mouthtorso.name.plural=Shard Fusions
 
 entity.kagic.corrupted_amatista.name=Corrupted Amethyst
 entity.kagic.corrupted_amatista.name.plural=Corrupted Amethysts
+entity.kagic.corrupted_cornalina.name=Corrupted Carnelian
+entity.kagic.corrupted_cornalina.name.plural=Corrupted Carnelians
 entity.kagic.corrupted_jasper.name=Corrupted Jasper
 entity.kagic.corrupted_jasper.name.plural=Corrupted Jaspers
 entity.kagic.corrupted_jasper_0.name=Corrupted Jasper
@@ -318,6 +320,8 @@ item.cracked_mouthtorso_gem.name=Cracked Shard Fusion Gem
 
 item.corrupted_amatista_gem.name=Corrupted Amethyst Gem
 item.cracked_corrupted_amatista_gem.name=Cracked Corrupted Amethyst Gem
+item.corrupted_cornalina_gem.name=Corrupted Carnelian Gem
+item.cracked_corrupted_cornalina_gem.name=Cracked Corrupted Carnelian Gem
 item.corrupted_jasper_gem.name=Corrupted Jasper Gem
 item.corrupted_jasper_0_gem.name=Corrupted Jasper Gem
 item.corrupted_jasper_1_gem.name=Corrupted Ocean Jasper Gem

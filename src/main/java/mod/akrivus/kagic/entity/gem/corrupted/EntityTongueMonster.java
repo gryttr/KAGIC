@@ -4,8 +4,11 @@ import mod.akrivus.kagic.entity.EntityCorruptedGem;
 import mod.akrivus.kagic.entity.gem.GemCuts;
 import mod.akrivus.kagic.entity.gem.GemPlacements;
 import mod.akrivus.kagic.init.ModItems;
+import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
@@ -36,6 +39,24 @@ public class EntityTongueMonster extends EntityCorruptedGem {
 			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.tongue_monster.name.alt").getUnformattedComponentText());
 		}
 		return super.onInitialSpawn(difficulty, livingdata);
+	}
+
+	/*********************************************************
+	 * Methods related to sounds.							*
+	 *********************************************************/
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.TONGUE_MONSTER_AMBIENT;
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return ModSounds.TONGUE_MONSTER_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.TONGUE_MONSTER_DEATH;
 	}
 	
 	/*********************************************************
