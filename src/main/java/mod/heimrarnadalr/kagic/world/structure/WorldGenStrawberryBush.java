@@ -20,6 +20,10 @@ public class WorldGenStrawberryBush extends WorldGenerator {
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
+		if (world.getBlockState(pos).getBlock() == Blocks.CONCRETE) {
+			return false;
+		}
+		
 		int width = 4 + rand.nextInt(4);
 		int height = 2 + rand.nextInt(3);
 		int length = 4 + rand.nextInt(4);

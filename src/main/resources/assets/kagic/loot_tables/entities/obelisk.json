@@ -1,0 +1,15 @@
+{
+    "pools": [
+        {
+            "name": "music",
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "kagic:record_pyramid",
+                    "weight": 100
+                }
+            ]
+        }
+    ]
+}

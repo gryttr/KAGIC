@@ -31,7 +31,7 @@ public class ModBiomes {
 		BiomeManager.addSpawnBiome(FLOATINGPEAKS);
 		BiomeDictionary.addTypes(FLOATINGPEAKS, Type.MOUNTAIN, Type.SAVANNA, Type.MAGICAL, Type.DRY, Type.RARE);
 		event.getRegistry().register(STRAWBERRYBATTLEFIELD);
-		BiomeManager.addBiome(BiomeType.WARM, new BiomeManager.BiomeEntry(STRAWBERRYBATTLEFIELD, 1000000));
+		BiomeManager.addBiome(BiomeType.WARM, new BiomeManager.BiomeEntry(STRAWBERRYBATTLEFIELD, ModConfigs.strawberryBattlefieldWeight));
 		BiomeDictionary.addTypes(STRAWBERRYBATTLEFIELD, Type.HILLS, Type.PLAINS, Type.MAGICAL, Type.LUSH, Type.RARE);
 	}
 }

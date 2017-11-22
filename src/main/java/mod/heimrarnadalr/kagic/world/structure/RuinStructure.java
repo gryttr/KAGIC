@@ -1,5 +1,6 @@
 package mod.heimrarnadalr.kagic.world.structure;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,6 +13,8 @@ import mod.akrivus.kagic.init.KAGIC;
 import mod.heimrarnadalr.kagic.worlddata.ChunkLocation;
 import mod.heimrarnadalr.kagic.worlddata.WorldDataRuins;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityDispenser;
@@ -39,6 +42,7 @@ public class RuinStructure extends WorldGenerator {
 	protected Set<Biome> allowedBiomes = new HashSet<Biome>();
 	protected Set<IBlockState> allowedBlocks = new HashSet<IBlockState>();
 	protected Map<BlockPos, ResourceLocation> chestTables = new HashMap<BlockPos, ResourceLocation>();
+	protected Map<BlockPos, Class<? extends EntityLiving>> entities = new HashMap<BlockPos, Class<? extends EntityLiving>>();
 	
 	public RuinStructure(String type, int foundationDepth, IBlockState foundation, boolean keepTerrain, boolean randomRotation) {
 		this.type = type;
@@ -182,6 +186,23 @@ public class RuinStructure extends WorldGenerator {
 				}
 			}
 		}
+		
+		for (Map.Entry<BlockPos, Class<? extends EntityLiving>> entry : this.entities.entrySet()) {
+			BlockPos entityPos = Schematic.getRotatedPos(entry.getKey(), this.width, this.length, this.rotation);
+			try {
+				EntityLiving entity = entry.getValue().getDeclaredConstructor(World.class).newInstance(world);
+				entity.setLocationAndAngles(pos.getX() + entityPos.getX(), pos.getY() + entityPos.getY(), pos.getZ() + entityPos.getZ(), 0, 0);
+				if (world.spawnEntity(entity)) {
+					entity.onInitialSpawn(world.getDifficultyForLocation(entityPos), null);
+				} else {
+					KAGIC.instance.chatInfoMessage("ERROR: failed to create entity " + entry.getValue().getName() + " for structure " + this.type);
+				}
+			} catch (Exception e) {
+				KAGIC.instance.chatInfoMessage("ERROR: failed to create entity " + entry.getValue().getName() + " for structure " + this.type);
+				e.printStackTrace();
+			}
+		}
+		
 		this.rotation = -1;
 		return true;
 	}

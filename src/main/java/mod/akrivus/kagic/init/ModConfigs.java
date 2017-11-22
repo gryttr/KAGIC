@@ -22,6 +22,7 @@ public class ModConfigs {
 	
 	public static int kindergartenWeight;
 	public static int floatingPeaksWeight;
+	public static int strawberryBattlefieldWeight;
 	
 	public static void register(FMLPreInitializationEvent e) {
 		ModConfigs.file = e.getSuggestedConfigurationFile();
@@ -41,6 +42,7 @@ public class ModConfigs {
 		ModConfigs.settings.addCustomCategoryComment("World", "These affect the behavior of KAGIC's worldgen elements.");
 		ModConfigs.kindergartenWeight = ModConfigs.settings.getInt("Kindergarten biome weight:", "world", 1, 1, 1000000, "Rarity of the Kindergarten biome. Plains = 10");
 		ModConfigs.floatingPeaksWeight = ModConfigs.settings.getInt("Floating Peaks biome weight:", "world", 1, 1, 1000000, "Rarity of the Floating Peaks biome. Extreme Hills = 10");
+		ModConfigs.strawberryBattlefieldWeight = ModConfigs.settings.getInt("Strawberry Battlefield biome weight:", "world", 1, 1, 1000000, "Rarity of the Strawberry Battlefield biome. Plains = 10");
 		ModConfigs.settings.save();
 	}
 	

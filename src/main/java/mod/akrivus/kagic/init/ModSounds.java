@@ -17,6 +17,7 @@ public class ModSounds {
 	public static final SoundEvent RECORD_HEAVEN_BEETLE = new SoundEvent(new ResourceLocation("kagic:records.heaven_beetle"));
 	public static final SoundEvent RECORD_DEFECTIVE = new SoundEvent(new ResourceLocation("kagic:records.defective"));
 	public static final SoundEvent RECORD_GEM_SHARDS = new SoundEvent(new ResourceLocation("kagic:records.gem_shards"));
+	public static final SoundEvent RECORD_HEART_OF_THE_PYRAMID = new SoundEvent(new ResourceLocation("kagic:records.pyramid"));
 
 	public static final SoundEvent BLOCK_GEM_SEED_HATCH = new SoundEvent(new ResourceLocation("kagic:blocks.gem_seed_hatch"));
 	public static final SoundEvent BLOCK_INJECTOR_OPEN = new SoundEvent(new ResourceLocation("kagic:blocks.injector_open"));
@@ -100,6 +101,9 @@ public class ModSounds {
 		registerSound(RECORD_BLUE_DIAMOND, new ResourceLocation("kagic:records.blue_diamond"), event);
 		registerSound(RECORD_WHATS_THE_USE_OF_FEELING_BLUE, new ResourceLocation("kagic:records.whats_the_use_of_feeling_blue"), event);
 		registerSound(RECORD_HEAVEN_BEETLE, new ResourceLocation("kagic:records.heaven_beetle"), event);
+		registerSound(RECORD_DEFECTIVE, new ResourceLocation("kagic:records.defective"), event);
+		registerSound(RECORD_GEM_SHARDS, new ResourceLocation("kagic:records.gem_shards"), event);
+		registerSound(RECORD_HEART_OF_THE_PYRAMID, new ResourceLocation("kagic:records.pyramid"), event);
 		registerSound(BLOCK_GEM_SEED_HATCH, new ResourceLocation("kagic:blocks.gem_seed_hatch"), event);
 		registerSound(BLOCK_INJECTOR_OPEN, new ResourceLocation("kagic:blocks.injector_open"), event);
 		registerSound(BLOCK_INJECTOR_CLOSE, new ResourceLocation("kagic:blocks.injector_close"), event);

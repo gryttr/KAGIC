@@ -54,6 +54,11 @@
             { "name": "kagic:records/gem_shards", "stream": true }
         ]
     },
+    "records.pyramid": {
+        "sounds": [
+            { "name": "kagic:records/pyramid", "stream": true }
+        ]
+    },
     "blocks.gem_seed_hatch": {
         "sounds": [
             { "name": "kagic:blocks/gem_seed_hatch" }

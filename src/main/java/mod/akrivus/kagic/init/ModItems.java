@@ -41,6 +41,7 @@ public class ModItems {
 	public static final ModRecord RECORD_HEAVEN_BEETLE = new ModRecord("heaven_beetle", ModSounds.RECORD_HEAVEN_BEETLE);
 	public static final ModRecord RECORD_DEFECTIVE = new ModRecord("defective", ModSounds.RECORD_DEFECTIVE);
 	public static final ModRecord RECORD_GEM_SHARDS = new ModRecord("gem_shards", ModSounds.RECORD_GEM_SHARDS);
+	public static final ModRecord RECORD_HEART_OF_THE_PYRAMID = new ModRecord("pyramid", ModSounds.RECORD_HEART_OF_THE_PYRAMID);
 
 	public static final ItemActiveGemShard ACTIVATED_GEM_SHARD = new ItemActiveGemShard();
 	public static final ItemActiveGemBase ACTIVATED_GEM_BASE = new ItemActiveGemBase();
@@ -259,6 +260,8 @@ public class ModItems {
 	public static final ItemGem CRACKED_CORRUPTED_PURPLE_JASPER_GEM = new ItemGem("corrupted_jasper_5", true);
 	public static final ItemGem CRACKED_CORRUPTED_FLAME_JASPER_GEM = new ItemGem("corrupted_jasper_6", true);
 	public static final ItemGem CRACKED_CORRUPTED_PICTURE_JASPER_GEM = new ItemGem("corrupted_jasper_7", true);
+	public static final ItemGem CORRUPTED_MOISSANITE_GEM = new ItemGem("corrupted_moissanita");
+	public static final ItemGem CRACKED_CORRUPTED_MOISSANITE_GEM = new ItemGem("corrupted_moissanita", true);
 	public static final ItemGem CORRUPTED_ROSE_QUARTZ_GEM = new ItemGem("corrupted_cuarzo_rosa");
 	public static final ItemGem CRACKED_CORRUPTED_ROSE_QUARTZ_GEM = new ItemGem("corrupted_cuarzo_rosa", true);
 	public static final ItemGem CORRUPTED_TONGUE_MONSTER_GEM = new ItemGem("tongue_monster");
@@ -365,6 +368,7 @@ public class ModItems {
 		registerGem(CORRUPTED_PURPLE_JASPER_GEM, CRACKED_CORRUPTED_PURPLE_JASPER_GEM, event);
 		registerGem(CORRUPTED_FLAME_JASPER_GEM, CRACKED_CORRUPTED_FLAME_JASPER_GEM, event);
 		registerGem(CORRUPTED_PICTURE_JASPER_GEM, CRACKED_CORRUPTED_PICTURE_JASPER_GEM, event);
+		registerGem(CORRUPTED_MOISSANITE_GEM, CRACKED_CORRUPTED_MOISSANITE_GEM, event);
 		registerGem(CORRUPTED_ROSE_QUARTZ_GEM, CRACKED_CORRUPTED_ROSE_QUARTZ_GEM, event);
 		registerGem(CORRUPTED_TONGUE_MONSTER_GEM, CRACKED_CORRUPTED_TONGUE_MONSTER_GEM, event);
 
@@ -379,6 +383,7 @@ public class ModItems {
 		registerItem(RECORD_HEAVEN_BEETLE, event);
 		registerItem(RECORD_DEFECTIVE, event);
 		registerItem(RECORD_GEM_SHARDS, event);
+		registerItem(RECORD_HEART_OF_THE_PYRAMID, event);
 		registerItem(ACTIVATED_GEM_SHARD, event);
 		registerItem(ACTIVATED_GEM_BASE, event);
 		registerItem(INACTIVE_GEM_BASE, event);
