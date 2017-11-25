@@ -1326,7 +1326,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		((PathNavigateGround) this.getNavigator()).setEnterDoors(true);
 	}
 	
-	protected int getSpecial() {
+	public int getSpecial() {
 		return this.dataManager.get(SPECIAL);
 	}
 	

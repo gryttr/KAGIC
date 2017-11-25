@@ -112,6 +112,10 @@ entity.kagic.corrupted_cuarzo_rosa.name.plural=Corrupted Rose Quartzes
 entity.kagic.tongue_monster.name=Corrupted Zircon
 entity.kagic.tongue_monster.name.alt=Dirty Tongue Flapper
 entity.kagic.tongue_monster.name.plural=Corrupted Zircons
+entity.kagic.water_bear_0.name=Corrupted Kunzite
+entity.kagic.water_bear_0.name.plural=Corrupted Kunzites
+entity.kagic.water_bear_1.name=Corrupted Hiddenite
+entity.kagic.water_bear_1.name.plural=Corrupted Hiddenites
 
 item.active_gem_base.name=Active Gem Base
 item.inactive_gem_base.name=Inactive Gem Base
@@ -132,8 +136,8 @@ item.gem_staff.name=Gem Staff
 item.warp_whistle.name=Warp Whistle
 item.roaming_eye.name=Roaming Eye
 item.laser_beam.name=Laser Beam
-item.strawberry_slice.name= Giant Strawberry Slice
-item.strawberry_seeds.name= Giant Strawberry Seeds
+item.strawberry_slice.name=Giant Strawberry Slice
+item.strawberry_seeds.name=Giant Strawberry Seeds
 
 item.ruby_gem.name=Ruby Gem
 item.padparadscha_gem.name=Padparadscha Gem
@@ -346,6 +350,10 @@ item.corrupted_cuarzo_rosa_gem.name=Corrupted Rose Quartz Gem
 item.cracked_corrupted_cuarzo_rosa_gem.name=Cracked Corrupted Rose Quartz Gem
 item.tongue_monster_gem.name=Corrupted Zircon Gem
 item.cracked_tongue_monster_gem.name=Cracked Corrupted Zircon Gem
+item.water_bear_0_gem.name=Corrupted Kunzite Gem
+item.cracked_water_bear_0_gem.name=Cracked Corrupted Kunzite Gem
+item.water_bear_1_gem.name=Corrupted Hiddenite Gem
+item.cracked_water_bear_1_gem.name=Cracked Corrupted Hiddenite Gem
 
 item.record_little_peridot.name=Music Disc
 item.record.little_peridot.desc=Aivi & Surasshu - Peridot In The Rain
