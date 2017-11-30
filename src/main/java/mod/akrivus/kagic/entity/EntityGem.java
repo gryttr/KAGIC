@@ -851,6 +851,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	public boolean alternateInteract(EntityPlayer player) {
+		KAGIC.instance.chatInfoMessage("This gem is " + this.getCachedUniqueIdString());
 		KAGIC.instance.chatInfoMessage("Owner is " + this.getOwnerId());
 		KAGIC.instance.chatInfoMessage("Max health is " + this.getMaxHealth() + ", defective is " + this.isDefective() + ", and prime is " + this.isPrimary());
 		KAGIC.instance.chatInfoMessage("Cut is " + this.getGemCut() + " and Placement is " + this.getGemPlacement());

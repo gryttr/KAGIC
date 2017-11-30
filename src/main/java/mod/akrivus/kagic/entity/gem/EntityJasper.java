@@ -626,8 +626,8 @@ public class EntityJasper extends EntityGem {
 		}
 		switch (this.getSpecial()) {
 		case 0:
-			this.droppedGemItem = ModItems.JASPER_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_JASPER_GEM;
+			this.droppedGemItem = ModItems.NOREENA_JASPER_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_NOREENA_JASPER_GEM;
 			break;
     	case 1:
     		this.droppedGemItem = ModItems.OCEAN_JASPER_GEM;

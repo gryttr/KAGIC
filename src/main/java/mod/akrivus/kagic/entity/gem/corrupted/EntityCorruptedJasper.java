@@ -128,8 +128,8 @@ public class EntityCorruptedJasper extends EntityCorruptedGem {
 	public void onDeath(DamageSource cause) {
 		switch (this.getSpecial()) {
 		case 0:
-			this.droppedGemItem = ModItems.CORRUPTED_JASPER_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_CORRUPTED_JASPER_GEM;
+			this.droppedGemItem = ModItems.CORRUPTED_NOREENA_JASPER_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_CORRUPTED_NOREENA_JASPER_GEM;
 			break;
 		case 1:
 			this.droppedGemItem = ModItems.CORRUPTED_OCEAN_JASPER_GEM;

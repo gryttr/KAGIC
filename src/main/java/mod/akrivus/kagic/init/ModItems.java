@@ -81,6 +81,7 @@ public class ModItems {
 	public static final ItemGem BISMUTH_GEM = new ItemGem("bismuth");
 	public static final ItemGem PERIDOT_GEM = new ItemGem("peridot");
 	public static final ItemGem JASPER_GEM = new ItemGem("jasper");
+	public static final ItemGem NOREENA_JASPER_GEM = new ItemGem("jasper_0");
 	public static final ItemGem OCEAN_JASPER_GEM = new ItemGem("jasper_1");
 	public static final ItemGem BIGGS_JASPER_GEM = new ItemGem("jasper_2");
 	public static final ItemGem GREEN_JASPER_GEM = new ItemGem("jasper_3");
@@ -169,6 +170,7 @@ public class ModItems {
 	public static final ItemGem CRACKED_BISMUTH_GEM = new ItemGem("bismuth", true);
 	public static final ItemGem CRACKED_PERIDOT_GEM = new ItemGem("peridot", true);
 	public static final ItemGem CRACKED_JASPER_GEM = new ItemGem("jasper", true);
+	public static final ItemGem CRACKED_NOREENA_JASPER_GEM = new ItemGem("jasper_0", true);
 	public static final ItemGem CRACKED_OCEAN_JASPER_GEM = new ItemGem("jasper_1", true);
 	public static final ItemGem CRACKED_BIGGS_JASPER_GEM = new ItemGem("jasper_2", true);
 	public static final ItemGem CRACKED_GREEN_JASPER_GEM = new ItemGem("jasper_3", true);
@@ -247,6 +249,7 @@ public class ModItems {
 	public static final ItemGem CORRUPTED_CARNELIAN_GEM = new ItemGem("corrupted_cornalina");
 	public static final ItemGem CRACKED_CORRUPTED_CARNELIAN_GEM = new ItemGem("corrupted_cornalina", true);
 	public static final ItemGem CORRUPTED_JASPER_GEM = new ItemGem("corrupted_jasper");
+	public static final ItemGem CORRUPTED_NOREENA_JASPER_GEM = new ItemGem("corrupted_jasper_0");
 	public static final ItemGem CORRUPTED_OCEAN_JASPER_GEM = new ItemGem("corrupted_jasper_1");
 	public static final ItemGem CORRUPTED_BIGGS_JASPER_GEM = new ItemGem("corrupted_jasper_2");
 	public static final ItemGem CORRUPTED_GREEN_JASPER_GEM = new ItemGem("corrupted_jasper_3");
@@ -255,6 +258,7 @@ public class ModItems {
 	public static final ItemGem CORRUPTED_FLAME_JASPER_GEM = new ItemGem("corrupted_jasper_6");
 	public static final ItemGem CORRUPTED_PICTURE_JASPER_GEM = new ItemGem("corrupted_jasper_7");
 	public static final ItemGem CRACKED_CORRUPTED_JASPER_GEM = new ItemGem("corrupted_jasper", true);
+	public static final ItemGem CRACKED_CORRUPTED_NOREENA_JASPER_GEM = new ItemGem("corrupted_jasper_0", true);
 	public static final ItemGem CRACKED_CORRUPTED_OCEAN_JASPER_GEM = new ItemGem("corrupted_jasper_1", true);
 	public static final ItemGem CRACKED_CORRUPTED_BIGGS_JASPER_GEM = new ItemGem("corrupted_jasper_2", true);
 	public static final ItemGem CRACKED_CORRUPTED_GREEN_JASPER_GEM = new ItemGem("corrupted_jasper_3", true);
@@ -296,6 +300,7 @@ public class ModItems {
 		registerGem(BISMUTH_GEM, CRACKED_BISMUTH_GEM, event);
 		registerGem(PERIDOT_GEM, CRACKED_PERIDOT_GEM, event);
 		registerGem(JASPER_GEM, CRACKED_JASPER_GEM, event);
+		registerGem(NOREENA_JASPER_GEM, CRACKED_NOREENA_JASPER_GEM, event);
 		registerGem(OCEAN_JASPER_GEM, CRACKED_OCEAN_JASPER_GEM, event);
 		registerGem(BIGGS_JASPER_GEM, CRACKED_BIGGS_JASPER_GEM, event);
 		registerGem(GREEN_JASPER_GEM, CRACKED_GREEN_JASPER_GEM, event);
@@ -368,6 +373,7 @@ public class ModItems {
 		registerGem(CORRUPTED_AMETHYST_GEM, CRACKED_CORRUPTED_AMETHYST_GEM, event);
 		registerGem(CORRUPTED_CARNELIAN_GEM, CRACKED_CORRUPTED_CARNELIAN_GEM, event);
 		registerGem(CORRUPTED_JASPER_GEM, CRACKED_CORRUPTED_JASPER_GEM, event);
+		registerGem(CORRUPTED_NOREENA_JASPER_GEM, CRACKED_CORRUPTED_NOREENA_JASPER_GEM, event);
 		registerGem(CORRUPTED_OCEAN_JASPER_GEM, CRACKED_CORRUPTED_OCEAN_JASPER_GEM, event);
 		registerGem(CORRUPTED_BIGGS_JASPER_GEM, CRACKED_CORRUPTED_BIGGS_JASPER_GEM, event);
 		registerGem(CORRUPTED_GREEN_JASPER_GEM, CRACKED_CORRUPTED_GREEN_JASPER_GEM, event);
