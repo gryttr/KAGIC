@@ -75,17 +75,22 @@ public class Schematic {
 		for (short y = 0; y < height; ++y) {
 			for (short z = 0; z < length; ++z) {
 				for (short x = 0; x < width; ++x) {
-					int index = (y * length + z) * width + x;
-					BlockPos pos = new BlockPos(x, y, z);
-					IBlockState blockState = null;
-					if (schematicaFormat && additionalBlocks != null) {
-						short blockID = (short) Byte.toUnsignedInt(blocks[index]);
-						blockID |= ((additionalBlocks[index] & 0xFF) << 8);
-						blockState = Block.getBlockFromName(additionalBlockNames.get(blockID)).getStateFromMeta(Byte.toUnsignedInt(data[index]));						
-					} else {
-						blockState = Block.getBlockById(Byte.toUnsignedInt(blocks[index])).getStateFromMeta(Byte.toUnsignedInt(data[index]));						
+					try {
+						int index = (y * length + z) * width + x;
+						BlockPos pos = new BlockPos(x, y, z);
+						IBlockState blockState = null;
+						if (schematicaFormat && additionalBlocks != null) {
+							short blockID = (short) Byte.toUnsignedInt(blocks[index]);
+							blockID |= ((additionalBlocks[index] & 0xFF) << 8);
+							blockState = Block.getBlockFromName(additionalBlockNames.get(blockID)).getStateFromMeta(Byte.toUnsignedInt(data[index]));						
+						} else {
+							blockState = Block.getBlockById(Byte.toUnsignedInt(blocks[index])).getStateFromMeta(Byte.toUnsignedInt(data[index]));						
+						}
+						structureBlocks.put(pos, blockState);
+					} catch (Exception e) {
+						KAGIC.instance.chatInfoMessage("Unable to create block at " + x + ", " + y + ", " + z);
+						structureBlocks.put(new BlockPos(x, y, z), Blocks.HAY_BLOCK.getDefaultState());
 					}
-					structureBlocks.put(pos, blockState);
 				}
 			}
 		}
