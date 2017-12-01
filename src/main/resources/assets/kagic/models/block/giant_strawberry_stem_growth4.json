@@ -1,6 +1,6 @@
 {
-    "parent": "block/stem_growth4",
+    "parent": "block/stem_growth7",
     "textures": {
-        "stem": "kagic:blocks/giant_strawberry_stem_disconnected"
+        "stem": "kagic:blocks/giant_strawberry_stem_4"
     }
 }

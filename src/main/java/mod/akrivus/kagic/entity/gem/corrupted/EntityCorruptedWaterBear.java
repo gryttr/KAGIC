@@ -7,7 +7,9 @@ import mod.akrivus.kagic.entity.gem.GemPlacements;
 import mod.akrivus.kagic.init.ModItems;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
@@ -53,5 +55,17 @@ public class EntityCorruptedWaterBear extends EntityCorruptedGem {
 			break;
 		}
 		super.onDeath(cause);
+	}
+	
+	@Override
+	protected SoundEvent getHurtSound(DamageSource p_184601_1_)
+	{
+		return SoundEvents.ENTITY_SLIME_HURT;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound()
+	{
+		return SoundEvents.ENTITY_SLIME_DEATH;
 	}
 }
