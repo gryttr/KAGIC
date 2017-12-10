@@ -60,7 +60,7 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityJasper extends EntityGem {
+public class EntityJasper extends EntityQuartzSoldier {
 	public static final HashMap<IBlockState, Double> JASPER_YIELDS = new HashMap<IBlockState, Double>();
 	public static final HashMap<Integer, ResourceLocation> JASPER_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private static final DataParameter<Boolean> CHARGED = EntityDataManager.<Boolean>createKey(EntityJasper.class, DataSerializers.BOOLEAN);
@@ -257,8 +257,6 @@ public class EntityJasper extends EntityGem {
 	
 	public EntityJasper(World worldIn) {
 		super(worldIn);
-		this.setSize(0.9F, 2.3F);
-		this.isSoldier = true;
 
 		//Define valid gem cuts and placements
 		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.BACK_OF_HEAD);
@@ -283,20 +281,12 @@ public class EntityJasper extends EntityGem {
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BELLY);
 
 		// Apply entity AI.
-		this.stayAI = new EntityAIStay(this);
         this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
 		this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntityLapisLazuli.class, EntityMalachite.class, 16D));
         this.tasks.addTask(3, new EntityAIMoveTowardsRestriction(this, 1.0D));
-        this.tasks.addTask(4, new EntityAIFollowDiamond(this, 1.0D));
         this.tasks.addTask(5, new EntityAIStandGuard(this, 0.6D));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
-        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
-        this.tasks.addTask(7, new EntityAILookIdle(this));
         
         // Apply targetting.
-        this.targetTasks.addTask(1, new EntityAIDiamondHurtByTarget(this));
-        this.targetTasks.addTask(2, new EntityAIDiamondHurtTarget(this));
-        this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false, new Class[0]));
         this.targetTasks.addTask(4, new EntityAINearestAttackableTarget<EntityLiving>(this, EntityLiving.class, 10, true, false, new Predicate<EntityLiving>() {
             public boolean apply(EntityLiving input) {
                 return input != null && IMob.VISIBLE_MOB_SELECTOR.apply(input);
@@ -471,30 +461,7 @@ public class EntityJasper extends EntityGem {
 
 	/*********************************************************
 	 * Methods related to entity interaction.                *
-	 *********************************************************/
-    @Override
-	public boolean processInteract(EntityPlayer player, EnumHand hand) {
-		if (!this.world.isRemote) {
-			if (hand == EnumHand.MAIN_HAND) {
-				if (this.isTamed() && this.isOwnedBy(player)) {
-					ItemStack stack = player.getHeldItemMainhand();
-					Item item = stack.getItem();
-					if (item instanceof ItemArmor && ((ItemArmor)item).armorType == EntityEquipmentSlot.HEAD || player.isSneaking() && stack.isEmpty()) {
-						this.playEquipSound(stack);
-						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.HEAD), 0.0F);
-						this.setItemStackToSlot(EntityEquipmentSlot.HEAD, stack.copy());
-						if (!player.isCreative()) {
-							stack.shrink(1);
-						}
-						this.playObeySound();
-						return true;
-					}
-				}
-			}
-		}
-		return super.processInteract(player, hand);
-    }
-    
+	 *********************************************************/    
     @Override
 	public boolean alternateInteract(EntityPlayer player) {
 		super.alternateInteract(player);

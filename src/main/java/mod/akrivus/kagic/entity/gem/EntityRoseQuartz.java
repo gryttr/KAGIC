@@ -56,7 +56,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
-public class EntityRoseQuartz extends EntityGem {
+public class EntityRoseQuartz extends EntityQuartzSoldier {
 	public static final HashMap<IBlockState, Double> ROSE_QUARTZ_YIELDS = new HashMap<IBlockState, Double>();
 	public static final HashMap<Integer, ResourceLocation> ROSE_QUARTZ_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private BlockPos lastSurgeLocation;
@@ -81,8 +81,6 @@ public class EntityRoseQuartz extends EntityGem {
 	
 	public EntityRoseQuartz(World worldIn) {
 		super(worldIn);
-		this.setSize(0.9F, 2.3F);
-		this.isSoldier = true;
 		
 		//Define valid gem cuts and placements
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BACK_OF_HEAD);
@@ -104,20 +102,12 @@ public class EntityRoseQuartz extends EntityGem {
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.RIGHT_KNEE);
 
 		// Apply entity AI.
-		this.stayAI = new EntityAIStay(this);
 		this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
 		this.tasks.addTask(3, new EntityAIMoveTowardsRestriction(this, 1.0D));
 		this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntityPearl.class, EntityRainbowQuartz.class, 16D));
-		this.tasks.addTask(4, new EntityAIFollowDiamond(this, 1.0D));
 		this.tasks.addTask(5, new EntityAIWander(this, 0.6D));
-		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
-		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
-		this.tasks.addTask(7, new EntityAILookIdle(this));
 		
 		// Apply targetting.
-		this.targetTasks.addTask(1, new EntityAIDiamondHurtByTarget(this));
-		this.targetTasks.addTask(2, new EntityAIDiamondHurtTarget(this));
-		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false, new Class[0]));
 		this.targetTasks.addTask(4, new EntityAINearestAttackableTarget<EntityMob>(this, EntityMob.class, 10, true, false, new Predicate<EntityMob>() {
 			public boolean apply(EntityMob input) {
 				return input != null && IMob.VISIBLE_MOB_SELECTOR.apply(input);
@@ -189,17 +179,7 @@ public class EntityRoseQuartz extends EntityGem {
 					}
 					this.playObeySound();
 					return true;
-				} else if (item instanceof ItemArmor && ((ItemArmor)item).armorType == EntityEquipmentSlot.HEAD || player.isSneaking() && stack.isEmpty()) {
-					this.playEquipSound(stack);
-					this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.HEAD), 0.0F);
-					this.setItemStackToSlot(EntityEquipmentSlot.HEAD, stack.copy());
-					if (!player.isCreative()) {
-						stack.shrink(1);
-					}
-					this.playObeySound();
-					return true;
 				}
-
 			}
 		}
 		return super.processInteract(player, hand);

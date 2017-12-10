@@ -42,7 +42,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
-public class EntityAgate extends EntityGem {
+public class EntityAgate extends EntityQuartzSoldier {
 	public static final HashMap<IBlockState, Double> AGATE_YIELDS = new HashMap<IBlockState, Double>();
 	public static final ArrayList<ResourceLocation> AGATE_HAIR_STYLES = new ArrayList<ResourceLocation>();
 	public static final ArrayList<ResourceLocation> AGATE_BAND_STYLES = new ArrayList<ResourceLocation>();
@@ -88,8 +88,6 @@ public class EntityAgate extends EntityGem {
 	
 	public EntityAgate(World worldIn) {
 		super(worldIn);
-		this.setSize(0.9F, 2.3F);
-		this.isSoldier = true;
 
 		//Define valid gem cuts and placements
 		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.BACK_OF_HEAD);
@@ -111,18 +109,8 @@ public class EntityAgate extends EntityGem {
 		this.setCutPlacement(GemCuts.TEARDROP, GemPlacements.RIGHT_KNEE);
 
 		// Apply entity AI.
-		this.stayAI = new EntityAIStay(this);
-		this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
 		this.tasks.addTask(2, new EntityAISitStill(this, 1.0D));
 		this.tasks.addTask(3, new EntityAIScareMobs(this));
-		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
-        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
-        this.tasks.addTask(5, new EntityAILookIdle(this));
-        
-        // Apply targetting.
-        this.targetTasks.addTask(1, new EntityAIDiamondHurtByTarget(this));
-        this.targetTasks.addTask(2, new EntityAIDiamondHurtTarget(this));
-        this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false, new Class[0]));
         
         // Apply entity attributes.
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D);
@@ -210,27 +198,11 @@ public class EntityAgate extends EntityGem {
 	 * Methods related to interaction.                       *
 	 *********************************************************/
 	@Override
-	public boolean processInteract(EntityPlayer player, EnumHand hand) {
-		if (!this.world.isRemote) {
-			if (hand == EnumHand.MAIN_HAND) {
-				if (this.isTamed() && this.isOwnedBy(player)) {
-					ItemStack stack = player.getHeldItemMainhand();
-					Item item = stack.getItem();
-					if (item instanceof ItemArmor && ((ItemArmor)item).armorType == EntityEquipmentSlot.HEAD || player.isSneaking() && stack.isEmpty()) {
-						this.playEquipSound(stack);
-						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.HEAD), 0.0F);
-						this.setItemStackToSlot(EntityEquipmentSlot.HEAD, stack.copy());
-						if (!player.isCreative()) {
-							stack.shrink(1);
-						}
-						this.playObeySound();
-						return true;
-					}
-				}
-			}
-		}
-		return super.processInteract(player, hand);
-    }
+	public boolean alternateInteract(EntityPlayer player) {
+		super.alternateInteract(player);
+		KAGIC.instance.chatInfoMessage("Agate type is " + this.getColor());
+		return false;
+	}
 
 	public int getColor() {
 		if (this.isHolly()) {
@@ -241,14 +213,7 @@ public class EntityAgate extends EntityGem {
 	
 	public boolean isHolly() {
 		return this.getSpecial() == 1 || this.getName().toLowerCase().contains("holly");
-	}
-	
-	@Override
-	public boolean alternateInteract(EntityPlayer player) {
-		super.alternateInteract(player);
-		KAGIC.instance.chatInfoMessage("Agate type is " + this.getColor());
-		return false;
-	}
+	}	
 	
 	/*********************************************************
      * Methods related to death.                             *

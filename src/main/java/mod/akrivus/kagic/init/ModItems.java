@@ -276,6 +276,8 @@ public class ModItems {
 	public static final ItemGem CRACKED_CORRUPTED_BLUE_WATER_BEAR_GEM = new ItemGem("water_bear_0", true);
 	public static final ItemGem CORRUPTED_GREEN_WATER_BEAR_GEM = new ItemGem("water_bear_1");
 	public static final ItemGem CRACKED_CORRUPTED_GREEN_WATER_BEAR_GEM = new ItemGem("water_bear_1", true);
+	public static final ItemGem CORRUPTED_WATERMELON_TOURMALINE_GEM = new ItemGem("corrupted_watermelon_tourmaline");
+	public static final ItemGem CRACKED_CORRUPTED_WATERMELON_TOURMALINE_GEM = new ItemGem("corrupted_watermelon_tourmaline", true);
 
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		registerGem(RUBY_GEM, CRACKED_RUBY_GEM, event);
@@ -386,6 +388,7 @@ public class ModItems {
 		registerGem(CORRUPTED_TONGUE_MONSTER_GEM, CRACKED_CORRUPTED_TONGUE_MONSTER_GEM, event);
 		registerGem(CORRUPTED_BLUE_WATER_BEAR_GEM, CRACKED_CORRUPTED_BLUE_WATER_BEAR_GEM, event);
 		registerGem(CORRUPTED_GREEN_WATER_BEAR_GEM, CRACKED_CORRUPTED_GREEN_WATER_BEAR_GEM, event);
+		registerGem(CORRUPTED_WATERMELON_TOURMALINE_GEM, CRACKED_CORRUPTED_WATERMELON_TOURMALINE_GEM, event);
 
 		registerItem(RECORD_LITTLE_PERIDOT, event);
 		registerItem(RECORD_ROSES_FOUNTAIN, event);

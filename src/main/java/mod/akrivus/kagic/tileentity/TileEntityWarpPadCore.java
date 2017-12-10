@@ -360,13 +360,13 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		List<Entity> entitiesToWarp = this.world.getEntitiesWithinAABB(Entity.class, warpArea);
 		Iterator<Entity> it = entitiesToWarp.iterator();
 		TileEntityWarpPadCore destPad = (TileEntityWarpPadCore) this.world.getTileEntity(this.destination);
-		ChunkPos cPos = destPad.world.getChunkFromBlockCoords(destPad.pos).getPos();
-		if (!destPad.isValidPad()) {
+		if (destPad == null || !destPad.isValidPad()) {
 			this.cooldownTicksLeft = 1;
 			this.warping = false;
 			this.cooling = true;
 			return;
 		}
+		ChunkPos cPos = destPad.world.getChunkFromBlockCoords(destPad.pos).getPos();
 		
 		while (it.hasNext()) {
 			Entity entity = (Entity) it.next();

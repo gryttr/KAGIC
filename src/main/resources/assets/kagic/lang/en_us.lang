@@ -116,6 +116,8 @@ entity.kagic.water_bear_0.name=Corrupted Kunzite
 entity.kagic.water_bear_0.name.plural=Corrupted Kunzites
 entity.kagic.water_bear_1.name=Corrupted Hiddenite
 entity.kagic.water_bear_1.name.plural=Corrupted Hiddenites
+entity.kagic.corrupted_watermelon_tourmaline.name=Corrupted Watermelon Tourmaline
+entity.kagic.corrupted_watermelon_tourmaline.name.plural=Corrupted Watermelon Tourmalines
 
 item.active_gem_base.name=Active Gem Base
 item.inactive_gem_base.name=Inactive Gem Base
@@ -354,6 +356,8 @@ item.water_bear_0_gem.name=Corrupted Kunzite Gem
 item.cracked_water_bear_0_gem.name=Cracked Corrupted Kunzite Gem
 item.water_bear_1_gem.name=Corrupted Hiddenite Gem
 item.cracked_water_bear_1_gem.name=Cracked Corrupted Hiddenite Gem
+item.corrupted_watermelon_tourmaline_gem.name=Corrupted Watermelon Tourmaline Gem
+item.cracked_corrupted_watermelon_tourmaline_gem.name=Cracked Corrupted Watermelon Tourmaline Gem
 
 item.record_little_peridot.name=Music Disc
 item.record.little_peridot.desc=Aivi & Surasshu - Peridot In The Rain
