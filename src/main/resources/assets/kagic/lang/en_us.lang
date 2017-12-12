@@ -200,6 +200,7 @@ item.aquamarine_gem.name=Aquamarine Gem
 item.hessonite_gem.name=Hessonite Gem
 
 item.sapphire_gem.name=Sapphire Gem
+item.sapphire_0_gem.name=White Sapphire Gem
 item.sapphire_4_gem.name=Yellow Sapphire Gem
 item.sapphire_6_gem.name=Pink Sapphire Gem
 item.sapphire_10_gem.name=Purple Sapphire Gem
@@ -288,6 +289,7 @@ item.cracked_aquamarine_gem.name=Cracked Aquamarine Gem
 item.cracked_hessonite_gem.name=Cracked Hessonite Gem
 
 item.cracked_sapphire_gem.name=Cracked Sapphire Gem
+item.cracked_sapphire_0_gem.name=Cracked White Sapphire Gem
 item.cracked_sapphire_4_gem.name=Cracked Yellow Sapphire Gem
 item.cracked_sapphire_6_gem.name=Cracked Pink Sapphire Gem
 item.cracked_sapphire_10_gem.name=Cracked Purple Sapphire Gem

@@ -93,6 +93,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
 		this.tasks.addTask(1, new EntityAIAvoidEntity<EntityCreeper>(this, EntityCreeper.class, new Predicate<EntityCreeper>() {
+			@Override
 			public boolean apply(EntityCreeper input) {
 				return ((EntityCreeper) input).getCreeperState() == 1;
 			}
@@ -121,10 +122,12 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		this.droppedCrackedGemItem = ModItems.CRACKED_PERIDOT_GEM;
 	}
 	
+	@Override
 	public float[] getGemColor() {
 		return new float[] { 47F / 255F, 248F / 255F, 42F / 255F };
 	}
-	
+		
+	@Override
 	public void convertGems(int placement) {
 		switch (placement) {
 		case 0:
@@ -141,10 +144,12 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	/*********************************************************
 	 * Methods related to loading.						   *
 	 *********************************************************/
+	@Override
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
 
+	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
 		super.writeEntityToNBT(compound);
 		NBTTagList nbttaglist = new NBTTagList();
@@ -168,6 +173,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		compound.setInteger("harvestTimer", this.harvestTimer);
 	}
 	
+	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
 		NBTTagList nbttaglist = compound.getTagList("items", 10);
@@ -193,6 +199,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	/*********************************************************
 	 * Methods related to interaction.					   *
 	 *********************************************************/
+	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
 			if (hand == EnumHand.MAIN_HAND) {
@@ -262,6 +269,8 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		}
 		return super.processInteract(player, hand);
 	}
+	
+	@Override
 	public boolean onSpokenTo(EntityPlayer player, String message) {
 		boolean spokenTo = super.onSpokenTo(player, message);
 		message = message.toLowerCase();
@@ -280,6 +289,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		}
 		return spokenTo;
 	}
+	
 	public void checkSurroundings(World worldIn, BlockPos pos) {
 		if (!worldIn.isRemote) {
 			InjectorResult result = ((this.lastCheckPos != null && this.getDistanceSq(this.lastCheckPos) > 32.0F) || this.lastCheckPos == null || this.world.getTotalWorldTime() - this.lastCheckTime > 2400) ? InjectorResult.create(worldIn, pos, false) : this.lastResult;
@@ -299,6 +309,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	/*********************************************************
 	 * Methods related to living.							*
 	 *********************************************************/
+	@Override
 	public void onLivingUpdate() {
 		if ((!this.canPickUpLoot() && this.dropTimer > 40) && this.isFarmer()) {
 			this.setCanPickUpLoot(this.isFarmer());
@@ -315,6 +326,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	/*********************************************************
 	 * Methods related to death.							 *
 	 *********************************************************/
+	@Override
 	public void onDeath(DamageSource cause) {
 		this.setCanPickUpLoot(false);
 		super.onDeath(cause);
@@ -401,15 +413,22 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	/*********************************************************
 	 * Methods related to sounds.							*
 	 *********************************************************/
+	@Override
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.PERIDOT_LIVING;
 	}
+	
+	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.PERIDOT_HURT;
 	}
+	
+	@Override
 	protected SoundEvent getObeySound() {
 		return ModSounds.PERIDOT_OBEY;
 	}
+	
+	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.PERIDOT_DEATH;
 	}

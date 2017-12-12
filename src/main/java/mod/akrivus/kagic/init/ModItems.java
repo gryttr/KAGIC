@@ -114,6 +114,7 @@ public class ModItems {
 	public static final ItemGem AQUAMARINE_GEM = new ItemGem("aquamarine");
 	public static final ItemGem HESSONITE_GEM = new ItemGem("hessonite");
 
+	public static final ItemGem WHITE_SAPPHIRE_GEM = new ItemGem("sapphire_0");
 	public static final ItemGem YELLOW_SAPPHIRE_GEM = new ItemGem("sapphire_4");
 	public static final ItemGem PINK_SAPPHIRE_GEM = new ItemGem("sapphire_6");
 	public static final ItemGem PURPLE_SAPPHIRE_GEM = new ItemGem("sapphire_10");
@@ -203,6 +204,7 @@ public class ModItems {
 	public static final ItemGem CRACKED_AQUAMARINE_GEM = new ItemGem("aquamarine", true);
 	public static final ItemGem CRACKED_HESSONITE_GEM = new ItemGem("hessonite", true);
 	
+	public static final ItemGem CRACKED_WHITE_SAPPHIRE_GEM = new ItemGem("sapphire_0", true);
 	public static final ItemGem CRACKED_YELLOW_SAPPHIRE_GEM = new ItemGem("sapphire_4", true);
 	public static final ItemGem CRACKED_PINK_SAPPHIRE_GEM = new ItemGem("sapphire_6", true);
 	public static final ItemGem CRACKED_PURPLE_SAPPHIRE_GEM = new ItemGem("sapphire_10", true);
@@ -336,6 +338,7 @@ public class ModItems {
 		registerGem(HESSONITE_GEM, CRACKED_HESSONITE_GEM, event);
 		
 		registerGem(SAPPHIRE_GEM, CRACKED_SAPPHIRE_GEM, event);
+		registerGem(WHITE_SAPPHIRE_GEM, CRACKED_WHITE_SAPPHIRE_GEM, event);
 		registerGem(YELLOW_SAPPHIRE_GEM, CRACKED_YELLOW_SAPPHIRE_GEM, event);
 		registerGem(PINK_SAPPHIRE_GEM, CRACKED_PINK_SAPPHIRE_GEM, event);
 		registerGem(PURPLE_SAPPHIRE_GEM, CRACKED_PURPLE_SAPPHIRE_GEM, event);

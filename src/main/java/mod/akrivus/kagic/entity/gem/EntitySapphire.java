@@ -55,6 +55,7 @@ public class EntitySapphire extends EntityGem {
 	private int luckTicks = 0;
 
 	private static final List<Integer> SKIN_COLORS = new ArrayList<Integer>(Arrays.asList(
+			0,								//White
 			4, 4, 4, 4,						//Yellow
 			6, 6, 6,						//Pink
 			10,	10,							//Purple
@@ -282,6 +283,10 @@ public class EntitySapphire extends EntityGem {
 	@Override
 	public void onDeath(DamageSource cause) {
 		switch (this.getSpecial()) {
+		case 0:
+			this.droppedGemItem = ModItems.WHITE_SAPPHIRE_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_WHITE_SAPPHIRE_GEM;
+			break;
 		case 4:
 			this.droppedGemItem = ModItems.YELLOW_SAPPHIRE_GEM;
 			this.droppedCrackedGemItem = ModItems.CRACKED_YELLOW_SAPPHIRE_GEM;
