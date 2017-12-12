@@ -1,6 +1,7 @@
 package mod.heimrarnadalr.kagic.world.structure;
 
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +38,8 @@ public class Schematic {
 		} catch (Exception e) {
 			KAGIC.instance.chatInfoMessage("Failed to load schematic " + schematic + "; trying uncompressed read");
 			try {
-				schematicData = CompressedStreamTools.read(new DataInputStream(Schematic.class.getResourceAsStream(schematic)));
+				File file = new File(Schematic.class.getResource(schematic).toExternalForm());
+				schematicData = CompressedStreamTools.read(file);
 			} catch (Exception e1) {
 				KAGIC.instance.chatInfoMessage("Failed to load schematic " + schematic);
 				return null;
