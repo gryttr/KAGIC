@@ -69,9 +69,11 @@ public class RenderJasper extends RenderGemBase<EntityJasper> {
 	}
 		
 	@Override
-	protected void preRenderCallback(EntityJasper entitylivingbaseIn, float partialTickTime) {
-		if (entitylivingbaseIn.isDefective()) {
+	protected void preRenderCallback(EntityJasper jasper, float partialTickTime) {
+		if (jasper.isDefective()) {
 			GlStateManager.scale(0.7F, 1.0F, 0.7F);
+		} else if (jasper.isPrimary()) {
+			GlStateManager.scale(1.1F, 1.1F, 1.1F);
 		}
 	}	
 	

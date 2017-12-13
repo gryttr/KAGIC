@@ -115,10 +115,8 @@ public class EntityRoseQuartz extends EntityQuartzSoldier {
 		}));
 		
 		// Apply entity attributes.
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(200.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10.0D);
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
-		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0D);
+
 		this.droppedGemItem = ModItems.ROSE_QUARTZ_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_ROSE_QUARTZ_GEM;
 	}

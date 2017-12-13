@@ -60,9 +60,11 @@ public class RenderRoseQuartz extends RenderGemBase<EntityRoseQuartz> {
     }
 	
 	@Override
-	protected void preRenderCallback(EntityRoseQuartz entitylivingbaseIn, float partialTickTime) {
-		if (entitylivingbaseIn.isDefective()) {
+	protected void preRenderCallback(EntityRoseQuartz roseQuartz, float partialTickTime) {
+		if (roseQuartz.isDefective()) {
 			GlStateManager.scale(0.7F, 1.0F, 0.7F);
+		} else if (roseQuartz.isPrimary()) {
+			GlStateManager.scale(1.1F, 1.1F, 1.1F);
 		}
 	}
 	

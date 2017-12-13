@@ -73,6 +73,8 @@ public class RenderAgate extends RenderGemBase<EntityAgate> {
 		}
 		if (agate.isDefective()) {
 			GlStateManager.scale(0.8F, 0.8F, 0.8F);
+		} else if (agate.isPrimary()) {
+			GlStateManager.scale(1.1F, 1.1F, 1.1F);
 		}
 	}
 	

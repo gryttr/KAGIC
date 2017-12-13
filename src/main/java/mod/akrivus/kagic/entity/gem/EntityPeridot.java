@@ -115,7 +115,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntitySlag>(this, EntitySlag.class, true, true));
 		
 		// Apply entity attributes.
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(400.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(200.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
 		this.droppedGemItem = ModItems.PERIDOT_GEM;

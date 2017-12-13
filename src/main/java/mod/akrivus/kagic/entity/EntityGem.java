@@ -1225,7 +1225,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			break;
 		case CHEST:
 			if (initialSpawn) {
-				this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue() * 2.5D);
+				this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue() * 1.25D);
 				this.setHealth(this.getMaxHealth());
 			}
 			break;
