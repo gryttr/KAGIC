@@ -59,6 +59,11 @@
             { "name": "kagic:records/pyramid", "stream": true }
         ]
     },
+    "records.underwater_temple": {
+        "sounds": [
+            { "name": "kagic:records/underwater_temple", "stream": true }
+        ]
+    },
     "blocks.gem_seed_hatch": {
         "sounds": [
             { "name": "kagic:blocks/gem_seed_hatch" }

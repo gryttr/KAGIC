@@ -13,6 +13,7 @@ import mod.heimrarnadalr.kagic.world.structure.PinkSandstoneTest;
 import mod.heimrarnadalr.kagic.world.structure.PyramidTemple;
 import mod.heimrarnadalr.kagic.world.structure.RoseFountain;
 import mod.heimrarnadalr.kagic.world.structure.RuinStructure;
+import mod.heimrarnadalr.kagic.world.structure.SeaShrine;
 import mod.heimrarnadalr.kagic.world.structure.SkySpire;
 import mod.heimrarnadalr.kagic.world.structure.SmallArena;
 import net.minecraft.util.math.BlockPos;
@@ -37,6 +38,7 @@ public class KAGICWorldGenerator implements IWorldGenerator {
 		ruins.add(new GiantWeapon("giant_weapon"));
 		ruins.add(new PyramidTemple("pyramid_temple"));
 		ruins.add(new MaskIsland("mask_island"));
+		ruins.add(new SeaShrine("sea_shrine"));
 	}
 	
 	@Override

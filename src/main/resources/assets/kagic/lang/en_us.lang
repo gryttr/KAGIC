@@ -386,6 +386,8 @@ item.record_gem_shards.name=Music Disc
 item.record.gem_shards.desc=Aivi & Surasshu - Gem Shards
 item.record_pyramid.name=Music Disc
 item.record.pyramid.desc=Aivi & Surasshu - Heart of the Pyramid
+item.record_underwater_temple.name=Music Disc
+item.record.underwater_temple.desc=Aivi & Surasshu - The Underwater Temple
 
 itemGroup.gems=KAGIC (Gems)
 itemGroup.other=KAGIC (Items & Blocks)

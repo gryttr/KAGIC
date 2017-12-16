@@ -1,0 +1,106 @@
+{
+	"pools": [
+		{
+			"name": "special",
+			"rolls": {
+				"min": 0,
+				"max": 1
+			},
+			"conditions": [
+                {
+                    "condition": "random_chance",
+                    "chance": 0.167
+                }
+            ],
+			"entries": [
+				{
+					"type": "item",
+					"name": "kagic:cracked_aquamarine_gem",
+					"weight": 100
+				}
+			]
+		},
+		{
+            "name": "music",
+            "rolls": 1,
+            "conditions": [
+                {
+                    "condition": "random_chance",
+                    "chance": 0.167
+                }
+            ],
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "kagic:record_underwater_temple",
+                    "weight": 100
+                }
+            ]
+        },
+		{
+			"name": "time",
+			"rolls": {
+				"min": 4,
+				"max": 6
+			},
+			"entries": [
+				{
+					"type": "item",
+					"name": "minecraft:clock",
+					"weight": 50,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 2,
+                                "max": 10
+                            }
+                        }
+                    ]
+				},
+                {
+                    "type": "item",
+                    "name": "minecraft:gold_ingot",
+                    "weight": 20,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 4,
+                                "max": 8
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:redstone",
+                    "weight": 20,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 12,
+                                "max": 16
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:glass",
+                    "weight": 10,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 12,
+                                "max": 16
+                            }
+                        }
+                    ]
+                }
+			]
+		}
+	]
+}

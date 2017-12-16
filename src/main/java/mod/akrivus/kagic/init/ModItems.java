@@ -42,6 +42,7 @@ public class ModItems {
 	public static final ModRecord RECORD_DEFECTIVE = new ModRecord("defective", ModSounds.RECORD_DEFECTIVE);
 	public static final ModRecord RECORD_GEM_SHARDS = new ModRecord("gem_shards", ModSounds.RECORD_GEM_SHARDS);
 	public static final ModRecord RECORD_HEART_OF_THE_PYRAMID = new ModRecord("pyramid", ModSounds.RECORD_HEART_OF_THE_PYRAMID);
+	public static final ModRecord RECORD_UNDERWATER_TEMPLE = new ModRecord("underwater_temple", ModSounds.RECORD_UNDERWATER_TEMPLE);
 
 	public static final ItemActiveGemShard ACTIVATED_GEM_SHARD = new ItemActiveGemShard();
 	public static final ItemActiveGemBase ACTIVATED_GEM_BASE = new ItemActiveGemBase();
@@ -405,6 +406,7 @@ public class ModItems {
 		registerItem(RECORD_DEFECTIVE, event);
 		registerItem(RECORD_GEM_SHARDS, event);
 		registerItem(RECORD_HEART_OF_THE_PYRAMID, event);
+		registerItem(RECORD_UNDERWATER_TEMPLE, event);
 		registerItem(ACTIVATED_GEM_SHARD, event);
 		registerItem(ACTIVATED_GEM_BASE, event);
 		registerItem(INACTIVE_GEM_BASE, event);

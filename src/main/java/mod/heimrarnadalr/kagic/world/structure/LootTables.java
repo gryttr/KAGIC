@@ -13,6 +13,7 @@ public class LootTables {
 	public static ResourceLocation ROSE_FOUNTAIN;
 	public static ResourceLocation OBELISK;
 	public static ResourceLocation MASK_ISLAND;
+	public static ResourceLocation SEA_SHRINE;
 	
 	public static void register() {
 		SMALL_ARENA = LootTableList.register(new ResourceLocation(KAGIC.MODID, "chests/smallarena"));
@@ -23,6 +24,7 @@ public class LootTables {
 		ROSE_FOUNTAIN = LootTableList.register(new ResourceLocation(KAGIC.MODID, "chests/rosefountain"));
 		OBELISK = LootTableList.register(new ResourceLocation(KAGIC.MODID, "entities/obelisk"));
 		MASK_ISLAND = LootTableList.register(new ResourceLocation(KAGIC.MODID, "chests/maskisland"));
+		SEA_SHRINE = LootTableList.register(new ResourceLocation(KAGIC.MODID, "chests/seashrine"));
 	}
 
 }

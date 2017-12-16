@@ -170,6 +170,7 @@ public class RuinStructure extends WorldGenerator {
 		}
 		
 		KAGIC.instance.chatInfoMessage("Generating " + this.type);
+		KAGIC.instance.chatInfoMessage("Generating at " + pos);
 		this.markChunks(world, affectedChunks, pos);
 		this.generateFoundation(world, pos);
 		
