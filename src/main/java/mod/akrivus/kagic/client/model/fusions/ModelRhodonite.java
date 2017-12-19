@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.client.model.fusions;
 
 import mod.akrivus.kagic.client.model.ModelGem;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -28,7 +29,7 @@ public class ModelRhodonite extends ModelGem {
 	}
 	
 	public ModelRhodonite(float modelSize, boolean isArmor) {
-		super(modelSize, 0.0F, 64, 64, false, -4F);
+		super(modelSize, 0.0F, 64, 64, false, -2F);
 		
 		this.bipedHead = new ModelRenderer(this, 0, 23);
 		this.bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
@@ -39,6 +40,9 @@ public class ModelRhodonite extends ModelGem {
 		this.neck = new ModelRenderer(this, 22, 0);
 		this.neck.setRotationPoint(0.0F, -3.0F, 0.0F);
 		this.neck.addBox(-1.0F, -2.0F, -1.0F, 2, 2, 2, 0.0F);
+		if (KAGIC.isHalloween() || KAGIC.isBirthday() || KAGIC.isChristmas()) {
+			this.bipedHead.addChild(this.witchHat);
+		}
 
 		this.bipedLeftArm = new ModelRenderer(this, 48, 0);
 		this.bipedLeftArm.setRotationPoint(3.7F, -1.5F, 0.0F);
@@ -87,7 +91,7 @@ public class ModelRhodonite extends ModelGem {
 		this.waist.addChild(this.bipedRightLeg);
 		this.bipedLeftLeg.addChild(this.left_leg_bottom);
 		this.waist.addChild(this.lower_arm_right);
-		this.neck.addChild(this.bipedHead);
+		//this.neck.addChild(this.bipedHead);
 		this.bipedBody.addChild(this.neck);
 		this.bipedBody.addChild(this.bipedLeftArm);
 		this.bipedHead.addChild(this.nose);
@@ -95,6 +99,7 @@ public class ModelRhodonite extends ModelGem {
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+		this.bipedHead.render(f5);
 		this.bipedBody.render(f5);
 	}
 
@@ -244,7 +249,7 @@ public class ModelRhodonite extends ModelGem {
 		else
 		{
 			this.bipedBody.rotateAngleX = 0.0F;
-			this.bipedHead.rotationPointY = 0.0F;
+			this.bipedHead.rotationPointY = -2.5F;
 		}
 
 		this.bipedRightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.375F;

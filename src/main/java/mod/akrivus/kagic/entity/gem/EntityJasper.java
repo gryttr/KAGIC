@@ -83,6 +83,7 @@ public class EntityJasper extends EntityQuartzSoldier {
 		MARK1S.put(5, 1);
 		MARK1S.put(6, 1);
 		MARK1S.put(7, 1);
+		MARK1S.put(8, 1);
 	}
 
 	private static final Map<Integer, Integer> MARK2S = new LinkedHashMap<Integer, Integer>();
@@ -95,6 +96,7 @@ public class EntityJasper extends EntityQuartzSoldier {
 		MARK2S.put(5, 0);
 		MARK2S.put(6, 1);
 		MARK2S.put(7, 1);
+		MARK2S.put(8, 2);
 	}
 
 	private static final Map<Integer, ArrayList<Integer>> SKIN_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -136,6 +138,10 @@ public class EntityJasper extends EntityQuartzSoldier {
 		ArrayList<Integer> picture = new ArrayList<Integer>();
 		picture.add(0xDF8A69);
 		SKIN_COLORS.put(7, picture);
+
+		ArrayList<Integer> candyCane = new ArrayList<Integer>();
+		candyCane.add(0xF9FFFE);
+		SKIN_COLORS.put(8, candyCane);
 	}
 	
 	private static final Map<Integer, ArrayList<Integer>> HAIR_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -175,6 +181,10 @@ public class EntityJasper extends EntityQuartzSoldier {
 		ArrayList<Integer> picture = new ArrayList<Integer>();
 		picture.add(0xEBDCCA);
 		HAIR_COLORS.put(7, picture);
+
+		ArrayList<Integer> candyCane = new ArrayList<Integer>();
+		candyCane.add(0xF9FFFE);
+		HAIR_COLORS.put(8, candyCane);
 	}
 	
 	private static final Map<Integer, ArrayList<Integer>> MARK_1_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -217,6 +227,10 @@ public class EntityJasper extends EntityQuartzSoldier {
 		ArrayList<Integer> picture = new ArrayList<Integer>();
 		picture.add(0xCA6C63);
 		MARK_1_COLORS.put(7, picture);
+
+		ArrayList<Integer> candyCane = new ArrayList<Integer>();
+		candyCane.add(0xB02E26);
+		MARK_1_COLORS.put(8, candyCane);
 	}
 	
 	private static final Map<Integer, ArrayList<Integer>> MARK_2_COLORS = new LinkedHashMap<Integer, ArrayList<Integer>>();
@@ -253,6 +267,10 @@ public class EntityJasper extends EntityQuartzSoldier {
 		ArrayList<Integer> picture = new ArrayList<Integer>();
 		picture.add(0x91818B);
 		MARK_2_COLORS.put(7, picture);
+
+		ArrayList<Integer> candyCane = new ArrayList<Integer>();
+		candyCane.add(0x5E7C16);
+		MARK_2_COLORS.put(8, candyCane);
 	}
 	
 	public EntityJasper(World worldIn) {
@@ -281,30 +299,30 @@ public class EntityJasper extends EntityQuartzSoldier {
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BELLY);
 
 		// Apply entity AI.
-        this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
+		this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
 		this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntityLapisLazuli.class, EntityMalachite.class, 16D));
-        this.tasks.addTask(3, new EntityAIMoveTowardsRestriction(this, 1.0D));
-        this.tasks.addTask(5, new EntityAIStandGuard(this, 0.6D));
-        
-        // Apply targetting.
-        this.targetTasks.addTask(4, new EntityAINearestAttackableTarget<EntityLiving>(this, EntityLiving.class, 10, true, false, new Predicate<EntityLiving>() {
-            public boolean apply(EntityLiving input) {
-                return input != null && IMob.VISIBLE_MOB_SELECTOR.apply(input);
-            }
-        }));
-        
-        // Apply entity attributes.
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(16.0D);
-        
-        this.droppedGemItem = ModItems.JASPER_GEM;
+		this.tasks.addTask(3, new EntityAIMoveTowardsRestriction(this, 1.0D));
+		this.tasks.addTask(5, new EntityAIStandGuard(this, 0.6D));
+		
+		// Apply targetting.
+		this.targetTasks.addTask(4, new EntityAINearestAttackableTarget<EntityLiving>(this, EntityLiving.class, 10, true, false, new Predicate<EntityLiving>() {
+			public boolean apply(EntityLiving input) {
+				return input != null && IMob.VISIBLE_MOB_SELECTOR.apply(input);
+			}
+		}));
+		
+		// Apply entity attributes.
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(16.0D);
+		
+		this.droppedGemItem = ModItems.JASPER_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_JASPER_GEM;
-        
-        // Register entity data.
-        this.dataManager.register(CHARGED, false);
-        this.dataManager.register(MARK_1_COLOR, 0);
-        this.dataManager.register(MARK_1, 0);
-        this.dataManager.register(MARK_2_COLOR, 0);
-        this.dataManager.register(MARK_2, 0);
+		
+		// Register entity data.
+		this.dataManager.register(CHARGED, false);
+		this.dataManager.register(MARK_1_COLOR, 0);
+		this.dataManager.register(MARK_1, 0);
+		this.dataManager.register(MARK_2_COLOR, 0);
+		this.dataManager.register(MARK_2, 0);
 	}
 
 	public float[] getGemColor() {
@@ -323,101 +341,103 @@ public class EntityJasper extends EntityQuartzSoldier {
 			return new float[] { 199F / 255F, 136F / 255F, 115F / 255F };
 		case 7:
 			return new float[] { 243F / 255F, 242F / 255F, 249F / 255F };
+		case 8:
+			return new float[] { 176F / 255F, 46F / 255F, 38F / 255F };
 		default:
 			return new float[] { 255F / 255F, 63F / 255F, 1F / 255F };
 		}
-    }
+	}
 	public void convertGems(int placement) {
-    	this.setGemCut(GemCuts.TINY.id);
-    	switch (placement) {
-    	case 0:
-    		this.setGemPlacement(GemPlacements.NOSE.id);
-    		break;
-    	case 1:
-    		this.setGemPlacement(GemPlacements.CHEST.id);
-    		break;
-    	}
-    }
+		this.setGemCut(GemCuts.TINY.id);
+		switch (placement) {
+		case 0:
+			this.setGemPlacement(GemPlacements.NOSE.id);
+			break;
+		case 1:
+			this.setGemPlacement(GemPlacements.CHEST.id);
+			break;
+		}
+	}
 	
 	/*********************************************************
-	 * Methods related to entity loading.                    *
+	 * Methods related to entity loading.					*
 	 *********************************************************/
 	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
-        compound.setBoolean("charged", this.dataManager.get(CHARGED).booleanValue());
-        compound.setInteger("charge_ticks", this.charge_ticks);
-        compound.setInteger("hit_count", this.hit_count);
-        compound.setInteger("mark1color", this.getMark1Color());
-        compound.setInteger("mark1", this.getMark1());
-        compound.setInteger("mark2color", this.getMark2Color());
-        compound.setInteger("mark2", this.getMark2());
-    }
+		super.writeEntityToNBT(compound);
+		compound.setBoolean("charged", this.dataManager.get(CHARGED).booleanValue());
+		compound.setInteger("charge_ticks", this.charge_ticks);
+		compound.setInteger("hit_count", this.hit_count);
+		compound.setInteger("mark1color", this.getMark1Color());
+		compound.setInteger("mark1", this.getMark1());
+		compound.setInteger("mark2color", this.getMark2Color());
+		compound.setInteger("mark2", this.getMark2());
+	}
 	
 	@Override
-    public void readEntityFromNBT(NBTTagCompound compound) {
-        super.readEntityFromNBT(compound);
-        this.dataManager.set(CHARGED, compound.getBoolean("charged"));
-        this.charge_ticks = compound.getInteger("charge_ticks");
-        this.hit_count = compound.getInteger("hit_count");
-        
-        if (compound.hasKey("mark1color")) {
-        	this.setMark1Color(compound.getInteger("mark1color"));
-        } else {
-        	this.setMark1Color(this.generateMark1Color());
-        }
-        if (compound.hasKey("mark1")) {
-        	this.setMark1(compound.getInteger("mark1"));
-        } else {
-        	this.setMark1(this.generateMark1());
-        }
+	public void readEntityFromNBT(NBTTagCompound compound) {
+		super.readEntityFromNBT(compound);
+		this.dataManager.set(CHARGED, compound.getBoolean("charged"));
+		this.charge_ticks = compound.getInteger("charge_ticks");
+		this.hit_count = compound.getInteger("hit_count");
+		
+		if (compound.hasKey("mark1color")) {
+			this.setMark1Color(compound.getInteger("mark1color"));
+		} else {
+			this.setMark1Color(this.generateMark1Color());
+		}
+		if (compound.hasKey("mark1")) {
+			this.setMark1(compound.getInteger("mark1"));
+		} else {
+			this.setMark1(this.generateMark1());
+		}
 
-        if (compound.hasKey("mark2color")) {
-        	this.setMark2Color(compound.getInteger("mark2color"));
-        } else {
-        	this.setMark2Color(this.generateMark2Color());
-        }
-        if (compound.hasKey("mark2")) {
-        	this.setMark2(compound.getInteger("mark2"));
-        } else {
-        	this.setMark2(this.generateMark2());
-        }
+		if (compound.hasKey("mark2color")) {
+			this.setMark2Color(compound.getInteger("mark2color"));
+		} else {
+			this.setMark2Color(this.generateMark2Color());
+		}
+		if (compound.hasKey("mark2")) {
+			this.setMark2(compound.getInteger("mark2"));
+		} else {
+			this.setMark2(this.generateMark2());
+		}
 
-    }
+	}
 
-    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-    	//0 - normal jasper
-    	//1 - ocean jasper
-    	//2 - biggs jasper
-    	//3 - green jasper
-    	//4 - bruneau jasper
-    	//5 - purple jasper
-    	//6 - flame jasper
-    	//7 - picture jasper
-        int special = this.rand.nextInt(8);
-        int biomeSpecial = 0;
-        Biome biome = this.world.getBiome(this.getPosition());
-        if (BiomeDictionary.hasType(biome, Type.MESA)) {
-        	biomeSpecial = 0;
-        } else if (BiomeDictionary.hasType(biome, Type.OCEAN)) {
-        	biomeSpecial = 1;
-        } else if (BiomeDictionary.hasType(biome, Type.SANDY) && BiomeDictionary.hasType(biome, Type.DRY)) {
-        	biomeSpecial = 2;
-        } else if (BiomeDictionary.hasType(biome, Type.FOREST)) {
-        	biomeSpecial = 3;
-        } else if (BiomeDictionary.hasType(biome, Type.RIVER)) {
-        	biomeSpecial = 4;
-        } else if (BiomeDictionary.hasType(biome, Type.MOUNTAIN)) {
-        	biomeSpecial = 5;
-        } else if (BiomeDictionary.hasType(biome, Type.NETHER)) {
-        	biomeSpecial = 6;
-        } else if (BiomeDictionary.hasType(biome, Type.HILLS)) {
-        	biomeSpecial = 7;
-        }
-        special = this.rand.nextFloat() < 0.9 ? biomeSpecial : special;
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		//0 - normal jasper
+		//1 - ocean jasper
+		//2 - biggs jasper
+		//3 - green jasper
+		//4 - bruneau jasper
+		//5 - purple jasper
+		//6 - flame jasper
+		//7 - picture jasper
+		int special = this.rand.nextInt(8);
+		int biomeSpecial = 0;
+		Biome biome = this.world.getBiome(this.getPosition());
+		if (BiomeDictionary.hasType(biome, Type.MESA)) {
+			biomeSpecial = 0;
+		} else if (BiomeDictionary.hasType(biome, Type.OCEAN)) {
+			biomeSpecial = 1;
+		} else if (BiomeDictionary.hasType(biome, Type.SANDY) && BiomeDictionary.hasType(biome, Type.DRY)) {
+			biomeSpecial = 2;
+		} else if (BiomeDictionary.hasType(biome, Type.FOREST)) {
+			biomeSpecial = 3;
+		} else if (BiomeDictionary.hasType(biome, Type.RIVER)) {
+			biomeSpecial = 4;
+		} else if (BiomeDictionary.hasType(biome, Type.MOUNTAIN)) {
+			biomeSpecial = 5;
+		} else if (BiomeDictionary.hasType(biome, Type.NETHER)) {
+			biomeSpecial = 6;
+		} else if (BiomeDictionary.hasType(biome, Type.HILLS)) {
+			biomeSpecial = 7;
+		}
+		special = KAGIC.isChristmas() ? 8 : this.rand.nextFloat() < 0.9 ? biomeSpecial : special;
 
-    	this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", special)).getUnformattedComponentText());
-        this.setSpecial(special);
+		this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", special)).getUnformattedComponentText());
+		this.setSpecial(special);
 		this.setMark1(this.generateMark1());
 		this.setMark1Color(this.generateMark1Color());
 		if (this.hasSecondMarking()) {
@@ -425,22 +445,23 @@ public class EntityJasper extends EntityQuartzSoldier {
 			this.setMark2Color(this.generateMark2Color());
 		}
 		return super.onInitialSpawn(difficulty, livingdata);
-    }
-    
-    @Override
-    public void itemDataToGemData(int data) {
-    	this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", data)).getUnformattedComponentText());
-        this.setSpecial(data);
+	}
+	
+	@Override
+	public void itemDataToGemData(int data) {
+		this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", data)).getUnformattedComponentText());
+		this.setSpecial(data);
 		this.setMark1(this.generateMark1());
 		this.setMark1Color(this.generateMark1Color());
 		if (this.hasSecondMarking()) {
 			this.setMark2(this.generateMark2());
+			KAGIC.instance.chatInfoMessage("Mark 2 is " + this.getMark2());
 			this.setMark2Color(this.generateMark2Color());
 		}
 		this.setSkinColor(this.generateSkinColor());
 	}
 	
-    @Override
+	@Override
 	public void setNewCutPlacement() {
 		GemCuts cut;
 		if (this.isPrimary()) {
@@ -458,9 +479,9 @@ public class EntityJasper extends EntityQuartzSoldier {
 	}
 
 	/*********************************************************
-	 * Methods related to entity interaction.                *
-	 *********************************************************/    
-    @Override
+	 * Methods related to entity interaction.				*
+	 *********************************************************/	
+	@Override
 	public boolean alternateInteract(EntityPlayer player) {
 		super.alternateInteract(player);
 		KAGIC.instance.chatInfoMessage("mark1Color is " + this.getMark1Color());
@@ -494,6 +515,8 @@ public class EntityJasper extends EntityQuartzSoldier {
 			return "flame_";
 		case 7:
 			return "picture_";
+		case 8:
+			return "candy_cane_";
 		}
 		return null;
 	}
@@ -505,59 +528,59 @@ public class EntityJasper extends EntityQuartzSoldier {
 	
 	public void whenDefective() {
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(12.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.0D);
-        this.setSize(0.63F, 2.3F);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(12.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.0D);
+		this.setSize(0.63F, 2.3F);
 	}
 	
 	/*********************************************************
-	 * Methods related to entity combat.                     *
+	 * Methods related to entity combat.					 *
 	 *********************************************************/
 	public boolean attackEntityAsMob(Entity entityIn) {
-        if (!this.world.isRemote) {
-        	this.charge_ticks += 20;
+		if (!this.world.isRemote) {
+			this.charge_ticks += 20;
 			this.hit_count += 1;
 			if (this.isCharged()) {
 				AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, (this.posX + 1), (this.posY + 1), (this.posZ + 1))).grow(8.0, (double) this.world.getHeight(), 8.0);
-	            List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
-	            for (EntityLivingBase entity : list) {
-	            	if (!this.isOwner(entity)) {
-	            		boolean shouldAttack = true;
-		            	if (entity instanceof EntityGem) {
-		            		EntityGem gem = (EntityGem) entity;
-		            		if (this.getServitude() == gem.getServitude()) {
-		            			if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
-		            				shouldAttack = !this.isOwnerId(gem.getOwnerId());
-		            			}
-		            			else {
-		            				shouldAttack = false;
-		            			}
-		            		}
-		            	}
-		            	if (shouldAttack) {
-			            	if (entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)(7 + this.rand.nextInt(15)))) {
-					            entity.motionY += 0.9D;
-					            this.applyEnchantments(this, entity);
-					        }
-		            	}
-	            	}
-	            }
-	            /*if (this.getServitude() == EntityGem.SERVE_HUMAN) {
-	            	this.getOwner().addStat(ModAchievements.FIGHTING_IS_MY_LIFE);
-	            }*/
+				List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
+				for (EntityLivingBase entity : list) {
+					if (!this.isOwner(entity)) {
+						boolean shouldAttack = true;
+						if (entity instanceof EntityGem) {
+							EntityGem gem = (EntityGem) entity;
+							if (this.getServitude() == gem.getServitude()) {
+								if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
+									shouldAttack = !this.isOwnerId(gem.getOwnerId());
+								}
+								else {
+									shouldAttack = false;
+								}
+							}
+						}
+						if (shouldAttack) {
+							if (entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)(7 + this.rand.nextInt(15)))) {
+								entity.motionY += 0.9D;
+								this.applyEnchantments(this, entity);
+							}
+						}
+					}
+				}
+				/*if (this.getServitude() == EntityGem.SERVE_HUMAN) {
+					this.getOwner().addStat(ModAchievements.FIGHTING_IS_MY_LIFE);
+				}*/
 			}
 			else {
 				if (entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), (float)(10 + this.rand.nextInt(15)))) {
-		            entityIn.motionY += 0.4D;
-		            this.applyEnchantments(this, entityIn);
-		        }
+					entityIn.motionY += 0.4D;
+					this.applyEnchantments(this, entityIn);
+				}
 			}
-        }
+		}
 		return super.attackEntityAsMob(entityIn);
 	}
 	
 	/*********************************************************
-	 * Methods related to entity living.                     *
+	 * Methods related to entity living.					 *
 	 *********************************************************/
 	public void onLivingUpdate() {
 		if (!this.isInWater() || !this.isAirBorne) {
@@ -581,7 +604,7 @@ public class EntityJasper extends EntityQuartzSoldier {
 	}
 	
 	/*********************************************************
-	 * Methods related to entity death.                      *
+	 * Methods related to entity death.					  *
 	 *********************************************************/
 	public void onDeath(DamageSource cause) {
 		if (!this.world.isRemote) {
@@ -594,35 +617,38 @@ public class EntityJasper extends EntityQuartzSoldier {
 			this.droppedGemItem = ModItems.NOREENA_JASPER_GEM;
 			this.droppedCrackedGemItem = ModItems.CRACKED_NOREENA_JASPER_GEM;
 			break;
-    	case 1:
-    		this.droppedGemItem = ModItems.OCEAN_JASPER_GEM;
-    		this.droppedCrackedGemItem = ModItems.CRACKED_OCEAN_JASPER_GEM;
-    		break;
-    	case 2:
-    		this.droppedGemItem = ModItems.BIGGS_JASPER_GEM;
-    		this.droppedCrackedGemItem = ModItems.CRACKED_BIGGS_JASPER_GEM;
-    		break;
-    	case 3:
-    		this.droppedGemItem = ModItems.GREEN_JASPER_GEM;
-    		this.droppedCrackedGemItem = ModItems.CRACKED_GREEN_JASPER_GEM;
-    		break;
-    	case 4:
-    		this.droppedGemItem = ModItems.BRUNEAU_JASPER_GEM;
-    		this.droppedCrackedGemItem = ModItems.CRACKED_BRUNEAU_JASPER_GEM;
-    		break;
-    	case 5:
-    		this.droppedGemItem = ModItems.PURPLE_JASPER_GEM;
-    		this.droppedCrackedGemItem = ModItems.CRACKED_PURPLE_JASPER_GEM;
-    		break;
-    	case 6:
-    		this.droppedGemItem = ModItems.FLAME_JASPER_GEM;
-    		this.droppedCrackedGemItem = ModItems.CRACKED_FLAME_JASPER_GEM;
-    		break;
-    	case 7:
-    		this.droppedGemItem = ModItems.PICTURE_JASPER_GEM;
-    		this.droppedCrackedGemItem = ModItems.CRACKED_PICTURE_JASPER_GEM;
-    		break;
-    	default:
+		case 1:
+			this.droppedGemItem = ModItems.OCEAN_JASPER_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_OCEAN_JASPER_GEM;
+			break;
+		case 2:
+			this.droppedGemItem = ModItems.BIGGS_JASPER_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_BIGGS_JASPER_GEM;
+			break;
+		case 3:
+			this.droppedGemItem = ModItems.GREEN_JASPER_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_GREEN_JASPER_GEM;
+			break;
+		case 4:
+			this.droppedGemItem = ModItems.BRUNEAU_JASPER_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_BRUNEAU_JASPER_GEM;
+			break;
+		case 5:
+			this.droppedGemItem = ModItems.PURPLE_JASPER_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_PURPLE_JASPER_GEM;
+			break;
+		case 6:
+			this.droppedGemItem = ModItems.FLAME_JASPER_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_FLAME_JASPER_GEM;
+			break;
+		case 7:
+			this.droppedGemItem = ModItems.PICTURE_JASPER_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_PICTURE_JASPER_GEM;
+			break;
+		case 8:
+			this.droppedGemItem = ModItems.CANDY_CANE_JASPER_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_CANDY_CANE_JASPER_GEM;
+		default:
 			this.droppedGemItem = ModItems.JASPER_GEM;
 			this.droppedCrackedGemItem = ModItems.CRACKED_JASPER_GEM;
 			break;
@@ -631,7 +657,7 @@ public class EntityJasper extends EntityQuartzSoldier {
 	}
 	
 	/*********************************************************
-	 * Methods related to entity sounds.                     *
+	 * Methods related to entity sounds.					 *
 	 *********************************************************/
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.JASPER_HURT;
@@ -644,7 +670,7 @@ public class EntityJasper extends EntityQuartzSoldier {
 	}
 	
 	/*********************************************************
-	 * Methods related to entity rendering.                  *
+	 * Methods related to entity rendering.				  *
 	 *********************************************************/
 	@Override
 	protected int generateSkinColor() {
@@ -704,6 +730,8 @@ public class EntityJasper extends EntityQuartzSoldier {
 			return true;
 		case 7:
 			return true;
+		case 8:
+			return true;
 		default:
 			return false;
 		}
@@ -762,10 +790,10 @@ public class EntityJasper extends EntityQuartzSoldier {
 	}
 	
 	@SideOnly(Side.CLIENT)
-    public int getBrightnessForRender() {
-        return isCharged() ? 15728880 : super.getBrightnessForRender();
-    }
-    public float getBrightness() {
-        return isCharged() ? 1.0F : super.getBrightness();
-    }	
+	public int getBrightnessForRender() {
+		return isCharged() ? 15728880 : super.getBrightnessForRender();
+	}
+	public float getBrightness() {
+		return isCharged() ? 1.0F : super.getBrightness();
+	}	
 }

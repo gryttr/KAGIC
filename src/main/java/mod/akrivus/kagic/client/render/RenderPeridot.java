@@ -6,6 +6,7 @@ import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerHair;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
 import mod.akrivus.kagic.client.render.layers.LayerPeridotItem;
+import mod.akrivus.kagic.client.render.layers.LayerSantaHat;
 import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerUniform;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
@@ -30,6 +31,8 @@ public class RenderPeridot extends RenderGemBase<EntityPeridot> {
 			this.addLayer(new LayerBirthdayHat(this));
 		} else if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
+		} else if (KAGIC.isChristmas()) {
+			this.addLayer(new LayerSantaHat(this));
 		}
     }
 

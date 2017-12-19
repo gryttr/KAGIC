@@ -11,6 +11,7 @@ import mod.akrivus.kagic.client.render.layers.LayerJasperMark1;
 import mod.akrivus.kagic.client.render.layers.LayerJasperMark2;
 import mod.akrivus.kagic.client.render.layers.LayerQuartzCape;
 import mod.akrivus.kagic.client.render.layers.LayerQuartzItem;
+import mod.akrivus.kagic.client.render.layers.LayerSantaHat;
 import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerUniform;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
@@ -65,6 +66,8 @@ public class RenderJasper extends RenderGemBase<EntityJasper> {
 			this.addLayer(new LayerBirthdayHat(this));
 		} else if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
+		} else if (KAGIC.isChristmas()) {
+			this.addLayer(new LayerSantaHat(this));
 		}
 	}
 		

@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.client.model.fusions;
 
 import mod.akrivus.kagic.client.model.ModelGem;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -28,7 +29,7 @@ public class ModelMalachite extends ModelGem {
 	}
 	
 	public ModelMalachite(float modelSize) {
-		super(modelSize, 0.0F, 128, 64, false, -4F);
+		super(modelSize, 0.0F, 128, 64, false, 1F);
 
 		this.bipedHead = new ModelRenderer(this, 76, 0);
 		this.bipedHead.setRotationPoint(0.0F, -2.5F, 0.0F);
@@ -40,6 +41,9 @@ public class ModelMalachite extends ModelGem {
 		this.hair.setRotationPoint(0.0F, -1.7F, -3.8F);
 		this.hair.addBox(0.0F, 0.0F, 0.0F, 12, 12, 12, 0.0F);
 		this.setRotateAngle(hair, 0.7853981633974483F, -1.0927506446736497F, 1.5707963267948966F);
+		if (KAGIC.isHalloween() || KAGIC.isBirthday() || KAGIC.isChristmas()) {
+			this.bipedHead.addChild(this.witchHat);
+		}
 		
 		this.neck = new ModelRenderer(this, 22, 0);
 		this.neck.setRotationPoint(0.0F, -1.5F, 0.0F);
@@ -84,7 +88,7 @@ public class ModelMalachite extends ModelGem {
 
 		this.bipedHead.addChild(this.bipedHeadwear);
 		this.bipedHead.addChild(this.hair);
-		this.neck.addChild(this.bipedHead);
+		//this.neck.addChild(this.bipedHead);
 		this.bipedBody.addChild(this.neck);
 		this.bipedBody.addChild(this.bipedLeftArm);
 		this.bipedBody.addChild(this.bipedRightArm);
@@ -98,6 +102,7 @@ public class ModelMalachite extends ModelGem {
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+		this.bipedHead.render(f5);
 		this.bipedBody.render(f5);
 	}
 

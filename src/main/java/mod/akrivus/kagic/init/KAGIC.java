@@ -141,7 +141,17 @@ public class KAGIC {
     }
     
     public static boolean isChristmas() {
-    	return KAGIC.isDayToday(12, 25);
+    	for (int day = 24; day <= 31; ++day) {
+    		if (KAGIC.isDayToday(12, day)) {
+    			return true;
+    		}
+    	}
+    	for (int day = 1; day <= 5; ++day) {
+    		if (KAGIC.isDayToday(1, day)) {
+    			return true;
+    		}
+    	}
+    	return KAGIC.isDayToday(12, 18);
     }
     
     public static boolean isBirthday() {

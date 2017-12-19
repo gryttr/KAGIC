@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.client.model.fusions;
 
 import mod.akrivus.kagic.client.model.ModelGem;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -17,14 +18,19 @@ public class ModelRainbowQuartz extends ModelGem {
 	}
 	
 	public ModelRainbowQuartz(float modelSize) {
-		super(modelSize, 0.0F, 96, 64, false, -4F);
+		super(modelSize, 0.0F, 96, 64, false, -1F);
 
 		this.bipedHead = new ModelRenderer(this, 42, 9);
 		this.bipedHead.setRotationPoint(0.0F, -6.0F, 0.0F);
 		this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F);
+		this.bipedHead.setTextureSize(96, 64);
 		this.bipedHeadwear = new ModelRenderer(this, 34, 25);
 		this.bipedHeadwear.setRotationPoint(0.0F, -9.0F, 0.0F);
 		this.bipedHeadwear.addBox(-5.0F, 0.0F, -5.0F, 10, 20, 10, 0.0F);
+		this.bipedHeadwear.setTextureSize(96, 64);
+		if (KAGIC.isHalloween() || KAGIC.isBirthday() || KAGIC.isChristmas()) {
+			this.bipedHead.addChild(this.witchHat);
+		}
 		
 		this.bipedBody = new ModelRenderer(this, 0, 0);
 		this.bipedBody.setRotationPoint(0.0F, 0.0F, 0.0F);
@@ -50,7 +56,7 @@ public class ModelRainbowQuartz extends ModelGem {
 		this.bipedRightLeg.setRotationPoint(-2.2F, 5.0F, 0.0F);
 		this.bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 14, 4, 0.0F);
 		
-		this.bipedBody.addChild(this.bipedHead);
+		//this.bipedBody.addChild(this.bipedHead);
 		this.bipedBody.addChild(this.bipedRightArm);
 		this.bipedBody.addChild(this.bipedLeftArm);
 		this.bipedBody.addChild(this.waist);
@@ -62,6 +68,7 @@ public class ModelRainbowQuartz extends ModelGem {
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+		this.bipedHead.render(f5);
 		this.bipedBody.render(f5);
 	}
 
@@ -192,7 +199,7 @@ public class ModelRainbowQuartz extends ModelGem {
 			this.bipedHead.rotationPointY = 1.0F;
 		} else {
 			this.bipedBody.rotateAngleX = 0.0F;
-			this.bipedHead.rotationPointY = -6.0F;
+			this.bipedHead.rotationPointY = -3.0F;
 		}
 
 		this.bipedRightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;

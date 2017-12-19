@@ -4,6 +4,7 @@ import mod.akrivus.kagic.client.model.ModelRutile;
 import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
+import mod.akrivus.kagic.client.render.layers.LayerSantaHat;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.entity.gem.EntityRutile;
@@ -22,6 +23,8 @@ public class RenderRutile extends RenderGemBase<EntityRutile> {
 			this.addLayer(new LayerBirthdayHat(this));
 		} else if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
+		} else if (KAGIC.isChristmas()) {
+			this.addLayer(new LayerSantaHat(this));
 		}
     }
 

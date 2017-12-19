@@ -22,63 +22,69 @@ public class ModelGarnet extends ModelGem {
 	}
 	
 	public ModelGarnet(float modelSize, boolean isArmor) {
-		super(modelSize, 0.0F, 64, 64, false, -4F);
+		super(modelSize, 0.0F, 64, 64, isArmor, -3F);
 		
-		this.textureWidth = 64;
-		this.textureHeight = 64;
-		this.bipedBody = new ModelRenderer(this, 0, 0);
-		this.bipedBody.setRotationPoint(0.0F, 0.0F, 0.0F);
-		this.bipedBody.addBox(-3.0F, -3.0F, -3.0F, 6, 6, 6, 0.0F);
-		this.right_leg_bottom = new ModelRenderer(this, 0, 36);
-		this.right_leg_bottom.setRotationPoint(-0.7F, 9.0F, -0.6F);
-		this.right_leg_bottom.addBox(-3.0F, 0.0F, -1.5F, 3, 9, 3, 0.0F);
+		this.bipedHead = new ModelRenderer(this, 0, 16);
+		this.bipedHead.setRotationPoint(0.0F, -2.0F, 0.0F);
+		this.bipedHead.addBox(-5.0F, -11.0F, -4.0F, 10, 10, 10, 0.0F);
 		this.neck = new ModelRenderer(this, 18, 0);
 		this.neck.setRotationPoint(0.0F, -3.0F, 0.0F);
 		this.neck.addBox(-1.0F, -2.0F, -1.0F, 2, 2, 2, 0.0F);
-		this.bipedLeftLeg = new ModelRenderer(this, 36, 8);
-		this.bipedLeftLeg.setRotationPoint(0.0F, 3.4F, 0.0F);
-		this.bipedLeftLeg.addBox(0.0F, 0.0F, -2.5F, 4, 9, 5, 0.0F);
-		this.arm_right = new ModelRenderer(this, 24, 36);
-		this.arm_right.setRotationPoint(-2.3F, 1.0F, 0.0F);
-		this.arm_right.addBox(-1.0F, 0.0F, -1.0F, 2, 13, 2, 0.0F);
-		this.setRotateAngle(arm_right, 0.0F, 0.0F, 0.2617993877991494F);
-		this.bipedRightArm = new ModelRenderer(this, 24, 0);
-		this.bipedRightArm.setRotationPoint(-2.5F, -2.2F, 0.0F);
-		this.bipedRightArm.addBox(-4.0F, -1.5F, -2.0F, 4, 4, 4, 0.0F);
-		this.left_leg_bottom = new ModelRenderer(this, 12, 36);
-		this.left_leg_bottom.setRotationPoint(0.6F, 9.0F, -0.6F);
-		this.left_leg_bottom.addBox(0.0F, 0.0F, -1.5F, 3, 9, 3, 0.0F);
+		if (KAGIC.isHalloween() || KAGIC.isBirthday() || KAGIC.isChristmas()) {
+			this.bipedHead.addChild(this.witchHat);
+		}
+		
+		this.bipedBody = new ModelRenderer(this, 0, 0);
+		this.bipedBody.setRotationPoint(0.0F, 0.0F, 0.0F);
+		this.bipedBody.addBox(-3.0F, -3.0F, -3.0F, 6, 6, 6, 0.0F);
+		this.waist = new ModelRenderer(this, 20, 8);
+		this.waist.setRotationPoint(0.0F, 2.0F, 0.0F);
+		this.waist.addBox(-2.0F, 0.0F, -2.0F, 4, 4, 4, 0.0F);
+
+		this.bipedLeftArm = new ModelRenderer(this, 40, 0);
+		this.bipedLeftArm.setRotationPoint(2.5F, -2.2F, 0.0F);
+		this.bipedLeftArm.addBox(0.0F, -1.5F, -2.0F, 4, 4, 4, 0.0F);
 		this.arm_left = new ModelRenderer(this, 54, 6);
 		this.arm_left.setRotationPoint(2.3F, 1.0F, 0.0F);
 		this.arm_left.addBox(-1.0F, 0.0F, -1.0F, 2, 13, 2, 0.0F);
 		this.setRotateAngle(arm_left, 0.0F, 0.0F, -0.2617993877991494F);
-		this.waist = new ModelRenderer(this, 20, 8);
-		this.waist.setRotationPoint(0.0F, 2.0F, 0.0F);
-		this.waist.addBox(-2.0F, 0.0F, -2.0F, 4, 4, 4, 0.0F);
+		this.bipedRightArm = new ModelRenderer(this, 24, 0);
+		this.bipedRightArm.setRotationPoint(-2.5F, -2.2F, 0.0F);
+		this.bipedRightArm.addBox(-4.0F, -1.5F, -2.0F, 4, 4, 4, 0.0F);
+		this.arm_right = new ModelRenderer(this, 24, 36);
+		this.arm_right.setRotationPoint(-2.3F, 1.0F, 0.0F);
+		this.arm_right.addBox(-1.0F, 0.0F, -1.0F, 2, 13, 2, 0.0F);
+		this.setRotateAngle(arm_right, 0.0F, 0.0F, 0.2617993877991494F);
+
+		this.bipedLeftLeg = new ModelRenderer(this, 36, 8);
+		this.bipedLeftLeg.setRotationPoint(0.0F, 3.4F, 0.0F);
+		this.bipedLeftLeg.addBox(0.0F, 0.0F, -2.5F, 4, 9, 5, 0.0F);
+		this.left_leg_bottom = new ModelRenderer(this, 12, 36);
+		this.left_leg_bottom.setRotationPoint(0.6F, 9.0F, -0.6F);
+		this.left_leg_bottom.addBox(0.0F, 0.0F, -1.5F, 3, 9, 3, 0.0F);
 		this.bipedRightLeg = new ModelRenderer(this, 40, 22);
 		this.bipedRightLeg.setRotationPoint(0.0F, 3.5F, 0.0F);
 		this.bipedRightLeg.addBox(-4.0F, 0.0F, -2.5F, 4, 9, 5, 0.0F);
-		this.bipedLeftArm = new ModelRenderer(this, 40, 0);
-		this.bipedLeftArm.setRotationPoint(2.5F, -2.2F, 0.0F);
-		this.bipedLeftArm.addBox(0.0F, -1.5F, -2.0F, 4, 4, 4, 0.0F);
-		this.bipedHead = new ModelRenderer(this, 0, 16);
-		this.bipedHead.setRotationPoint(0.0F, -2.0F, 0.0F);
-		this.bipedHead.addBox(-5.0F, -11.0F, -4.0F, 10, 10, 10, 0.0F);
-		this.bipedRightLeg.addChild(this.right_leg_bottom);
+		this.right_leg_bottom = new ModelRenderer(this, 0, 36);
+		this.right_leg_bottom.setRotationPoint(-0.7F, 9.0F, -0.6F);
+		this.right_leg_bottom.addBox(-3.0F, 0.0F, -1.5F, 3, 9, 3, 0.0F);
+		
 		this.bipedBody.addChild(this.neck);
-		this.waist.addChild(this.bipedLeftLeg);
-		this.bipedRightArm.addChild(this.arm_right);
-		this.bipedBody.addChild(this.bipedRightArm);
-		this.bipedLeftLeg.addChild(this.left_leg_bottom);
-		this.bipedLeftArm.addChild(this.arm_left);
-		this.bipedBody.addChild(this.waist);
-		this.waist.addChild(this.bipedRightLeg);
 		this.bipedBody.addChild(this.bipedLeftArm);
-		this.neck.addChild(this.bipedHead);
+		this.bipedBody.addChild(this.bipedRightArm);
+		this.bipedBody.addChild(this.waist);
+		this.bipedLeftArm.addChild(this.arm_left);
+		this.bipedRightArm.addChild(this.arm_right);
+		this.waist.addChild(this.bipedLeftLeg);
+		this.waist.addChild(this.bipedRightLeg);
+		this.bipedLeftLeg.addChild(this.left_leg_bottom);
+		this.bipedRightLeg.addChild(this.right_leg_bottom);
+		//this.neck.addChild(this.bipedHead);
 	}
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
+		this.bipedHead.render(f5);
 		this.bipedBody.render(f5);
 	}
 
@@ -222,7 +228,7 @@ public class ModelGarnet extends ModelGem {
 		else
 		{
 			this.bipedBody.rotateAngleX = 0.0F;
-			this.bipedHead.rotationPointY = 0.0F;
+			this.bipedHead.rotationPointY = -4.0F;
 		}
 
 		this.bipedRightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;

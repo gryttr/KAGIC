@@ -37,7 +37,7 @@ public class ModelOpal extends ModelGem {
 	}
 	
 	public ModelOpal(float modelSize) {
-		super(modelSize, 0.0F, 128, 64, false, -4F);
+		super(modelSize, 0.0F, 128, 64, false, -1.5F);
 
 		this.bipedHead = new ModelRenderer(this, 94, 0);
 		this.bipedHead.setRotationPoint(0.0F, -2.0F, 0.0F);
@@ -52,6 +52,9 @@ public class ModelOpal extends ModelGem {
 		this.Hair.setRotationPoint(0.0F, -10.4F, 0.5F);
 		this.Hair.addBox(-5.0F, -1.75F, 0.0F, 10, 30, 7, modelSize);
 		this.setRotateAngle(Hair, 0.18203784098300857F, 0.0F, 0.0F);
+		if (KAGIC.isHalloween() || KAGIC.isBirthday() || KAGIC.isChristmas()) {
+			this.bipedHead.addChild(this.witchHat);
+		}
 
 		this.neck = new ModelRenderer(this, 22, 0);
 		this.neck.setRotationPoint(0.0F, -3.0F, 0.0F);
@@ -113,11 +116,12 @@ public class ModelOpal extends ModelGem {
 		this.bipedHead.addChild(this.headout);
 		this.waist.addChild(this.bipedLeftLeg);
 		this.waist.addChild(this.skirt);
-		this.neck.addChild(this.bipedHead);
+		//this.neck.addChild(this.bipedHead);
 	}
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+		this.bipedHead.render(f5);
 		this.bipedBody.render(f5);
 	}
 
@@ -273,7 +277,7 @@ public class ModelOpal extends ModelGem {
 			this.bipedLeftLeg.rotationPointZ = 0.1F;
 			this.bipedRightLeg.rotationPointY = 12.0F;
 			this.bipedLeftLeg.rotationPointY = 12.0F;*/
-			this.bipedHead.rotationPointY = 0.0F;
+			this.bipedHead.rotationPointY = -9.0F;
 		}
 
 		this.bipedRightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;

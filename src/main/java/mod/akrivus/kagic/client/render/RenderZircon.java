@@ -5,6 +5,7 @@ import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
 import mod.akrivus.kagic.client.render.layers.LayerNoDyeOverlay;
+import mod.akrivus.kagic.client.render.layers.LayerSantaHat;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.client.render.layers.LayerZirconHair;
@@ -29,6 +30,8 @@ public class RenderZircon extends RenderGemBase<EntityZircon> {
 			this.addLayer(new LayerBirthdayHat(this));
 		} else if (KAGIC.isHalloween()) {
 			this.addLayer(new LayerWitchHat(this));
+		} else if (KAGIC.isChristmas()) {
+			this.addLayer(new LayerSantaHat(this));
 		}
     }
 	
