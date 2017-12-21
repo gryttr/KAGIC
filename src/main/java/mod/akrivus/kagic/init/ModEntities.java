@@ -226,6 +226,8 @@ public class ModEntities {
 		EntityAmethyst.AMETHYST_YIELDS.put(Blocks.QUARTZ_BLOCK.getDefaultState(), 5.99);
 		ModEntities.registerWithOreDictionary(EntityAmethyst.AMETHYST_YIELDS, "Amethyst", "Quartz");
 		EntityRoseQuartz.ROSE_QUARTZ_YIELDS.put(Blocks.IRON_ORE.getDefaultState(), 0.11);
+		EntityRoseQuartz.ROSE_QUARTZ_YIELDS.put(Blocks.PURPUR_BLOCK.getDefaultState(), 0.11);
+		EntityRoseQuartz.ROSE_QUARTZ_YIELDS.put(Blocks.PURPUR_PILLAR.getDefaultState(), 0.11);
 		EntityRoseQuartz.ROSE_QUARTZ_YIELDS.put(Blocks.QUARTZ_ORE.getDefaultState(), 1.99);
 		EntityRoseQuartz.ROSE_QUARTZ_YIELDS.put(Blocks.SANDSTONE.getDefaultState(), 0.33);
 		EntityRoseQuartz.ROSE_QUARTZ_YIELDS.put(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE), 0.11);

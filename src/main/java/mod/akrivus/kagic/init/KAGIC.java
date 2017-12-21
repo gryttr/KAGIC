@@ -151,7 +151,7 @@ public class KAGIC {
     			return true;
     		}
     	}
-    	return KAGIC.isDayToday(12, 18);
+    	return false;
     }
     
     public static boolean isBirthday() {

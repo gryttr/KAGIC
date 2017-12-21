@@ -455,10 +455,10 @@ public class EntityJasper extends EntityQuartzSoldier {
 		this.setMark1Color(this.generateMark1Color());
 		if (this.hasSecondMarking()) {
 			this.setMark2(this.generateMark2());
-			KAGIC.instance.chatInfoMessage("Mark 2 is " + this.getMark2());
 			this.setMark2Color(this.generateMark2Color());
 		}
 		this.setSkinColor(this.generateSkinColor());
+		this.setHairColor(this.generateHairColor());
 	}
 	
 	@Override
