@@ -31,7 +31,7 @@ public class EntityTongueMonster extends EntityCorruptedGem {
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.75D);
 		
 		this.droppedGemItem = ModItems.CORRUPTED_TONGUE_MONSTER_GEM;
-		this.droppedCrackedGemItem = ModItems.CORRUPTED_TONGUE_MONSTER_GEM;
+		this.droppedCrackedGemItem = ModItems.CRACKED_CORRUPTED_TONGUE_MONSTER_GEM;
 	}
 
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
