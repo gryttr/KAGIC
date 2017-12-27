@@ -213,6 +213,14 @@ public class EntityAgate extends EntityQuartzSoldier {
 		return this.getSpecial() == 1 || this.getName().toLowerCase().contains("holly");
 	}	
 	
+	@Override
+	public void whenDefective() {
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.0D);
+        this.setSize(0.72F, 1.84F);
+	}
+
 	/*********************************************************
      * Methods related to death.                             *
      *********************************************************/

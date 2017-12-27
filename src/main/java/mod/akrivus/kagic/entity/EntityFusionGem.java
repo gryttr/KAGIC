@@ -40,7 +40,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
-public class EntityFusionGem  extends EntityGem implements IEntityAdditionalSpawnData {
+public class EntityFusionGem  extends EntityGem {
 	private NBTTagList fusionGems = new NBTTagList();
 	private ArrayList<Class<? extends EntityGem>> gemTypes = new ArrayList<Class<? extends EntityGem>>();
 	private ArrayList<GemCuts> fusionGemCuts = new ArrayList<GemCuts>();
@@ -348,17 +348,5 @@ public class EntityFusionGem  extends EntityGem implements IEntityAdditionalSpaw
 	
 	public void setAdjustedSize() {
 		
-	}
-
-	@Override
-	public void writeSpawnData(ByteBuf buffer) {
-		buffer.writeFloat(this.width);
-		buffer.writeFloat(this.height);
-	}
-
-	@Override
-	public void readSpawnData(ByteBuf buffer) {
-		this.width = buffer.readFloat();
-		this.height = buffer.readFloat();
 	}
 }

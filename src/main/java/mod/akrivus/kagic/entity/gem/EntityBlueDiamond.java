@@ -152,7 +152,6 @@ public class EntityBlueDiamond extends EntityGem {
 				amethyst.setPosition(this.posX, this.posY, this.posZ);
 				amethyst.setServitude(EntityGem.SERVE_BLUE_DIAMOND);
 				amethyst.setRevengeTarget(this.getAttackTarget());
-				amethyst.setCitrine(false);
 				amethyst.onInitialSpawn(this.world.getDifficultyForLocation(this.getPosition()), null);
 				this.world.spawnEntity(amethyst);
 	    	}

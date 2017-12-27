@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 
+import io.netty.buffer.ByteBuf;
 import mod.akrivus.kagic.entity.ai.EntityAIAttackRangedBow;
 import mod.akrivus.kagic.entity.ai.EntityAIFightWars;
 import mod.akrivus.kagic.entity.ai.EntityAIPredictFights;
@@ -95,12 +96,13 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.DyeUtils;
 
-public class EntityGem extends EntityCreature implements IEntityOwnable, IRangedAttackMob {
+public class EntityGem extends EntityCreature implements IEntityOwnable, IRangedAttackMob, IEntityAdditionalSpawnData {
 	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityGem.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 	protected static final DataParameter<Boolean> SELECTED = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
 	protected static final DataParameter<Boolean> SWINGING_ARMS = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
@@ -327,8 +329,16 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		}
 
 		this.setHairStyle(compound.getInteger("hair"));
+		
 		this.setDefective(compound.getBoolean("defective"));
+		if (this.isDefective()) {
+			this.whenDefective();
+		}
 		this.setPrimary(compound.getBoolean("primary"));
+		if (this.isPrimary()) {
+			this.whenPrimary();
+		}
+		
 		NBTTagList fusionMembers = compound.getTagList("fusionMembers", 10);
 		for (int i = 0; i < fusionMembers.tagCount(); ++i) {
 			this.fusionMembers.add(fusionMembers.getCompoundTagAt(i));
@@ -476,7 +486,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 				this.isPeaceful = false;
 			}
 			if (this.isDefective()) {
-				this.whenDefective();
+				//this.whenDefective();
 			}
 			if (this.fallbackServitude > 0 && ModConfigs.canRebel) {
 				if (this.timeUntilBetrayal > (this.rand.nextDouble() * 4) * 24000) {
@@ -860,6 +870,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		KAGIC.instance.chatInfoMessage("Hair style is " + this.getHairStyle());
 		KAGIC.instance.chatInfoMessage("Insignia color is " + this.getInsigniaColor());
 		KAGIC.instance.chatInfoMessage("Uniform color is " + this.getUniformColor());
+		KAGIC.instance.chatInfoMessage("Size is " + this.width + ", " + this.height);
 		return false;
 	}
 	
@@ -1315,7 +1326,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public void setPrimary(boolean primary) {
 		this.dataManager.set(PRIMARY, primary);
-		this.whenPrimary();
+		if (primary) {
+			this.whenPrimary();
+		}
 	}
 	
 	public void whenPrimary() {
@@ -2025,5 +2038,16 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public float getBrightness(/*float partialTicks*/) {
 		return this.isSpaceBorn ? 1.0F : super.getBrightness();
+	}
+
+	@Override
+	public void writeSpawnData(ByteBuf buffer) {
+		buffer.writeFloat(this.width);
+		buffer.writeFloat(this.height);
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf buffer) {
+		this.setSize(buffer.readFloat(), buffer.readFloat());
 	}
 }

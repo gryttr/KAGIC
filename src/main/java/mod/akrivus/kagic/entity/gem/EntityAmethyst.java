@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.google.common.base.Predicate;
 
+import io.netty.buffer.ByteBuf;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
@@ -52,6 +53,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -136,10 +138,7 @@ public class EntityAmethyst extends EntityQuartzSoldier {
 	 * Methods related to entity loading.                    *
 	 *********************************************************/
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-    	this.setSpecial(/*this.rand.nextInt(9) == 0 ? 1 : */0);
-		if (this.isCitrine()) {
-    		this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.citrine.name")).getUnformattedText());
-    	}
+    	this.setSpecial(0);
 		return super.onInitialSpawn(difficulty, livingdata);
     }
 	
@@ -199,14 +198,6 @@ public class EntityAmethyst extends EntityQuartzSoldier {
         this.setSize(0.72F, 1.38F);
 	}
 	
-	public boolean isCitrine() {
-		return this.getSpecial() == 1;
-	}
-	
-	public void setCitrine(boolean citrine) {
-		this.setSpecial(citrine ? 1 : 0);
-	}
-    
     /*********************************************************
      * Methods related to entity combat.                     *
      *********************************************************/

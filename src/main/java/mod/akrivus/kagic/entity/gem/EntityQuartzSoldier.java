@@ -7,10 +7,12 @@ import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIScareMobs;
 import mod.akrivus.kagic.entity.ai.EntityAISitStill;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -80,4 +82,13 @@ public class EntityQuartzSoldier extends EntityGem {
 		}
 		return super.processInteract(player, hand);
     }
+    
+	@Override
+	public void whenPrimary() {
+		super.whenPrimary();
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(200.0D);
+		IAttributeInstance attackDamage = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+		attackDamage.setBaseValue(attackDamage.getAttributeValue() * 2);
+		this.setSize(0.9F, 2.53F);
+	}
 }
