@@ -209,7 +209,7 @@ public class InjectorResult {
 		return new InjectorResult(gemSpawned, pos, gemSpawned == null ? 0.0 : defectivity.get(gemSpawned.getClass()), !canSpawnGem, canSpawnGem ? friction.get(gemSpawned.getClass()) >= 1.0F : false, exitHole);
 	}
 	
-	private static void drainBlock(World world, BlockPos ore) {
+	public static void drainBlock(World world, BlockPos ore) {
 		IBlockState state = world.getBlockState(ore);
 		Block block = state.getBlock();
 		

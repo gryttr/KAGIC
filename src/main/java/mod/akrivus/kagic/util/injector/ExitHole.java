@@ -3,6 +3,7 @@ package mod.akrivus.kagic.util.injector;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModBlocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -11,11 +12,13 @@ public class ExitHole {
 	private final BlockPos[] blocks;
 	private final boolean canCreate;
 	private final boolean meltRocks;
+	private final boolean xDirection;
 	private final int minY;
-	public ExitHole(BlockPos[] blocks, boolean canCreate, boolean meltRocks, int y) {
+	public ExitHole(BlockPos[] blocks, boolean canCreate, boolean meltRocks, boolean direction, int y) {
 		this.blocks = blocks;
 		this.canCreate = canCreate;
 		this.meltRocks = meltRocks;
+		this.xDirection = direction;
 		this.minY = y;
 	}
 	public boolean canCreate() {
@@ -27,8 +30,15 @@ public class ExitHole {
 	public void emerge(World world) {
 		for (BlockPos block : this.blocks) {
 			world.destroyBlock(block, false);
-			if (this.meltRocks && block.getY() == minY && !world.isAirBlock(block.down())) {
-				world.setBlockState(block, ModBlocks.ROCK_MELT.getDefaultState());
+			InjectorResult.drainBlock(world, this.xDirection ? block.north() : block.east());
+			InjectorResult.drainBlock(world, this.xDirection ? block.south() : block.west());
+			if (block.getY() == minY) {
+				InjectorResult.drainBlock(world, block.down());
+				if (this.meltRocks && !world.isAirBlock(block.down())) {
+					world.setBlockState(block, ModBlocks.ROCK_MELT.getDefaultState());
+				}
+			} else {
+				InjectorResult.drainBlock(world, block.up());
 			}
 		}
 	}
@@ -113,6 +123,7 @@ public class ExitHole {
 			}
 			break;
 		}
-		return new ExitHole(blocksToDelete.toArray(new BlockPos[0]), blocksToDelete.size() <= height, meltRocks, pos.getY());
+		boolean xDirection = exit.direction == 'e' || exit.direction == 'w';
+		return new ExitHole(blocksToDelete.toArray(new BlockPos[0]), blocksToDelete.size() <= height, meltRocks, xDirection, pos.getY());
 	}
 }
