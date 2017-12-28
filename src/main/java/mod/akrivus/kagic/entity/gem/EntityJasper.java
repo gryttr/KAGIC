@@ -648,6 +648,7 @@ public class EntityJasper extends EntityQuartzSoldier {
 		case 8:
 			this.droppedGemItem = ModItems.CANDY_CANE_JASPER_GEM;
 			this.droppedCrackedGemItem = ModItems.CRACKED_CANDY_CANE_JASPER_GEM;
+			break;
 		default:
 			this.droppedGemItem = ModItems.JASPER_GEM;
 			this.droppedCrackedGemItem = ModItems.CRACKED_JASPER_GEM;
