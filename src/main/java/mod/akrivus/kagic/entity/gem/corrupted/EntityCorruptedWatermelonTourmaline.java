@@ -21,6 +21,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -166,6 +169,17 @@ public class EntityCorruptedWatermelonTourmaline extends EntityCorruptedGem {
 	@Override
 	public float getEyeHeight() {
 		return 2F;
+	}
+	
+	@Override
+	public boolean getCanSpawnHere() {
+		World world = this.world;
+		BlockPos pos = this.getPosition();
+		Biome biome = world.getBiome(pos);
+		
+		boolean isWater = BiomeDictionary.hasType(biome, Type.OCEAN) || BiomeDictionary.hasType(biome, Type.BEACH);
+		
+		return isWater && world.canSeeSky(pos) && super.getCanSpawnHere();
 	}
 	
 	static class TourmalineMoveHelper extends EntityMoveHelper {

@@ -104,6 +104,10 @@ public class WorldDataRuins extends WorldSavedData {
 		return this.ruins.containsKey(chunk);
 	}
 	
+	public boolean chunkHasSpecificRuin(ChunkLocation chunk, String type) {
+		return this.ruins.get(chunk).equals(type);
+	}
+	
 	public void setChunk(ChunkLocation chunk, String type) {
 		if (this.chunkHasRuin(chunk)) {
 			KAGIC.instance.chatInfoMessage("WARNING: double-setting chunk " + chunk.toString());

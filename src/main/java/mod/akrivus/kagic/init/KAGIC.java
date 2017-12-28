@@ -16,6 +16,7 @@ import mod.heimrarnadalr.kagic.crafting.KAGICSmeltingRecipes;
 import mod.heimrarnadalr.kagic.dispenser.DispenserBehaviors;
 import mod.heimrarnadalr.kagic.networking.KTPacketHandler;
 import mod.heimrarnadalr.kagic.proxies.CommonProxy;
+import mod.heimrarnadalr.kagic.world.CorruptedGemSpawner;
 import mod.heimrarnadalr.kagic.world.Fogger;
 import mod.heimrarnadalr.kagic.world.GenEventCanceller;
 import mod.heimrarnadalr.kagic.world.KAGICWorldGenerator;
@@ -89,6 +90,7 @@ public class KAGIC {
 		MinecraftForge.EVENT_BUS.register(genCanceller);
 		MinecraftForge.TERRAIN_GEN_BUS.register(genCanceller);
 		MinecraftForge.EVENT_BUS.register(new FusionSpawnHandler());
+		MinecraftForge.EVENT_BUS.register(new CorruptedGemSpawner());
 		DispenserBehaviors.register();
 		KAGIC.proxy.registerBlockColors();
     }
