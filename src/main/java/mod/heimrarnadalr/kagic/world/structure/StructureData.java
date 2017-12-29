@@ -19,14 +19,16 @@ public class StructureData {
 	private NBTTagList tileEntities;
 	private NBTTagList entities;
 	public List<TileEntityLockableLoot> chests = new ArrayList<TileEntityLockableLoot>();
+	public boolean schematicaFormat;
 	
-	public StructureData(short width, short height, short length, Map<BlockPos, IBlockState> structureBlocks, NBTTagList tileEntities, NBTTagList entities) {
+	public StructureData(short width, short height, short length, Map<BlockPos, IBlockState> structureBlocks, NBTTagList tileEntities, NBTTagList entities, boolean schematicaFormat) {
 		this.width = width;
 		this.height = height;
 		this.length = length;
 		this.structureBlocks = structureBlocks;
 		this.tileEntities = tileEntities;
 		this.entities = entities;
+		this.schematicaFormat = schematicaFormat;
 	}
 	
 	public void setWidth(short width) {

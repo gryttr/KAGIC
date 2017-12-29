@@ -96,7 +96,7 @@ public class Schematic {
 				}
 			}
 		}
-		return new StructureData(width, height, length, structureBlocks, tileEntities, entities);
+		return new StructureData(width, height, length, structureBlocks, tileEntities, entities, schematicaFormat);
 	}
 	
 	public static void GenerateStructureAtPoint(StructureData structure, World world, BlockPos pos, boolean keepTerrain, byte rotation) {
@@ -149,19 +149,22 @@ public class Schematic {
 			}
 		}
 		
-		/* WorldEdit saves entities with their global coordinates, instead of structure relative coordinates
-		for (NBTBase nbt : structure.getEntities()) {
-			NBTTagList nbtPos = ((NBTTagCompound) nbt).getTagList("Pos", 6);
-			double x = nbtPos.getDoubleAt(0);
-			double y = nbtPos.getDoubleAt(1);
-			double z = nbtPos.getDoubleAt(2);
-			BlockPos ePos = getRotatedPos(new BlockPos(x, y, z), structure.getWidth(), structure.getLength(), rotation);
-			Entity e = EntityList.createEntityFromNBT((NBTTagCompound) nbt, world);
-			if (e != null) {
-				e.setLocationAndAngles(pos.getX() + ePos.getX(), pos.getY() + ePos.getY(), pos.getZ() + ePos.getZ(), e.rotationYaw, e.rotationPitch);
-				world.spawnEntity(e);
+		/* WorldEdit saves entities with their global coordinates, instead of structure relative coordinates*/
+		if (structure.schematicaFormat) {
+			KAGIC.instance.chatInfoMessage("Attempting to spawn entities from structure file");
+			for (NBTBase nbt : structure.getEntities()) {
+				NBTTagList nbtPos = ((NBTTagCompound) nbt).getTagList("Pos", 6);
+				double x = nbtPos.getDoubleAt(0);
+				double y = nbtPos.getDoubleAt(1);
+				double z = nbtPos.getDoubleAt(2);
+				BlockPos ePos = getRotatedPos(new BlockPos(x, y, z), structure.getWidth(), structure.getLength(), rotation);
+				Entity e = EntityList.createEntityFromNBT((NBTTagCompound) nbt, world);
+				if (e != null) {
+					e.setLocationAndAngles(pos.getX() + ePos.getX() + 0.5, pos.getY() + ePos.getY(), pos.getZ() + ePos.getZ() + 0.5, e.rotationYaw, e.rotationPitch);
+					world.spawnEntity(e);
+				}
 			}
-		}*/
+		}
 	}
 	
 	public static BlockPos getRotatedPos(BlockPos original, int width, int length, byte rotation) {

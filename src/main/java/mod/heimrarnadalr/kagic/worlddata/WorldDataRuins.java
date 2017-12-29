@@ -105,7 +105,11 @@ public class WorldDataRuins extends WorldSavedData {
 	}
 	
 	public boolean chunkHasSpecificRuin(ChunkLocation chunk, String type) {
-		return this.ruins.get(chunk).equals(type);
+		if (this.ruins.containsKey(chunk)) {
+			return this.ruins.get(chunk).equals(type);
+		} else {
+			return false;
+		}
 	}
 	
 	public void setChunk(ChunkLocation chunk, String type) {

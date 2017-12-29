@@ -3,6 +3,7 @@ package mod.heimrarnadalr.kagic.world;
 import java.util.ArrayList;
 import java.util.Random;
 
+import mod.heimrarnadalr.kagic.world.structure.AncientSkyArena;
 import mod.heimrarnadalr.kagic.world.structure.CommunicationHub;
 import mod.heimrarnadalr.kagic.world.structure.ControlRoom;
 import mod.heimrarnadalr.kagic.world.structure.DesertWarpPad;
@@ -39,6 +40,7 @@ public class KAGICWorldGenerator implements IWorldGenerator {
 		ruins.add(new PyramidTemple("pyramid_temple"));
 		ruins.add(new MaskIsland("mask_island"));
 		ruins.add(new SeaShrine("sea_shrine"));
+		ruins.add(new AncientSkyArena("large_arena"));
 	}
 	
 	@Override
