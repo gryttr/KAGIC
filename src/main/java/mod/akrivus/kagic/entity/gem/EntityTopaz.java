@@ -88,7 +88,9 @@ public class EntityTopaz extends EntityGem {
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false, new Class[0]));
         
         // Apply entity attributes.
-        this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5D);
         this.droppedGemItem = ModItems.TOPAZ_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_TOPAZ_GEM;
 	}
@@ -258,7 +260,7 @@ public class EntityTopaz extends EntityGem {
 		topaz.setRevengeTarget(this.getAttackingEntity());
 		
 		topaz.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D * topaz.getFusionCount());
-		topaz.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(18.0D * topaz.getFusionCount());
+		topaz.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10.0D * topaz.getFusionCount());
 		topaz.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.6D / topaz.getFusionCount());
 		topaz.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0F);
 		topaz.stepHeight = topaz.getFusionCount();
