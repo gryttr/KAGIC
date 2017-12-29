@@ -430,7 +430,7 @@ public class ModEntities {
 		ModEntities.registerDiamond(name, gem);
 		for (BiomeType type : BiomeType.values()) {
 			for (BiomeEntry entry : BiomeManager.getBiomes(type)) {
-				EntityRegistry.addSpawn(gem, 10, 1, 2, EnumCreatureType.MONSTER, entry.biome);
+				EntityRegistry.addSpawn(gem, 1, 1, 2, EnumCreatureType.MONSTER, entry.biome);
 			}
 		}
 	}

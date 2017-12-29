@@ -95,6 +95,10 @@ public class EntityCorruptedGem extends EntityGem {
 	
 	@Override
 	public boolean getCanSpawnHere() {
+		if (this.rand.nextFloat() > 0.1) {
+			return false;
+		}
+		
 		WorldDataRuins ruins = WorldDataRuins.get(this.world);
 		ChunkLocation cPos = new ChunkLocation(this.getPosition());
 
