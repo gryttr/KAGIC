@@ -550,6 +550,33 @@
             { "name": "kagic:entities/aquamarine/death3" }
         ]
     },
+    "entities.hessonite.death": {
+        "sounds": [
+            { "name": "kagic:entities/hessonite/death1" },
+            { "name": "kagic:entities/hessonite/death2" }
+        ]
+    },
+    "entities.hessonite.hurt": {
+        "sounds": [
+            { "name": "kagic:entities/hessonite/hurt1" },
+            { "name": "kagic:entities/hessonite/hurt2" },
+            { "name": "kagic:entities/hessonite/hurt3" }
+        ]
+    },
+    "entities.hessonite.living": {
+        "sounds": [
+            { "name": "kagic:entities/hessonite/living1" },
+            { "name": "kagic:entities/hessonite/living2" },
+            { "name": "kagic:entities/hessonite/living3" }
+        ]
+    },
+    "entities.hessonite.obey": {
+        "sounds": [
+            { "name": "kagic:entities/hessonite/obey1" },
+            { "name": "kagic:entities/hessonite/obey2" },
+            { "name": "kagic:entities/hessonite/obey3" }
+        ]
+    },
     "entities.rutile.death": {
         "sounds": [
             { "name": "kagic:entities/rutile/death1" }

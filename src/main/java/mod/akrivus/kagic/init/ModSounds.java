@@ -80,6 +80,10 @@ public class ModSounds {
 	public static final SoundEvent AQUAMARINE_HURT = new SoundEvent(new ResourceLocation("kagic:entities.aquamarine.hurt"));
 	public static final SoundEvent AQUAMARINE_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.aquamarine.obey"));
 	public static final SoundEvent AQUAMARINE_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.aquamarine.death"));
+	public static final SoundEvent HESSONITE_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.hessonite.death"));
+	public static final SoundEvent HESSONITE_HURT = new SoundEvent(new ResourceLocation("kagic:entities.hessonite.hurt"));
+	public static final SoundEvent HESSONITE_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.hessonite.living"));
+	public static final SoundEvent HESSONITE_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.hessonite.obey"));
 	public static final SoundEvent RUTILE_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.rutile.death"));
 	public static final SoundEvent RUTILE_HURT = new SoundEvent(new ResourceLocation("kagic:entities.rutile.hurt"));
 	public static final SoundEvent RUTILE_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.rutile.living"));

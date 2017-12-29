@@ -4,6 +4,7 @@ import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityAgate;
+import mod.akrivus.kagic.entity.gem.EntityHessonite;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIWander;
@@ -40,7 +41,9 @@ public EntityAIStandGuard(EntityGem gem, double movementSpeed) {
 				/*if (this.gem.getServitude() == EntityGem.SERVE_HUMAN && this.gem.getOwner() != null && entity instanceof EntityAgate) {
 					this.gem.getOwner().addStat(ModAchievements.SHOULDERS_SQUARE);
 				}*/
-				this.gem.canTalk = false;
+				if (!(this.gem instanceof EntityHessonite)) {
+					this.gem.canTalk = false;
+				}
 				return false;
 			}
 		}

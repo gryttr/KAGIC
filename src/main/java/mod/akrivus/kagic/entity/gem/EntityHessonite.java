@@ -49,6 +49,7 @@ public class EntityHessonite extends EntityGem {
 		this.setSize(0.9F, 2.3F);
 		this.isSoldier = true;
 		this.visorChanceReciprocal = 1;
+		this.canTalk = true;
 		
 		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.BACK_OF_HEAD);
 		this.setCutPlacement(GemCuts.PILLOW, GemPlacements.RIGHT_EYE);
@@ -107,20 +108,25 @@ public class EntityHessonite extends EntityGem {
 	 * Methods related to sounds.							*
 	 *********************************************************/
 	@Override
-	protected SoundEvent getHurtSound(DamageSource source) {
-		return ModSounds.AGATE_HURT;
-	}
-	
-	@Override
-	protected SoundEvent getObeySound() {
-		return ModSounds.AGATE_OBEY;
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.HESSONITE_LIVING;
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSounds.AGATE_DEATH;
+		return ModSounds.HESSONITE_DEATH;
 	}
 
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return ModSounds.HESSONITE_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getObeySound() {
+		return ModSounds.HESSONITE_OBEY;
+	}
+	
 	/*********************************************************
 	 * Methods related to rendering.						 *
 	 *********************************************************/
