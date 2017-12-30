@@ -72,7 +72,7 @@ public class EntityJasper extends EntityQuartzSoldier {
 	private int hit_count = 0;
 	private int regenTicks = 0;
 
-	private static final int NUM_HAIRSTYLES = 1;
+	private static final int NUM_HAIRSTYLES = 5;
 	private static final Map<Integer, Integer> MARK1S = new LinkedHashMap<Integer, Integer>();
 	static {
 		MARK1S.put(0, 6);

@@ -84,7 +84,7 @@ public class EntityAmethyst extends EntityQuartzSoldier {
 	
 	public static final int HAIR_COLOR_END = 0xC47DA3; 
 	
-	private static final int NUM_HAIRSTYLES = 1;
+	private static final int NUM_HAIRSTYLES = 5;
 	
 	private int charge_ticks = 0;
 	private int hit_count = 0;

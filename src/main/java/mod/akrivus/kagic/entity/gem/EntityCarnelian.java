@@ -63,7 +63,7 @@ public class EntityCarnelian extends EntityQuartzSoldier {
 	
 	public static final int SKIN_COLOR_END = 0xC5307D;
 	
-	private static final int NUM_HAIRSTYLES = 1;
+	private static final int NUM_HAIRSTYLES = 5;
 	
 	public static final int HAIR_COLOR_BEGIN = 0x7C0034;
 	
