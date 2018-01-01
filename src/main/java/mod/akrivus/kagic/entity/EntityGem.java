@@ -1629,9 +1629,6 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		if (entityIn instanceof EntityLivingBase) {
 			f += EnchantmentHelper.getModifierForCreature(this.getHeldItemMainhand(), ((EntityLivingBase) entityIn).getCreatureAttribute());
 			i += EnchantmentHelper.getKnockbackModifier(this);
-			try {
-				ReflectionHelper.setPrivateValue(EntityLivingBase.class, (EntityLivingBase) entityIn, 100, "recentlyHit", "field_70718_bc", "aT");
-			} catch (Exception e) {}
 		}
 		boolean flag = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), f);
 		this.swingArm(EnumHand.MAIN_HAND);
