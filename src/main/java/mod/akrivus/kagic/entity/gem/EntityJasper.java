@@ -451,6 +451,7 @@ public class EntityJasper extends EntityQuartzSoldier {
 	public void itemDataToGemData(int data) {
 		this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", data)).getUnformattedComponentText());
 		this.setSpecial(data);
+		this.setNewCutPlacement();
 		this.setMark1(this.generateMark1());
 		this.setMark1Color(this.generateMark1Color());
 		if (this.hasSecondMarking()) {
@@ -484,6 +485,7 @@ public class EntityJasper extends EntityQuartzSoldier {
 	@Override
 	public boolean alternateInteract(EntityPlayer player) {
 		super.alternateInteract(player);
+		KAGIC.instance.chatInfoMessage("Special is " + this.getSpecial());
 		KAGIC.instance.chatInfoMessage("mark1Color is " + this.getMark1Color());
 		KAGIC.instance.chatInfoMessage("mark1 is " + this.getMark1());
 		KAGIC.instance.chatInfoMessage("mark2Color is " + this.getMark2Color());

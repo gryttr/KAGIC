@@ -35,6 +35,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -91,8 +92,14 @@ public class KAGIC {
 		MinecraftForge.TERRAIN_GEN_BUS.register(genCanceller);
 		MinecraftForge.EVENT_BUS.register(new FusionSpawnHandler());
 		MinecraftForge.EVENT_BUS.register(new CorruptedGemSpawner());
+		MinecraftForge.EVENT_BUS.register(new OreDictListener());
 		DispenserBehaviors.register();
 		KAGIC.proxy.registerBlockColors();
+    }
+    
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent e) {
+    	ModEntities.registerGemYields();
     }
     
     @EventHandler

@@ -25,6 +25,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ModItems {
 	public static final HashMap<ItemGem, ItemGem> GEM_TABLE = new HashMap<ItemGem, ItemGem>();
@@ -397,19 +398,19 @@ public class ModItems {
 		registerGem(CORRUPTED_GREEN_WATER_BEAR_GEM, CRACKED_CORRUPTED_GREEN_WATER_BEAR_GEM, event);
 		registerGem(CORRUPTED_WATERMELON_TOURMALINE_GEM, CRACKED_CORRUPTED_WATERMELON_TOURMALINE_GEM, event);
 
-		registerItem(RECORD_LITTLE_PERIDOT, event);
-		registerItem(RECORD_ROSES_FOUNTAIN, event);
-		registerItem(RECORD_LAPIS_FLIGHT, event);
-		registerItem(RECORD_THE_BREAKING_POINT, event);
-		registerItem(RECORD_DUEL_OF_THE_QUARTZ, event);
-		registerItem(RECORD_YELLOW_DIAMOND, event);
-		registerItem(RECORD_BLUE_DIAMOND, event);
-		registerItem(RECORD_WHATS_THE_USE_OF_FEELING_BLUE, event);
-		registerItem(RECORD_HEAVEN_BEETLE, event);
-		registerItem(RECORD_DEFECTIVE, event);
-		registerItem(RECORD_GEM_SHARDS, event);
-		registerItem(RECORD_HEART_OF_THE_PYRAMID, event);
-		registerItem(RECORD_UNDERWATER_TEMPLE, event);
+		registerItem(RECORD_LITTLE_PERIDOT, event, "record");
+		registerItem(RECORD_ROSES_FOUNTAIN, event, "record");
+		registerItem(RECORD_LAPIS_FLIGHT, event, "record");
+		registerItem(RECORD_THE_BREAKING_POINT, event, "record");
+		registerItem(RECORD_DUEL_OF_THE_QUARTZ, event, "record");
+		registerItem(RECORD_YELLOW_DIAMOND, event, "record");
+		registerItem(RECORD_BLUE_DIAMOND, event, "record");
+		registerItem(RECORD_WHATS_THE_USE_OF_FEELING_BLUE, event, "record");
+		registerItem(RECORD_HEAVEN_BEETLE, event, "record");
+		registerItem(RECORD_DEFECTIVE, event, "record");
+		registerItem(RECORD_GEM_SHARDS, event, "record");
+		registerItem(RECORD_HEART_OF_THE_PYRAMID, event, "record");
+		registerItem(RECORD_UNDERWATER_TEMPLE, event, "record");
 		registerItem(ACTIVATED_GEM_SHARD, event);
 		registerItem(ACTIVATED_GEM_BASE, event);
 		registerItem(INACTIVE_GEM_BASE, event);
@@ -438,18 +439,38 @@ public class ModItems {
 		registerExternalItem(normal, prefix, event);
 		registerExternalItem(broken, prefix, event);
 	}
+	
 	public static void registerItem(Item item, RegistryEvent.Register<Item> event) {
+		registerItem(item, event, "");
+	}
+	
+	public static void registerItem(Item item, RegistryEvent.Register<Item> event, String oredictName) {
 		//GameRegistry.register(item, new ResourceLocation("kagic:" + item.getUnlocalizedName().replaceFirst("item\\.|tile\\.", "")));
 		item.setRegistryName( new ResourceLocation("kagic:" + item.getUnlocalizedName().replaceFirst("item\\.|tile\\.", "")));
 		event.getRegistry().register(item);
+		
+		if (!oredictName.isEmpty()) {
+			OreDictionary.registerOre(oredictName, item);
+		}
+		
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
 	}
+	
 	public static void registerExternalItem(Item item, String prefix, RegistryEvent.Register<Item> event) {
+		registerExternalItem(item, prefix, event, "");
+	}
+	
+	public static void registerExternalItem(Item item, String prefix, RegistryEvent.Register<Item> event, String oredictName) {
 		//GameRegistry.register(item, new ResourceLocation(prefix + ":" + item.getUnlocalizedName().replaceFirst("item\\.|tile\\.", "")));
 		item.setRegistryName(new ResourceLocation(prefix + ":" + item.getUnlocalizedName().replaceFirst("item\\.|tile\\.", "")));
 		event.getRegistry().register(item);
+		
+		if (!oredictName.isEmpty()) {
+			OreDictionary.registerOre(oredictName, item);
+		}
+
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}

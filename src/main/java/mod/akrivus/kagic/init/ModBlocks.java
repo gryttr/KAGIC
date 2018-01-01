@@ -42,6 +42,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ModBlocks {
 	public static final Material DRAINED = (new Material(MapColor.PURPLE) {
@@ -130,11 +131,11 @@ public class ModBlocks {
 		registerBlockItem(INJECTOR, new ResourceLocation("kagic:injector"), event);
 		registerBlockItem(EQUIPPED_INJECTOR, new ResourceLocation("kagic:equipped_injector"), event);
 		registerBlockItem(INCUBATOR, new ResourceLocation("kagic:incubator"), event);
-		registerBlockItem(DRAINED_BLOCK, new ResourceLocation("kagic:drained_block"), event);
-		registerBlockItem(DRAINED_BLOCK_2, new ResourceLocation("kagic:drained_block_2"), event);
-		registerBlockItem(DRAINED_BANDS, new ResourceLocation("kagic:drained_bands"), event);
+		registerBlockItem(DRAINED_BLOCK, new ResourceLocation("kagic:drained_block"), event, "stoneDrained");
+		registerBlockItem(DRAINED_BLOCK_2, new ResourceLocation("kagic:drained_block_2"), event, "stoneDrained");
+		registerBlockItem(DRAINED_BANDS, new ResourceLocation("kagic:drained_bands"), event, "stoneDrained");
 		registerBlockItem(SMOOTH_CARBONITE, new ResourceLocation("kagic:smooth_carbonite"), event);
-		registerBlockItem(DRAINED_GRAVEL, new ResourceLocation("kagic:drained_gravel"), event);
+		registerBlockItem(DRAINED_GRAVEL, new ResourceLocation("kagic:drained_gravel"), event, "gravelDrained");
 		registerBlockItem(CHISELED_CARBONITE, new ResourceLocation("kagic:chiseled_carbonite"), event);
 		registerBlockItem(ROCK_MELT, new ResourceLocation("kagic:rock_melt"), event);
 		registerBlockItem(RUTILE_TRAIL, new ResourceLocation("kagic:rutile_trail"), event);
@@ -148,9 +149,18 @@ public class ModBlocks {
 	}
 	
 	public static void registerBlockItem(Block block, ResourceLocation location, RegistryEvent.Register<Item> event) {
+		registerBlockItem(block, location, event, "");
+	}
+	
+	public static void registerBlockItem(Block block, ResourceLocation location, RegistryEvent.Register<Item> event, String oredictName) {
 		ItemBlock item = new ItemBlock(block);
 		item.setRegistryName(location);
 		event.getRegistry().register(item);
+
+		if (!oredictName.isEmpty()) {
+			OreDictionary.registerOre(oredictName, item);
+		}
+
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
@@ -168,6 +178,7 @@ public class ModBlocks {
 	public static void registerPinkSandstoneItems(RegistryEvent.Register<Item> event) {
 		ItemMultiTexture item = (ItemMultiTexture) (new ItemMultiTexture(PINK_SANDSTONE, PINK_SANDSTONE, new ItemMultiTexture.Mapper()
         {
+			@Override
             public String apply(ItemStack p_apply_1_)
             {
                 return BlockPinkSandstone.EnumType.byMetadata(p_apply_1_.getMetadata()).getUnlocalizedName();
@@ -175,6 +186,7 @@ public class ModBlocks {
         })).setUnlocalizedName(PINK_SANDSTONE.getUnlocalizedName());
 		item.setRegistryName(new ResourceLocation("kagic:pink_sandstone"));
 		event.getRegistry().register(item);
+		OreDictionary.registerOre("sandstone", item);
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation("kagic:pink_sandstone", "inventory"));
 			ModelLoader.setCustomModelResourceLocation(item, 1, new ModelResourceLocation("kagic:chiseled_pink_sandstone", "inventory"));
