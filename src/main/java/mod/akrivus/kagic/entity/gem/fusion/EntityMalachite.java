@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import mod.akrivus.kagic.entity.EntityFusionGem;
 import mod.akrivus.kagic.entity.gem.EntityAmethyst;
 import mod.akrivus.kagic.entity.gem.EntityJasper;
+import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -12,6 +13,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
@@ -131,5 +134,23 @@ public class EntityMalachite extends EntityFusionGem {
 		this.setSize(1.9F + sizeModifier * 0.125F, 8.3F + sizeModifier * 0.75F);
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(500.0D + sizeModifier * 50D);
 		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(25D + sizeModifier * 2.5D);
+	}
+
+	/*********************************************************
+	 * Methods related to sounds.							*
+	 *********************************************************/
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.MALACHITE_DEATH;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return ModSounds.MALACHITE_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getObeySound() {
+		return ModSounds.MALACHITE_OBEY;
 	}
 }

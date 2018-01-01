@@ -550,6 +550,25 @@
             { "name": "kagic:entities/aquamarine/death3" }
         ]
     },
+    "entities.garnet.death": {
+        "sounds": [
+            { "name": "kagic:entities/garnet/death1" },
+            { "name": "kagic:entities/garnet/death2" }
+        ]
+    },
+    "entities.garnet.hurt": {
+        "sounds": [
+            { "name": "kagic:entities/garnet/hurt1" },
+            { "name": "kagic:entities/garnet/hurt2" },
+            { "name": "kagic:entities/garnet/hurt3" },
+            { "name": "kagic:entities/garnet/hurt4" }
+        ]
+    },
+    "entities.garnet.obey": {
+        "sounds": [
+            { "name": "kagic:entities/garnet/obey1" }
+        ]
+    },
     "entities.hessonite.death": {
         "sounds": [
             { "name": "kagic:entities/hessonite/death1" },
@@ -575,6 +594,42 @@
             { "name": "kagic:entities/hessonite/obey1" },
             { "name": "kagic:entities/hessonite/obey2" },
             { "name": "kagic:entities/hessonite/obey3" }
+        ]
+    },
+    "entities.malachite.death": {
+        "sounds": [
+            { "name": "kagic:entities/malachite/death1" }
+        ]
+    },
+    "entities.malachite.hurt": {
+        "sounds": [
+            { "name": "kagic:entities/malachite/hurt1" },
+            { "name": "kagic:entities/malachite/hurt2" },
+            { "name": "kagic:entities/malachite/hurt3" }
+        ]
+    },
+    "entities.malachite.obey": {
+        "sounds": [
+            { "name": "kagic:entities/malachite/obey1" },
+            { "name": "kagic:entities/malachite/obey2" }
+        ]
+    },
+    "entities.rhodonite.death": {
+        "sounds": [
+            { "name": "kagic:entities/rhodonite/death1" },
+            { "name": "kagic:entities/rhodonite/death2" }
+        ]
+    },
+    "entities.rhodonite.hurt": {
+        "sounds": [
+            { "name": "kagic:entities/rhodonite/hurt1" },
+            { "name": "kagic:entities/rhodonite/hurt2" },
+            { "name": "kagic:entities/rhodonite/hurt3" }
+        ]
+    },
+    "entities.rhodonite.obey": {
+        "sounds": [
+            { "name": "kagic:entities/rhodonite/obey1" }
         ]
     },
     "entities.rutile.death": {

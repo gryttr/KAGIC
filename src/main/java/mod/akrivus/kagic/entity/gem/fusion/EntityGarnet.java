@@ -6,8 +6,11 @@ import mod.akrivus.kagic.entity.EntityFusionGem;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
 import mod.akrivus.kagic.entity.gem.EntitySapphire;
+import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class EntityGarnet extends EntityFusionGem {
@@ -89,5 +92,23 @@ public class EntityGarnet extends EntityFusionGem {
 		this.setSize(.7F, 2.1F + sizeModifier * 0.75F);
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(200.0D + sizeModifier * 50D);
 		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(12.5D + sizeModifier * 2.5D);
+	}
+
+	/*********************************************************
+	 * Methods related to sounds.							*
+	 *********************************************************/
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.GARNET_DEATH;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return ModSounds.GARNET_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getObeySound() {
+		return ModSounds.GARNET_OBEY;
 	}
 }

@@ -4,8 +4,11 @@ import java.util.ArrayList;
 
 import mod.akrivus.kagic.entity.EntityFusionGem;
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 public class EntityRhodonite extends EntityFusionGem {
@@ -81,5 +84,23 @@ public class EntityRhodonite extends EntityFusionGem {
 		this.setSize(.7F, 2.1F + sizeModifier * 0.75F);
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.getMaxHealth() + sizeModifier * 50D);
 		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10D + sizeModifier * 2.5D);
+	}
+
+	/*********************************************************
+	 * Methods related to sounds.							*
+	 *********************************************************/
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.RHODONITE_DEATH;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return ModSounds.RHODONITE_HURT;
+	}
+	
+	@Override
+	protected SoundEvent getObeySound() {
+		return ModSounds.RHODONITE_OBEY;
 	}
 }
