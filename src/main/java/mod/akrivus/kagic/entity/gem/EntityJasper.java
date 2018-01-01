@@ -614,47 +614,52 @@ public class EntityJasper extends EntityQuartzSoldier {
 				this.dropItem(ModItems.RECORD_DUEL_OF_THE_QUARTZ, 1);
 			}
 		}
-		switch (this.getSpecial()) {
-		case 0:
-			this.droppedGemItem = ModItems.NOREENA_JASPER_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_NOREENA_JASPER_GEM;
-			break;
-		case 1:
-			this.droppedGemItem = ModItems.OCEAN_JASPER_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_OCEAN_JASPER_GEM;
-			break;
-		case 2:
-			this.droppedGemItem = ModItems.BIGGS_JASPER_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_BIGGS_JASPER_GEM;
-			break;
-		case 3:
-			this.droppedGemItem = ModItems.GREEN_JASPER_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_GREEN_JASPER_GEM;
-			break;
-		case 4:
-			this.droppedGemItem = ModItems.BRUNEAU_JASPER_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_BRUNEAU_JASPER_GEM;
-			break;
-		case 5:
-			this.droppedGemItem = ModItems.PURPLE_JASPER_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_PURPLE_JASPER_GEM;
-			break;
-		case 6:
-			this.droppedGemItem = ModItems.FLAME_JASPER_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_FLAME_JASPER_GEM;
-			break;
-		case 7:
-			this.droppedGemItem = ModItems.PICTURE_JASPER_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_PICTURE_JASPER_GEM;
-			break;
-		case 8:
-			this.droppedGemItem = ModItems.CANDY_CANE_JASPER_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_CANDY_CANE_JASPER_GEM;
-			break;
-		default:
+		if (this.isPrimary()) {
 			this.droppedGemItem = ModItems.JASPER_GEM;
 			this.droppedCrackedGemItem = ModItems.CRACKED_JASPER_GEM;
-			break;
+		} else {
+			switch (this.getSpecial()) {
+			case 0:
+				this.droppedGemItem = ModItems.NOREENA_JASPER_GEM;
+				this.droppedCrackedGemItem = ModItems.CRACKED_NOREENA_JASPER_GEM;
+				break;
+			case 1:
+				this.droppedGemItem = ModItems.OCEAN_JASPER_GEM;
+				this.droppedCrackedGemItem = ModItems.CRACKED_OCEAN_JASPER_GEM;
+				break;
+			case 2:
+				this.droppedGemItem = ModItems.BIGGS_JASPER_GEM;
+				this.droppedCrackedGemItem = ModItems.CRACKED_BIGGS_JASPER_GEM;
+				break;
+			case 3:
+				this.droppedGemItem = ModItems.GREEN_JASPER_GEM;
+				this.droppedCrackedGemItem = ModItems.CRACKED_GREEN_JASPER_GEM;
+				break;
+			case 4:
+				this.droppedGemItem = ModItems.BRUNEAU_JASPER_GEM;
+				this.droppedCrackedGemItem = ModItems.CRACKED_BRUNEAU_JASPER_GEM;
+				break;
+			case 5:
+				this.droppedGemItem = ModItems.PURPLE_JASPER_GEM;
+				this.droppedCrackedGemItem = ModItems.CRACKED_PURPLE_JASPER_GEM;
+				break;
+			case 6:
+				this.droppedGemItem = ModItems.FLAME_JASPER_GEM;
+				this.droppedCrackedGemItem = ModItems.CRACKED_FLAME_JASPER_GEM;
+				break;
+			case 7:
+				this.droppedGemItem = ModItems.PICTURE_JASPER_GEM;
+				this.droppedCrackedGemItem = ModItems.CRACKED_PICTURE_JASPER_GEM;
+				break;
+			case 8:
+				this.droppedGemItem = ModItems.CANDY_CANE_JASPER_GEM;
+				this.droppedCrackedGemItem = ModItems.CRACKED_CANDY_CANE_JASPER_GEM;
+				break;
+			default:
+				this.droppedGemItem = ModItems.JASPER_GEM;
+				this.droppedCrackedGemItem = ModItems.CRACKED_JASPER_GEM;
+				break;
+			}
 		}
 		super.onDeath(cause);
 	}
