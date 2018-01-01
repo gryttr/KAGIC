@@ -130,7 +130,7 @@ public class EntityBismuth extends EntityGem {
 								}
 							}
 						}
-						else {
+						else if (!stack.isEmpty()) {
 							ItemStack result = smeltItem(stack);
 							if (!result.isEmpty()) {
 								if (player.inventory.getFirstEmptyStack() > -1) {

@@ -1,10 +1,14 @@
 package mod.akrivus.kagic.entity.gem.fusion;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityFusionGem;
+import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityAmethyst;
 import mod.akrivus.kagic.entity.gem.EntityJasper;
+import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
+import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.entity.IEntityLivingData;
@@ -19,18 +23,40 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityMalachite extends EntityFusionGem {
-	private static final int SKIN_COLOR_BEGIN = 0x00FFC5;
-	private static final int SKIN_COLOR_END = 0x00FFC5;
+	private static final List<Integer> SKIN_COLORS = new ArrayList<Integer>();
+	static {
+		SKIN_COLORS.add(0x00FFC5); //Noreena
+		SKIN_COLORS.add(0x00FECE); //Ocean
+		SKIN_COLORS.add(0x085338); //Biggs
+		SKIN_COLORS.add(0x1CFFD1); //Green
+		SKIN_COLORS.add(0x1EFFA4); //Bruneau
+		SKIN_COLORS.add(0x00FECE); //Purple
+		SKIN_COLORS.add(0x1EFFA4); //Flame
+		SKIN_COLORS.add(0x085338); //Picture
+		SKIN_COLORS.add(0xF9FFFE); //Candy cane
+	}
 	
 	private static final int HAIR_COLOR_BEGIN = 0xECFDE8;
 	private static final int HAIR_COLOR_END = 0xECFDE8;
 	
 	private static final DataParameter<Integer> MARK_COLOR = EntityDataManager.<Integer>createKey(EntityJasper.class, DataSerializers.VARINT);
-	private static final int MARK_COLOR_BEGIN = 0x00735E;
-	private static final int MARK_COLOR_END = 0x00735E;
+	private static final List<Integer> MARK_COLORS = new ArrayList<Integer>();
+	static {
+		MARK_COLORS.add(0x00735E); //Noreena
+		MARK_COLORS.add(0x00605F); //Ocean
+		MARK_COLORS.add(0x043624); //Biggs
+		MARK_COLORS.add(0x0B8060); //Green
+		MARK_COLORS.add(0x0B8146); //Bruneau
+		MARK_COLORS.add(0x00605F); //Purple
+		MARK_COLORS.add(0x0B8146); //Flame
+		MARK_COLORS.add(0x043624); //Picture
+		MARK_COLORS.add(0xB02E26); //Candy cane
+	}
 	
 	private static final int NUM_HAIRSTYLES = 1;
 
+	private int jasperType;
+	
 	public EntityMalachite(World world) {
 		super(world);
 		this.setSize(1.9F, 8.3F);
@@ -52,12 +78,29 @@ public class EntityMalachite extends EntityFusionGem {
 	}
 	
 	//=========================================================================
+	//=== Methods for managing fusion==========================================
+	//=========================================================================
+	
+	@Override
+	public boolean addGem(EntityGem gem) {
+		if (this.getFusionCount() >= 2) {
+			return false;
+		} else {
+			if (gem instanceof EntityJasper) {
+				this.jasperType = gem.getSpecial();
+			}
+			return super.addGem(gem);
+		}
+	}
+
+	//=========================================================================
 	//=== Methods for entity NBTing ===========================================
 	//=========================================================================
 	
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound comp) {
 		comp.setInteger("markColor", this.getMarkColor());
+		comp.setInteger("jasperType", this.jasperType);
 		return super.writeToNBT(comp);
 	}
 
@@ -65,6 +108,7 @@ public class EntityMalachite extends EntityFusionGem {
 	public void readFromNBT(NBTTagCompound comp) {
 		super.readFromNBT(comp);
 		this.setMarkColor(comp.getInteger("markColor"));
+		this.jasperType = comp.getInteger("jasperType");
 	}
 	
 	/*********************************************************
@@ -94,10 +138,7 @@ public class EntityMalachite extends EntityFusionGem {
 
 	@Override
 	protected int generateSkinColor() {
-		ArrayList<Integer> skinColors = new ArrayList<Integer>();
-		skinColors.add(EntityMalachite.SKIN_COLOR_BEGIN);
-		skinColors.add(EntityMalachite.SKIN_COLOR_END);
-		return Colors.arbiLerp(skinColors);
+		return SKIN_COLORS.get(this.jasperType);
 	}
 
 	@Override
@@ -109,10 +150,7 @@ public class EntityMalachite extends EntityFusionGem {
 	}
 
 	protected int generateMarkColor() {
-		ArrayList<Integer> markColors = new ArrayList<Integer>();
-		markColors.add(EntityMalachite.MARK_COLOR_BEGIN);
-		markColors.add(EntityMalachite.MARK_COLOR_END);
-		return Colors.arbiLerp(markColors);
+		return MARK_COLORS.get(this.jasperType);
 	}
 	
 	public void setMarkColor(int markColor) {

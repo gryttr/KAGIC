@@ -109,7 +109,11 @@ public class EntityHessonite extends EntityGem {
 	 *********************************************************/
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSounds.HESSONITE_LIVING;
+		if (this.rand.nextInt(3) == 0) {
+			return ModSounds.HESSONITE_LIVING;
+		} else {
+			return null;
+		}
 	}
 	
 	@Override
