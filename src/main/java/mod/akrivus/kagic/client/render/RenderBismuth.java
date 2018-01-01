@@ -11,8 +11,10 @@ import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.entity.gem.EntityBismuth;
+import mod.akrivus.kagic.entity.gem.EntityHessonite;
 import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.util.ResourceLocation;
 
@@ -33,6 +35,13 @@ public class RenderBismuth extends RenderGemBase<EntityBismuth> {
 			this.addLayer(new LayerSantaHat(this));
 		}
     }
+
+	@Override
+	protected void preRenderCallback(EntityBismuth gem, float partialTickTime) {
+		if (gem.isDefective()) {
+			GlStateManager.scale(0.67F, 0.9F, 0.8F);
+		}
+	}
 
 	@Override
 	protected ResourceLocation getEntityTexture(EntityBismuth entity) {

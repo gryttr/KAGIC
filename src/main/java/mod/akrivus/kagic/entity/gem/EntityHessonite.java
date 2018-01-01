@@ -104,6 +104,13 @@ public class EntityHessonite extends EntityGem {
 		super.onLivingUpdate();
 	}*/
 
+	@Override
+	public void whenDefective() {
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D);
+		this.setSize(0.72F, 1.61F);
+	}
+
 	/*********************************************************
 	 * Methods related to sounds.							*
 	 *********************************************************/

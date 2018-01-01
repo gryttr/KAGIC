@@ -72,7 +72,7 @@ public class EntityBismuth extends EntityGem {
         
         // Apply entity attributes.
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(200.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(18.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(8.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
         this.droppedGemItem = ModItems.BISMUTH_GEM;
 		this.droppedCrackedGemItem = ModItems.CRACKED_BISMUTH_GEM;
@@ -98,6 +98,7 @@ public class EntityBismuth extends EntityGem {
 	/*********************************************************
      * Methods related to entity interaction.                *
      *********************************************************/
+	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
 			if (hand == EnumHand.MAIN_HAND) {
@@ -107,7 +108,7 @@ public class EntityBismuth extends EntityGem {
 						if (this.isCoreItem(stack)) {
 							return super.processInteract(player, hand);
 						}
-						else if (stack.isItemStackDamageable()) {
+						else if (stack.isItemStackDamageable() && !this.isDefective()) {
 							if (stack.isItemDamaged()) {
 								int damage = stack.getItemDamage() - stack.getMaxDamage();
 								stack.damageItem(damage, this);
@@ -130,7 +131,7 @@ public class EntityBismuth extends EntityGem {
 								}
 							}
 						}
-						else if (!stack.isEmpty()) {
+						else if (!stack.isEmpty() && !this.isDefective()) {
 							ItemStack result = smeltItem(stack);
 							if (!result.isEmpty()) {
 								if (player.inventory.getFirstEmptyStack() > -1) {
@@ -155,11 +156,19 @@ public class EntityBismuth extends EntityGem {
 		}
 		return super.processInteract(player, hand);
     }
+	
 	public ItemStack smeltItem(ItemStack stack) {
 		ItemStack result = FurnaceRecipes.instance().getSmeltingResult(stack).copy();
 		return result;
     }
 	
+	@Override
+	public void whenDefective() {
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4.0D);
+		this.setSize(0.6F, 2.07F);
+	}
+
 	/*********************************************************
      * Methods related to entity death.                      *
      *********************************************************/
@@ -203,5 +212,4 @@ public class EntityBismuth extends EntityGem {
 		skinColors.add(EntityBismuth.SKIN_COLOR_END);
 		return Colors.arbiLerp(skinColors);
 	}
-
 }

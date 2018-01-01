@@ -14,8 +14,10 @@ import mod.akrivus.kagic.client.render.layers.LayerUniform;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.entity.gem.EntityHessonite;
+import mod.akrivus.kagic.entity.gem.EntityRuby;
 import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderHessonite extends RenderGemBase<EntityHessonite> {
@@ -39,6 +41,13 @@ public class RenderHessonite extends RenderGemBase<EntityHessonite> {
 			this.addLayer(new LayerWitchHat(this));
 		} else if (KAGIC.isChristmas()) {
 			this.addLayer(new LayerSantaHat(this));
+		}
+	}
+
+	@Override
+	protected void preRenderCallback(EntityHessonite gem, float partialTickTime) {
+		if (gem.isDefective()) {
+			GlStateManager.scale(0.8F, 0.7F, 0.8F);
 		}
 	}
 
