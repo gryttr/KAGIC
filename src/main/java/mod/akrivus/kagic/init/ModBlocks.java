@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.init;
 
+import mod.akrivus.kagic.blocks.BlockDrainedGravel;
 import mod.akrivus.kagic.blocks.BlockGalaxyPadCore;
 import mod.akrivus.kagic.blocks.BlockGemDrill;
 import mod.akrivus.kagic.blocks.BlockGemSeed;
@@ -21,6 +22,7 @@ import net.minecraft.block.BlockSandStone;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStaticLiquid;
 import net.minecraft.block.BlockStem;
+import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialLiquid;
@@ -42,6 +44,18 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class ModBlocks {
+	public static final Material DRAINED = (new Material(MapColor.PURPLE) {
+		@Override
+		public EnumPushReaction getMobilityFlag() {
+			return EnumPushReaction.BLOCK;
+		}
+		
+		@Override
+		public boolean isToolNotRequired() {
+			return false;
+		}
+	});
+	
 	public static final BlockGemSeed GEM_SEED = new BlockGemSeed();
 	public static final ItemBlock GEM_SEED_BLOCK = new ItemBlock(GEM_SEED);
 	public static final BlockGemDrill GEM_DRILL = new BlockGemDrill();
@@ -53,6 +67,7 @@ public class ModBlocks {
 	public static final BlockVarying DRAINED_BANDS = new BlockVarying("drained_bands", 1, 40, 1);
 	public static final BlockVarying SMOOTH_CARBONITE = new BlockVarying("smooth_carbonite", 2, 80, 1);
 	public static final BlockVarying CHISELED_CARBONITE = new BlockVarying("chiseled_carbonite", 2, 80, 1);
+	public static final BlockDrainedGravel DRAINED_GRAVEL = new BlockDrainedGravel("drained_gravel");
 	public static final BlockRockMelt ROCK_MELT = new BlockRockMelt(true);
 	public static final BlockRockMelt RUTILE_TRAIL = new BlockRockMelt(false);
 	public static final BlockWarpPadCore WARP_PAD_CORE = new BlockWarpPadCore();
@@ -79,6 +94,7 @@ public class ModBlocks {
 		registerBlock(DRAINED_BANDS, new ResourceLocation("kagic:drained_bands"), event);
 		registerBlock(SMOOTH_CARBONITE, new ResourceLocation("kagic:smooth_carbonite"), event);
 		registerBlock(CHISELED_CARBONITE, new ResourceLocation("kagic:chiseled_carbonite"), event);
+		registerBlock(DRAINED_GRAVEL, new ResourceLocation("kagic:drained_gravel"), event);
 		registerBlock(ROCK_MELT, new ResourceLocation("kagic:rock_melt"), event);
 		registerBlock(RUTILE_TRAIL, new ResourceLocation("kagic:rutile_trail"), event);
 		registerBlock(WARP_PAD_CORE, new ResourceLocation("kagic:warp_pad_core"), event);
@@ -118,6 +134,7 @@ public class ModBlocks {
 		registerBlockItem(DRAINED_BLOCK_2, new ResourceLocation("kagic:drained_block_2"), event);
 		registerBlockItem(DRAINED_BANDS, new ResourceLocation("kagic:drained_bands"), event);
 		registerBlockItem(SMOOTH_CARBONITE, new ResourceLocation("kagic:smooth_carbonite"), event);
+		registerBlockItem(DRAINED_GRAVEL, new ResourceLocation("kagic:drained_gravel"), event);
 		registerBlockItem(CHISELED_CARBONITE, new ResourceLocation("kagic:chiseled_carbonite"), event);
 		registerBlockItem(ROCK_MELT, new ResourceLocation("kagic:rock_melt"), event);
 		registerBlockItem(RUTILE_TRAIL, new ResourceLocation("kagic:rutile_trail"), event);

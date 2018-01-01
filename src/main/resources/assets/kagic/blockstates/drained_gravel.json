@@ -1,0 +1,23 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+    	"model": "minecraft:cube",
+        "textures": {
+            "north": "kagic:blocks/drained_gravel",
+            "south": "kagic:blocks/drained_gravel",
+            "east": "kagic:blocks/drained_gravel",
+            "west": "kagic:blocks/drained_gravel",
+            "up": "kagic:blocks/drained_gravel",
+            "down": "kagic:blocks/drained_gravel",
+            "particle": "kagic:blocks/drained_gravel"
+        }
+    },
+    "variants": {
+        "normal": {
+            "model": "minecraft:cube"
+        },
+        "inventory": {
+            "model": "minecraft:cube"
+        }
+    }
+}

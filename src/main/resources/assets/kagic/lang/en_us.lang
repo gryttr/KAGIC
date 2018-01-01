@@ -406,6 +406,7 @@ tile.incubator.name=Incubator
 tile.drained_block.name=Drained Block
 tile.drained_block_2.name=Drained Block
 tile.drained_bands.name=Drained Block
+tile.drained_gravel.name=Drained Gravel
 tile.smooth_carbonite.name=Carbonite
 tile.chiseled_carbonite.name=Chiseled Carbonite
 tile.rock_melt.name=Frictional Rock Melt
