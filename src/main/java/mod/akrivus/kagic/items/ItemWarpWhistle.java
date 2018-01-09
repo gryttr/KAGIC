@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.items;
 
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModCreativeTabs;
 import mod.akrivus.kagic.tileentity.TileEntityGalaxyPadCore;
 import mod.akrivus.kagic.tileentity.TileEntityWarpPadCore;
@@ -33,6 +34,14 @@ public class ItemWarpWhistle extends Item {
 				} else {
 					KTPacketHandler.INSTANCE.sendToServer(new PadDataRequestMessage(false, te.getPos().getX(), te.getPos().getY(), te.getPos().getZ()));
 				}
+	    	} else {
+	    		if (te == null) {
+	    			KAGIC.instance.chatInfoMessage("Could not find warp pad");
+	    		} else if (!te.isValidPad()) {
+	    			KAGIC.instance.chatInfoMessage("Warp pad is not valid");
+	    		} else if (te.isWarping()) {
+	    			KAGIC.instance.chatInfoMessage("Warp pad is already in use");
+	    		}
 	    	}
     	}
     	return new ActionResult<> (EnumActionResult.SUCCESS, stack);
