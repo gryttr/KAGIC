@@ -75,4 +75,9 @@ public class EntityCorruptedMoissanite extends EntityCorruptedGem {
 	public ResourceLocation getLootTable() {
 		return LootTables.OBELISK;
 	}
+	
+	@Override
+	public boolean getCanSpawnHere() {
+		return false;
+	}
 }

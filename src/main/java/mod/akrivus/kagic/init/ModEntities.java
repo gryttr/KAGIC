@@ -114,7 +114,7 @@ public class ModEntities {
 		registerCorruptedGem("corrupted_amatista", EntityCorruptedAmethyst.class);
 		registerCorruptedGem("corrupted_cornalina", EntityCorruptedCarnelian.class);
 		registerCorruptedGem("corrupted_jasper", EntityCorruptedJasper.class);
-		registerCorruptedGem("corrupted_moissanita", EntityCorruptedMoissanite.class);
+		registerDiamond("corrupted_moissanita", EntityCorruptedMoissanite.class);
 		registerCorruptedGem("corrupted_cuarzo_rosa", EntityCorruptedRoseQuartz.class);
 		registerCorruptedGem("tongue_monster", EntityTongueMonster.class);
 		registerCorruptedGem("water_bear", EntityCorruptedWaterBear.class);

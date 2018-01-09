@@ -13,6 +13,7 @@ import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.heimrarnadalr.kagic.worlddata.ChunkLocation;
 import mod.heimrarnadalr.kagic.worlddata.WorldDataRuins;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -25,6 +26,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -95,7 +97,7 @@ public class EntityCorruptedGem extends EntityGem {
 	
 	@Override
 	public boolean getCanSpawnHere() {
-		if (this.rand.nextFloat() > 0.1) {
+		if (this.rand.nextFloat() > 0.0001) {
 			return false;
 		}
 		
@@ -114,8 +116,15 @@ public class EntityCorruptedGem extends EntityGem {
 		}
 		
 		boolean isValidRuinChunk = !ruins.chunkHasRuin(cPos) || ruins.chunkHasSpecificRuin(cPos, "mask_island");
+		if (!adjacentToRuin || !isValidRuinChunk) {
+			return false;
+		}
 		
-		return super.getCanSpawnHere() && this.world.getDifficulty() != EnumDifficulty.PEACEFUL && adjacentToRuin && isValidRuinChunk;
+		if (!this.world.getEntities(EntityCorruptedGem.class, EntitySelectors.withinRange(this.posX, this.posY, this.posZ, 32)).isEmpty()) {
+			return false;
+		}
+
+		return super.getCanSpawnHere() && this.world.getDifficulty() != EnumDifficulty.PEACEFUL;
 	}
 	
 	@Override
