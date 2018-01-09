@@ -12,11 +12,15 @@ import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIScareMobs;
 import mod.akrivus.kagic.entity.ai.EntityAISitStill;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
+import mod.heimrarnadalr.kagic.util.GemPlayerLoot;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -26,7 +30,13 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
@@ -42,6 +52,8 @@ public class EntityHessonite extends EntityGem {
 	
 	private static final int HAIR_COLOR_BEGIN = 0xF8F299;
 	private static final int HAIR_COLOR_END = 0xF8F299;
+	
+	private static final float ENEMY_WEAPON_DROP_CHANCE = 0.5F;
 
 	public EntityHessonite(World world) {
 		super(world);
@@ -90,19 +102,18 @@ public class EntityHessonite extends EntityGem {
 		return new float[] { 255F / 255F, 255F / 255F, 255F / 255F };
 	}
 
-	/*
 	@Override
 	public void onLivingUpdate()
 	{
-		if (this.world.isRemote)
+		/*if (this.world.isRemote)
 		{
 			for (int i = 0; i < 2; ++i)
 			{
 				this.world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - 0.25D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, (this.rand.nextDouble() - 0.5D) * 2.0D, -this.rand.nextDouble(), (this.rand.nextDouble() - 0.5D) * 2.0D);
 			}
-		}
+		}*/
 		super.onLivingUpdate();
-	}*/
+	}
 
 	@Override
 	public void whenDefective() {
@@ -111,6 +122,40 @@ public class EntityHessonite extends EntityGem {
 		this.setSize(0.72F, 1.61F);
 	}
 
+	@Override
+	public boolean attackEntityAsMob(Entity entity) {
+		boolean attacked = super.attackEntityAsMob(entity);
+		
+		if (entity instanceof EntityLivingBase) {
+			EntityLivingBase target = (EntityLivingBase) entity;
+			if (attacked && !this.isDefective() && this.rand.nextFloat() < EntityHessonite.ENEMY_WEAPON_DROP_CHANCE) {
+				GemPlayerLoot.dropEntityMainHand(target);
+			}
+		}
+		
+		return attacked;
+	}
+	
+	@Override
+	protected boolean canEquipItem(ItemStack stack) {
+		Item weapon = stack.getItem();
+		if (weapon instanceof ItemSword || weapon instanceof ItemTool || weapon instanceof ItemBow) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean canPickUpLoot() {
+		return true;
+	}
+	
+	@Override
+	public void onItemPickup(Entity item, int quantity) {
+		this.setAttackAI();
+	}
+	
 	/*********************************************************
 	 * Methods related to sounds.							*
 	 *********************************************************/

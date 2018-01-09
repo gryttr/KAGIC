@@ -1552,7 +1552,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public void setAttackAI() {
 		this.tasks.removeTask(this.rangedAttack);
 		this.tasks.removeTask(this.meleeAttack);
-		if (this.getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.BOW) {
+		if (this.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemBow) {
 			this.tasks.addTask(1, this.rangedAttack);
 		}
 		else {
