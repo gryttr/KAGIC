@@ -337,14 +337,15 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
             }
         }
         
-        pad.ticket = ticket;
-        pad.loadChunkTicksLeft = this.loadChunkTicks;
+        this.ticket = ticket;
+        this.loadChunkTicksLeft = this.loadChunkTicks;
 	}
 	
 	public void beginWarp(BlockPos destination) {
 		Ticket ticket = ForgeChunkManager.requestTicket(KAGIC.instance, this.world, Type.NORMAL);
 		TileEntityWarpPadCore destPad = (TileEntityWarpPadCore) this.world.getTileEntity(destination);
 		this.loadPadChunks(this, ticket);
+		this.loadPadChunks(destPad, ticket);
 		
 		this.warpTicksLeft = this.warpTicks;
 		this.destination = destination;
