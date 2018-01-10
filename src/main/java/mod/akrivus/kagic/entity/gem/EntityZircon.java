@@ -2,6 +2,7 @@ package mod.akrivus.kagic.entity.gem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.google.common.base.Predicate;
 
@@ -11,7 +12,10 @@ import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.items.ItemGemStaff;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -22,7 +26,11 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemEnchantedBook;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
@@ -190,6 +198,32 @@ public class EntityZircon extends EntityGem {
 
 	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
+		if (!this.world.isRemote && hand == EnumHand.MAIN_HAND) {
+			if (this.isTamed() && this.isOwnedBy(player)) {
+				ItemStack playerStack = player.getHeldItemMainhand();
+				if (playerStack.getItem() instanceof ItemEnchantedBook) {
+					this.entityDropItem(this.getHeldItemMainhand(), 0.5F);
+					this.setHeldItem(EnumHand.MAIN_HAND, playerStack.copy());
+					if (!player.isCreative()) {
+						playerStack.shrink(1);
+					}
+				} else if (playerStack.isEmpty()) {
+					this.entityDropItem(this.getHeldItemMainhand(), 0.5F);
+					this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+				} else if (!(playerStack.getItem() instanceof ItemGemStaff) && this.getHeldItemMainhand().getItem() instanceof ItemEnchantedBook) {
+					ItemStack enchantmentResult = this.getEnchantedItem(playerStack.copy());
+					if (playerStack.getCount() == 1) {
+						player.setHeldItem(EnumHand.MAIN_HAND, enchantmentResult);
+					} else {
+						if (!player.addItemStackToInventory(enchantmentResult)) {
+							this.entityDropItem(enchantmentResult, 0.5F);
+						}
+						playerStack.shrink(1);
+					}
+					this.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, this.rand.nextFloat() * 0.1F + 0.9F);
+				}
+			}
+		}
 		return super.processInteract(player, hand);
 	}
 
@@ -200,5 +234,50 @@ public class EntityZircon extends EntityGem {
 	
 	public String getSpecialSkin() {
 		return "0";
+	}
+	
+	private ItemStack getEnchantedItem(ItemStack playerStack) {
+		ItemStack holdingStack = this.getHeldItemMainhand();
+		if (!(holdingStack.getItem() instanceof ItemEnchantedBook)) {
+			return ItemStack.EMPTY;
+		}
+		
+		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(holdingStack);
+		if (enchantments.isEmpty()) {
+			// I'm not sure if it can ever be the case that an enchanted book has no
+			// enchantments, but better safe than sorry
+			return ItemStack.EMPTY;
+		}
+		Enchantment enchantment = (Enchantment) enchantments.keySet().toArray()[0];
+		int level = enchantments.get(enchantment);
+		if (level <= 0) {
+			return ItemStack.EMPTY;
+		}
+		
+		Map<Enchantment, Integer> existingEnchantments = EnchantmentHelper.getEnchantments(playerStack);
+		if (existingEnchantments.containsKey(enchantment)) {
+			existingEnchantments.put(enchantment, existingEnchantments.get(enchantment) + 1);
+		} else {
+			existingEnchantments.put(enchantment, 1);
+		}
+		if (playerStack.getCount() > 1) {
+			playerStack.setCount(1);
+		}
+		EnchantmentHelper.setEnchantments(existingEnchantments, playerStack);
+		level -= 1;
+		if (level == 0) {
+			enchantments.remove(enchantment);
+		} else {
+			enchantments.put(enchantment, level);
+		}
+		
+		if (!enchantments.isEmpty()) {
+			ItemStack newBookStack = new ItemStack(Items.ENCHANTED_BOOK);
+			EnchantmentHelper.setEnchantments(enchantments, newBookStack);
+			this.setHeldItem(EnumHand.MAIN_HAND, newBookStack);
+		} else {
+			this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+		}
+		return playerStack;
 	}
 }

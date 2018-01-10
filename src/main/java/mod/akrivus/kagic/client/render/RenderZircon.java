@@ -9,6 +9,7 @@ import mod.akrivus.kagic.client.render.layers.LayerSantaHat;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.client.render.layers.LayerZirconHair;
+import mod.akrivus.kagic.client.render.layers.LayerZirconItem;
 import mod.akrivus.kagic.entity.gem.EntityZircon;
 import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
@@ -21,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
 public class RenderZircon extends RenderGemBase<EntityZircon> {
 	public RenderZircon() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelZircon(), 0.25F);
+        this.addLayer(new LayerZirconItem(this));
         this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerNoDyeOverlay(this));
         this.addLayer(new LayerZirconHair(this));
