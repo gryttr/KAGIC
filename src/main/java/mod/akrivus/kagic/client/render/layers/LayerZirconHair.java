@@ -18,7 +18,7 @@ public class LayerZirconHair implements LayerRenderer<EntityZircon> {
 		if (gem.getSpecialSkin().equals("0")) {
 			this.zirconRenderer.bindTexture(EntityZircon.ZIRCON_HAIR_STYLES.get(gem.getHairStyle()));
 			float[] afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[gem.getInsigniaColor()]);
-			GlStateManager.color(afloat[0], afloat[1], afloat[2]);
+			GlStateManager.color(afloat[0] + 0.25F, afloat[1] + 0.25F, afloat[2] + 0.25F);
 			this.zirconModel.setModelAttributes(this.zirconRenderer.getMainModel());
 			this.zirconModel.render(gem, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 		}

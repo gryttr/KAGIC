@@ -37,6 +37,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class EntityZircon extends EntityGem {
 	public static final HashMap<IBlockState, Double> ZIRCON_YIELDS = new HashMap<IBlockState, Double>();
@@ -44,6 +45,7 @@ public class EntityZircon extends EntityGem {
 	public EntityZircon(World worldIn) {
 		super(worldIn);
 		this.setSize(0.6F, 1.9F);
+		this.visorChanceReciprocal = 1;
 		this.seePastDoors();
 		
 		//Define valid gem cuts and placements
@@ -88,15 +90,16 @@ public class EntityZircon extends EntityGem {
 	
 	@Override
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		livingdata = super.onInitialSpawn(difficulty, livingdata);
 		this.setInsigniaColor(this.rand.nextInt(16));
-		this.setHasVisor(true);
-		return livingdata;
+		this.setUniformColor(this.getInsigniaColor());
+		return super.onInitialSpawn(difficulty, livingdata);
 	}
 	
 	@Override
 	public void itemDataToGemData(int data) {
 		this.setInsigniaColor(data);
+		this.setUniformColor(data);
+		this.setSkinColor(this.generateSkinColor());
 	}
 	
 	/*********************************************************
@@ -280,4 +283,21 @@ public class EntityZircon extends EntityGem {
 		}
 		return playerStack;
 	}
+	
+	@Override
+	protected int generateSkinColor() {
+		int colorIndex = this.getInsigniaColor();
+		EnumDyeColor color = EnumDyeColor.values()[colorIndex];
+		int colorValue = 0;
+		try {
+			colorValue = ReflectionHelper.getPrivateValue(EnumDyeColor.class, color, "colorValue", "field_193351_w", "w");
+		} catch (Exception e) {}
+		return colorValue;
+	}
+	
+	@Override
+	public boolean canChangeInsigniaColorByDefault() {
+		return false;
+	}
+
 }

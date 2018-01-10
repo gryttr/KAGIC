@@ -6,6 +6,8 @@ import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
 import mod.akrivus.kagic.client.render.layers.LayerNoDyeOverlay;
 import mod.akrivus.kagic.client.render.layers.LayerSantaHat;
+import mod.akrivus.kagic.client.render.layers.LayerSkin;
+import mod.akrivus.kagic.client.render.layers.LayerUniform;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.client.render.layers.LayerZirconHair;
@@ -23,11 +25,14 @@ public class RenderZircon extends RenderGemBase<EntityZircon> {
 	public RenderZircon() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelZircon(), 0.25F);
         this.addLayer(new LayerZirconItem(this));
-        this.addLayer(new LayerVisor(this));
+        this.addLayer(new LayerSkin(this));
+        this.addLayer(new LayerUniform(this));
         this.addLayer(new LayerNoDyeOverlay(this));
         this.addLayer(new LayerZirconHair(this));
         this.addLayer(new LayerInsignia(this));
         this.addLayer(new LayerGemPlacement(this));
+        this.addLayer(new LayerVisor(this));
+        
 		if (KAGIC.isBirthday()) {
 			this.addLayer(new LayerBirthdayHat(this));
 		} else if (KAGIC.isHalloween()) {
@@ -39,8 +44,8 @@ public class RenderZircon extends RenderGemBase<EntityZircon> {
 	
 	@Override
 	protected void preRenderCallback(EntityZircon gem, float partialTickTime) {
-		float[] afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[((EntityZircon) gem).getInsigniaColor()]);
-		GlStateManager.color(afloat[0], afloat[1], afloat[2]);
+		//float[] afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[((EntityZircon) gem).getInsigniaColor()]);
+		//GlStateManager.color(afloat[0], afloat[1], afloat[2]);
 	}
 	
 	@Override
