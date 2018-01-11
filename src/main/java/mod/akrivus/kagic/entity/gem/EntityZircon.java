@@ -13,6 +13,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.items.ItemGemStaff;
+import mod.akrivus.kagic.util.KAGICEnchantmentUtils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -223,7 +224,6 @@ public class EntityZircon extends EntityGem {
 						}
 						playerStack.shrink(1);
 					}
-					this.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, this.rand.nextFloat() * 0.1F + 0.9F);
 				}
 			}
 		}
@@ -242,22 +242,25 @@ public class EntityZircon extends EntityGem {
 	private ItemStack getEnchantedItem(ItemStack playerStack) {
 		ItemStack holdingStack = this.getHeldItemMainhand();
 		if (!(holdingStack.getItem() instanceof ItemEnchantedBook)) {
-			return ItemStack.EMPTY;
+			return playerStack;
 		}
 		
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(holdingStack);
 		if (enchantments.isEmpty()) {
 			// I'm not sure if it can ever be the case that an enchanted book has no
 			// enchantments, but better safe than sorry
-			return ItemStack.EMPTY;
+			return playerStack;
 		}
-		Enchantment enchantment = (Enchantment) enchantments.keySet().toArray()[0];
+		Map<Enchantment, Integer> existingEnchantments = EnchantmentHelper.getEnchantments(playerStack);
+		Enchantment enchantment = KAGICEnchantmentUtils.getFirstNonconflicting(enchantments, existingEnchantments);
+		if (enchantment == null) {
+			return playerStack;
+		}
 		int level = enchantments.get(enchantment);
 		if (level <= 0) {
-			return ItemStack.EMPTY;
+			return playerStack;
 		}
 		
-		Map<Enchantment, Integer> existingEnchantments = EnchantmentHelper.getEnchantments(playerStack);
 		if (existingEnchantments.containsKey(enchantment)) {
 			existingEnchantments.put(enchantment, existingEnchantments.get(enchantment) + 1);
 		} else {
@@ -267,6 +270,8 @@ public class EntityZircon extends EntityGem {
 			playerStack.setCount(1);
 		}
 		EnchantmentHelper.setEnchantments(existingEnchantments, playerStack);
+		this.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, 1.0F, this.rand.nextFloat() * 0.1F + 0.9F);
+
 		level -= 1;
 		if (level == 0) {
 			enchantments.remove(enchantment);
@@ -279,7 +284,7 @@ public class EntityZircon extends EntityGem {
 			EnchantmentHelper.setEnchantments(enchantments, newBookStack);
 			this.setHeldItem(EnumHand.MAIN_HAND, newBookStack);
 		} else {
-			this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+			this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.BOOK));
 		}
 		return playerStack;
 	}
