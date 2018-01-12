@@ -196,6 +196,10 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		this.harvestTimer = compound.getInteger("harvestTimer");
 	}
 	
+	public void whenDefective() {
+		this.setSize(0.7F, 1.7F);
+	}
+	
 	/*********************************************************
 	 * Methods related to interaction.					   *
 	 *********************************************************/
