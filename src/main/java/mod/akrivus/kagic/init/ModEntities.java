@@ -156,7 +156,7 @@ public class ModEntities {
 		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.22, "oreIron");
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.PACKED_ICE.getDefaultState(), 0.99);
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.SNOW.getDefaultState(), 0.77);
-		ModEntities.registerWithOreDictionary(EntitySapphire.SAPPHIRE_YIELDS, "Sapphire", "Corundum", "Bauxite");
+		ModEntities.registerWithOreDictionary(EntitySapphire.SAPPHIRE_YIELDS, "Sapphire", "VioletSapphire", "Corundum", "Bauxite");
 		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.33, "oreAluminum");
 		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.33, "oreAluminium");
 		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.99, "oreGarnet");
