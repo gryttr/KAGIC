@@ -7,6 +7,7 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class RoseFountain extends RuinStructure {
 
@@ -15,15 +16,11 @@ public class RoseFountain extends RuinStructure {
 		this.structures.add("/assets/kagic/structures/RoseFountain.schematic");
 		
 		//39, 2, 29
-		this.chestTables.put(new BlockPos(39, 2, 29), LootTables.ROSE_FOUNTAIN);
+		this.chestTables.put(new BlockPos(42, 2, 29), LootTables.ROSE_FOUNTAIN);
 		
-		this.allowedBiomes.add(Biomes.SWAMPLAND);
-		this.allowedBiomes.add(Biomes.MUTATED_SWAMPLAND);
-		this.allowedBiomes.add(Biomes.JUNGLE);
-		this.allowedBiomes.add(Biomes.JUNGLE_EDGE);
-		this.allowedBiomes.add(Biomes.JUNGLE_HILLS);
-		this.allowedBiomes.add(Biomes.MUTATED_JUNGLE);
-		this.allowedBiomes.add(Biomes.MUTATED_JUNGLE_EDGE);
+		this.allowedBiomeTypes.add(Type.SWAMP);
+		this.allowedBiomeTypes.add(Type.JUNGLE);
+		this.canContainAnyType = true;
 	}
 
 	@Override
@@ -33,7 +30,7 @@ public class RoseFountain extends RuinStructure {
 	
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
-		if (rand.nextInt(500) != 0) {
+		if (rand.nextInt(10) != 0) {
 			return false;
 		}
 		//KAGIC.instance.chatInfoMessage("Random passed; checking world conditions");

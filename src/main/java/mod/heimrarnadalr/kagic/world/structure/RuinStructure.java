@@ -2,6 +2,7 @@ package mod.heimrarnadalr.kagic.world.structure;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +26,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.common.BiomeDictionary;
 
 public class RuinStructure extends WorldGenerator {
 	protected final String type;
@@ -40,6 +42,8 @@ public class RuinStructure extends WorldGenerator {
 	protected byte rotation = -1;
 	protected final IBlockState foundationBlock;
 	protected Set<Biome> allowedBiomes = new HashSet<Biome>();
+	protected Set<BiomeDictionary.Type> allowedBiomeTypes = new HashSet<BiomeDictionary.Type>();
+	protected boolean canContainAnyType = false;
 	protected Set<IBlockState> allowedBlocks = new HashSet<IBlockState>();
 	protected Map<BlockPos, ResourceLocation> chestTables = new HashMap<BlockPos, ResourceLocation>();
 	protected Map<BlockPos, Class<? extends EntityLiving>> entities = new HashMap<BlockPos, Class<? extends EntityLiving>>();
@@ -77,12 +81,26 @@ public class RuinStructure extends WorldGenerator {
 	
 	protected boolean checkBiome(World world, BlockPos pos) {
 		//If we haven't defined any biomes, we can generate anywhere
-		if (allowedBiomes.isEmpty()) {
+		if (this.allowedBiomes.isEmpty() && this.allowedBiomeTypes.isEmpty()) {
 			return true;
 		}
-		if (allowedBiomes.contains(world.getBiome(pos))) {
+		
+		Biome biome = world.getBiome(pos);
+		if (this.allowedBiomes.contains(biome)) {
+			return true;
+		} else if (!this.allowedBiomes.isEmpty()) {
+			return false;
+		}
+		
+		Set<BiomeDictionary.Type> biomeTypes = BiomeDictionary.getTypes(biome);
+		if (biomeTypes.containsAll(this.allowedBiomeTypes)) {
 			return true;
 		}
+		
+		if (this.canContainAnyType && !Collections.disjoint(this.allowedBiomeTypes, biomeTypes)) {
+			return true;
+		}
+		
 		return false;
 	}
 	

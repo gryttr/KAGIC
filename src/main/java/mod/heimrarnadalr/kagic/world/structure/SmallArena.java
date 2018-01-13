@@ -6,6 +6,7 @@ import net.minecraft.init.Biomes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class SmallArena extends FloatingRuinStructure {
 
@@ -17,11 +18,9 @@ public class SmallArena extends FloatingRuinStructure {
 		this.chestTables.put(new BlockPos(31, 12, 8), LootTables.SMALL_ARENA);
 		this.chestTables.put(new BlockPos(31, 12, 16), LootTables.SMALL_ARENA);
 
-		this.allowedBiomes.add(Biomes.EXTREME_HILLS);
-		this.allowedBiomes.add(Biomes.EXTREME_HILLS_WITH_TREES);
-		this.allowedBiomes.add(Biomes.MUTATED_EXTREME_HILLS);
-		this.allowedBiomes.add(Biomes.MUTATED_EXTREME_HILLS_WITH_TREES);
-		this.allowedBiomes.add(Biomes.EXTREME_HILLS_EDGE);
+		this.allowedBiomeTypes.add(Type.MOUNTAIN);
+		this.allowedBiomeTypes.add(Type.HILLS);
+		this.canContainAnyType = true;
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class GalaxyWarp extends SunkenRuinStructure {
 
@@ -17,9 +18,7 @@ public class GalaxyWarp extends SunkenRuinStructure {
 		
 		this.chestTables.put(new BlockPos(28, 55, 30), LootTables.GALAXY_WARP);
 
-		this.allowedBiomes.add(Biomes.OCEAN);
-		this.allowedBiomes.add(Biomes.DEEP_OCEAN);
-		this.allowedBiomes.add(Biomes.FROZEN_OCEAN);
+		this.allowedBiomeTypes.add(Type.OCEAN);
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class CommunicationHub extends RuinStructure {
 
@@ -13,9 +14,8 @@ public class CommunicationHub extends RuinStructure {
 		super(type, 10, Blocks.SANDSTONE.getDefaultState(), true, true);
 		this.structures.add("/assets/kagic/structures/CommHub2.schematic");
 		
-		this.allowedBiomes.add(Biomes.DESERT);
-		this.allowedBiomes.add(Biomes.DESERT_HILLS);
-		this.allowedBiomes.add(Biomes.MUTATED_DESERT);
+		this.allowedBiomeTypes.add(Type.DRY);
+		this.allowedBiomeTypes.add(Type.SANDY);
 		this.allowedBlocks.add(Blocks.SAND.getDefaultState());
 		this.allowedBlocks.add(Blocks.SANDSTONE.getDefaultState());
 	}
