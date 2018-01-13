@@ -30,6 +30,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
@@ -38,8 +39,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class EntityHessonite extends EntityGem {
@@ -122,6 +125,7 @@ public class EntityHessonite extends EntityGem {
 		this.setSize(0.72F, 1.61F);
 	}
 
+	// This is for when we attack 
 	@Override
 	public boolean attackEntityAsMob(Entity entity) {
 		boolean attacked = super.attackEntityAsMob(entity);
@@ -134,6 +138,37 @@ public class EntityHessonite extends EntityGem {
 		}
 		
 		return attacked;
+	}
+	
+	// This is for when we get attacked
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (source instanceof EntityDamageSourceIndirect && this.teleportToEntity(source.getTrueSource())) {
+			return true;
+		}
+		return super.attackEntityFrom(source, amount);
+	}
+	
+	protected boolean teleportToEntity(Entity target) {
+		Vec3d vec3d = new Vec3d(this.posX - target.posX, this.getEntityBoundingBox().minY + (double)(this.height / 2.0F) - target.posY + (double)target.getEyeHeight(), this.posZ - target.posZ);
+		if (vec3d.lengthVector() < 4F) {
+			return false;
+		}
+		double d1 = target.posX + (this.rand.nextDouble() - 0.5D) * 2.0D;
+		double d2 = target.posY + 1;
+		double d3 = target.posZ + (this.rand.nextDouble() - 0.5D) * 2.0D;
+		return this.teleportTo(d1, d2, d3);
+	}
+	
+	private boolean teleportTo(double x, double y, double z) {
+		boolean teleportSucceeded = this.attemptTeleport(x, y, z);
+
+		if (teleportSucceeded) {
+			this.world.playSound((EntityPlayer)null, this.prevPosX, this.prevPosY, this.prevPosZ, ModSounds.HESSONITE_TELEPORT_START, this.getSoundCategory(), 1.0F, 1.0F);
+			this.playSound(ModSounds.HESSONITE_TELEPORT_END, 1.0F, 1.0F);
+		}
+
+		return teleportSucceeded;
 	}
 	
 	@Override

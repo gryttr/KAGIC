@@ -87,6 +87,8 @@ public class ModSounds {
 	public static final SoundEvent HESSONITE_HURT = new SoundEvent(new ResourceLocation("kagic:entities.hessonite.hurt"));
 	public static final SoundEvent HESSONITE_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.hessonite.living"));
 	public static final SoundEvent HESSONITE_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.hessonite.obey"));
+	public static final SoundEvent HESSONITE_TELEPORT_START = new SoundEvent(new ResourceLocation("kagic:entities.hessonite.teleport.start"));
+	public static final SoundEvent HESSONITE_TELEPORT_END = new SoundEvent(new ResourceLocation("kagic:entities.hessonite.teleport.end"));
 	public static final SoundEvent MALACHITE_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.malachite.death"));
 	public static final SoundEvent MALACHITE_HURT = new SoundEvent(new ResourceLocation("kagic:entities.malachite.hurt"));
 	public static final SoundEvent MALACHITE_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.malachite.obey"));
@@ -192,6 +194,8 @@ public class ModSounds {
 		registerSound(HESSONITE_HURT, new ResourceLocation("kagic:entities.hessonite.hurt"), event);
 		registerSound(HESSONITE_LIVING, new ResourceLocation("kagic:entities.hessonite.living"), event);
 		registerSound(HESSONITE_OBEY, new ResourceLocation("kagic:entities.hessonite.obey"), event);
+		registerSound(HESSONITE_TELEPORT_START, new ResourceLocation("kagic:entities.hessonite.teleport.start"), event);
+		registerSound(HESSONITE_TELEPORT_END, new ResourceLocation("kagic:entities.hessonite.teleport.end"), event);
 		registerSound(MALACHITE_DEATH, new ResourceLocation("kagic:entities.malachite.death"), event);
 		registerSound(MALACHITE_HURT, new ResourceLocation("kagic:entities.malachite.hurt"), event);
 		registerSound(MALACHITE_OBEY, new ResourceLocation("kagic:entities.malachite.obey"), event);

@@ -27,8 +27,8 @@ public class BlockRoseTears extends BlockFluidClassic {
 
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-		if (entity instanceof EntityLivingBase) {
-			((EntityLivingBase) entity).addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 20, 2));
+		if (entity instanceof EntityLivingBase && !((EntityLivingBase) entity).isPotionActive(MobEffects.REGENERATION)) {
+			((EntityLivingBase) entity).addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 100, 2));
 		}
 	}
 	

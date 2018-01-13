@@ -596,6 +596,16 @@
             { "name": "kagic:entities/hessonite/obey3" }
         ]
     },
+    "entities.hessonite.teleport.start": {
+        "sounds": [
+            { "name": "kagic:entities/hessonite/tp1" }
+        ]
+    },
+    "entities.hessonite.teleport.end": {
+        "sounds": [
+            { "name": "kagic:entities/hessonite/tp2" }
+        ]
+    },
     "entities.malachite.death": {
         "sounds": [
             { "name": "kagic:entities/malachite/death1" }
