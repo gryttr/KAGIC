@@ -83,7 +83,7 @@ public class EntityRuby extends EntityGem {
 	
 	public EntityRuby(World worldIn) {
 		super(worldIn);
-		this.setSize(0.7F, 1.8F);
+		this.setSize(0.7F, 1.2F);
 		this.isImmuneToFire = true;
 		this.isSoldier = true;
 		

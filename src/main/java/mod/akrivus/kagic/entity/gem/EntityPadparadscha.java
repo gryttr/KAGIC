@@ -37,7 +37,7 @@ public class EntityPadparadscha extends EntityGem {
 	public boolean playerLoves = true;
 	public EntityPadparadscha(World worldIn) {
 		super(worldIn);
-		this.setSize(0.6F, 1.6F);
+		this.setSize(0.6F, 1.2F);
 		this.seePastDoors();
 
 		//Define valid gem cuts and placements

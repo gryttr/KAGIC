@@ -7,8 +7,10 @@ import mod.akrivus.kagic.client.render.layers.LayerSantaHat;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
+import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.util.ResourceLocation;
 
@@ -25,6 +27,11 @@ public class RenderPadparadscha extends RenderGemBase<EntityPadparadscha> {
 			this.addLayer(new LayerSantaHat(this));
 		}
     }
+
+	@Override
+	protected void preRenderCallback(EntityPadparadscha gem, float partialTickTime) {
+		GlStateManager.scale(0.85F, 0.85F, 0.85F);
+	}
 
 	@Override
 	protected ResourceLocation getEntityTexture(EntityPadparadscha entity) {

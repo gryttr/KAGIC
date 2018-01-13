@@ -11,9 +11,11 @@ import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerUniform;
 import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
+import mod.akrivus.kagic.entity.gem.EntityRuby;
 import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.util.ResourceLocation;
 
@@ -35,6 +37,11 @@ public class RenderSapphire extends RenderGemBase<EntitySapphire> {
 		} else if (KAGIC.isChristmas()) {
 			this.addLayer(new LayerSantaHat(this));
 		}
+	}
+	
+	@Override
+	protected void preRenderCallback(EntitySapphire gem, float partialTickTime) {
+		GlStateManager.scale(0.85F, 0.85F, 0.85F);
 	}
 	
 	@Override

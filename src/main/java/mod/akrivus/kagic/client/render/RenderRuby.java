@@ -47,6 +47,9 @@ public class RenderRuby extends RenderGemBase<EntityRuby> {
 		else if (gem.isDefective()) {
 			GlStateManager.scale(0.5F, 0.5F, 0.5F);
 		}
+		else {
+			GlStateManager.scale(0.8F, 0.8F, 0.8F);
+		}
 	}
 	
 	@Override

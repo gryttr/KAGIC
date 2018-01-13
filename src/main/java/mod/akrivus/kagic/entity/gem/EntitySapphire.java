@@ -68,7 +68,7 @@ public class EntitySapphire extends EntityGem {
 	public EntitySapphire(World worldIn) {
 		super(worldIn);
 		//Width must be 0.6, or she will get stuck trying to pass through doors
-		this.setSize(0.6F, 1.6F);
+		this.setSize(0.6F, 1.2F);
 		this.seePastDoors();
 		
 		//Define valid gem cuts and placements
