@@ -145,7 +145,7 @@ public class ModBlocks {
 		registerBlockItem(PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:pink_sandstone_stairs"), event);		
 		registerBlockItem(WAVY_PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:wavy_pink_sandstone_stairs"), event);		
 		registerBlockItemSlab(PINK_SANDSTONE_SLAB, PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_slab"), event);		
-		registerBlockItem(GIANT_STRAWBERRY, new ResourceLocation("kagic:giant_strawberry_block"), event);
+		registerBlockItem(GIANT_STRAWBERRY, new ResourceLocation("kagic:giant_strawberry_block"), event, "blockGiantStrawberry");
 	}
 	
 	public static void registerBlockItem(Block block, ResourceLocation location, RegistryEvent.Register<Item> event) {
@@ -187,6 +187,9 @@ public class ModBlocks {
 		item.setRegistryName(new ResourceLocation("kagic:pink_sandstone"));
 		event.getRegistry().register(item);
 		OreDictionary.registerOre("sandstone", item);
+		OreDictionary.registerOre("sandstone", new ItemStack(item, 1, 1));
+		OreDictionary.registerOre("sandstone", new ItemStack(item, 1, 2));
+		OreDictionary.registerOre("sandstone", new ItemStack(item, 1, 3));
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation("kagic:pink_sandstone", "inventory"));
 			ModelLoader.setCustomModelResourceLocation(item, 1, new ModelResourceLocation("kagic:chiseled_pink_sandstone", "inventory"));

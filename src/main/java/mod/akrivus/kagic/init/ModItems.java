@@ -424,8 +424,9 @@ public class ModItems {
 		registerItem(ROAMING_EYE, event);
 		registerItem(LASER_BEAM, event);
 		registerItem(WARP_WHISTLE, event);
-		registerItem(STRAWBERRY_SLICE, event);
-		registerItem(STRAWBERRY_SEEDS, event);
+		registerItem(STRAWBERRY_SLICE, event, "cropGiantStrawberry");
+		OreDictionary.registerOre("cropStrawberry", STRAWBERRY_SLICE);
+		registerItem(STRAWBERRY_SEEDS, event, "seedGiantStrawberry");
 	}
 	public static void registerGem(ItemGem normal, ItemGem broken, RegistryEvent.Register<Item> event) {
 		GEM_TABLE.put(normal, broken);
