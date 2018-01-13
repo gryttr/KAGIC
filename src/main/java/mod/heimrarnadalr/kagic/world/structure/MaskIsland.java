@@ -52,7 +52,7 @@ public class MaskIsland extends SunkenRuinStructure {
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
-		if (rand.nextInt(2000) != 0) {
+		if (rand.nextInt(2500) != 0) {
 			return false;
 		}
 
