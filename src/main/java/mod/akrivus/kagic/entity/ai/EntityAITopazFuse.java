@@ -23,7 +23,7 @@ public class EntityAITopazFuse extends EntityAIBase {
 			double distance = Double.MAX_VALUE;
 			for (EntityTopaz topaz : list) {
 				if (topaz.canFuseWith(this.topaz) && topaz.compatIndex != this.topaz.compatIndex) {
-					double newDistance = this.topaz.getDistanceSqToEntity(topaz);
+					double newDistance = this.topaz.getDistanceSq(topaz);
 					if (newDistance <= distance) {
 						distance = newDistance;
 						this.otherTopaz = topaz;
@@ -47,13 +47,13 @@ public class EntityAITopazFuse extends EntityAIBase {
 	
 	@Override
 	public void resetTask() {
-		this.topaz.getNavigator().clearPathEntity();
+		this.topaz.getNavigator().clearPath();
 		this.otherTopaz = null;
 	}
 	
 	@Override
 	public void updateTask() {
-		if (this.topaz.getDistanceSqToEntity(this.otherTopaz) > this.otherTopaz.width * 2) {
+		if (this.topaz.getDistanceSq(this.otherTopaz) > this.otherTopaz.width * 2) {
 			this.topaz.getNavigator().tryMoveToEntityLiving(this.otherTopaz, this.movementSpeed);
 		}
 		else if (this.topaz.compatIndex > this.otherTopaz.compatIndex) {

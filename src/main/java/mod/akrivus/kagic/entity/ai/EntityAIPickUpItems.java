@@ -22,7 +22,7 @@ public class EntityAIPickUpItems extends EntityAIBase {
 		List<EntityItem> list = this.gem.world.<EntityItem>getEntitiesWithinAABB(EntityItem.class, this.gem.getEntityBoundingBox().grow(8.0D, 8.0D, 8.0D));
 		double maxDistance = Double.MAX_VALUE;
 		for (EntityItem item : list) {
-			double newDistance = this.gem.getDistanceSqToEntity(item);
+			double newDistance = this.gem.getDistanceSq(item);
 			if (newDistance <= maxDistance && this.gem.canPickUpItem(item.getItem().getItem()) && this.gem.canEntityBeSeen(item) && !item.isDead) {
 				maxDistance = newDistance;
 				this.item = item;
@@ -46,13 +46,13 @@ public class EntityAIPickUpItems extends EntityAIBase {
 	
 	@Override
 	public void resetTask() {
-		this.gem.getNavigator().clearPathEntity();
+		this.gem.getNavigator().clearPath();
 		this.item = null;
 	}
 	
 	@Override
 	public void updateTask() {
-		if (this.gem.getDistanceSqToEntity(this.item) > 1F) {
+		if (this.gem.getDistanceSq(this.item) > 1F) {
 		   	this.gem.getNavigator().tryMoveToEntityLiving(this.item, this.movementSpeed);
 		}
 	}

@@ -20,7 +20,7 @@ public class EntityAIRubyFuse extends EntityAIBase {
 	        double distance = Double.MAX_VALUE;
 	        for (EntityRuby ruby : list) {
 	            if (ruby.canFuseWith(this.ruby) && ruby.compatIndex != this.ruby.compatIndex) {
-	                double newDistance = this.ruby.getDistanceSqToEntity(ruby);
+	                double newDistance = this.ruby.getDistanceSq(ruby);
 	                if (newDistance <= distance) {
 	                    distance = newDistance;
 	                    this.otherRuby = ruby;
@@ -44,13 +44,13 @@ public class EntityAIRubyFuse extends EntityAIBase {
     
     @Override
     public void resetTask() {
-    	this.ruby.getNavigator().clearPathEntity();
+    	this.ruby.getNavigator().clearPath();
         this.otherRuby = null;
     }
     
     @Override
     public void updateTask() {
-    	if (this.ruby.getDistanceSqToEntity(this.otherRuby) > this.otherRuby.width * 2) {
+    	if (this.ruby.getDistanceSq(this.otherRuby) > this.otherRuby.width * 2) {
 			this.ruby.getNavigator().tryMoveToEntityLiving(this.otherRuby, this.movementSpeed);
 		} else if (this.ruby.compatIndex > this.otherRuby.compatIndex) {
     		this.ruby.world.spawnEntity(this.ruby.fuse(this.otherRuby));

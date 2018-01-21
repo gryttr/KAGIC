@@ -324,7 +324,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
 							double distance = Double.MAX_VALUE;
 							for (EntityLivingBase base : list) {
-								double newDistance = this.getDistanceSqToEntity(base);
+								double newDistance = this.getDistanceSq(base);
 				                if (newDistance <= distance && base.getName().toLowerCase().contains(args.get(0)) && this.shouldAttackEntity(this, base)) {
 				                	this.setRevengeTarget(base);
 				                    distance = newDistance;
@@ -339,7 +339,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
 							double distance = Double.MAX_VALUE;
 							for (EntityLivingBase base : list) {
-								double newDistance = this.getDistanceSqToEntity(base);
+								double newDistance = this.getDistanceSq(base);
 				                if (newDistance <= distance && base.getName().toLowerCase().contains(args.get(0)) && this.shouldAttackEntity(this, base)) {
 				                	this.getNavigator().tryMoveToEntityLiving(base, 1.0);
 				                	this.setRevengeTarget(base.getAttackingEntity());

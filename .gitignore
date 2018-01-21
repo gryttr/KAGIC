@@ -21,7 +21,7 @@ build
 eclipse
 run
 CREDITS-fml.txt
-forge-1.12.1-14.22.0.2452-changelog.txt
+forge-1.12.2-14.23.1.2600-changelog.txt
 gradle.properties
 gradlew
 gradlew.bat

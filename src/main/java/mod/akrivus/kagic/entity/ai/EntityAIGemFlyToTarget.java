@@ -23,7 +23,7 @@ public class EntityAIGemFlyToTarget extends EntityAIBase {
 	}
 
 	public boolean shouldExecute() {
-		return this.gem.getAttackTarget() != null && this.gem.getDistanceToEntity(this.gem.getAttackTarget()) > distance;
+		return this.gem.getAttackTarget() != null && this.gem.getDistanceSq(this.gem.getAttackTarget()) > distance;
 	}
 
 	public boolean shouldContinueExecuting() {

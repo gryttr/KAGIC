@@ -24,7 +24,7 @@ public class EntityAISlagEatGems extends EntityAIBase {
 		List<EntityItem> list = this.slag.world.<EntityItem>getEntitiesWithinAABB(EntityItem.class, this.slag.getEntityBoundingBox().grow(8.0D, 8.0D, 8.0D));
 		double maxDistance = Double.MAX_VALUE;
 		for (EntityItem item : list) {
-			double newDistance = this.slag.getDistanceSqToEntity(item);
+			double newDistance = this.slag.getDistanceSq(item);
 			if (newDistance <= maxDistance && item.getItem().getItem() instanceof ItemGem && this.slag.canEntityBeSeen(item)) {
 				maxDistance = newDistance;
 				this.item = item;
@@ -45,13 +45,13 @@ public class EntityAISlagEatGems extends EntityAIBase {
 	
 	@Override
 	public void resetTask() {
-		this.slag.getNavigator().clearPathEntity();
+		this.slag.getNavigator().clearPath();
 		this.item = null;
 	}
 	
 	@Override
 	public void updateTask() {
-		if (this.slag.getDistanceSqToEntity(this.item) > 1.0D) {
+		if (this.slag.getDistanceSq(this.item) > 1.0D) {
 			this.slag.getNavigator().tryMoveToEntityLiving(this.item, this.movementSpeed);
 		}
 		else {

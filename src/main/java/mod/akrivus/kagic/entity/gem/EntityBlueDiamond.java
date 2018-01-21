@@ -218,7 +218,7 @@ public class EntityBlueDiamond extends EntityGem {
 			    		gem.setOwnerId(player.getUniqueID());
 			    		gem.setLeader(player);
 			    		gem.setServitude(EntityGem.SERVE_HUMAN);
-			        	gem.getNavigator().clearPathEntity();
+			        	gem.getNavigator().clearPath();
 			        	gem.setAttackTarget(null);
 			        	gem.setHealth(gem.getMaxHealth());
 			        	gem.playTameEffect();

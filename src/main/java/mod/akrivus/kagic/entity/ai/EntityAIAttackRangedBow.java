@@ -51,7 +51,7 @@ public class EntityAIAttackRangedBow extends EntityAIBase {
 	
 	@Override
 	public void resetTask() {
-		this.gem.getNavigator().clearPathEntity();
+		this.gem.getNavigator().clearPath();
 		this.gem.setSwingingArms(false);
 		this.seeTime = 0;
 		this.attackTime = -1;
@@ -75,7 +75,7 @@ public class EntityAIAttackRangedBow extends EntityAIBase {
 				--this.seeTime;
 			}
 			if (d0 <= (double)this.maxAttackDistance && this.seeTime >= 20) {
-				this.gem.getNavigator().clearPathEntity();
+				this.gem.getNavigator().clearPath();
 				++this.strafingTime;
 			}
 			else {

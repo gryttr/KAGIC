@@ -23,7 +23,7 @@ public class EntityAISlagFuse extends EntityAIBase {
 			double distance = Double.MAX_VALUE;
 			for (EntitySlag slag : list) {
 				if (slag.canFuse() && slag.compatIndex != this.slag.compatIndex) {
-					double newDistance = this.slag.getDistanceSqToEntity(slag);
+					double newDistance = this.slag.getDistanceSq(slag);
 					if (newDistance <= distance) {
 						distance = newDistance;
 						this.otherSlag = slag;
@@ -48,13 +48,13 @@ public class EntityAISlagFuse extends EntityAIBase {
 	
 	@Override
 	public void resetTask() {
-		this.slag.getNavigator().clearPathEntity();
+		this.slag.getNavigator().clearPath();
 		this.otherSlag = null;
 	}
 	
 	@Override
 	public void updateTask() {
-		if (this.slag.getDistanceSqToEntity(this.otherSlag) > this.otherSlag.width * 2) {
+		if (this.slag.getDistanceSq(this.otherSlag) > this.otherSlag.width * 2) {
 			this.slag.getNavigator().tryMoveToEntityLiving(this.otherSlag, this.movementSpeed);
 		}
 		else if (this.slag.compatIndex > this.otherSlag.compatIndex) {

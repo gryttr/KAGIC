@@ -37,13 +37,13 @@ public class EntityAIFollowRose extends EntityAIBase {
 	@Override
 	public void resetTask() {
 		this.gem = null;
-		this.pepo.getNavigator().clearPathEntity();
+		this.pepo.getNavigator().clearPath();
 		this.pepo.setPathPriority(PathNodeType.WATER, this.oldWaterCost);
 	}
 	
 	@Override
 	public void updateTask() {
-		if (this.pepo.getDistanceSqToEntity(this.gem) > (this.gem.width * 3) + 3) {
+		if (this.pepo.getDistanceSq(this.gem) > (this.gem.width * 3) + 3) {
 			this.pepo.getNavigator().tryMoveToEntityLiving(this.gem, this.followSpeed);
 		}
 	}

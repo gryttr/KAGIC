@@ -199,7 +199,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		return true;
 	}
 	
-	public void validateWarpPad() {
+	public boolean validateWarpPad() {
 		boolean valid = this.validatePad();
 		if (this.isPadValid != valid) {
 			this.isPadValid = valid;
@@ -211,6 +211,8 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 			this.isClear = clear;
 			this.setDirty();
 		}
+		
+		return valid && clear;
 	}
 
 	public boolean isValidPad() {

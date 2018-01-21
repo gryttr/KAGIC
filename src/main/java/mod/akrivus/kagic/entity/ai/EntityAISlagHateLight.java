@@ -64,7 +64,7 @@ public class EntityAISlagHateLight extends EntityAIBase {
 	
 	@Override
 	public void resetTask() {
-		this.slag.getNavigator().clearPathEntity();
+		this.slag.getNavigator().clearPath();
 	}
 	
 	@Override

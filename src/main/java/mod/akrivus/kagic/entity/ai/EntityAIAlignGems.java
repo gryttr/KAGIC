@@ -24,7 +24,7 @@ public class EntityAIAlignGems extends EntityAIBase {
 			double distance = Double.MAX_VALUE;
 			for (EntityGem gem : list) {
 				if (this.alignedGem.isTamed() && !gem.isTamed()) {
-					double newDistance = this.alignedGem.getDistanceSqToEntity(gem);
+					double newDistance = this.alignedGem.getDistanceSq(gem);
 					if (newDistance <= distance) {
 						distance = newDistance;
 						this.unalignedGem = gem;
@@ -52,13 +52,13 @@ public class EntityAIAlignGems extends EntityAIBase {
 	
 	@Override
 	public void resetTask() {
-		this.alignedGem.getNavigator().clearPathEntity();
+		this.alignedGem.getNavigator().clearPath();
 		this.unalignedGem = null;
 	}
 	
 	@Override
 	public void updateTask() {
-		if (this.alignedGem.getDistanceSqToEntity(this.unalignedGem) > this.alignedGem.width * 3) {
+		if (this.alignedGem.getDistanceSq(this.unalignedGem) > this.alignedGem.width * 3) {
 			this.alignedGem.getNavigator().tryMoveToEntityLiving(this.unalignedGem, this.movementSpeed);
 		}
 		else if (!this.unalignedGem.isTamed()) {
@@ -67,7 +67,7 @@ public class EntityAIAlignGems extends EntityAIBase {
 				this.unalignedGem.setLeader(this.alignedGem.getOwner());
 			}
 			this.unalignedGem.setServitude(this.alignedGem.getServitude());
-			this.unalignedGem.getNavigator().clearPathEntity();
+			this.unalignedGem.getNavigator().clearPath();
 			this.unalignedGem.setAttackTarget(null);
 			this.unalignedGem.setHealth(this.unalignedGem.getMaxHealth());
 			this.unalignedGem.playTameEffect();

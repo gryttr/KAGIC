@@ -24,14 +24,20 @@ import net.minecraft.world.IBlockAccess;
 
 public class FlyingNodeProcessor extends WalkNodeProcessor {
 	private float avoidsWater;
-	public void initProcessor(IBlockAccess sourceIn, EntityLiving mob) {
-        super.initProcessor(sourceIn, mob);
+	
+	@Override
+	public void init(IBlockAccess sourceIn, EntityLiving mob) {
+        super.init(sourceIn, mob);
         this.avoidsWater = mob.getPathPriority(PathNodeType.WATER);
     }
+	
+	@Override
     public void postProcess() {
         this.entity.setPathPriority(PathNodeType.WATER, this.avoidsWater);
         super.postProcess();
     }
+	
+	@Override
     public PathPoint getStart() {
         double i;
         if (this.getCanSwim() && this.entity.isInWater()) {
@@ -62,9 +68,13 @@ public class FlyingNodeProcessor extends WalkNodeProcessor {
         }
         return super.openPoint(blockpos1.getX(), (int) i, blockpos1.getZ());
     }
+	
+	@Override
     public PathPoint getPathPointToCoords(double x, double y, double z) {
         return super.openPoint(MathHelper.floor(x), MathHelper.floor(y), MathHelper.floor(z));
     }
+	
+	@Override
     public int findPathOptions(PathPoint[] pathOptions, PathPoint currentPoint, PathPoint targetPoint, float maxDistance) {
         int i = 0;
         PathPoint pathpoint = this.openPoint(currentPoint.x, currentPoint.y, currentPoint.z + 1);
@@ -171,6 +181,8 @@ public class FlyingNodeProcessor extends WalkNodeProcessor {
         }
         return i;
     }
+	
+	@Override
     protected PathPoint openPoint(int x, int y, int z) {
         PathPoint pathpoint = null;
         PathNodeType pathnodetype = this.getPathNodeType(x, y, z, this.entity);
@@ -186,6 +198,8 @@ public class FlyingNodeProcessor extends WalkNodeProcessor {
         }
         return pathnodetype != PathNodeType.OPEN && pathnodetype != PathNodeType.WALKABLE ? pathpoint : pathpoint;
     }
+	
+	@Override
     public PathNodeType getPathNodeType(IBlockAccess blockaccessIn, int x, int y, int z, EntityLiving entitylivingIn, int xSize, int ySize, int zSize, boolean canBreakDoorsIn, boolean canEnterDoorsIn) {
         EnumSet<PathNodeType> enumset = EnumSet.<PathNodeType>noneOf(PathNodeType.class);
         PathNodeType pathnodetype = PathNodeType.BLOCKED;
@@ -211,6 +225,8 @@ public class FlyingNodeProcessor extends WalkNodeProcessor {
             }
         }
     }
+	
+	@Override
     public PathNodeType getPathNodeType(IBlockAccess blockaccessIn, int x, int y, int z, int xSize, int ySize, int zSize, boolean canOpenDoorsIn, boolean canEnterDoorsIn, EnumSet<PathNodeType> set, PathNodeType type, BlockPos pos) {
         for (int i = 0; i < xSize; ++i) {
             for (int j = 0; j < ySize; ++j) {
@@ -237,6 +253,8 @@ public class FlyingNodeProcessor extends WalkNodeProcessor {
         }
         return type;
     }
+	
+	@Override
     public PathNodeType getPathNodeType(IBlockAccess blockaccessIn, int x, int y, int z) {
     	PathNodeType pathnodetype = this.getPathNodeTypeRaw(blockaccessIn, x, y, z);
         if (pathnodetype == PathNodeType.OPEN && y >= 1) {
@@ -257,6 +275,8 @@ public class FlyingNodeProcessor extends WalkNodeProcessor {
         pathnodetype = this.checkNeighborBlocks(blockaccessIn, x, y, z, pathnodetype);
         return pathnodetype;
     }
+	
+	@Override
     protected PathNodeType getPathNodeTypeRaw(IBlockAccess blockaccessIn, int x, int y, int z) {
     	BlockPos blockpos = new BlockPos(x, y, z);
         IBlockState iblockstate = blockaccessIn.getBlockState(blockpos);
@@ -268,12 +288,16 @@ public class FlyingNodeProcessor extends WalkNodeProcessor {
         }
         return material == Material.AIR ? PathNodeType.OPEN : (block != Blocks.TRAPDOOR && block != Blocks.IRON_TRAPDOOR && block != Blocks.WATERLILY ? (block == Blocks.FIRE ? PathNodeType.DAMAGE_FIRE : (block == Blocks.CACTUS ? PathNodeType.DAMAGE_CACTUS : (block instanceof BlockDoor && material == Material.WOOD && !((Boolean)iblockstate.getValue(BlockDoor.OPEN)).booleanValue() ? PathNodeType.DOOR_WOOD_CLOSED : (block instanceof BlockDoor && material == Material.IRON && !((Boolean)iblockstate.getValue(BlockDoor.OPEN)).booleanValue() ? PathNodeType.DOOR_IRON_CLOSED : (block instanceof BlockDoor && ((Boolean)iblockstate.getValue(BlockDoor.OPEN)).booleanValue() ? PathNodeType.DOOR_OPEN : (block instanceof BlockRailBase ? PathNodeType.RAIL : (!(block instanceof BlockFence) && !(block instanceof BlockWall) && (!(block instanceof BlockFenceGate) || ((Boolean)iblockstate.getValue(BlockFenceGate.OPEN)).booleanValue()) ? (material == Material.WATER ? PathNodeType.WATER : (material == Material.LAVA ? PathNodeType.LAVA : (block.isPassable(blockaccessIn, blockpos) ? PathNodeType.OPEN : PathNodeType.BLOCKED))) : PathNodeType.FENCE))))))) : PathNodeType.TRAPDOOR);
     }
+	
     private PathNodeType getPathNodeType(EntityLiving entity, BlockPos pos) {
         return this.getPathNodeType(pos.getX(), pos.getY(), pos.getZ(), entity);
     }
+    
     private PathNodeType getPathNodeType(int x, int y, int z, EntityLiving entity) {
         return this.getPathNodeType(this.blockaccess, x, y, z, entity, this.entitySizeX, this.entitySizeY, this.entitySizeZ, /*this.getCanBreakDoors(),*/ this.getCanOpenDoors(), this.getCanEnterDoors());
     }
+    
+    @Override
     public PathNodeType checkNeighborBlocks(IBlockAccess blockaccessIn, int x, int y, int z, PathNodeType pathnodetype) {
         BlockPos.PooledMutableBlockPos blockpos = BlockPos.PooledMutableBlockPos.retain();
         if (pathnodetype == PathNodeType.WALKABLE) {

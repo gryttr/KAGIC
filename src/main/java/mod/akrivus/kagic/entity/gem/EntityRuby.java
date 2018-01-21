@@ -453,7 +453,7 @@ public class EntityRuby extends EntityGem {
         double distanceFromTargetY = target.getEntityBoundingBox().minY + (double)(target.height / 3.0F) - arrow.posY;
         double distanceFromTargetZ = target.posZ - this.posZ;
         double distanceFromTargetS = (double) MathHelper.sqrt(distanceFromTargetX * distanceFromTargetX + distanceFromTargetY * distanceFromTargetY);
-        arrow.setThrowableHeading(distanceFromTargetX, distanceFromTargetY + distanceFromTargetS * 0.20000000298023224D, distanceFromTargetZ, 1.6F, 2.0F);
+        arrow.shoot(distanceFromTargetX, distanceFromTargetY + distanceFromTargetS * 0.20000000298023224D, distanceFromTargetZ, 1.6F, 2.0F);
         arrow.setDamage((double)(distanceFactor * 2.0F) + this.rand.nextGaussian() * 0.25D + (double)((float)this.world.getDifficulty().getDifficultyId() * 0.11F));
         
         // Enchantments.

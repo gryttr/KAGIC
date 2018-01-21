@@ -107,7 +107,7 @@ public class ItemGem extends Item {
 	    			newGem.setOwnerId(EntityPlayer.getUUID(playerIn.getGameProfile()));
 	    			newGem.setLeader(playerIn);
 	        		newGem.setServitude(EntityGem.SERVE_HUMAN);
-	            	newGem.getNavigator().clearPathEntity();
+	            	newGem.getNavigator().clearPath();
 	            	newGem.setAttackTarget(null);
 	            	newGem.setHealth(newGem.getMaxHealth());
 	            	newGem.playTameEffect();

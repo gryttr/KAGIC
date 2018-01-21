@@ -24,12 +24,12 @@ public class EntityAIStay extends EntityAIBase {
         }
         else {
             EntityLivingBase entitylivingbase = this.theEntity.getOwner();
-            return entitylivingbase == null ? true : (this.theEntity.getDistanceSqToEntity(entitylivingbase) < 144.0D && entitylivingbase.getLastAttackedEntity() != null ? false : this.isSitting);
+            return entitylivingbase == null ? true : (this.theEntity.getDistanceSq(entitylivingbase) < 144.0D && entitylivingbase.getLastAttackedEntity() != null ? false : this.isSitting);
         }
     }
 
     public void startExecuting() {
-        this.theEntity.getNavigator().clearPathEntity();
+        this.theEntity.getNavigator().clearPath();
         this.theEntity.isSitting = true;
     }
 

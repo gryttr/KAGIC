@@ -38,12 +38,12 @@ public class EntityAIFollowDiamond extends EntityAIBase {
     }
     public void resetTask() {
         this.theOwner = null;
-        this.theGem.getNavigator().clearPathEntity();
+        this.theGem.getNavigator().clearPath();
         this.theGem.setPathPriority(PathNodeType.WATER, this.oldWaterCost);
     }
     public void updateTask() {
-        if (!this.theGem.isSitting() && this.theGem.getDistanceToEntity(this.theOwner) > (this.theOwner.width * 3) + 2) {
-        	if (this.theGem.getDistanceToEntity(this.theOwner) > 24.0D) {
+        if (!this.theGem.isSitting() && this.theGem.getDistanceSq(this.theOwner) > (this.theOwner.width * 3) + 2) {
+        	if (this.theGem.getDistanceSq(this.theOwner) > 24.0D) {
                 int x = MathHelper.floor(this.theOwner.posX - this.theGem.width);
                 int y = MathHelper.floor(this.theOwner.getEntityBoundingBox().minY);
                 int z = MathHelper.floor(this.theOwner.posZ - this.theGem.width);
@@ -51,7 +51,7 @@ public class EntityAIFollowDiamond extends EntityAIBase {
                     for (int j = 0; i <= 4; ++i) {
                         if ((i < 1 || j < 1 || i > 3 || j > 3) && this.canHandleClearance(this.theGem.height)) {
                             this.theGem.setLocationAndAngles((double)((float)(x + j) + 0.5F), (double) y, (double)((float)(z + i) + 0.5F), this.theGem.rotationYaw, this.theGem.rotationPitch);
-                            this.theGem.getNavigator().clearPathEntity();
+                            this.theGem.getNavigator().clearPath();
                             return;
                         }
                     }

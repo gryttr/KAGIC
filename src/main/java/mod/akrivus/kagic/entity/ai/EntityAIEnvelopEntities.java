@@ -19,11 +19,11 @@ public class EntityAIEnvelopEntities extends EntityAIBase {
 		return this.shouldExecute() && !this.target.isDead;
 	}
 	public void resetTask() {
-		this.topaz.getNavigator().clearPathEntity();
+		this.topaz.getNavigator().clearPath();
 		this.target = null;
 	}
 	public void updateTask() {
-		if (this.topaz.getDistanceSqToEntity(this.target) < 4.0F) {
+		if (this.topaz.getDistanceSq(this.target) < 4.0F) {
 			this.topaz.isPeaceful = this.target.startRiding(this.topaz, true);
 			this.resetTask();
 		}

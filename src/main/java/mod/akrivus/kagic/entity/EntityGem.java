@@ -575,7 +575,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 						this.setOwnerId(player.getUniqueID());
 						this.setLeader(player);
 						this.setServitude(EntityGem.SERVE_HUMAN);
-						this.navigator.clearPathEntity();
+						this.navigator.clearPath();
 						this.setAttackTarget(null);
 						this.setHealth(this.getMaxHealth());
 						this.playTameEffect();
@@ -591,7 +591,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 						this.setOwnerId(player.getUniqueID());
 						this.setLeader(player);
 						this.setServitude(EntityGem.SERVE_HUMAN);
-						this.navigator.clearPathEntity();
+						this.navigator.clearPath();
 						this.setAttackTarget(null);
 						this.setHealth(this.getMaxHealth());
 						this.playTameEffect();
@@ -951,7 +951,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 					return true;
 				}
 				else if (this.isMatching("regex.kagic.stop", message)) {
-					this.getNavigator().clearPathEntity();
+					this.getNavigator().clearPath();
 					if (!this.isSitting()) {
 						this.isSitting = true;
 						this.restPosition = this.getPosition();
@@ -970,7 +970,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
 							double distance = Double.MAX_VALUE;
 							for (EntityLivingBase base : list) {
-								double newDistance = this.getDistanceSqToEntity(base);
+								double newDistance = this.getDistanceSq(base);
 								if (newDistance <= distance && base.getName().toLowerCase().contains(args.get(0)) && this.shouldAttackEntity(this, base)) {
 									this.setRevengeTarget(base);
 									distance = newDistance;
@@ -985,7 +985,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
 							double distance = Double.MAX_VALUE;
 							for (EntityLivingBase base : list) {
-								double newDistance = this.getDistanceSqToEntity(base);
+								double newDistance = this.getDistanceSq(base);
 								if (newDistance <= distance && base.getName().toLowerCase().contains(args.get(0)) && this.shouldAttackEntity(this, base)) {
 									this.getNavigator().tryMoveToEntityLiving(base, 1.0);
 									this.setRevengeTarget(base.getRevengeTarget());
@@ -1665,7 +1665,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		double distanceFromTargetY = target.getEntityBoundingBox().minY + (double)(target.height) - arrow.posY;
 		double distanceFromTargetZ = target.posZ - this.posZ;
 		double distanceFromTargetS = (double) MathHelper.sqrt(distanceFromTargetX * distanceFromTargetX + distanceFromTargetY * distanceFromTargetY);
-		arrow.setThrowableHeading(distanceFromTargetX, distanceFromTargetY + distanceFromTargetS * 0.20000000298023224D, distanceFromTargetZ, 1.6F, 0.0F);
+		arrow.shoot(distanceFromTargetX, distanceFromTargetY + distanceFromTargetS * 0.20000000298023224D, distanceFromTargetZ, 1.6F, 0.0F);
 		arrow.setDamage(distanceFactor * 2.0D + this.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getBaseValue() + this.rand.nextGaussian() * 0.25D);
 		int power = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this);
 		int punch = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this);

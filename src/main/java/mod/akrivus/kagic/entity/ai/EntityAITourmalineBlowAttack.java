@@ -23,7 +23,7 @@ public class EntityAITourmalineBlowAttack extends EntityAIBase {
 	@Override
 	public boolean shouldExecute() {
 		EntityLivingBase target = this.tourmaline.getAttackTarget();
-		return target != null && this.tourmaline.getDistanceToEntity(target) <= this.distance;
+		return target != null && this.tourmaline.getDistance(target) <= this.distance;
 	}
 	
 	@Override

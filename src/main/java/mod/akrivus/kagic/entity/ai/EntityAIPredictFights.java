@@ -49,8 +49,8 @@ public class EntityAIPredictFights extends EntityAITarget {
     	double distance = 0;
         for (EntityGem fighter : nearbygems) {
         	if (!this.gem.equals(fighter) && fighter.isSoldier) {
-        		if (this.gem.getDistanceSqToEntity(fighter) > distance) {
-        			distance = this.gem.getDistanceSqToEntity(fighter);
+        		if (this.gem.getDistanceSq(fighter) > distance) {
+        			distance = this.gem.getDistanceSq(fighter);
         			destination = fighter;
         		}
             }
