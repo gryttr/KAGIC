@@ -40,7 +40,7 @@ public class ModelPeridot extends ModelGem {
 	    this.bipedHeadwear.setRotationPoint(0F, 0F, 0F);
 		// Squaridot
 		this.squareHair = new ModelRenderer(this, 0, 45);
-		this.squareHair.addBox(-7F, -9.75F, -3.49F, 14, 12, 7);
+		this.squareHair.addBox(-7F, -8F, -3.49F, 14, 12, 7);
 	    this.squareHair.setRotationPoint(0F, 0F, 0F);
 	    // Body.
 	    this.normalBody = new ModelRenderer(this, 8, 20);
@@ -122,9 +122,9 @@ public class ModelPeridot extends ModelGem {
 		this.bipedHeadwear.rotateAngleY = 0;
 		this.bipedHeadwear.rotateAngleZ = 0.7853982f;
 		if (!((EntityPeridot) entity).isDefective()) {
-			this.bipedHeadwear.offsetY = -0.2F;
+			this.bipedHead.offsetY = -0.2F;
 		} else {
-			this.bipedHeadwear.offsetY = 0.05F;
+			this.bipedHead.offsetY = .05F;
 		}
 	}
 	
