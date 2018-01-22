@@ -30,7 +30,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class EntityPadparadscha extends EntityGem {
-	public static final HashMap<Block, Double> PADPARADSCHA_YIELDS = new HashMap<Block, Double>();
 	public static final HashMap<Integer, ResourceLocation> PADPARADSCHA_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	public int lastLoveTime = 0;
 	public int luckTicks = 0;
