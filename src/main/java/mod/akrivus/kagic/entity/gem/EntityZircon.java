@@ -12,6 +12,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.items.ItemGem;
 import mod.akrivus.kagic.items.ItemGemStaff;
 import mod.akrivus.kagic.util.KAGICEnchantmentUtils;
 import net.minecraft.block.state.IBlockState;
@@ -214,7 +215,7 @@ public class EntityZircon extends EntityGem {
 				} else if (playerStack.isEmpty()) {
 					this.entityDropItem(this.getHeldItemMainhand(), 0.5F);
 					this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
-				} else if (!(playerStack.getItem() instanceof ItemGemStaff) && this.getHeldItemMainhand().getItem() instanceof ItemEnchantedBook) {
+				} else if (!(playerStack.getItem() instanceof ItemGemStaff) && !(playerStack.getItem() instanceof ItemGem) && this.getHeldItemMainhand().getItem() instanceof ItemEnchantedBook) {
 					ItemStack enchantmentResult = this.getEnchantedItem(playerStack.copy());
 					if (playerStack.getCount() == 1) {
 						player.setHeldItem(EnumHand.MAIN_HAND, enchantmentResult);
