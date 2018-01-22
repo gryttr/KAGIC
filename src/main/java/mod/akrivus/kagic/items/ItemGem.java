@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.Nullable;
+
 import mod.akrivus.kagic.entity.EntityCorruptedGem;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityRuby;
@@ -12,6 +14,7 @@ import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModCreativeTabs;
 import mod.akrivus.kagic.init.ModEntities;
 import mod.akrivus.kagic.init.ModItems;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -31,9 +34,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemGem extends Item {
 	private final String gemName;
 	public boolean isCracked;
+	
 	public ItemGem(String name) {
 		this(name, false);
 	}
+	
 	public ItemGem(String name, boolean cracked) {
 		this.setUnlocalizedName((cracked ? "cracked_" : "") + name + "_gem");
 		this.setMaxStackSize(1);
@@ -41,22 +46,31 @@ public class ItemGem extends Item {
 		this.isCracked = cracked;
 		this.gemName = new TextComponentTranslation("entity.kagic." + name + ".name").getUnformattedComponentText();
 	}
+	
 	public void setData(EntityGem host, ItemStack stack) {
 		stack.setTagCompound(host.writeToNBT(new NBTTagCompound()));
 		stack.getTagCompound().setString("name", host.getName());
 	}
+	
 	public void clearData(ItemStack itemStackIn) {
 		itemStackIn.setTagCompound(new NBTTagCompound());
 	}
+	
+	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean info) {
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		try {
-			list.add(stack.getTagCompound().getString("name"));
+			String name = stack.getTagCompound().getString("name");
+			if (!name.isEmpty()) {
+				tooltip.add(name);
+			}
 		}
 		catch (NullPointerException e) {
-			list.add(this.gemName);
+			tooltip.add(this.gemName);
 		}
 	}
+	
+	@Override
 	public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote) {
 			ItemStack stack = playerIn.getHeldItem(hand);
@@ -76,6 +90,7 @@ public class ItemGem extends Item {
 		}
 		return EnumActionResult.PASS;
 	}
+	
 	public boolean spawnGem(World worldIn, EntityPlayer playerIn, BlockPos blockpos, ItemStack stack) {
 		if (this.isCracked) {
 			return false;
@@ -126,6 +141,7 @@ public class ItemGem extends Item {
 		}
 	}
 	
+	@Override
 	public boolean onEntityItemUpdate(EntityItem entity) {
 		entity.isDead = false;
 		entity.setEntityInvulnerable(true);
