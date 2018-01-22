@@ -312,12 +312,12 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 					this.gemStorage.addItem(player.getHeldItemMainhand());
 					this.playObeySound();
 					return true;
-				} else if (this.isMatching("regex.kagic.train", message)) {
+				} /*else if (this.isMatching("regex.kagic.train", message)) {
 					this.spawnHoloPearl();
 					this.talkTo(player, new TextComponentTranslation("notify.kagic.train").getUnformattedComponentText());
 					this.playObeySound();
 					return true;
-				} else if (this.isDefective()) {
+				} */else if (this.isDefective()) {
 					if (this.isMatching("regex.kagic.kill", message)) {
 						ArrayList<String> args = this.getArgsFrom("regex.kagic.kill", message);
 						if (args.size() > 0) {
