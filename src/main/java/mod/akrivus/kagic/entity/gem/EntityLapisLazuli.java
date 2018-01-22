@@ -95,9 +95,12 @@ public class EntityLapisLazuli extends EntityGem {
 		this.droppedCrackedGemItem = ModItems.CRACKED_LAPIS_LAZULI_GEM;
 	}
 
+	@Override
 	public float[] getGemColor() {
     	return new float[] { 30F / 255F, 143F / 255F, 244F / 255F };
     }
+
+	@Override
 	public void convertGems(int placement) {
     	this.setGemCut(GemCuts.TEARDROP.id);
     	switch (placement) {
@@ -116,6 +119,7 @@ public class EntityLapisLazuli extends EntityGem {
 	/*********************************************************
 	 * Methods related to loading.                           *
 	 *********************************************************/
+	@Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
         return super.onInitialSpawn(difficulty, livingdata);
     }
@@ -123,6 +127,7 @@ public class EntityLapisLazuli extends EntityGem {
 	/*********************************************************
 	 * Methods related to interaction.                       *
 	 *********************************************************/
+	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
 			if (hand == EnumHand.MAIN_HAND) {
@@ -132,15 +137,12 @@ public class EntityLapisLazuli extends EntityGem {
 						if (this.isCoreItem(stack)) {
 							return super.processInteract(player, hand);
 						}
-						else if (stack.getItem() instanceof ItemHoe) {
+						else if (stack.getItem() instanceof ItemHoe || stack.isEmpty()) {
 		        			boolean toolChanged = true;
-		        			if (this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isEmpty()) {
-								if (!this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqualIgnoreDurability(stack)) {
-									this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
-								}
-								else {
-									toolChanged = false;
-								}
+							if (!this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqualIgnoreDurability(stack)) {
+								this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
+							} else {
+								toolChanged = false;
 							}
 		        			if (toolChanged) {
 								ItemStack heldItem = stack.copy();
@@ -166,16 +168,24 @@ public class EntityLapisLazuli extends EntityGem {
 		}
 		return super.processInteract(player, hand);
     }
+
+	@Override
 	public void updatePassenger(Entity passenger) {
         super.updatePassenger(passenger);
         passenger.setPosition(this.posX, this.posY - 1.25F, this.posZ);
     }
+
+	@Override
 	public boolean shouldDismountInWater(Entity rider) {
 		return false;
 	}
+
+	@Override
     public Entity getControllingPassenger() {
         return this.getPassengers().isEmpty() ? null : this.getPassengers().get(0);
     }
+
+	@Override
 	public boolean canBeSteered() {
 		if (this.world.isRemote) {
 			return true;
@@ -189,6 +199,8 @@ public class EntityLapisLazuli extends EntityGem {
 	        return false;
         }
     }
+
+	@Override
 	public void travel(float strafe, float up, float forward) {
 		Entity entity = this.getPassengers().isEmpty() ? null : (Entity)this.getPassengers().get(0);
         if (this.isBeingRidden() && this.canBeSteered()) {
@@ -254,9 +266,11 @@ public class EntityLapisLazuli extends EntityGem {
             super.travel(strafe, up, forward);
         }
 	}
+	
 	public boolean isFarmer() {
 		return this.isTamed() && this.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemHoe;
 	}
+	
 	private boolean hasWater(World worldIn, BlockPos pos) {
         for (BlockPos.MutableBlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(pos.add(-4, 0, -4), pos.add(4, 1, 4))) {
             if (worldIn.getBlockState(blockpos$mutableblockpos).getMaterial() == Material.WATER) {
@@ -269,6 +283,7 @@ public class EntityLapisLazuli extends EntityGem {
 	/*********************************************************
 	 * Methods related to living.                            *
 	 *********************************************************/
+	@Override
 	public void onLivingUpdate() {
 		if (this.isBeingRidden() && !this.onGround) {
 			++this.ticksFlying;
@@ -294,6 +309,7 @@ public class EntityLapisLazuli extends EntityGem {
 	/*********************************************************
 	 * Methods related to combat.                            *
 	 *********************************************************/
+	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (this.isBeingRidden() && source.getTrueSource() != null) {
 			if (this.getPassengers().get(0).equals(source.getTrueSource())) {
@@ -302,16 +318,22 @@ public class EntityLapisLazuli extends EntityGem {
 		}
 		return super.attackEntityFrom(source, amount);
 	}
+
+	@Override
 	public void fall(float distance, float damageMultiplier) {
 		if (!this.isBeingRidden()) {
 			super.fall(distance, damageMultiplier);
 		}
 	}
+	
+	@Override
     protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) {
 		if (!this.isBeingRidden()) {
 			super.updateFallState(y, onGroundIn, state, pos);
 		}
 	}
+	
+	@Override
 	public boolean isOnLadder() {
         return false;
     }
@@ -319,6 +341,7 @@ public class EntityLapisLazuli extends EntityGem {
 	/*********************************************************
 	 * Methods related to death.                             *
 	 *********************************************************/
+	@Override
 	public void onDeath(DamageSource cause) {
 		if (!this.world.isRemote) {
 			if (cause.getTrueSource() instanceof EntitySkeleton) {
@@ -331,12 +354,17 @@ public class EntityLapisLazuli extends EntityGem {
 	/*********************************************************
 	 * Methods related to sounds.                            *
 	 *********************************************************/
+	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.LAPIS_LAZULI_HURT;
 	}
+
+	@Override
 	protected SoundEvent getObeySound() {
 		return ModSounds.LAPIS_LAZULI_OBEY;
 	}
+
+	@Override
 	protected SoundEvent getDeathSound() {
 		return ModSounds.LAPIS_LAZULI_DEATH;
 	}
