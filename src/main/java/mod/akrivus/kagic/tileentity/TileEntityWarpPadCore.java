@@ -229,34 +229,36 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 	
 	@Override
 	public void update() {
-		++(this.ticksSinceLastCheck);
-		if (this.isValid() && (ticksSinceLastCheck & 10) == 0) {
-			this.validateWarpPad();
-			this.ticksSinceLastCheck = 0;
-		}
-
-		if (this.warpTicksLeft > 0) {
-			--this.warpTicksLeft;
-			if (this.warpTicksLeft <= 0) {
-				this.WARP();
+		if (!this.world.isRemote) {
+			++(this.ticksSinceLastCheck);
+			if (this.isValid() && (ticksSinceLastCheck & 20) == 0) {
+				this.validateWarpPad();
+				this.ticksSinceLastCheck = 0;
 			}
-		} 
 		
-		if (this.cooldownTicksLeft >= 0) {
-			--this.cooldownTicksLeft;
-		} else if (this.cooling) {
-			this.cooling = false;
-			this.setDirty();
-		}
-		
-		if (this.ticket != null) {
-			--this.loadChunkTicksLeft;
-		}
-		if (this.loadChunkTicksLeft < 0 && this.ticket != null) {
-			//KAGIC.instance.chatInfoMessage("Releasing ticket");
-			ForgeChunkManager.releaseTicket(ticket);
-			this.ticket = null;
-			this.loadChunkTicksLeft = 0;
+			if (this.warpTicksLeft > 0) {
+				--this.warpTicksLeft;
+				if (this.warpTicksLeft <= 0) {
+					this.WARP();
+				}
+			} 
+			
+			if (this.cooldownTicksLeft >= 0) {
+				--this.cooldownTicksLeft;
+			} else if (this.cooling) {
+				this.cooling = false;
+				this.setDirty();
+			}
+			
+			if (this.ticket != null) {
+				--this.loadChunkTicksLeft;
+			}
+			if (this.loadChunkTicksLeft < 0 && this.ticket != null) {
+				//KAGIC.instance.chatInfoMessage("Releasing ticket");
+				ForgeChunkManager.releaseTicket(ticket);
+				this.ticket = null;
+				this.loadChunkTicksLeft = 0;
+			}
 		}
 	}
 	
