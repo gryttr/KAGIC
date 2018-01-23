@@ -27,9 +27,9 @@ public class LayerJasperMark2 implements LayerRenderer<EntityJasper> {
 	        float r = (float) ((mark2Color & 16711680) >> 16) / 255f;
 	        float g = (float) ((mark2Color & 65280) >> 8) / 255f;
 	        float b = (float) ((mark2Color & 255) >> 0) / 255f;
-			GlStateManager.color(r, g, b, 0.99f);
-			GlStateManager.enableBlend();
-			GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+			GlStateManager.color(r, g, b/*, 0.99f*/);
+			//GlStateManager.enableBlend();
+			//GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 			this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
 	        this.gemModel.render(jasper, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 		} else {

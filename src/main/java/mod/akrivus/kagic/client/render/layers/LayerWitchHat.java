@@ -28,8 +28,8 @@ public class LayerWitchHat implements LayerRenderer<EntityGem> {
 		this.gemRenderer.bindTexture(this.getTexture(gem));
 		float[] insigniaColor = EntitySheep.getDyeRgb(EnumDyeColor.values()[gem.getInsigniaColor()]);
 		GlStateManager.color(insigniaColor[0] * 2, insigniaColor[1] * 2, insigniaColor[2] * 2, 1F);
-		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+		//GlStateManager.enableBlend();
+		//GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
         this.gemModel.renderWitchHat(scale);
 		GlStateManager.disableBlend();

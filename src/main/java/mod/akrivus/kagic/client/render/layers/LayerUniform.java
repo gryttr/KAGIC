@@ -24,9 +24,9 @@ public class LayerUniform implements LayerRenderer<EntityGem> {
 	public void doRenderLayer(EntityGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		this.gemRenderer.bindTexture(this.getTexture(gem));
 		float[] afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[gem.getUniformColor()]);
-		GlStateManager.color(afloat[0] * 2, afloat[1] * 2, afloat[2] * 2, 0.99f);
-		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+		GlStateManager.color(afloat[0] * 2, afloat[1] * 2, afloat[2] * 2/*, 0.99f*/);
+		//GlStateManager.enableBlend();
+		//GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
         this.gemModel.render(gem, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 		GlStateManager.disableBlend();

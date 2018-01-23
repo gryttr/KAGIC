@@ -27,10 +27,10 @@ public class LayerNoDyeOverlay implements LayerRenderer<EntityGem> {
 	
 	@Override
 	public void doRenderLayer(EntityGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 0.99F);
+		GlStateManager.color(1.0F, 1.0F, 1.0F/*, 0.99F*/);
 		this.gemRenderer.bindTexture(this.getTexture(gem));
-		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+		//GlStateManager.enableBlend();
+		//GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
         this.gemModel.render(gem, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 		GlStateManager.disableBlend();

@@ -28,9 +28,9 @@ public class LayerMalachiteMark implements LayerRenderer<EntityMalachite> {
         float r = (float) ((mark1Color & 16711680) >> 16) / 255f;
         float g = (float) ((mark1Color & 65280) >> 8) / 255f;
         float b = (float) ((mark1Color & 255) >> 0) / 255f;
-		GlStateManager.color(r, g, b, 0.99f);
-		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+		GlStateManager.color(r, g, b/*, 0.99f*/);
+		//GlStateManager.enableBlend();
+		//GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
         this.gemModel.render(malachite, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 	}

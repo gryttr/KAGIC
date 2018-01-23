@@ -23,8 +23,8 @@ public class LayerAgateBand implements LayerRenderer<EntityAgate> {
 			this.gemRenderer.bindTexture(EntityAgate.AGATE_BAND_STYLES.get(agate.getHairStyle()));
 			float[] afloat = EntityAgate.BANDCOLORS[agate.getColor()];
 			GlStateManager.color(afloat[0], afloat[1], afloat[2]);
-			GlStateManager.enableBlend();
-			GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+			//GlStateManager.enableBlend();
+			//GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 			this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
 	        this.gemModel.render(agate, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 		}

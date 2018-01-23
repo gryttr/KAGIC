@@ -40,8 +40,8 @@ public class LayerSkin implements LayerRenderer<EntityGem> {
 		float b = (float) ((skin & 255) >> 0) / 255f;
 		//KAGIC.instance.chatInfoMessage("Skin color is " + r + " , " + g + " , " + b);
 		GlStateManager.color(r+ this.offset, g + this.offset, b + this.offset, 1f);
-		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+		//GlStateManager.enableBlend();
+		//GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
         this.gemModel.render(gem, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 		GlStateManager.disableBlend();
