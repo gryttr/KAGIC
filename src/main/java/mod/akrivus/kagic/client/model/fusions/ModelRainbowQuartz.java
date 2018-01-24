@@ -10,65 +10,85 @@ import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelRainbowQuartz extends ModelGem {
+	public ModelRenderer neck;
 	public ModelRenderer waist;
 	public ModelRenderer shawl;
+	public ModelRenderer nose;
+	public ModelRenderer hair;
+	public ModelRenderer left_leg_bottom;
+	public ModelRenderer right_leg_bottom;
 
 	public ModelRainbowQuartz() {
 		this(0.0F);
 	}
 	
 	public ModelRainbowQuartz(float modelSize) {
-		super(modelSize, 0.0F, 96, 64, false, -1F);
+		super(modelSize, 0.0F, 128, 64, false, -1F);
 
-		this.bipedHead = new ModelRenderer(this, 42, 9);
-		this.bipedHead.setRotationPoint(0.0F, -6.0F, 0.0F);
-		this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F);
-		this.bipedHead.setTextureSize(96, 64);
-		this.bipedHeadwear = new ModelRenderer(this, 34, 25);
-		this.bipedHeadwear.setRotationPoint(0.0F, -9.0F, 0.0F);
-		this.bipedHeadwear.addBox(-5.0F, 0.0F, -5.0F, 10, 20, 10, 0.0F);
-		this.bipedHeadwear.setTextureSize(96, 64);
-		if (KAGIC.isHalloween() || KAGIC.isBirthday() || KAGIC.isChristmas()) {
-			this.bipedHead.addChild(this.witchHat);
-		}
-		
+		this.bipedHead = new ModelRenderer(this, 22, 9);
+		this.bipedHead.setRotationPoint(0.0F, -2.0F, 0.0F);
+		this.bipedHead.addBox(-3.0F, -8.0F, -3.0F, 6, 8, 6, modelSize);
+		this.hair = new ModelRenderer(this, 37, 18);
+		this.hair.setRotationPoint(0.0F, -4.7F, 0.0F);
+		this.hair.addBox(-4.5F, -4.5F, -4.0F, 9, 24, 9, modelSize);
+		this.nose = new ModelRenderer(this, 0, 0);
+		this.nose.setRotationPoint(0.0F, -4.5F, -2.7F);
+		this.nose.addBox(-0.5F, -0.5F, -2.0F, 1, 2, 2, modelSize);
+		this.setRotateAngle(nose, 1.2292353921796064F, 0.0F, 0.0F);
+		this.neck = new ModelRenderer(this, 22, 0);
+		this.neck.setRotationPoint(0.0F, -3F, 0.0F);
+		this.neck.addBox(-1.0F, -2.0F, -1.0F, 2, 2, 2, modelSize);
+
+		this.bipedLeftArm = new ModelRenderer(this, 61, 0);
+		this.bipedLeftArm.setRotationPoint(2.7F, -1.5F, 0.0F);
+		this.bipedLeftArm.addBox(0.5F, -1.5F, -1.5F, 3, 15, 3, modelSize);
+		this.setRotateAngle(bipedLeftArm, 0.0F, 0.0F, -0.08726646259971647F);
+		this.bipedRightArm = new ModelRenderer(this, 49, 0);
+		this.bipedRightArm.setRotationPoint(-1.7F, -1.5F, 0.0F);
+		this.bipedRightArm.addBox(-4.5F, -1.5F, -1.5F, 3, 15, 3, modelSize);
+		this.setRotateAngle(bipedRightArm, 0.0F, 0.0F, 0.08726646259971647F);
+
 		this.bipedBody = new ModelRenderer(this, 0, 0);
-		this.bipedBody.setRotationPoint(0.0F, 0.0F, 0.0F);
-		this.bipedBody.addBox(-4.0F, -6.0F, -2.5F, 8, 8, 5, 0.0F);
-		this.waist = new ModelRenderer(this, 50, 0);
-		this.waist.setRotationPoint(0.0F, 2.0F, 0.0F);
-		this.waist.addBox(-4.0F, 0.0F, -2.0F, 8, 5, 4, 0.0F);
-		this.shawl = new ModelRenderer(this, 0, 19);
-		this.shawl.setRotationPoint(0.0F, 0.0F, 0.0F);
-		this.shawl.addBox(-8.0F, -6.4F, -3.0F, 16, 10, 6, 0.0F);
+		this.bipedBody.setRotationPoint(0.0F, -6.0F, 0.0F);
+		this.bipedBody.addBox(-4.0F, -3.0F, -3.0F, 8, 7, 6, modelSize);
+		this.waist = new ModelRenderer(this, 28, 0);
+		this.waist.setRotationPoint(0.0F, 2.8F, 0.0F);
+		this.waist.addBox(-3.0F, -0.5F, -2.0F, 6, 5, 4, modelSize);
+		this.shawl = new ModelRenderer(this, 73, 0);
+		this.shawl.setRotationPoint(0.0F, -3.5F, 0.0F);
+		this.shawl.addBox(-8.0F, 0.0F, -3.5F, 16, 12, 7, modelSize);
 
-		this.bipedRightArm = new ModelRenderer(this, 38, 0);
-		this.bipedRightArm.setRotationPoint(-4.0F, -6.0F, 0.0F);
-		this.bipedRightArm.addBox(-3.0F, 0.0F, -1.5F, 3, 14, 3, 0.0F);
-		this.bipedLeftArm = new ModelRenderer(this, 26, 0);
-		this.bipedLeftArm.setRotationPoint(4.0F, -6.0F, 0.0F);
-		this.bipedLeftArm.addBox(0.0F, 0.0F, -1.5F, 3, 14, 3, 0.0F);
+		this.bipedLeftLeg = new ModelRenderer(this, 0, 13);
+		this.bipedLeftLeg.setRotationPoint(0.0F, 4.5F, 0.5F);
+		this.bipedLeftLeg.addBox(0.0F, 0.0F, -2.5F, 4, 9, 4, modelSize);
+		this.bipedRightLeg = new ModelRenderer(this, 73, 19);
+		this.bipedRightLeg.setRotationPoint(0.0F, 4.5F, 0.5F);
+		this.bipedRightLeg.addBox(-4.0F, 0.0F, -2.5F, 4, 9, 4, modelSize);
+
+		this.left_leg_bottom = new ModelRenderer(this, 89, 19);
+		this.left_leg_bottom.setRotationPoint(0.6F, 9.0F, -0.6F);
+		this.left_leg_bottom.addBox(0.0F, 0.0F, -1.5F, 3, 12, 3, modelSize);
+		this.right_leg_bottom = new ModelRenderer(this, 116, 16);
+		this.right_leg_bottom.setRotationPoint(-0.7F, 9.0F, -0.6F);
+		this.right_leg_bottom.addBox(-3.0F, 0.0F, -1.5F, 3, 12, 3, modelSize);
 		
-		this.bipedLeftLeg = new ModelRenderer(this, 74, 18);
-		this.bipedLeftLeg.setRotationPoint(2.2F, 5.0F, 0.0F);
-		this.bipedLeftLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 14, 4, 0.0F);
-		this.bipedRightLeg = new ModelRenderer(this, 74, 0);
-		this.bipedRightLeg.setRotationPoint(-2.2F, 5.0F, 0.0F);
-		this.bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4, 14, 4, 0.0F);
-		
-		//this.bipedBody.addChild(this.bipedHead);
 		this.bipedBody.addChild(this.bipedRightArm);
-		this.bipedBody.addChild(this.bipedLeftArm);
 		this.bipedBody.addChild(this.waist);
 		this.waist.addChild(this.bipedLeftLeg);
-		this.bipedHead.addChild(this.bipedHeadwear);
 		this.waist.addChild(this.bipedRightLeg);
+		this.bipedRightLeg.addChild(this.right_leg_bottom);
+		this.neck.addChild(this.bipedHead);
+		this.bipedBody.addChild(this.neck);
+		this.bipedHead.addChild(this.nose);
 		this.bipedBody.addChild(this.shawl);
+		this.bipedLeftLeg.addChild(this.left_leg_bottom);
+		this.bipedHead.addChild(this.hair);
+		this.bipedBody.addChild(this.bipedLeftArm);
 	}
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
-		this.bipedHead.render(f5);
+		//this.bipedHead.render(f5);
 		this.bipedBody.render(f5);
 	}
 
@@ -199,7 +219,7 @@ public class ModelRainbowQuartz extends ModelGem {
 			this.bipedHead.rotationPointY = 1.0F;
 		} else {
 			this.bipedBody.rotateAngleX = 0.0F;
-			this.bipedHead.rotationPointY = -3.0F;
+			this.bipedHead.rotationPointY = -2.0F;
 		}
 
 		this.bipedRightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;

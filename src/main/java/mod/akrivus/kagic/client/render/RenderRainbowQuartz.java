@@ -5,6 +5,7 @@ import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
 import mod.akrivus.kagic.client.render.layers.LayerCrossFusionGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerNoDyeOverlay;
 import mod.akrivus.kagic.client.render.layers.LayerRainbowQuartzItem;
+import mod.akrivus.kagic.client.render.layers.LayerRainbowQuartzShawl;
 import mod.akrivus.kagic.client.render.layers.LayerSantaHat;
 import mod.akrivus.kagic.client.render.layers.LayerSkin;
 import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
@@ -22,6 +23,7 @@ public class RenderRainbowQuartz extends RenderGemBase<EntityRainbowQuartz> {
 		this.addLayer(new LayerRainbowQuartzItem(this));
 		this.addLayer(new LayerSkin(this));
 		this.addLayer(new LayerNoDyeOverlay(this));
+		this.addLayer(new LayerRainbowQuartzShawl(this));
 		this.addLayer(new LayerCrossFusionGemPlacement(this));
 
 		if (KAGIC.isBirthday()) {
@@ -35,7 +37,7 @@ public class RenderRainbowQuartz extends RenderGemBase<EntityRainbowQuartz> {
 
 	@Override
 	protected void preRenderCallback(EntityRainbowQuartz rainbowQuartz, float partialTickTime) {
-		GlStateManager.scale(2F * rainbowQuartz.getSizeFactor(), 2F * rainbowQuartz.getSizeFactor(), 2F * rainbowQuartz.getSizeFactor());
+		GlStateManager.scale(1.8F * rainbowQuartz.getSizeFactor(), 1.8F * rainbowQuartz.getSizeFactor(), 1.8F * rainbowQuartz.getSizeFactor());
 	}
 
 	@Override
