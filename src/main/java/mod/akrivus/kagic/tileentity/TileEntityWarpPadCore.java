@@ -307,6 +307,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		if (!this.world.isRemote) {
 			KAGIC.instance.chatInfoMessage("Name set");
 			this.name = name;
+			this.validateWarpPad();
 			this.setDirty();
 		} else {
 			KAGIC.instance.chatInfoMessage("ERROR: setName called on client");

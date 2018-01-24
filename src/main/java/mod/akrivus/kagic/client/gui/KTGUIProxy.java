@@ -23,7 +23,7 @@ public class KTGUIProxy implements IGuiHandler {
 	
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		if (ID == GUIWARPPADID) {
+		if (ID == GUIWARPPADID && world.isRemote) {
 			BlockPos pos = new BlockPos(x, y, z);
 			TileEntity te = world.getTileEntity(pos);
 			if (te instanceof TileEntityWarpPadCore) {

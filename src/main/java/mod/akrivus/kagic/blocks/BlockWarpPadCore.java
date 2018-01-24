@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.blocks;
 
 
+import mod.akrivus.kagic.client.gui.KTGUIProxy;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModCreativeTabs;
 import mod.akrivus.kagic.init.ModItems;
@@ -48,20 +49,15 @@ public class BlockWarpPadCore extends Block implements ITileEntityProvider {
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-		if (!worldIn.isRemote) {
+		if (worldIn.isRemote) {
 			ItemStack heldItem = playerIn.getHeldItem(hand);
 
 			if (heldItem.getItem() == ModItems.GEM_STAFF) {
 				TileEntityWarpPadCore entityPad = this.getTE(worldIn, pos);
+				entityPad.validateWarpPad();
 				if (entityPad.isValidPad()) {
-						playerIn.openGui(KAGIC.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
-						return true;
-				 } else {
-					entityPad.validateWarpPad();
-					if (entityPad.isValidPad()) {
-						playerIn.openGui(KAGIC.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
-						return true;
-					}
+					playerIn.openGui(KAGIC.instance, KTGUIProxy.GUIWARPPADID, worldIn, pos.getX(), pos.getY(), pos.getZ());
+					return true;
 				}
 			}
 		}
