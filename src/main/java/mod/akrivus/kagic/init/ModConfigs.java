@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.config.IConfigElement;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -19,6 +20,7 @@ public class ModConfigs {
 	public static int meteorRubyRate;
 	public static boolean instructInjectors;
 	public static boolean canRebel;
+	public static Property ruinDimensions;
 	
 	public static int kindergartenWeight;
 	public static int floatingPeaksWeight;
@@ -43,6 +45,7 @@ public class ModConfigs {
 		ModConfigs.kindergartenWeight = ModConfigs.settings.getInt("Kindergarten biome weight:", "world", 1, 1, 1000000, "Rarity of the Kindergarten biome. Plains = 10");
 		ModConfigs.floatingPeaksWeight = ModConfigs.settings.getInt("Floating Peaks biome weight:", "world", 1, 1, 1000000, "Rarity of the Floating Peaks biome. Extreme Hills = 10");
 		ModConfigs.strawberryBattlefieldWeight = ModConfigs.settings.getInt("Strawberry Battlefield biome weight:", "world", 1, 1, 1000000, "Rarity of the Strawberry Battlefield biome. Plains = 10");
+		ModConfigs.ruinDimensions = ModConfigs.settings.get("World", "Ruin Dimensions", new int[] {0}, "List of dimension IDs to generate ruins in.");
 		ModConfigs.settings.save();
 	}
 	

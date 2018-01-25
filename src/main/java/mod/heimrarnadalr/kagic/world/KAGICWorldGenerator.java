@@ -1,8 +1,11 @@
 package mod.heimrarnadalr.kagic.world;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
+import mod.akrivus.kagic.init.ModConfigs;
 import mod.heimrarnadalr.kagic.world.structure.AncientSkyArena;
 import mod.heimrarnadalr.kagic.world.structure.CommunicationHub;
 import mod.heimrarnadalr.kagic.world.structure.ControlRoom;
@@ -23,36 +26,37 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
+import scala.actors.threadpool.Arrays;
 
 public class KAGICWorldGenerator implements IWorldGenerator {
 	private ArrayList<RuinStructure> ruins = new ArrayList<RuinStructure>();
+	private ArrayList<Integer> ruinDimensions = new ArrayList<Integer>();
 	
 	public KAGICWorldGenerator() {
-		ruins.add(new CommunicationHub("CommHub"));
-		ruins.add(new DesertWarpPad("DesertWarpPad"));
-		ruins.add(new SmallArena("SmallArena"));
-		ruins.add(new GalaxyWarp("GalaxyWarp"));
-		ruins.add(new SkySpire("SkySpire"));
-		ruins.add(new ControlRoom("controlroom"));
+		this.ruins.add(new CommunicationHub("CommHub"));
+		this.ruins.add(new DesertWarpPad("DesertWarpPad"));
+		this.ruins.add(new SmallArena("SmallArena"));
+		this.ruins.add(new GalaxyWarp("GalaxyWarp"));
+		this.ruins.add(new SkySpire("SkySpire"));
+		this.ruins.add(new ControlRoom("controlroom"));
 		//ruins.add(new PinkSandstoneTest("pinksandstonetest"));
-		ruins.add(new RoseFountain("rosefountain"));
-		ruins.add(new GiantWeapon("giant_weapon"));
-		ruins.add(new PyramidTemple("pyramid_temple"));
-		ruins.add(new MaskIsland("mask_island"));
-		ruins.add(new SeaShrine("sea_shrine"));
-		ruins.add(new AncientSkyArena("large_arena"));
+		this.ruins.add(new RoseFountain("rosefountain"));
+		this.ruins.add(new GiantWeapon("giant_weapon"));
+		this.ruins.add(new PyramidTemple("pyramid_temple"));
+		this.ruins.add(new MaskIsland("mask_island"));
+		this.ruins.add(new SeaShrine("sea_shrine"));
+		this.ruins.add(new AncientSkyArena("large_arena"));
+		for (int dim : ModConfigs.ruinDimensions.getIntList()) {
+			this.ruinDimensions.add(dim);
+		}
 	}
 	
 	@Override
 	public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		switch (world.provider.getDimension()) {
-			case 0:
-				for (RuinStructure ruin : ruins) {
-					runGenerator(ruin, world, rand, chunkX, chunkZ, 1);
-				}
-				break;
-			default: //Only generate ruins in the Overworld for now 
-				break;
+		if (this.ruinDimensions.contains(world.provider.getDimension())) {
+			for (RuinStructure ruin : ruins) {
+				runGenerator(ruin, world, rand, chunkX, chunkZ, 1);
+			}
 		}
 	}
 
