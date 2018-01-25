@@ -197,6 +197,9 @@ public class EntityRoseQuartz extends EntityQuartzSoldier {
 			this.startCryingLikeAnEmo();
 			this.regenTicks = 0;
 		}
+		if (!this.onGround && this.motionY < 0.0D) {
+			this.motionY *= 0.5D;
+		}
 		this.regenTicks += 1;
 		super.onLivingUpdate();
 	}
