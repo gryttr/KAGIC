@@ -168,6 +168,9 @@ public class Schematic {
 	}
 	
 	public static BlockPos getRotatedPos(BlockPos original, int width, int length, byte rotation) {
+		if (rotation < 0 || rotation > 3) {
+			KAGIC.instance.chatInfoMessage("WARNING: using nonstandard rotation " + rotation);
+		}
 		int rotationCorrectionX = width % 2 == 0 ? -1 : 0;
 		int rotationCorrectionZ = length % 2 == 0 ? -1 : 0;
 		

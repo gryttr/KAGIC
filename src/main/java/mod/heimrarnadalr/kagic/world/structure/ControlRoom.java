@@ -41,10 +41,15 @@ public class ControlRoom extends BuriedRuinStructure {
 		KAGIC.instance.chatInfoMessage("Generating at " + entrance);
 		BlockPos genPos = new BlockPos(pos.getX(), entrance.getY(), pos.getZ());
 		if (super.generate(world, rand, genPos)) {
+
 			BlockPos redstonePos = genPos.add(Schematic.getRotatedPos(new BlockPos(54, 4, 15), this.width, this.length, this.rotation)).down(this.minDepth);
 			world.setBlockState(redstonePos, Blocks.REDSTONE_WIRE.getDefaultState());
+			KAGIC.instance.chatInfoMessage("Setting redstone wire for " + Schematic.getRotatedPos(new BlockPos(54, 4, 15), this.width, this.length, this.rotation) + " at " + redstonePos);
+
 			redstonePos = genPos.add(Schematic.getRotatedPos(new BlockPos(44, 4, 16), this.width, this.length, this.rotation)).down(this.minDepth);
 			world.setBlockState(redstonePos, Blocks.REDSTONE_WIRE.getDefaultState());
+			KAGIC.instance.chatInfoMessage("Setting redstone wire for " + Schematic.getRotatedPos(new BlockPos(44, 4, 16), this.width, this.length, this.rotation) + " at " + redstonePos);
+
 			return true;
 		} else {
 			return false; 

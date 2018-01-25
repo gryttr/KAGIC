@@ -158,8 +158,10 @@ public class RuinStructure extends WorldGenerator {
 		this.height = ruin.getHeight();
 		this.length = ruin.getLength();
 		
+		boolean wasNegative = false;
 		if (this.rotation == -1) {
 			this.rotation = (byte) (this.randomRotation ? rand.nextInt(4) : 0);
+			wasNegative = true;
 		}
 		
 		if (!checkBiome(world, pos)) {
@@ -222,7 +224,7 @@ public class RuinStructure extends WorldGenerator {
 			}
 		}
 		
-		this.rotation = -1;
+		this.rotation = wasNegative ? -1 : this.rotation;
 		return true;
 	}
 	
