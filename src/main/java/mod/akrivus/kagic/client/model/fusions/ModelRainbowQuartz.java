@@ -94,7 +94,7 @@ public class ModelRainbowQuartz extends ModelGem {
 
 	@Override
 	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entity) {
-		this.bipedBody.offsetY = .2F;
+		this.bipedBody.offsetY = .1F;
 		boolean flag = entity instanceof EntityLivingBase && ((EntityLivingBase)entity).getTicksElytraFlying() > 4;
 		this.bipedHead.rotateAngleY = netHeadYaw * 0.017453292F;
 
@@ -219,7 +219,7 @@ public class ModelRainbowQuartz extends ModelGem {
 			this.bipedHead.rotationPointY = 1.0F;
 		} else {
 			this.bipedBody.rotateAngleX = 0.0F;
-			this.bipedHead.rotationPointY = -2.0F;
+			this.bipedHead.rotationPointY = -1.75F;
 		}
 
 		this.bipedRightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;

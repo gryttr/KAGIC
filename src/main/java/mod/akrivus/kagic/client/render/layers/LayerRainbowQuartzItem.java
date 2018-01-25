@@ -45,7 +45,7 @@ public class LayerRainbowQuartzItem implements LayerRenderer<EntityGem> {
 			GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
 			GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
 			boolean lefty = handSide == EnumHandSide.LEFT;
-			GlStateManager.translate((float)(lefty ? -.875 : 1) / 10F, 0.1F, -1.1F);
+			GlStateManager.translate((float)(lefty ? -.75 : 1) / 5F, 0.1F, -.6F);
 			Minecraft.getMinecraft().getItemRenderer().renderItemSide(entity, stack, camera, lefty);
 			GlStateManager.popMatrix();
 		}
