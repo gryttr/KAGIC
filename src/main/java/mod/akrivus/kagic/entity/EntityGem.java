@@ -1572,6 +1572,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			else if (this.isPeaceful) {
 				this.isPeaceful = false;
 				return false;
+			} else if (source.damageType.equals("Vacuum") || source.damageType.equals("oxygen_suffocation")) {
+				// Gems don't need to breathe
+				return false;
 			}
 			else {
 				switch (this.dimensionOfCreation) {

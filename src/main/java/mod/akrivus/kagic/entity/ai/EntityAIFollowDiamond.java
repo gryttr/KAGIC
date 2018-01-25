@@ -42,8 +42,8 @@ public class EntityAIFollowDiamond extends EntityAIBase {
         this.theGem.setPathPriority(PathNodeType.WATER, this.oldWaterCost);
     }
     public void updateTask() {
-        if (!this.theGem.isSitting() && this.theGem.getDistanceSq(this.theOwner) > (this.theOwner.width * 3) + 2) {
-        	if (this.theGem.getDistanceSq(this.theOwner) > 24.0D) {
+        if (!this.theGem.isSitting() && this.theGem.getDistance(this.theOwner) > (this.theOwner.width * 3) + 2) {
+        	if (this.theGem.getDistance(this.theOwner) > 24.0D) {
                 int x = MathHelper.floor(this.theOwner.posX - this.theGem.width);
                 int y = MathHelper.floor(this.theOwner.getEntityBoundingBox().minY);
                 int z = MathHelper.floor(this.theOwner.posZ - this.theGem.width);
