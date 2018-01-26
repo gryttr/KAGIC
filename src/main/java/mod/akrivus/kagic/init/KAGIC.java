@@ -69,7 +69,7 @@ public class KAGIC {
     	logger = e.getModLog();
         //ModBiomes.register();
         ModConfigs.register(e);
-        ModDimensions.register();
+        //ModDimensions.register();
         KAGICSmeltingRecipes.register();
 		KTPacketHandler.registerMessages(KAGIC.MODID);
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new KAGICChunkCallback());
