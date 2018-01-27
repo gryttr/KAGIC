@@ -96,6 +96,9 @@ public class OreDictListener {
 		case "blockDiamond":
 			OreDictListener.registerOreDict(EntityZircon.ZIRCON_YIELDS, 5.99, ore);
 			break;
+		case "blockEmerald":
+			OreDictListener.registerOreDict(EntityAquamarine.AQUAMARINE_YIELDS, 5.99, ore);
+			break;
 		case "blockGalena":
 			OreDictListener.registerOreDict(EntityBismuth.BISMUTH_YIELDS, 5.99, ore);
 			break;
@@ -281,7 +284,7 @@ public class OreDictListener {
 			OreDictListener.registerOreDict(EntityZircon.ZIRCON_YIELDS, 1.99, ore);
 			break;
 		case "oreEmerald":
-			OreDictListener.registerOreDict(EntityPeridot.PERIDOT_YIELDS, 0.11, ore);
+			OreDictListener.registerOreDict(EntityAquamarine.AQUAMARINE_YIELDS, 1.99, ore);
 			break;
 		case "oreGalena":
 			OreDictListener.registerOreDict(EntityBismuth.BISMUTH_YIELDS, 1.99, ore);

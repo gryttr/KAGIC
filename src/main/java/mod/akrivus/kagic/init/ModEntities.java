@@ -199,7 +199,6 @@ public class ModEntities {
 		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.33, "oreTin");
 		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.33, "oreLead");
 
-		ModEntities.registerOreDictValue(EntityPeridot.PERIDOT_YIELDS, 0.11, "oreEmerald");
 		ModEntities.registerOreDictValue(EntityPeridot.PERIDOT_YIELDS, 0.99, "endstone");
 		ModEntities.registerOreDictValue(EntityPeridot.PERIDOT_YIELDS, 0.99, "oreIron");
 		EntityPeridot.PERIDOT_YIELDS.put(Blocks.LAVA.getDefaultState(), 0.33);
@@ -269,7 +268,7 @@ public class ModEntities {
 		EntityAquamarine.AQUAMARINE_YIELDS.put(Blocks.PACKED_ICE.getDefaultState(), 0.99);
 		ModEntities.registerOreDictValue(EntityAquamarine.AQUAMARINE_YIELDS, 1.99, "blockPrismarine");
 		EntityAquamarine.AQUAMARINE_YIELDS.put(Blocks.WATER.getDefaultState(), 0.11);
-		ModEntities.registerWithOreDictionary(EntityAquamarine.AQUAMARINE_YIELDS, "Aquamarine", "Beryl");
+		ModEntities.registerWithOreDictionary(EntityAquamarine.AQUAMARINE_YIELDS, "Aquamarine", "Beryl", "Emerald");
 		
 		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 0.33, "stoneAndesite");
 		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 0.33, "stoneAndesitePolished");

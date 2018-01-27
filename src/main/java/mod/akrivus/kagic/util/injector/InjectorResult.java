@@ -105,6 +105,7 @@ public class InjectorResult {
 		HashMap<Class<EntityGem>, Double> defectivity = new HashMap<Class<EntityGem>, Double>();
 		HashMap<Class<EntityGem>, Double> friction = new HashMap<Class<EntityGem>, Double>();
 		float drainedCount = 0F;
+		float baseMinerals = 0F;
 		boolean drainedChecked = false;
 		for (String gem : ModEntities.GEMS.keySet()) {
 			try {
@@ -132,8 +133,16 @@ public class InjectorResult {
 									drainedCount += 1;
 								}
 							}
+							if (!world.isAirBlock(ore) && OreDictionary.getOreIDs(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state))).length > 0) {
+								defectivityRate -= 0.2;
+							}
 							if (state.getMaterial() == Material.GRASS) {
 								defectivityRate -= 0.4;
+								if (!drainedChecked) {
+									baseMinerals += 1;
+								}
+							} else if (state.getMaterial() == Material.SAND || state.getMaterial() == Material.GROUND) {
+								defectivityRate -= 0.1;
 							}
 						}
 					}
@@ -174,7 +183,7 @@ public class InjectorResult {
 			}
 		}
 
-		if (highestYield <= 0.0 && drainedCount / (9F * 9F * 9F) < InjectorResult.drainedPercentage) {
+		if (highestYield <= 0.0 && (drainedCount - baseMinerals) / (9F * 9F * 9F) < InjectorResult.drainedPercentage) {
 			ChunkPos c = world.getChunkFromBlockCoords(pos).getPos();
 			int chunkPos = (c.x + c.z) % ModEntities.MINERALS.size();
 			mostLikelyGem = ModEntities.MINERALS.get(Math.abs(chunkPos));
