@@ -213,7 +213,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 						if (this.isCoreItem(stack)) {
 							return super.processInteract(player, hand);
 						}
-						else if (stack.getItem() instanceof ItemHoe || stack.isEmpty()) {
+						else if (stack.getItem() instanceof ItemHoe || (stack.isEmpty() && this.isFarmer())) {
 							boolean toolChanged = true;
 							if (!this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqualIgnoreDurability(stack)) {
 								this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
