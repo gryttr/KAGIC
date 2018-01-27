@@ -14,6 +14,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIPickUpItems;
 import mod.akrivus.kagic.entity.ai.EntityAIProtectionFuse;
 import mod.akrivus.kagic.entity.ai.EntityAIRubyFuse;
+import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.entity.gem.fusion.EntityGarnet;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRhodonite;
@@ -140,7 +141,7 @@ public class EntityRuby extends EntityGem {
         this.tasks.addTask(4, new EntityAIFollowDiamond(this, 1.0D));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(6, new EntityAIRubyFuse(this, 1.0D));
-        this.tasks.addTask(7, new EntityAIWander(this, 0.6D));
+		this.tasks.addTask(7, new EntityAIStandGuard(this, 0.6D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
         this.tasks.addTask(9, new EntityAILookIdle(this));
