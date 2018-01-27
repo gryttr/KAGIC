@@ -594,7 +594,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 		if (this.isDefective()) {
 			slots -= 9;
 		}else if (this.isPrimary()) {
-			slots += 18;
+			slots += 9;
 		}
 		return slots;
 	}
