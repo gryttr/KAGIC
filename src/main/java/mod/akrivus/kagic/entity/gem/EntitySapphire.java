@@ -246,6 +246,9 @@ public class EntitySapphire extends EntityGem {
 				this.luckTicks = 0;
 			}
 			this.luckTicks += 1;
+			if (!this.onGround && this.motionY < 0.0D) {
+				this.motionY *= 0.5D;
+			}
         }
 		super.onLivingUpdate();
 	}
