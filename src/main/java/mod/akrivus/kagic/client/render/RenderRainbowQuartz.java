@@ -23,8 +23,8 @@ public class RenderRainbowQuartz extends RenderGemBase<EntityRainbowQuartz> {
 		this.addLayer(new LayerRainbowQuartzItem(this));
 		this.addLayer(new LayerSkin(this));
 		this.addLayer(new LayerNoDyeOverlay(this));
-		this.addLayer(new LayerRainbowQuartzShawl(this));
 		this.addLayer(new LayerCrossFusionGemPlacement(this));
+		this.addLayer(new LayerRainbowQuartzShawl(this));
 
 		if (KAGIC.isBirthday()) {
 			this.addLayer(new LayerBirthdayHat(this));
