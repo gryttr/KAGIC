@@ -7,6 +7,7 @@ import mod.akrivus.kagic.init.ModCreativeTabs;
 import net.minecraft.block.BlockSandStone;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStoneSlab;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -31,6 +32,9 @@ public class BlockPinkSandstoneSlab extends BlockSlab {
 		if (!this.isDouble()) {
 			defaultState = defaultState.withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
 		}
+		this.setSoundType(SoundType.STONE);
+		this.setHardness(0.8F);
+		this.setResistance(4F);
 		this.setUnlocalizedName("pink_sandstone_slab");
 		this.setDefaultState(defaultState.withProperty(VARIANT, BlockPinkSandstoneSlab.EnumType.PINK));
 		this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
