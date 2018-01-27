@@ -21,7 +21,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderRuby extends RenderGemBase<EntityRuby> {
 	public RenderRuby() {
-        super(Minecraft.getMinecraft().getRenderManager(), new ModelRuby(), 0.25F);
+        super(Minecraft.getMinecraft().getRenderManager(), new ModelRuby(), 0.3F);
         this.addLayer(new LayerRubyItem(this));
         this.addLayer(new LayerSkin(this));
         this.addLayer(new LayerUniform(this));
@@ -42,7 +42,7 @@ public class RenderRuby extends RenderGemBase<EntityRuby> {
 	@Override
 	protected void preRenderCallback(EntityRuby gem, float partialTickTime) {
 		if (gem.isFusion()) {
-			GlStateManager.scale(gem.getFusionCount(), gem.getFusionCount(), gem.getFusionCount());
+			GlStateManager.scale(0.8F * gem.getFusionCount(), 0.8F * gem.getFusionCount(), 0.8F * gem.getFusionCount());
 		}
 		else if (gem.isDefective()) {
 			GlStateManager.scale(0.5F, 0.5F, 0.5F);
@@ -50,6 +50,7 @@ public class RenderRuby extends RenderGemBase<EntityRuby> {
 		else {
 			GlStateManager.scale(0.8F, 0.8F, 0.8F);
 		}
+		this.shadowSize = 0.3F * gem.getFusionCount();
 	}
 	
 	@Override

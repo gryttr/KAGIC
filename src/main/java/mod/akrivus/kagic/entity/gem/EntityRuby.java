@@ -225,7 +225,7 @@ public class EntityRuby extends EntityGem {
     public void whenFused() {
     	//Everything that used to be here was moved to EntityRuby#fuse()
     	//because it doesn't need to be done 20 times a second
-    	this.setSize(0.7F * this.getFusionCount(), 1.8F * this.getFusionCount());
+    	//this.setSize(0.7F * this.getFusionCount(), 1.35F * this.getFusionCount());
     }
     public boolean canPickupItem(Item itemIn) {
         return this.isDefective() && (itemIn instanceof ItemSword || itemIn instanceof ItemTool || itemIn instanceof ItemBow);
@@ -382,7 +382,7 @@ public class EntityRuby extends EntityGem {
     	ruby.setFusionWeapon(weapon);
     	ruby.setFusionWeapon(second);
     	
-    	ruby.setSize(0.7F * ruby.getFusionCount(), 1.8F * ruby.getFusionCount());
+    	ruby.setSize(0.7F * ruby.getFusionCount(), 1.35F * ruby.getFusionCount());
      	return ruby;
 	}
 	

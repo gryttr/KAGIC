@@ -22,7 +22,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderTopaz extends RenderGemBase<EntityTopaz> {
 	public RenderTopaz() {
-        super(Minecraft.getMinecraft().getRenderManager(), new ModelTopaz(), 0.25F);
+        super(Minecraft.getMinecraft().getRenderManager(), new ModelTopaz(), 0.625F);
         this.addLayer(new LayerTopazItem(this));
         this.addLayer(new LayerSkin(this));
         this.addLayer(new LayerUniform(this));
@@ -51,9 +51,8 @@ public class RenderTopaz extends RenderGemBase<EntityTopaz> {
 	
 	@Override
 	protected void preRenderCallback(EntityTopaz gem, float partialTickTime) {
-		if (gem.isFusion()) {
-			GlStateManager.scale(gem.getFusionCount(), gem.getFusionCount(), gem.getFusionCount());
-		}
+		GlStateManager.scale(gem.getFusionCount(), gem.getFusionCount(), gem.getFusionCount());
+		this.shadowSize = 0.625F * gem.getFusionCount();
 	}
 	
 	@Override
