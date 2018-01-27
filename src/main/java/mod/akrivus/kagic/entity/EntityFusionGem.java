@@ -81,6 +81,7 @@ public class EntityFusionGem  extends EntityGem {
 		this.dataManager.register(PRIME_COUNT, 0);
 		this.dataManager.register(FUSION_COLOR, 0);
 		this.setFusionCount(0);
+		this.pitch = 0;
 	}
 
 	//=========================================================================
@@ -159,7 +160,10 @@ public class EntityFusionGem  extends EntityGem {
 	
 	@Override
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		return super.onInitialSpawn(difficulty, livingdata);
+		float pitch = this.pitch;
+		IEntityLivingData data = super.onInitialSpawn(difficulty, livingdata);
+		this.pitch = pitch;
+		return data;
 	}
 	
 	//=========================================================================
@@ -215,6 +219,7 @@ public class EntityFusionGem  extends EntityGem {
 		this.setFusionCount(this.getFusionCount() + 1);
 		this.setFusionPlacements(this.generateFusionPlacements());
 		this.setFusionTypes(this.generateFusionTypes());
+		this.pitch = (this.pitch + gem.pitch) / this.getFusionCount();
 		return true;
 	}
 	

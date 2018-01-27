@@ -187,7 +187,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	private int timeUntilBetrayal;
 	private int servitude = 0;
 	
-	private float pitch = 1.0F;
+	protected float pitch = 1.0F;
 	protected int visorChanceReciprocal = 3; // 1 in visorChanceReciprocal gems will have a visor
 	protected HashMap<GemCuts, ArrayList<GemPlacements>> cutPlacements = new HashMap<GemCuts, ArrayList<GemPlacements>>();
 	
@@ -871,6 +871,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		KAGIC.instance.chatInfoMessage("Insignia color is " + this.getInsigniaColor());
 		KAGIC.instance.chatInfoMessage("Uniform color is " + this.getUniformColor());
 		KAGIC.instance.chatInfoMessage("Size is " + this.width + ", " + this.height);
+		KAGIC.instance.chatInfoMessage("Pitch is " + this.pitch);
 		return false;
 	}
 	
