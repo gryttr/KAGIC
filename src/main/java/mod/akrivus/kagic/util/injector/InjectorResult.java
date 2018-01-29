@@ -126,15 +126,22 @@ public class InjectorResult {
 								frictionFactor += 0.0036;
 								defectivityRate -= 0.2;
 								
+							} else {
+								ItemStack stack = new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
+								if (!stack.isEmpty()) {
+									int[] oreIDs = OreDictionary.getOreIDs(stack);
+									for (int oreID : oreIDs) {
+										if (OreDictionary.getOreName(oreID).startsWith("ore") || OreDictionary.getOreName(oreID).startsWith("block")) {
+											defectivityRate -= 0.2;
+										}
+									}
+								}
 							}
 							if (!drainedChecked) {
 								Block block = state.getBlock();
 								if (block == ModBlocks.DRAINED_BLOCK || block == Blocks.GRAVEL || block == Blocks.AIR) {
 									drainedCount += 1;
 								}
-							}
-							if (!world.isAirBlock(ore) && OreDictionary.getOreIDs(new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state))).length > 0) {
-								defectivityRate -= 0.2;
 							}
 							if (state.getMaterial() == Material.GRASS) {
 								defectivityRate -= 0.4;
