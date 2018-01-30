@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockFalling;
+import net.minecraft.block.BlockGlowstone;
 import net.minecraft.block.BlockShulkerBox;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -257,7 +258,7 @@ public class InjectorResult {
 				//KAGIC.instance.chatInfoMessage("Found falling ore of type " + OreDictionary.getOreName(OreDictionary.getOreIDs(oreItem)[0]));
 				world.setBlockState(ore, ModBlocks.DRAINED_GRAVEL.getDefaultState());
 			}
-		} else if ((state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON) && (state.isFullCube() || block instanceof BlockShulkerBox)) {
+		} else if ((state.getMaterial() == Material.ROCK || state.getMaterial() == Material.IRON || block instanceof BlockGlowstone) && (state.isFullCube() || block instanceof BlockShulkerBox)) {
 			if (block instanceof BlockShulkerBox) {
 				TileEntityShulkerBox shulker = (TileEntityShulkerBox) world.getTileEntity(ore);
 				shulker.clear();
