@@ -121,7 +121,7 @@ public class KAGIC {
     
     //Used for debugging
 	public void chatInfoMessage(String message) {
-		if (DEVELOPER) {
+		if (DEVELOPER && FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
 			PlayerList list = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList();
 			logger.info(message);
 			list.sendMessage(new TextComponentString(message));
