@@ -137,6 +137,7 @@ public class ModEntities {
 		//registerGemYields();
 		registerGemAddons();
 	}
+	
 	public static void registerGemYields() {
 		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.77, "oreIron");
 		EntityRuby.RUBY_YIELDS.put(Blocks.LAVA.getDefaultState(), 0.55);
@@ -145,6 +146,8 @@ public class ModEntities {
 		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.99, "oreRedstone");
 		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.99, "stoneGranite");
 		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.99, "stoneGranitePolished");
+		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.11, "stoneMarble");
+		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.11, "stoneMarblePolished");
 		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 5.99, "blockRedstone");
 		ModEntities.registerWithOreDictionary(EntityRuby.RUBY_YIELDS, "Ruby", "Corundum", "Bauxite", "Cinnabar", "Chromite", "Chromium");
 		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.33, "oreAluminum");
@@ -153,6 +156,8 @@ public class ModEntities {
 		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 1.99, "blockGarnet");
 
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.ICE.getDefaultState(), 0.99);
+		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.11, "stoneMarble");
+		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.11, "stoneMarblePolished");
 		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.22, "oreIron");
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.PACKED_ICE.getDefaultState(), 0.99);
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.SNOW.getDefaultState(), 0.77);
@@ -219,6 +224,8 @@ public class ModEntities {
 		EntityJasper.JASPER_YIELDS.put(Blocks.STAINED_HARDENED_CLAY.getDefaultState(), 0.99);
 		ModEntities.registerOreDictValue(EntityJasper.JASPER_YIELDS, 0.11, "stoneDiorite");
 		ModEntities.registerOreDictValue(EntityJasper.JASPER_YIELDS, 0.11, "stoneDioritePolished");
+		ModEntities.registerOreDictValue(EntityJasper.JASPER_YIELDS, 0.11, "stoneLimestone");
+		ModEntities.registerOreDictValue(EntityJasper.JASPER_YIELDS, 0.11, "stoneLimestonePolished");
 		ModEntities.registerOreDictValue(EntityJasper.JASPER_YIELDS, 5.99, "blockQuartz");
 		ModEntities.registerWithOreDictionary(EntityJasper.JASPER_YIELDS, "Jasper");
 		
@@ -226,6 +233,8 @@ public class ModEntities {
 		ModEntities.registerOreDictValue(EntityAmethyst.AMETHYST_YIELDS, 1.99, "oreQuartz");
 		ModEntities.registerOreDictValue(EntityAmethyst.AMETHYST_YIELDS, 0.44, "stoneDiorite");
 		ModEntities.registerOreDictValue(EntityAmethyst.AMETHYST_YIELDS, 0.44, "stoneDioritePolished");
+		ModEntities.registerOreDictValue(EntityAmethyst.AMETHYST_YIELDS, 0.11, "stoneLimestone");
+		ModEntities.registerOreDictValue(EntityAmethyst.AMETHYST_YIELDS, 0.11, "stoneLimestonePolished");
 		ModEntities.registerOreDictValue(EntityAmethyst.AMETHYST_YIELDS, 5.99, "blockQuartz");
 		ModEntities.registerWithOreDictionary(EntityAmethyst.AMETHYST_YIELDS, "Amethyst");
 		
@@ -236,6 +245,8 @@ public class ModEntities {
 		EntityRoseQuartz.ROSE_QUARTZ_YIELDS.put(Blocks.SANDSTONE.getDefaultState(), 0.33);
 		ModEntities.registerOreDictValue(EntityRoseQuartz.ROSE_QUARTZ_YIELDS, 0.11, "stoneDiorite");
 		ModEntities.registerOreDictValue(EntityRoseQuartz.ROSE_QUARTZ_YIELDS, 0.11, "stoneDioritePolished");
+		ModEntities.registerOreDictValue(EntityRoseQuartz.ROSE_QUARTZ_YIELDS, 0.11, "stoneLimestone");
+		ModEntities.registerOreDictValue(EntityRoseQuartz.ROSE_QUARTZ_YIELDS, 0.11, "stoneLimestonePolished");
 		ModEntities.registerOreDictValue(EntityRoseQuartz.ROSE_QUARTZ_YIELDS, 5.99, "blockQuartz");
 		ModEntities.registerWithOreDictionary(EntityRoseQuartz.ROSE_QUARTZ_YIELDS, "RoseQuartz");
 		
@@ -252,10 +263,14 @@ public class ModEntities {
 		ModEntities.registerOreDictValue(EntityCarnelian.CARNELIAN_YIELDS, 0.22, "oreRedstone");
 		ModEntities.registerOreDictValue(EntityCarnelian.CARNELIAN_YIELDS, 0.33, "stoneDiorite");
 		ModEntities.registerOreDictValue(EntityCarnelian.CARNELIAN_YIELDS, 0.33, "stoneDioritePolished");
+		ModEntities.registerOreDictValue(EntityCarnelian.CARNELIAN_YIELDS, 0.11, "stoneLimestone");
+		ModEntities.registerOreDictValue(EntityCarnelian.CARNELIAN_YIELDS, 0.11, "stoneLimestonePolished");
 		ModEntities.registerOreDictValue(EntityCarnelian.CARNELIAN_YIELDS, 5.99, "blockQuartz");
 		ModEntities.registerWithOreDictionary(EntityCarnelian.CARNELIAN_YIELDS, "Carnelian");
 		
 		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.82, "endstone");
+		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.11, "stoneLimestone");
+		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.11, "stoneLimestonePolished");
 		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.99, "obsidian");
 		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 1.99, "oreQuartz");
 		EntityAgate.AGATE_YIELDS.put(Blocks.SOUL_SAND.getDefaultState(), 0.77);
@@ -268,7 +283,7 @@ public class ModEntities {
 		EntityAquamarine.AQUAMARINE_YIELDS.put(Blocks.PACKED_ICE.getDefaultState(), 0.99);
 		ModEntities.registerOreDictValue(EntityAquamarine.AQUAMARINE_YIELDS, 1.99, "blockPrismarine");
 		EntityAquamarine.AQUAMARINE_YIELDS.put(Blocks.WATER.getDefaultState(), 0.11);
-		ModEntities.registerWithOreDictionary(EntityAquamarine.AQUAMARINE_YIELDS, "Aquamarine", "Beryl", "Emerald");
+		ModEntities.registerWithOreDictionary(EntityAquamarine.AQUAMARINE_YIELDS, "Aquamarine", "Beryl", "GoldenBeryl", "Emerald", "Heliodor", "Morganite");
 		
 		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 0.33, "stoneAndesite");
 		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 0.33, "stoneAndesitePolished");

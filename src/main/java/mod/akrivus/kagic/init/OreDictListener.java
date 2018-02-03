@@ -110,6 +110,12 @@ public class OreDictListener {
 		case "blockGold":
 			OreDictListener.registerOreDict(EntityBismuth.BISMUTH_YIELDS, 5.99, ore);
 			break;
+		case "blockGoldenBeryl":
+			OreDictListener.registerOreDict(EntityAquamarine.AQUAMARINE_YIELDS, 5.99, ore);
+			break;
+		case "blockHeliodor":
+			OreDictListener.registerOreDict(EntityAquamarine.AQUAMARINE_YIELDS, 5.99, ore);
+			break;
 		case "blockIron":
 			OreDictListener.registerOreDict(EntityHessonite.HESSONITE_YIELDS, 0.55, ore);
 			OreDictListener.registerOreDict(EntityPeridot.PERIDOT_YIELDS, 5.99, ore);
@@ -119,6 +125,9 @@ public class OreDictListener {
 			break;
 		case "blockLapis":
 			OreDictListener.registerOreDict(EntityLapisLazuli.LAPIS_LAZULI_YIELDS, 5.99, ore);
+			break;
+		case "blockMorganite":
+			OreDictListener.registerOreDict(EntityAquamarine.AQUAMARINE_YIELDS, 5.99, ore);
 			break;
 		case "blockOlivine":
 			OreDictListener.registerOreDict(EntityPeridot.PERIDOT_YIELDS, 5.99, ore);
@@ -298,6 +307,12 @@ public class OreDictListener {
 			OreDictListener.registerOreDict(EntityBismuth.BISMUTH_YIELDS, 0.99, ore);
 			OreDictListener.registerOreDict(EntityTopaz.TOPAZ_YIELDS, 0.45, ore);
 			break;
+		case "oreGoldenBeryl":
+			OreDictListener.registerOreDict(EntityAquamarine.AQUAMARINE_YIELDS, 1.99, ore);
+			break;
+		case "oreHeliodor":
+			OreDictListener.registerOreDict(EntityAquamarine.AQUAMARINE_YIELDS, 1.99, ore);
+			break;
 		case "oreIron":
 			OreDictListener.registerOreDict(EntityAmethyst.AMETHYST_YIELDS, 0.66, ore);
 			OreDictListener.registerOreDict(EntityCarnelian.CARNELIAN_YIELDS, 0.11, ore);
@@ -316,6 +331,9 @@ public class OreDictListener {
 			break;
 		case "oreLead":
 			OreDictListener.registerOreDict(EntityBismuth.BISMUTH_YIELDS, 0.33, ore);
+			break;
+		case "oreMorganite":
+			OreDictListener.registerOreDict(EntityAquamarine.AQUAMARINE_YIELDS, 1.99, ore);
 			break;
 		case "oreOlivine":
 			OreDictListener.registerOreDict(EntityPeridot.PERIDOT_YIELDS, 1.99, ore);
@@ -424,6 +442,28 @@ public class OreDictListener {
 		case "stoneGranitePolished":
 			OreDictListener.registerOreDict(EntityRuby.RUBY_YIELDS, 0.99, ore);
 			OreDictListener.registerOreDict(EntityTopaz.TOPAZ_YIELDS, 1.99, ore);
+			break;
+		case "stoneMarble":
+			OreDictListener.registerOreDict(EntityRuby.RUBY_YIELDS, 0.11, ore);
+			OreDictListener.registerOreDict(EntitySapphire.SAPPHIRE_YIELDS, 0.11, ore);
+			break;
+		case "stoneMarblePolished":
+			OreDictListener.registerOreDict(EntityRuby.RUBY_YIELDS, 0.11, ore);
+			OreDictListener.registerOreDict(EntitySapphire.SAPPHIRE_YIELDS, 0.11, ore);
+			break;
+		case "stoneLimestone":
+			OreDictListener.registerOreDict(EntityAgate.AGATE_YIELDS, 0.11, ore);
+			OreDictListener.registerOreDict(EntityAmethyst.AMETHYST_YIELDS, 0.11, ore);
+			OreDictListener.registerOreDict(EntityCarnelian.CARNELIAN_YIELDS, 0.11, ore);
+			OreDictListener.registerOreDict(EntityJasper.JASPER_YIELDS, 0.11, ore);
+			OreDictListener.registerOreDict(EntityRoseQuartz.ROSE_QUARTZ_YIELDS, 0.11, ore);
+			break;
+		case "stoneLimestonePolished":
+			OreDictListener.registerOreDict(EntityAgate.AGATE_YIELDS, 0.11, ore);
+			OreDictListener.registerOreDict(EntityAmethyst.AMETHYST_YIELDS, 0.11, ore);
+			OreDictListener.registerOreDict(EntityCarnelian.CARNELIAN_YIELDS, 0.11, ore);
+			OreDictListener.registerOreDict(EntityJasper.JASPER_YIELDS, 0.11, ore);
+			OreDictListener.registerOreDict(EntityRoseQuartz.ROSE_QUARTZ_YIELDS, 0.11, ore);
 			break;
 		default:
 			break;

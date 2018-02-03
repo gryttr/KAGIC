@@ -100,7 +100,7 @@ public class InjectorResult {
 			this.gem.onInitialSpawn(world.getDifficultyForLocation(this.getPosition()), null);
 		}
 	}
-	@SuppressWarnings("unchecked")
+
 	public static InjectorResult create(World world, BlockPos pos, boolean drain) {
 		HashMap<Class<EntityGem>, Double> resultTable = new HashMap<Class<EntityGem>, Double>();
 		HashMap<Class<EntityGem>, Double> defectivity = new HashMap<Class<EntityGem>, Double>();
@@ -119,38 +119,42 @@ public class InjectorResult {
 						for (int z = -4; z <= 4; ++z) {
 							BlockPos ore = pos.add(x, y, z);
 							IBlockState state = world.getBlockState(ore);
-							if (!resultTable.containsKey(gemClass)) {
-								resultTable.put(gemClass, 0.0);
-							}
-							if (yield.containsKey(state)) {
-								resultTable.put(gemClass, resultTable.get(gemClass) + yield.get(state));
-								frictionFactor += 0.0036;
-								defectivityRate -= 0.2;
-								
-							} else {
-								ItemStack stack = new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
-								if (!stack.isEmpty()) {
-									int[] oreIDs = OreDictionary.getOreIDs(stack);
-									for (int oreID : oreIDs) {
-										if (OreDictionary.getOreName(oreID).startsWith("ore") || OreDictionary.getOreName(oreID).startsWith("block")) {
-											defectivityRate -= 0.2;
+							try {
+								if (!resultTable.containsKey(gemClass)) {
+									resultTable.put(gemClass, 0.0);
+								}
+								if (yield.containsKey(state)) {
+									resultTable.put(gemClass, resultTable.get(gemClass) + yield.get(state));
+									frictionFactor += 0.0036;
+									defectivityRate -= 0.2;
+									
+								} else {
+									ItemStack stack = new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
+									if (!stack.isEmpty()) {
+										int[] oreIDs = OreDictionary.getOreIDs(stack);
+										for (int oreID : oreIDs) {
+											if (OreDictionary.getOreName(oreID).startsWith("ore") || OreDictionary.getOreName(oreID).startsWith("block")) {
+												defectivityRate -= 0.2;
+											}
 										}
 									}
 								}
-							}
-							if (!drainedChecked) {
-								Block block = state.getBlock();
-								if (block == ModBlocks.DRAINED_BLOCK || block == Blocks.GRAVEL || block == Blocks.AIR) {
-									drainedCount += 1;
-								}
-							}
-							if (state.getMaterial() == Material.GRASS) {
-								defectivityRate -= 0.4;
 								if (!drainedChecked) {
-									baseMinerals += 1;
+									Block block = state.getBlock();
+									if (block == ModBlocks.DRAINED_BLOCK || block == Blocks.GRAVEL || block == Blocks.AIR) {
+										drainedCount += 1;
+									}
 								}
-							} else if (state.getMaterial() == Material.SAND || state.getMaterial() == Material.GROUND) {
-								defectivityRate -= 0.1;
+								if (state.getMaterial() == Material.GRASS) {
+									defectivityRate -= 0.4;
+									if (!drainedChecked) {
+										baseMinerals += 1;
+									}
+								} else if (state.getMaterial() == Material.SAND || state.getMaterial() == Material.GROUND) {
+									defectivityRate -= 0.1;
+								}
+							} catch (Exception e) {
+								KAGIC.instance.chatInfoMessage("A problem occurred when analyzing the block " + state.getBlock().getUnlocalizedName() + ". It has been skipped. Please report this to HeimrArnadalr.");
 							}
 						}
 					}
