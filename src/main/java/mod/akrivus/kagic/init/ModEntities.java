@@ -89,7 +89,7 @@ public class ModEntities {
 	public static void register() {
 		registerGem("ruby", EntityRuby.class, 0xE52C5C, 0x3A0015, true);
 		registerGem("sapphire", EntitySapphire.class, 0xBAF5FD, 0x7298EC, false);
-		registerGem("padparadscha", EntityPadparadscha.class, 0xFF8065, 0xFFB3A4, true);
+		registerGem("padparadscha", EntityPadparadscha.class, 0xFF8065, 0xFFB3A4, false);
 		registerGem("pearl", EntityPearl.class, 0xFCCCB1, 0x92EAD9, true);
 		registerGem("bismuth", EntityBismuth.class, 0x91A8CF, 0x9C5867, false);
 		registerGem("peridot", EntityPeridot.class, 0x98FF72, 0x13BA54, true);

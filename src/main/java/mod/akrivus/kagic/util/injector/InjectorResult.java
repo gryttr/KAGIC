@@ -214,7 +214,11 @@ public class InjectorResult {
 		}
 		ExitHole exitHole = null;
 		if (drain && gemSpawned != null) {
-			exitHole = ExitHole.create(world, pos, Math.ceil(gemSpawned.height), friction.get(gemSpawned.getClass()) >= 1.0F);
+			Double gemFriction = friction.get(gemSpawned.getClass());
+			if (gemFriction == null) {
+				gemFriction = 0.0;
+			}
+			exitHole = ExitHole.create(world, pos, Math.ceil(gemSpawned.height), gemFriction >= 1.0F);
 			exitHole.emerge(world);
 			gemSpawned.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 		}
