@@ -252,6 +252,14 @@ public class EntityCitrine extends EntityQuartzSoldier {
 		super.attackEntityWithRangedAttack(target, distanceFactor);
 	}
 	public void onDeath(DamageSource cause) {
+		if (this.isDefective()) {
+			this.droppedGemItem = ModItems.AMETRINE_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_AMETRINE_GEM;
+		}
+		else {
+			this.droppedGemItem = ModItems.CITRINE_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_CITRINE_GEM;
+		}
 		super.onDeath(cause);
 	}
 	
