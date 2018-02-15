@@ -59,18 +59,19 @@ public class EntityCarnelian extends EntityQuartzSoldier {
 	private int charge_ticks = 0;
 	private int hit_count = 0;
 	
-	public static final int SKIN_COLOR_BEGIN = 0xF02D57;
+	public static final int SKIN_COLOR_BEGIN = 0xE1764D;
 	
 	public static final int SKIN_COLOR_END = 0xC5307D;
 	
 	private static final int NUM_HAIRSTYLES = 5;
 	
-	public static final int HAIR_COLOR_BEGIN = 0x7C0034;
+	public static final int HAIR_COLOR_BEGIN = 0xF24807;
 	
 	public static final int HAIR_COLOR_END = 0x4D0043;
 	
 	public EntityCarnelian(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 14;
 		this.isImmuneToFire = true;
 
 		//Define valid gem cuts and placements

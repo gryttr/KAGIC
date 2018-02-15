@@ -36,6 +36,7 @@ public class EntityPadparadscha extends EntityGem {
 	public boolean playerLoves = true;
 	public EntityPadparadscha(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 1;
 		this.setSize(0.6F, 1.2F);
 		this.seePastDoors();
 

@@ -4,8 +4,8 @@ import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityZircon;
-import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.util.math.BlockPos;
 
 public class EntityAIAlignGems extends EntityAIBase {
 	private final EntityGem alignedGem;
@@ -49,6 +49,7 @@ public class EntityAIAlignGems extends EntityAIBase {
 	@Override
 	public void startExecuting() {
 		this.alignedGem.getLookHelper().setLookPositionWithEntity(this.unalignedGem, 30.0F, 30.0F);
+		this.unalignedGem.moveToBlockPosAndAngles(new BlockPos(this.alignedGem), this.unalignedGem.rotationYaw, this.unalignedGem.rotationPitch);
 	}
 	
 	@Override
@@ -76,7 +77,9 @@ public class EntityAIAlignGems extends EntityAIBase {
 			if (!(this.unalignedGem instanceof EntityZircon)) {
 				this.unalignedGem.setInsigniaColor(this.alignedGem.getInsigniaColor());
 			}
-			this.unalignedGem.setUniformColor(this.alignedGem.getUniformColor());
+			if (this.alignedGem.uniformColorChanged) {
+				this.unalignedGem.setUniformColor(this.alignedGem.getUniformColor());
+			}
 			this.unalignedGem.playObeySound();
 			this.resetTask();
 		}

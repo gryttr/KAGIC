@@ -76,6 +76,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	
 	public EntityPeridot(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 13;
 		this.setSize(0.7F, 1.9F);
 		this.initGemStorage();
 		this.seePastDoors();
@@ -203,6 +204,22 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	/*********************************************************
 	 * Methods related to interaction.					   *
 	 *********************************************************/
+	public boolean alternateInteract(EntityPlayer player) {
+		if (!this.world.isRemote) {
+			if (this.isTamed()) {
+				if (this.isOwner(player)) {
+					if (this.isFarmer()) {
+						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
+					}
+				}
+				else {
+					player.sendMessage(new TextComponentTranslation("command.kagic.does_not_serve_you", this.getName()));
+					return true;
+				}
+			}
+		}
+		return super.alternateInteract(player);
+	}
 	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
@@ -213,7 +230,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 						if (this.isCoreItem(stack)) {
 							return super.processInteract(player, hand);
 						}
-						else if (stack.getItem() instanceof ItemHoe || (stack.isEmpty() && this.isFarmer())) {
+						else if (stack.getItem() instanceof ItemHoe) {
 							boolean toolChanged = true;
 							if (!this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqualIgnoreDurability(stack)) {
 								this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);

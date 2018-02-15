@@ -47,6 +47,7 @@ public class EntityBismuth extends EntityGem {
 	
 	public EntityBismuth(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 10;
 		this.isImmuneToFire = true;
 		this.setSize(0.9F, 2.3F);
 		

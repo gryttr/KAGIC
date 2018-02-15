@@ -30,6 +30,7 @@ public class EntityRutile extends EntityGem {
 	public static final HashMap<IBlockState, Double> RUTILE_YIELDS = new HashMap<IBlockState, Double>();
 	public EntityRutile(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 14;
 		this.setSize(0.6F, 1.9F);
 		this.seePastDoors();
 		this.visorChanceReciprocal = 20;

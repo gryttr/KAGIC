@@ -140,6 +140,12 @@ public class EntityTopaz extends EntityGem {
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
     	this.setSpecial(this.rand.nextInt(7) == 0 ? 1 : 0);
+    	if (this.getSpecial() == 1) {
+    		this.nativeColor = 11;
+    	}
+    	else {
+    		this.nativeColor = 14;
+    	}
 		return super.onInitialSpawn(difficulty, livingdata);
     }
     public void itemDataToGemData(int data) {
@@ -147,6 +153,7 @@ public class EntityTopaz extends EntityGem {
         this.setSkinColor(this.generateSkinColor());
 		this.setHairStyle(this.generateHairStyle());
 		this.setHairColor(this.generateHairColor());
+		this.nativeColor = 11;
 	}
     /*********************************************************
      * Methods related to entity interaction.                *

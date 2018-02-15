@@ -435,7 +435,25 @@ public class EntityJasper extends EntityQuartzSoldier {
 			biomeSpecial = 7;
 		}
 		special = KAGIC.isChristmas() ? 8 : this.rand.nextFloat() < 0.9 ? biomeSpecial : special;
-
+		if (special == 0) {
+			this.nativeColor = 1;
+		} else if (special == 1) {
+			this.nativeColor = 9;
+		} else if (special == 2) {
+			this.nativeColor = 12;
+		} else if (special == 3) {
+			this.nativeColor = 13;
+		} else if (special == 4) {
+			this.nativeColor = 12;
+		} else if (special == 5) {
+			this.nativeColor = 10;
+		} else if (special == 6) {
+			this.nativeColor = 14;
+		} else if (special == 7) {
+			this.nativeColor = 8;
+		} else if (special == 8) {
+			this.nativeColor = 4;
+		}
 		this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", special)).getUnformattedComponentText());
 		this.setSpecial(special);
 		this.setMark1(this.generateMark1());

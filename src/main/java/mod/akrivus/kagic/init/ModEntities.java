@@ -18,6 +18,7 @@ import mod.akrivus.kagic.entity.gem.EntityAquamarine;
 import mod.akrivus.kagic.entity.gem.EntityBismuth;
 import mod.akrivus.kagic.entity.gem.EntityBlueDiamond;
 import mod.akrivus.kagic.entity.gem.EntityCarnelian;
+import mod.akrivus.kagic.entity.gem.EntityCitrine;
 import mod.akrivus.kagic.entity.gem.EntityHessonite;
 import mod.akrivus.kagic.entity.gem.EntityHoloPearl;
 import mod.akrivus.kagic.entity.gem.EntityJasper;
@@ -53,7 +54,6 @@ import mod.akrivus.kagic.entity.shardfusion.EntityHandBody;
 import mod.akrivus.kagic.entity.shardfusion.EntityMouthTorso;
 import mod.akrivus.kagic.entity.vehicles.EntityRoamingEye;
 import net.minecraft.block.BlockRotatedPillar;
-import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.crash.CrashReport;
@@ -65,20 +65,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.BiomeManager.BiomeEntry;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.OreDictionary.OreRegisterEvent;
 
 public class ModEntities {
 	public static final HashMap<String, Class<? extends EntityGem>> GEMS = new HashMap<String, Class<? extends EntityGem>>();
@@ -104,6 +99,7 @@ public class ModEntities {
 		registerGem("rutile", EntityRutile.class, 0xD2508C, 0x23020D, false);
 		registerGem("zircon", EntityZircon.class, 0x458FBE, 0x57C7CF, false);
 		registerGem("hessonite", EntityHessonite.class, 0xBE331C, 0xEDCC41, false);
+		registerGem("citrine", EntityCitrine.class, 0xECF404, 0xEBFD64, false);
 		registerDiamond("yellow_diamond", EntityYellowDiamond.class);
 		registerDiamond("blue_diamond", EntityBlueDiamond.class);
 		
@@ -267,6 +263,14 @@ public class ModEntities {
 		ModEntities.registerOreDictValue(EntityCarnelian.CARNELIAN_YIELDS, 0.11, "stoneLimestonePolished");
 		ModEntities.registerOreDictValue(EntityCarnelian.CARNELIAN_YIELDS, 5.99, "blockQuartz");
 		ModEntities.registerWithOreDictionary(EntityCarnelian.CARNELIAN_YIELDS, "Carnelian");
+		
+		ModEntities.registerOreDictValue(EntityCitrine.CITRINE_YIELDS, 1.99, "oreQuartz");
+		ModEntities.registerOreDictValue(EntityCitrine.CITRINE_YIELDS, 0.33, "stoneDiorite");
+		ModEntities.registerOreDictValue(EntityCitrine.CITRINE_YIELDS, 0.33, "stoneDioritePolished");
+		ModEntities.registerOreDictValue(EntityCitrine.CITRINE_YIELDS, 0.11, "stoneLimestone");
+		ModEntities.registerOreDictValue(EntityCitrine.CITRINE_YIELDS, 0.11, "stoneLimestonePolished");
+		ModEntities.registerOreDictValue(EntityCitrine.CITRINE_YIELDS, 5.99, "blockQuartz");
+		ModEntities.registerWithOreDictionary(EntityCitrine.CITRINE_YIELDS, "Citrine");
 		
 		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.82, "endstone");
 		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.11, "stoneLimestone");

@@ -41,6 +41,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
@@ -57,6 +58,7 @@ public class EntityLapisLazuli extends EntityGem {
 	
 	public EntityLapisLazuli(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 11;
 		this.setSize(0.6F, 1.9F);
 		this.visorChanceReciprocal = 20;
 		
@@ -127,6 +129,22 @@ public class EntityLapisLazuli extends EntityGem {
 	/*********************************************************
 	 * Methods related to interaction.                       *
 	 *********************************************************/
+	public boolean alternateInteract(EntityPlayer player) {
+		if (!this.world.isRemote) {
+			if (this.isTamed()) {
+				if (this.isOwner(player)) {
+					if (this.isFarmer()) {
+						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
+					}
+				}
+				else {
+					player.sendMessage(new TextComponentTranslation("command.kagic.does_not_serve_you", this.getName()));
+					return true;
+				}
+			}
+		}
+		return super.alternateInteract(player);
+	}
 	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
@@ -137,7 +155,7 @@ public class EntityLapisLazuli extends EntityGem {
 						if (this.isCoreItem(stack)) {
 							return super.processInteract(player, hand);
 						}
-						else if (stack.getItem() instanceof ItemHoe || stack.isEmpty() && this.isFarmer()) {
+						else if (stack.getItem() instanceof ItemHoe) {
 		        			boolean toolChanged = true;
 							if (!this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqualIgnoreDurability(stack)) {
 								this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);

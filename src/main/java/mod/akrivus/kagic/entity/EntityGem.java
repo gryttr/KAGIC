@@ -97,7 +97,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.DyeUtils;
@@ -166,6 +165,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public ItemGem droppedGemItem;
 	public ItemGem droppedCrackedGemItem;
 	public int fallbackServitude = -1;
+	
+	public int nativeColor = 12;
+	public boolean uniformColorChanged = false;
 	
 	public boolean isSoldier;
 	public boolean isDiamond;
@@ -240,6 +242,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		compound.setInteger("fusionCount", this.getFusionCount());
 		compound.setString("fusionPlacements", this.getFusionPlacements());
 		compound.setTag("fusionMembers", fusionMembers);
+		compound.setBoolean("uniformColorChanged", this.uniformColorChanged);
 		if (this.getOwnerId() == null) {
 			compound.setString("ownerId", "");
 		}
@@ -345,6 +348,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		}
 		this.setFusionCount(compound.getInteger("fusionCount"));
 		this.setFusionPlacements(compound.getString("fusionPlacements"));
+		this.uniformColorChanged = compound.getBoolean("uniformColorChanged");
 		this.setSpecial(compound.getInteger("special"));
 		String ownerId;
 		if (compound.hasKey("ownerId", 8)) {
@@ -428,6 +432,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		if (!this.isGemPlacementDefined() || !this.isGemCutDefined() || !this.isCorrectCutPlacement()) {
 			this.setNewCutPlacement();
 		}
+		this.setUniformColor(this.nativeColor);
 		this.setSkinColor(this.generateSkinColor());
 		this.setHairStyle(this.generateHairStyle());
 		this.setHairColor(this.generateHairColor());
@@ -476,6 +481,16 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public void onLivingUpdate() {
 		if (this.world.isRemote) {
 			this.setGlowing(this.isSelected());
+			if (this.getServitude() == EntityGem.SERVE_REBELLION) {
+				for (int i = 0; i < 2; ++i) {
+					this.world.spawnParticle(EnumParticleTypes.PORTAL, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - 0.25D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, (this.rand.nextDouble() - 0.5D) * 2.0D, -this.rand.nextDouble(), (this.rand.nextDouble() - 0.5D) * 2.0D);
+				}
+			}
+			else if (this.getServitude() == EntityGem.SERVE_YELLOW_DIAMOND) {
+				for (int i = 0; i < 2; ++i) {
+					this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - 0.25D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, (this.rand.nextDouble() - 0.5D) * 2.0D, -this.rand.nextDouble(), (this.rand.nextDouble() - 0.5D) * 2.0D);
+				}
+			}
 		}
 		else {
 			if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL && this.getAttackTarget() instanceof EntityPlayer) {
@@ -599,6 +614,14 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 						this.playObeySound();
 						player.sendMessage(new TextComponentTranslation("command.kagic.now_serves_you", this.getName()));
 						return true;
+					}
+				}
+				else if (stack.getItem() == Items.WATER_BUCKET && player.isSneaking()) {
+					if (this.isTamed()) {
+						if (this.isOwner(player)) {
+							this.setUniformColor(this.nativeColor);
+							return true;
+						}
 					}
 				}
 				else if (stack.getItem() == ModItems.TRANSFER_CONTRACT) {
@@ -841,6 +864,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 				else if (DyeUtils.isDye(stack) && this.canChangeUniformColorByDefault() && player.isSneaking()) {
 					if (this.isTamed() && this.isOwner(player)) {
 						this.setUniformColor(DyeUtils.metaFromStack(stack).orElse(0));
+						this.uniformColorChanged = true;
 						return true;
 					}
 				}

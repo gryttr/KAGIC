@@ -81,6 +81,7 @@ public class EntityRoseQuartz extends EntityQuartzSoldier {
 	
 	public EntityRoseQuartz(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 6;
 		
 		//Define valid gem cuts and placements
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BACK_OF_HEAD);

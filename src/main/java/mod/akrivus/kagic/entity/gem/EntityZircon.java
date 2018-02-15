@@ -94,6 +94,7 @@ public class EntityZircon extends EntityGem {
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
 		this.setInsigniaColor(this.rand.nextInt(16));
 		this.setUniformColor(this.getInsigniaColor());
+		this.nativeColor = this.getInsigniaColor();
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
 	

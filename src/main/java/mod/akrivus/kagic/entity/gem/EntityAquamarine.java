@@ -37,6 +37,7 @@ public class EntityAquamarine extends EntityGem {
 	private int lastScanTime;
 	public EntityAquamarine(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 11;
 		this.moveHelper = new EntityFlyHelper(this);
 		this.setSize(0.4F, 0.8F);
 		this.seePastDoors();

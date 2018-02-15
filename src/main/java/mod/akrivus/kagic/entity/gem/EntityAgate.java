@@ -70,14 +70,14 @@ public class EntityAgate extends EntityQuartzSoldier {
 	public static final float[][] BANDCOLORS = {
 			{(float)0xF9/255f, (float)0xFF/255f, (float)0xFE/255f}, //#F9FFFE	White
 			{(float)0xF9/255f, (float)0x80/255f, (float)0x1D/255f}, //#F9801D	Orange
-			{(float)0xF9/255f, (float)0x80/255f, (float)0x1D/255f}, //Magenta Agua Nueva has Orange bands
-			{(float)0xF9/255f, (float)0xFF/255f, (float)0xFE/255f}, //Light Blue Lace has White bands
+			{(float)0x9D/255f, (float)0x9D/255f, (float)0x97/255f}, //Magenta Crazy Lace has gray bands
+			{(float)0xF3/255f, (float)0x8B/255f, (float)0xAA/255f}, //persian
 			{(float)0xFE/255f, (float)0xD8/255f, (float)0x3D/255f}, //#FED83D	Yellow
 			{(float)0xF9/255f, (float)0xFF/255f, (float)0xFE/255f}, //Lime Moss has White bands
 			{(float)0xF3/255f, (float)0x8B/255f, (float)0xAA/255f}, //#F38BAA	Pink
 			{(float)0x47/255f, (float)0x4F/255f, (float)0x52/255f}, //#474F52	Gray
 			{(float)0x9D/255f, (float)0x9D/255f, (float)0x97/255f}, //#9D9D97	Light gray
-			{(float)0x3A/255f, (float)0xB3/255f, (float)0xDA/255f}, //Cyan Blue Lace has Light blue bands
+			{(float)0xFE/255f, (float)0xD8/255f, (float)0x3D/255f}, //polyherdoid
 			{(float)0xF9/255f, (float)0x80/255f, (float)0x1D/255f}, //Purple Agua Nueva has Orange bands
 			{(float)0x3A/255f, (float)0xB3/255f, (float)0xDA/255f}, //Blue Lace has Light blue bands
 			{(float)0x3A/255f, (float)0xB3/255f, (float)0xDA/255f}, //Zimbabwe has Light blue bands
@@ -120,6 +120,7 @@ public class EntityAgate extends EntityQuartzSoldier {
         
         // Register entity data.
         this.dataManager.register(COLOR, Integer.valueOf(new Random().nextInt(16)));
+        this.nativeColor = this.dataManager.get(COLOR);
 	}
 
     public float[] getGemColor() {
@@ -170,6 +171,7 @@ public class EntityAgate extends EntityQuartzSoldier {
         	this.setCustomNameTag(new TextComponentTranslation("entity.kagic.agate_16.name").getUnformattedComponentText());
         	this.setGemPlacement(GemPlacements.BACK_OF_HEAD.id);
         	this.setGemCut(GemCuts.TEARDROP.id);
+        	this.nativeColor = 3;
         	this.setSpecial(1);
         } else {
             //this.setHairStyle(this.rand.nextInt(EntityAgate.AGATE_HAIR_STYLES.size()));

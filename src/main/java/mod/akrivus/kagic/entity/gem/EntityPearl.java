@@ -185,6 +185,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
     	livingdata = super.onInitialSpawn(difficulty, livingdata);
     	this.setGemCut(GemCuts.CABOCHON.id);
     	this.setHairColor(this.getColor());
+    	this.nativeColor = this.getColor();
         return livingdata;
     }
     public void itemDataToGemData(int data) {

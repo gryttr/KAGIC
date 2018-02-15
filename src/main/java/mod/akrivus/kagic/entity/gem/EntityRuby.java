@@ -84,6 +84,7 @@ public class EntityRuby extends EntityGem {
 	
 	public EntityRuby(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 14;
 		this.setSize(0.7F, 1.2F);
 		this.isImmuneToFire = true;
 		this.isSoldier = true;

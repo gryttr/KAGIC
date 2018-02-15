@@ -114,6 +114,7 @@ public class EntitySapphire extends EntityGem {
 		this.setSkinColor(this.generateSkinColor());
 		this.setHairColor(this.getSkinColor());
 		this.setUniformColor(color);
+		this.nativeColor = color;
 		this.setInsigniaColor(color);
 		return livingdata;
 	}

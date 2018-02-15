@@ -91,6 +91,7 @@ public class EntityAmethyst extends EntityQuartzSoldier {
 	
 	public EntityAmethyst(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 8;
 		
 		//Define valid gem cuts and placements
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BACK_OF_HEAD);

@@ -60,7 +60,7 @@ public class EntityHessonite extends EntityGem {
 
 	public EntityHessonite(World world) {
 		super(world);
-
+		this.nativeColor = 14;
 		this.setSize(0.9F, 2.3F);
 		this.isSoldier = true;
 		this.visorChanceReciprocal = 1;
