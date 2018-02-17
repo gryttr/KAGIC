@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import mod.akrivus.kagic.entity.EntityFusionGem;
 import mod.akrivus.kagic.entity.EntityGem;
-import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
 import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
@@ -45,7 +44,7 @@ public class EntityGarnet extends EntityFusionGem {
 		if (this.getFusionCount() >= 2) {
 			return false;
 		} else {
-			if (gem instanceof EntitySapphire || gem instanceof EntityPadparadscha) {
+			if (gem instanceof EntitySapphire) {
 				this.setFusionColor(gem.getSkinColor());
 			}
 			return super.addGem(gem);

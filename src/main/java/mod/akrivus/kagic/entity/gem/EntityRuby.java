@@ -69,6 +69,8 @@ import net.minecraft.world.World;
 
 public class EntityRuby extends EntityGem {
 	public static final HashMap<IBlockState, Double> RUBY_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double RUBY_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double RUBY_DEPTH_THRESHOLD = 0;
 	private static final DataParameter<Integer> ANGER = EntityDataManager.<Integer>createKey(EntityRuby.class, DataSerializers.VARINT);
 	private int angerTicks = 0;
 	
@@ -137,7 +139,6 @@ public class EntityRuby extends EntityGem {
 		this.tasks.addTask(2, new EntityAIPickUpItems(this, 1.0D));
         this.tasks.addTask(3, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
         this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntitySapphire.class, EntityGarnet.class, 16D));
-        this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntityPadparadscha.class, EntityGarnet.class, 16D));
         this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntityPearl.class, EntityRhodonite.class, 16D));
         this.tasks.addTask(4, new EntityAIFollowDiamond(this, 1.0D));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
@@ -226,6 +227,7 @@ public class EntityRuby extends EntityGem {
     public void whenFused() {
     	//Everything that used to be here was moved to EntityRuby#fuse()
     	//because it doesn't need to be done 20 times a second
+    	// uhhhh yeah it does ;)
     	//this.setSize(0.7F * this.getFusionCount(), 1.35F * this.getFusionCount());
     }
     public boolean canPickupItem(Item itemIn) {

@@ -62,7 +62,6 @@ public class ModItems {
 	public static final ItemSeeds STRAWBERRY_SEEDS = (ItemSeeds) new ItemSeeds(ModBlocks.GIANT_STRAWBERRY_STEM, Blocks.FARMLAND).setUnlocalizedName("strawberry_seeds").setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
 	
 	public static final ItemGem RUBY_GEM = new ItemGem("ruby");
-	public static final ItemGem PADPARADSCHA_GEM = new ItemGem("padparadscha");
 	public static final ItemGem WHITE_PEARL_GEM = new ItemGem("pearl_0");
 	public static final ItemGem ORANGE_PEARL_GEM = new ItemGem("pearl_1");
 	public static final ItemGem MAGENTA_PEARL_GEM = new ItemGem("pearl_2");
@@ -118,12 +117,14 @@ public class ModItems {
 	public static final ItemGem HESSONITE_GEM = new ItemGem("hessonite");
 
 	public static final ItemGem WHITE_SAPPHIRE_GEM = new ItemGem("sapphire_0");
+	public static final ItemGem ORANGE_SAPPHIRE_GEM = new ItemGem("sapphire_1");
 	public static final ItemGem YELLOW_SAPPHIRE_GEM = new ItemGem("sapphire_4");
 	public static final ItemGem PINK_SAPPHIRE_GEM = new ItemGem("sapphire_6");
 	public static final ItemGem PURPLE_SAPPHIRE_GEM = new ItemGem("sapphire_10");
 	public static final ItemGem BLUE_SAPPHIRE_GEM = new ItemGem("sapphire_11");
 	public static final ItemGem GREEN_SAPPHIRE_GEM = new ItemGem("sapphire_13");
 	public static final ItemGem BLACK_SAPPHIRE_GEM = new ItemGem("sapphire_15");
+	public static final ItemGem PADPARADSCHA_GEM = new ItemGem("sapphire_16");
 	public static final ItemGem SAPPHIRE_GEM = new ItemGem("sapphire");
 
 	public static final ItemGem TOPAZ_GEM = new ItemGem("topaz");
@@ -156,7 +157,6 @@ public class ModItems {
 	public static final ItemGem BLUE_DIAMOND_GEM = new ItemGem("blue_diamond");
 
 	public static final ItemGem CRACKED_RUBY_GEM = new ItemGem("ruby", true);
-	public static final ItemGem CRACKED_PADPARADSCHA_GEM = new ItemGem("padparadscha", true);
 	public static final ItemGem CRACKED_WHITE_PEARL_GEM = new ItemGem("pearl_0", true);
 	public static final ItemGem CRACKED_ORANGE_PEARL_GEM = new ItemGem("pearl_1", true);
 	public static final ItemGem CRACKED_MAGENTA_PEARL_GEM = new ItemGem("pearl_2", true);
@@ -212,12 +212,14 @@ public class ModItems {
 	public static final ItemGem CRACKED_HESSONITE_GEM = new ItemGem("hessonite", true);
 	
 	public static final ItemGem CRACKED_WHITE_SAPPHIRE_GEM = new ItemGem("sapphire_0", true);
+	public static final ItemGem CRACKED_ORANGE_SAPPHIRE_GEM = new ItemGem("sapphire_1", true);
 	public static final ItemGem CRACKED_YELLOW_SAPPHIRE_GEM = new ItemGem("sapphire_4", true);
 	public static final ItemGem CRACKED_PINK_SAPPHIRE_GEM = new ItemGem("sapphire_6", true);
 	public static final ItemGem CRACKED_PURPLE_SAPPHIRE_GEM = new ItemGem("sapphire_10", true);
 	public static final ItemGem CRACKED_BLUE_SAPPHIRE_GEM = new ItemGem("sapphire_11", true);
 	public static final ItemGem CRACKED_GREEN_SAPPHIRE_GEM = new ItemGem("sapphire_13", true);
 	public static final ItemGem CRACKED_BLACK_SAPPHIRE_GEM = new ItemGem("sapphire_15", true);
+	public static final ItemGem CRACKED_PADPARADSCHA_GEM = new ItemGem("sapphire_16", true);
 	public static final ItemGem CRACKED_SAPPHIRE_GEM = new ItemGem("sapphire", true);
 
 	public static final ItemGem CRACKED_TOPAZ_GEM = new ItemGem("topaz", true);
@@ -293,7 +295,6 @@ public class ModItems {
 
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		registerGem(RUBY_GEM, CRACKED_RUBY_GEM, event);
-		registerGem(PADPARADSCHA_GEM, CRACKED_PADPARADSCHA_GEM, event);
 		registerGem(WHITE_PEARL_GEM, CRACKED_WHITE_PEARL_GEM, event);
 		registerGem(ORANGE_PEARL_GEM, CRACKED_ORANGE_PEARL_GEM, event);
 		registerGem(MAGENTA_PEARL_GEM, CRACKED_MAGENTA_PEARL_GEM, event);
@@ -350,12 +351,14 @@ public class ModItems {
 		
 		registerGem(SAPPHIRE_GEM, CRACKED_SAPPHIRE_GEM, event);
 		registerGem(WHITE_SAPPHIRE_GEM, CRACKED_WHITE_SAPPHIRE_GEM, event);
+		registerGem(ORANGE_SAPPHIRE_GEM, CRACKED_ORANGE_SAPPHIRE_GEM, event);
 		registerGem(YELLOW_SAPPHIRE_GEM, CRACKED_YELLOW_SAPPHIRE_GEM, event);
 		registerGem(PINK_SAPPHIRE_GEM, CRACKED_PINK_SAPPHIRE_GEM, event);
 		registerGem(PURPLE_SAPPHIRE_GEM, CRACKED_PURPLE_SAPPHIRE_GEM, event);
 		registerGem(BLUE_SAPPHIRE_GEM, CRACKED_BLUE_SAPPHIRE_GEM, event);
 		registerGem(GREEN_SAPPHIRE_GEM, CRACKED_GREEN_SAPPHIRE_GEM, event);
 		registerGem(BLACK_SAPPHIRE_GEM, CRACKED_BLACK_SAPPHIRE_GEM, event);
+		registerGem(PADPARADSCHA_GEM, CRACKED_PADPARADSCHA_GEM, event);
 		
 		registerGem(TOPAZ_GEM, CRACKED_TOPAZ_GEM, event);
 		registerGem(BLUE_TOPAZ_GEM, CRACKED_BLUE_TOPAZ_GEM, event);

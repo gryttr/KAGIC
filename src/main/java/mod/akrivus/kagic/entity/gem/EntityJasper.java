@@ -62,6 +62,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityJasper extends EntityQuartzSoldier {
 	public static final HashMap<IBlockState, Double> JASPER_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double JASPER_DEFECTIVITY_MULTIPLIER = 1.25;
+	public static final double JASPER_DEPTH_THRESHOLD = 128;
 	public static final HashMap<Integer, ResourceLocation> JASPER_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private static final DataParameter<Boolean> CHARGED = EntityDataManager.<Boolean>createKey(EntityJasper.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Integer> MARK_1_COLOR = EntityDataManager.<Integer>createKey(EntityJasper.class, DataSerializers.VARINT);

@@ -32,6 +32,8 @@ import net.minecraft.world.World;
 
 public class EntityAquamarine extends EntityGem {
 	public static final HashMap<IBlockState, Double> AQUAMARINE_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double AQUAMARINE_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double AQUAMARINE_DEPTH_THRESHOLD = 0;
 	public static final HashMap<Integer, ResourceLocation> AQUAMARINE_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	public boolean wantsToScan;
 	private int lastScanTime;

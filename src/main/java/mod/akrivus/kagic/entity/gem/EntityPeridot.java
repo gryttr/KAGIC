@@ -58,6 +58,8 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class EntityPeridot extends EntityGem implements IInventoryChangedListener {
 	public static final HashMap<IBlockState, Double> PERIDOT_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double PERIDOT_DEFECTIVITY_MULTIPLIER = 2.5;
+	public static final double PERIDOT_DEPTH_THRESHOLD = 48;
 	public InventoryBasic gemStorage;
 	public InvWrapper gemStorageHandler;
 	public InventoryBasic harvest;
@@ -315,7 +317,12 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 			InjectorResult result = ((this.lastCheckPos != null && this.getDistanceSq(this.lastCheckPos) > 32.0F) || this.lastCheckPos == null || this.world.getTotalWorldTime() - this.lastCheckTime > 2400) ? InjectorResult.create(worldIn, pos, false) : this.lastResult;
 			String defectivity = Math.round(result.getDefectivity() * 100) + "%";
 			if (result.getGem() != null) {
-				this.getOwner().sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_find_gem", result.getName(), defectivity).getUnformattedComponentText()));
+				if (result.isPrimary()) {
+					this.getOwner().sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_find_prime_gem", result.getName()).getUnformattedComponentText()));
+				}
+				else {
+					this.getOwner().sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_find_gem", result.getName(), defectivity).getUnformattedComponentText()));
+				}
 			}
 			else {
 				this.getOwner().sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_cant_find_gem").getUnformattedComponentText()));

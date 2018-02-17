@@ -47,6 +47,8 @@ import net.minecraft.world.World;
 
 public class EntityHessonite extends EntityGem {
 	public static final HashMap<IBlockState, Double> HESSONITE_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double HESSONITE_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double HESSONITE_DEPTH_THRESHOLD = 32;
 	
 	private static final int SKIN_COLOR_BEGIN = 0xF0A100;
 	private static final int SKIN_COLOR_END = 0xF0A100;

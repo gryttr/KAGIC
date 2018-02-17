@@ -44,6 +44,9 @@ import net.minecraft.world.World;
 
 public class EntityAgate extends EntityQuartzSoldier {
 	public static final HashMap<IBlockState, Double> AGATE_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double AGATE_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double AGATE_DEPTH_THRESHOLD = 64;
+	
 	public static final ArrayList<ResourceLocation> AGATE_HAIR_STYLES = new ArrayList<ResourceLocation>();
 	public static final ArrayList<ResourceLocation> AGATE_BAND_STYLES = new ArrayList<ResourceLocation>();
 	private static final DataParameter<Integer> COLOR = EntityDataManager.<Integer>createKey(EntityAgate.class, DataSerializers.VARINT);

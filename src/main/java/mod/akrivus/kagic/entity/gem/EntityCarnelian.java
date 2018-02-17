@@ -54,6 +54,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityCarnelian extends EntityQuartzSoldier {
 	public static final HashMap<IBlockState, Double> CARNELIAN_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double CARNELIAN_DEFECTIVITY_MULTIPLIER = 1.75;
+	public static final double CARNELIAN_DEPTH_THRESHOLD = 64;
 	public static final HashMap<Integer, ResourceLocation> CARNELIAN_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private static final DataParameter<Boolean> CHARGED = EntityDataManager.<Boolean>createKey(EntityCarnelian.class, DataSerializers.BOOLEAN);
 	private int charge_ticks = 0;
@@ -134,7 +136,7 @@ public class EntityCarnelian extends EntityQuartzSoldier {
 	}
 
 	public float[] getGemColor() {
-    	return new float[] { 244F / 255F, 55F / 255F, 74F / 255F };
+    	return new float[] { 1F, 45F / 255F, 93F / 255F };
     }
 	public void convertGems(int placement) {
     	this.setGemCut(GemCuts.FACETED.id);

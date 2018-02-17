@@ -5,10 +5,7 @@ import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityFusionGem;
 import mod.akrivus.kagic.entity.EntityGem;
-import mod.akrivus.kagic.entity.gem.EntityAmethyst;
 import mod.akrivus.kagic.entity.gem.EntityJasper;
-import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
-import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.entity.IEntityLivingData;

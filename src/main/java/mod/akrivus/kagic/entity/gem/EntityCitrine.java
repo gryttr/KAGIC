@@ -59,6 +59,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityCitrine extends EntityQuartzSoldier {
 	public static final HashMap<IBlockState, Double> CITRINE_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double CITRINE_DEFECTIVITY_MULTIPLIER = 2;
+	public static final double CITRINE_DEPTH_THRESHOLD = 64;
 	public static final HashMap<Integer, ResourceLocation> CITRINE_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private static final DataParameter<Boolean> CHARGED = EntityDataManager.<Boolean>createKey(EntityCitrine.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Integer> DEFECTIVE_COLOR = EntityDataManager.<Integer>createKey(EntityCitrine.class, DataSerializers.VARINT);

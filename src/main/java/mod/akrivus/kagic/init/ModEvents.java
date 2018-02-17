@@ -7,8 +7,10 @@ import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityAgate;
+import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
 import mod.akrivus.kagic.entity.gem.EntityRuby;
 import mod.akrivus.kagic.entity.gem.EntityRutile;
+import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import mod.akrivus.kagic.init.ModMetrics.Update;
 import mod.akrivus.kagic.server.SpaceStuff;
 import net.minecraft.entity.IEntityLivingData;
@@ -24,6 +26,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootEntryItem;
 import net.minecraft.world.storage.loot.LootPool;
@@ -64,9 +67,13 @@ public class ModEvents {
 				//player.addStat(ModAchievements.INSTALLED_KAGIC);
 			}
 		}
+		if (e.getEntity() instanceof EntityPadparadscha) {
+			EntityPadparadscha paddy = (EntityPadparadscha) e.getEntity();
+			e.getWorld().spawnEntity(EntitySapphire.convertFrom(paddy));
+		}
 		if (e.getEntity() instanceof EntityMob) {
 			EntityMob mob = (EntityMob) e.getEntity();
-			if (!(e.getEntity() instanceof EntityEnderman || e.getEntity() instanceof EntityGolem)) {
+			if (!(/*e.getEntity() instanceof EntityEnderman || */e.getEntity() instanceof EntityGolem)) {
 				mob.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityGem>(mob, EntityGem.class, 1, true, true, new Predicate<EntityGem>() {
 		            public boolean apply(EntityGem input) {
 		                return !(input instanceof EntityAgate || (input.isDefective() && input instanceof EntityRutile));

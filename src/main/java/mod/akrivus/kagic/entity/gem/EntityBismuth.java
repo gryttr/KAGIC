@@ -39,6 +39,8 @@ import net.minecraft.world.World;
 
 public class EntityBismuth extends EntityGem {
 	public static final HashMap<IBlockState, Double> BISMUTH_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double BISMUTH_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double BISMUTH_DEPTH_THRESHOLD = 0;
 	public static final HashMap<Integer, ResourceLocation> BISMUTH_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 
 

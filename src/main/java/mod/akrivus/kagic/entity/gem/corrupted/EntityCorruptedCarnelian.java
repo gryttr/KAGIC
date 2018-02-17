@@ -57,7 +57,7 @@ public class EntityCorruptedCarnelian extends EntityCorruptedGem {
 	 *********************************************************/
 	@Override
 	public float[] getGemColor() {
-		return new float[] { 244F / 255F, 55F / 255F, 74F / 255F };
+		return new float[] { 1F, 45F / 255F, 93F / 255F };
 	}
 	
 	@Override

@@ -11,6 +11,7 @@ import mod.akrivus.kagic.blocks.BlockRoseTears;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIFutureVision;
+import mod.akrivus.kagic.entity.ai.EntityAIRetroVision;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
@@ -44,18 +45,21 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class EntitySapphire extends EntityGem {
 	public static final HashMap<IBlockState, Double> SAPPHIRE_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double SAPPHIRE_DEFECTIVITY_MULTIPLIER = 1.75;
+	public static final double SAPPHIRE_DEPTH_THRESHOLD = 0;
 	public static final HashMap<Integer, ResourceLocation> SAPPHIRE_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
-	private boolean spawnedPadparadscha;
 	private int luckTicks = 0;
 
 	private static final List<Integer> SKIN_COLORS = new ArrayList<Integer>(Arrays.asList(
 			0,								//White
+			1, 1,							//Orange
 			4, 4, 4, 4,						//Yellow
 			6, 6, 6,						//Pink
 			10,	10,							//Purple
@@ -91,6 +95,7 @@ public class EntitySapphire extends EntityGem {
         }, 6.0F, 1.0D, 1.2D));
 		this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
 		this.tasks.addTask(2, new EntityAIFutureVision(this));
+		this.tasks.addTask(3, new EntityAIRetroVision(this));
 		this.tasks.addTask(3, new EntityAIRestrictOpenDoor(this));
         this.tasks.addTask(3, new EntityAIOpenDoor(this, true));
         this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
@@ -113,9 +118,18 @@ public class EntitySapphire extends EntityGem {
 		this.setSpecial(color);
 		this.setSkinColor(this.generateSkinColor());
 		this.setHairColor(this.getSkinColor());
-		this.setUniformColor(color);
-		this.nativeColor = color;
-		this.setInsigniaColor(color);
+		if (color == 16) {
+			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.sapphire_16.name").getUnformattedComponentText());
+			this.setHairColor(0xF9D5BD);
+			this.setUniformColor(1);
+			this.nativeColor = 1;
+			this.setInsigniaColor(1);
+		}
+		else {
+			this.setUniformColor(color);
+			this.nativeColor = color;
+			this.setInsigniaColor(color);
+		}
 		return livingdata;
 	}
 	
@@ -124,19 +138,31 @@ public class EntitySapphire extends EntityGem {
 		this.setSpecial(data);
 		this.setSkinColor(this.generateSkinColor());
 		this.setHairColor(this.getSkinColor());
-		this.setUniformColor(data);
-		this.setInsigniaColor(data);
+		if (data == 16) {
+			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.sapphire_16.name").getUnformattedComponentText());
+			this.setHairColor(0xF9D5BD);
+			this.setUniformColor(1);
+			this.nativeColor = 1;
+			this.setInsigniaColor(1);
+		}
+		else {
+			this.setUniformColor(data);
+			this.nativeColor = data;
+			this.setInsigniaColor(data);
+		}
 	}
 	
 	@Override
 	public float[] getGemColor() {
-		return EntitySheep.getDyeRgb(EnumDyeColor.values()[this.getSpecial()]);
+		if (this.getSpecial() < 16) {
+			return EntitySheep.getDyeRgb(EnumDyeColor.values()[this.getSpecial()]);
+		}
+		return new float[] { 237F / 255F, 177F / 255F, 166F / 255F };
     }
 	
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
-
 		if (compound.hasKey("skinColor")) {
 			if (compound.getInteger("skinColor") == 0) {
 				this.setSpecial(11);
@@ -170,6 +196,9 @@ public class EntitySapphire extends EntityGem {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
+		if (this.isDefective()) {
+			return ModSounds.PADPARADSCHA_LIVING;
+		}
 		return ModSounds.SAPPHIRE_LIVING;
 	}
 	
@@ -212,20 +241,8 @@ public class EntitySapphire extends EntityGem {
 	
 	@Override
 	public void onLivingUpdate() {
-        if (this.isDefective()) {
-        	if (this.spawnedPadparadscha) {
-        		this.setDead();
-        	}
-        	else if (!this.world.isRemote) {
-        		EntityPadparadscha gem = new EntityPadparadscha(this.world);
-        		gem.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
-        		this.world.spawnEntity(gem);
-        		gem.onInitialSpawn(gem.world.getDifficultyForLocation(gem.getPosition()), null);
-        		this.spawnedPadparadscha = true;
-        	}
-        }
-        else {
-        	BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos(0, 0, 0);
+		if (this.isPrimary()) {
+	    	BlockPos.MutableBlockPos blockpos = new BlockPos.MutableBlockPos(0, 0, 0);
 	        for (BlockPos.MutableBlockPos blockpos1 : BlockPos.getAllInBoxMutable(this.getPosition().add(-2, -1.0D, -2), this.getPosition().add(2, -1.0D, 2))) {
 	            if (blockpos1.distanceSqToCenter(this.posX, this.posY, this.posZ) <= 4) {
 	                blockpos.setPos(blockpos1.getX(), blockpos1.getY() + 1, blockpos1.getZ());
@@ -242,15 +259,15 @@ public class EntitySapphire extends EntityGem {
 	                }
 	            }
 	        }
-	        if (this.luckTicks > 80 && !(this.isDead || this.getHealth() <= 0.0F)) {
-				this.futureVision();
-				this.luckTicks = 0;
-			}
-			this.luckTicks += 1;
-			if (!this.onGround && this.motionY < 0.0D) {
-				this.motionY *= 0.5D;
-			}
-        }
+		}
+        if (this.luckTicks > 80 && !(this.isDead || this.getHealth() <= 0.0F)) {
+			this.futureVision();
+			this.luckTicks = 0;
+		}
+		this.luckTicks += 1;
+		if (!this.onGround && this.motionY < 0.0D) {
+			this.motionY *= 0.5D;
+		}
 		super.onLivingUpdate();
 	}
 	
@@ -265,16 +282,31 @@ public class EntitySapphire extends EntityGem {
 	            		if (this.getServitude() == gem.getServitude()) {
 	            			if (this.getServitude() == EntityGem.SERVE_HUMAN) {
 	            				if (this.isOwnerId(gem.getOwnerId())) {
-	            					entity.addPotionEffect(new PotionEffect(MobEffects.LUCK, 100));
+	            					if (this.isDefective()) {
+	            						entity.addPotionEffect(new PotionEffect(MobEffects.UNLUCK, 100));
+	            					}
+	            					else {
+	            						entity.addPotionEffect(new PotionEffect(MobEffects.LUCK, 100));
+	            					}
 	            				}
 	            			}
 	            			else {
-	            				entity.addPotionEffect(new PotionEffect(MobEffects.LUCK, 100));
+	            				if (this.isDefective()) {
+            						entity.addPotionEffect(new PotionEffect(MobEffects.UNLUCK, 100));
+            					}
+            					else {
+            						entity.addPotionEffect(new PotionEffect(MobEffects.LUCK, 100));
+            					}
 	            			}
 	            		}
 	            	}
 	            	if (this.isOwner(entity)) {
-	            		entity.addPotionEffect(new PotionEffect(MobEffects.LUCK, 100));
+	            		if (this.isDefective()) {
+    						entity.addPotionEffect(new PotionEffect(MobEffects.UNLUCK, 100));
+    					}
+    					else {
+    						entity.addPotionEffect(new PotionEffect(MobEffects.LUCK, 100));
+    					}
 	            	}
             	}
             }
@@ -290,6 +322,10 @@ public class EntitySapphire extends EntityGem {
 		case 0:
 			this.droppedGemItem = ModItems.WHITE_SAPPHIRE_GEM;
 			this.droppedCrackedGemItem = ModItems.CRACKED_WHITE_SAPPHIRE_GEM;
+			break;
+		case 1:
+			this.droppedGemItem = ModItems.ORANGE_SAPPHIRE_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_ORANGE_SAPPHIRE_GEM;
 			break;
 		case 4:
 			this.droppedGemItem = ModItems.YELLOW_SAPPHIRE_GEM;
@@ -315,6 +351,10 @@ public class EntitySapphire extends EntityGem {
 			this.droppedGemItem = ModItems.BLACK_SAPPHIRE_GEM;
 			this.droppedCrackedGemItem = ModItems.CRACKED_BLACK_SAPPHIRE_GEM;
 			break;
+		case 16:
+			this.droppedGemItem = ModItems.PADPARADSCHA_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_PADPARADSCHA_GEM;
+			break;
 		default:
 			this.droppedGemItem = ModItems.SAPPHIRE_GEM;
 			this.droppedCrackedGemItem = ModItems.CRACKED_SAPPHIRE_GEM;
@@ -328,11 +368,16 @@ public class EntitySapphire extends EntityGem {
 	@Override
 	protected int generateSkinColor() {
 		int colorIndex = this.getSpecial();
-		EnumDyeColor color = EnumDyeColor.values()[colorIndex];
 		int colorValue = 0;
-		try {
-			colorValue = ReflectionHelper.getPrivateValue(EnumDyeColor.class, color, "colorValue", "field_193351_w", "w");
-		} catch (Exception e) {}
+		if (this.getSpecial() < 16) {
+			EnumDyeColor color = EnumDyeColor.values()[colorIndex];
+			try {
+				colorValue = ReflectionHelper.getPrivateValue(EnumDyeColor.class, color, "colorValue", "field_193351_w", "w");
+			} catch (Exception e) {}
+		}
+		else {
+			colorValue = 0xFF8D32;
+		}
 		return colorValue;
 	}
 
@@ -351,5 +396,12 @@ public class EntitySapphire extends EntityGem {
 		default:
 			return false;
 		}
+	}
+	
+	public static EntitySapphire convertFrom(EntityPadparadscha pad) {
+		EntitySapphire sapphire = new EntitySapphire(pad.world);
+		sapphire.setPosition(pad.posX, pad.posY, pad.posZ);
+		sapphire.itemDataToGemData(16);
+		return sapphire;
 	}
 }

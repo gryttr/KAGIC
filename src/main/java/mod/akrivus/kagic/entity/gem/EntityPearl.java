@@ -59,6 +59,8 @@ import net.minecraftforge.oredict.DyeUtils;
 
 public class EntityPearl extends EntityGem implements IInventoryChangedListener {
 	public static final HashMap<IBlockState, Double> PEARL_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double PEARL_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double PEARL_DEPTH_THRESHOLD = 0;
 	public static final ArrayList<ResourceLocation> PEARL_HAIR_STYLES = new ArrayList<ResourceLocation>();
 	public static final ArrayList<ResourceLocation> PEARL_DRESS_STYLES = new ArrayList<ResourceLocation>();
 	private static final DataParameter<Integer> COLOR = EntityDataManager.<Integer>createKey(EntityPearl.class, DataSerializers.VARINT);
@@ -184,7 +186,12 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
     	livingdata = super.onInitialSpawn(difficulty, livingdata);
     	this.setGemCut(GemCuts.CABOCHON.id);
-    	this.setHairColor(this.getColor());
+    	if (this.isDefective()) {
+    		this.setHairColor(15 - this.getColor());
+    	}
+    	else {
+    		this.setHairColor(this.getColor());
+    	}
     	this.nativeColor = this.getColor();
         return livingdata;
     }

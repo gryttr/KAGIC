@@ -1,16 +1,16 @@
 package mod.akrivus.kagic.entity.ai;
 
-import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
+import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class EntityAIRetroVision extends EntityAIBase {
-	private final EntityPadparadscha gem;
+	private final EntitySapphire gem;
 	private long lastPrediction;
 	private String lastMessage = "";
-	public EntityAIRetroVision(EntityPadparadscha gem) {
+	public EntityAIRetroVision(EntitySapphire gem) {
 		this.gem = gem;
 		this.setMutexBits(0);
 	}
@@ -36,8 +36,8 @@ public class EntityAIRetroVision extends EntityAIBase {
 			this.sendMessage("water");
 		}
 		else if (world.isRaining() && !this.lastMessage.equals("rain")) {
-			if (world.canSnowAt(this.gem.getPosition(), false)) {
-				this.sendMessage("snow");
+			if (!world.canSnowAt(this.gem.getPosition(), false)) {
+				this.sendMessage("rain");
 			}
 		}
 		else if (world.isRaining() && !this.lastMessage.equals("snow")) {

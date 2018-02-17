@@ -42,7 +42,9 @@ import net.minecraft.world.World;
 
 public class EntityTopaz extends EntityGem {
 	public static final HashMap<IBlockState, Double> TOPAZ_YIELDS = new HashMap<IBlockState, Double>();
-		
+	public static final double TOPAZ_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double TOPAZ_DEPTH_THRESHOLD = 48;
+	
 	private static final int SKIN_COLOR_YELLOW = 0xF6E83E; 
 	private static final int SKIN_COLOR_BLUE = 0x5167fB; 
 	private static final int SKIN_COLOR_GREEN = 0x52FC75; 

@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.common.base.Predicate;
@@ -11,6 +12,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -28,6 +30,17 @@ import net.minecraft.world.World;
 
 public class EntityRutile extends EntityGem {
 	public static final HashMap<IBlockState, Double> RUTILE_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double RUTILE_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double RUTILE_DEPTH_THRESHOLD = 0;
+	private static final int SKIN_COLOR_BEGIN = 0x5F243F; 
+	private static final int SKIN_COLOR_MID = 0xC4695C; 
+	private static final int SKIN_COLOR_END = 0xC09E61; 
+
+	private static final int HAIR_COLOR_BEGIN = 0x0E0005;
+	private static final int HAIR_COLOR_MID = 0x832C13;
+	private static final int HAIR_COLOR_END = 0x5C360A; 
+	
+	private static final int NUM_HAIRSTYLES = 1;
 	public EntityRutile(World worldIn) {
 		super(worldIn);
 		this.nativeColor = 14;
@@ -69,7 +82,7 @@ public class EntityRutile extends EntityGem {
 	}
 
 	public float[] getGemColor() {
-    	return new float[] { 174F / 255F, 29F / 255F, 72F / 255F };
+    	return new float[] { 183F / 255F, 81F / 255F, 61F / 255F };
     }
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.RUTILE_LIVING;
@@ -82,6 +95,28 @@ public class EntityRutile extends EntityGem {
 	}
 	protected SoundEvent getDeathSound() {
 		return ModSounds.RUTILE_DEATH;
+	}
+	@Override
+	protected int generateSkinColor() {
+		ArrayList<Integer> skinColors = new ArrayList<Integer>();
+		skinColors.add(EntityRutile.SKIN_COLOR_BEGIN);
+		skinColors.add(EntityRutile.SKIN_COLOR_MID);
+		skinColors.add(EntityRutile.SKIN_COLOR_END);
+		return Colors.arbiLerp(skinColors);
+	}
+	
+	@Override
+	protected int generateHairStyle() {
+		return this.rand.nextInt(EntityRutile.NUM_HAIRSTYLES);
+	}
+	
+	@Override
+	protected int generateHairColor() {
+		ArrayList<Integer> hairColors = new ArrayList<Integer>();
+		hairColors.add(EntityRutile.HAIR_COLOR_BEGIN);
+		hairColors.add(EntityRutile.HAIR_COLOR_MID);
+		hairColors.add(EntityRutile.HAIR_COLOR_END);
+		return Colors.arbiLerp(hairColors);
 	}
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		return super.processInteract(player, hand);

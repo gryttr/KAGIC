@@ -108,10 +108,29 @@ public class InjectorResult {
 		float drainedCount = 0F;
 		float baseMinerals = 0F;
 		boolean drainedChecked = false;
+		System.out.println("############# BEGIN ###############");
 		for (String gem : ModEntities.GEMS.keySet()) {
 			try {
 				Class<EntityGem> gemClass = (Class<EntityGem>) ModEntities.GEMS.get(gem);
 				HashMap<IBlockState, Double> yield = (HashMap<IBlockState, Double>) gemClass.getField((gem + "_yields").toUpperCase()).get(null);
+				double defectivityMultiplier = (double) gemClass.getField((gem + "_defectivity_multiplier").toUpperCase()).get(null);
+				double pressureFactor = 1.0;
+				double depthFactor = 1.0;
+				if (world.provider.isSurfaceWorld()) {
+					try {
+						depthFactor = (double) gemClass.getField((gem + "_depth_threshold").toUpperCase()).get(null); 
+						if (depthFactor > 0) {
+							pressureFactor = depthFactor / pos.getY();
+							depthFactor = Math.min(1.0, pressureFactor);
+						}
+						else {
+							depthFactor = 1.0;
+						}
+					}
+					catch (Exception e) {
+						//System.out.println("depthFactor not used.");
+					}
+				}
 				double defectivityRate = 1.0;
 				double frictionFactor = 0.0;
 				for (int x = -4; x <= 4; ++x) {
@@ -160,12 +179,13 @@ public class InjectorResult {
 					}
 				}
 				drainedChecked = true;
-				defectivity.put(gemClass, Math.max(0.0, Math.min(1.0, defectivityRate)));
-				friction.put(gemClass, frictionFactor);
+				defectivity.put(gemClass, Math.max(0.0, Math.min(1.0, defectivityRate * defectivityMultiplier)));
+				resultTable.put(gemClass, resultTable.get(gemClass) * depthFactor);
+				friction.put(gemClass, frictionFactor * pressureFactor);
+				System.out.println(gem + " | RESULT = " + resultTable.get(gemClass) + " | DEF = " + defectivity.get(gemClass) + " | FRI = " + friction.get(gemClass) + " | DEP = " + depthFactor);
 			}
 			catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("Error creating gem: " + e.getMessage());
+				//System.out.println("Tried spawning something that doesn't exist, lol.");
 			}
 		}
 		boolean canSpawnGem = false;
@@ -194,11 +214,12 @@ public class InjectorResult {
 				}
 			}
 		}
-
+		boolean mineralSpawned = false;
 		if (highestYield <= 0.0 && (drainedCount - baseMinerals) / (9F * 9F * 9F) < InjectorResult.drainedPercentage) {
 			ChunkPos c = world.getChunkFromBlockCoords(pos).getPos();
 			int chunkPos = (c.x + c.z) % ModEntities.MINERALS.size();
 			mostLikelyGem = ModEntities.MINERALS.get(Math.abs(chunkPos));
+			mineralSpawned = true;
 			canSpawnGem = true;
 		}
 		EntityGem gemSpawned = null;
@@ -234,7 +255,7 @@ public class InjectorResult {
 				}
 			}
 		}
-		return new InjectorResult(gemSpawned, pos, gemSpawned == null ? 0.0 : defectivity.get(gemSpawned.getClass()), !canSpawnGem, canSpawnGem ? friction.get(gemSpawned.getClass()) >= 1.0F : false, exitHole);
+		return new InjectorResult(gemSpawned, pos, mineralSpawned ? 1.0 : (gemSpawned == null ? 0.0 : defectivity.get(gemSpawned.getClass())), !canSpawnGem, canSpawnGem ? friction.get(gemSpawned.getClass()) >= 1.0F : false, exitHole);
 	}
 	
 	public static void drainBlock(World world, BlockPos ore) {
