@@ -33,12 +33,10 @@ public class EntityRutile extends EntityGem {
 	public static final double RUTILE_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double RUTILE_DEPTH_THRESHOLD = 0;
 	private static final int SKIN_COLOR_BEGIN = 0x5F243F; 
-	private static final int SKIN_COLOR_MID = 0xC4695C; 
-	private static final int SKIN_COLOR_END = 0xC09E61; 
+	private static final int SKIN_COLOR_END = 0xC4695C; 
 
 	private static final int HAIR_COLOR_BEGIN = 0x0E0005;
-	private static final int HAIR_COLOR_MID = 0x832C13;
-	private static final int HAIR_COLOR_END = 0x5C360A; 
+	private static final int HAIR_COLOR_END = 0x832C13;
 	
 	private static final int NUM_HAIRSTYLES = 1;
 	public EntityRutile(World worldIn) {
@@ -100,7 +98,6 @@ public class EntityRutile extends EntityGem {
 	protected int generateSkinColor() {
 		ArrayList<Integer> skinColors = new ArrayList<Integer>();
 		skinColors.add(EntityRutile.SKIN_COLOR_BEGIN);
-		skinColors.add(EntityRutile.SKIN_COLOR_MID);
 		skinColors.add(EntityRutile.SKIN_COLOR_END);
 		return Colors.arbiLerp(skinColors);
 	}
@@ -114,7 +111,6 @@ public class EntityRutile extends EntityGem {
 	protected int generateHairColor() {
 		ArrayList<Integer> hairColors = new ArrayList<Integer>();
 		hairColors.add(EntityRutile.HAIR_COLOR_BEGIN);
-		hairColors.add(EntityRutile.HAIR_COLOR_MID);
 		hairColors.add(EntityRutile.HAIR_COLOR_END);
 		return Colors.arbiLerp(hairColors);
 	}

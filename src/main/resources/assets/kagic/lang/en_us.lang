@@ -458,12 +458,36 @@ fluid.rose_tears=Healing Tears
 command.kagic.will_follow_you=%1$s will follow you.
 command.kagic.will_not_follow_you=%1$s will not follow you.
 command.kagic.following_someone_else=%1$s is now following %2$s.
+
+command.kagic.team_0=Team White
+command.kagic.team_1=Team Orange
+command.kagic.team_2=Team Magenta
+command.kagic.team_3=Team Light Blue
+command.kagic.team_4=Team Yellow
+command.kagic.team_5=Team Lime
+command.kagic.team_6=Team Pink
+command.kagic.team_7=Team Gray
+command.kagic.team_8=Team Light Gray
+command.kagic.team_9=Team Cyan
+command.kagic.team_10=Team Purple
+command.kagic.team_11=Team Blue
+command.kagic.team_12=Team Brown
+command.kagic.team_13=Team Green
+command.kagic.team_14=Team Red
+command.kagic.team_15=Team Black
+
+command.kagic.commander_lead=%1$s is now the commander of %2$s.
+command.kagic.commander_join=%1$s is now a member of %2$s.
+command.kagic.commander_left=%1$s is no longer a member of %2$s.
+
 command.kagic.does_not_serve_you=%1$s does not serve you.
 command.kagic.already_serves_you=%1$s already serves you.
 command.kagic.now_serves_you=%1$s now serves you.
 command.kagic.does_not_serve_signee=%1$s does not serve the signee.
+
 command.kagic.does_not_understand=The %1$s's shattered mind does not understand this command!
 command.kagic.does_not_understand_corrupted=The %1$s's corrupted mind does not understand this command!
+
 command.kagic.ownership_transfered=Ownership of %1$s transfered to %2$s.
 command.kagic.joint_ownership_added=Joint ownership of %1$s given to %2$s.
 command.kagic.gem_liberated_by=%1$s has been liberated by %2$s.
@@ -474,6 +498,7 @@ command.kagic.gem_war_by=%1$s has been enlisted into the gem war by %2$s.
 command.kagic.gem_war=%1$s has been enlisted into the gem war.
 command.kagic.peace_treaty_by=%1$s has been retired from the gem war by %2$s.
 command.kagic.peace_treaty=%1$s has been retired from the gem war.
+
 command.kagic.peridot_find_gem=You'll find lots of high quality %1$s in this location.
 command.kagic.peridot_find_gem=You'll find %1$s here, with %2$s defectivity.
 command.kagic.peridot_cant_find_gem=You'll find nothing but slag here.

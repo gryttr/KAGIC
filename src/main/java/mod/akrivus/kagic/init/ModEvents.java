@@ -73,7 +73,7 @@ public class ModEvents {
 		}
 		if (e.getEntity() instanceof EntityMob) {
 			EntityMob mob = (EntityMob) e.getEntity();
-			if (!(/*e.getEntity() instanceof EntityEnderman || */e.getEntity() instanceof EntityGolem)) {
+			if (!(e.getEntity() instanceof EntityEnderman || e.getEntity() instanceof EntityGolem)) {
 				mob.targetTasks.addTask(3, new EntityAINearestAttackableTarget<EntityGem>(mob, EntityGem.class, 1, true, true, new Predicate<EntityGem>() {
 		            public boolean apply(EntityGem input) {
 		                return !(input instanceof EntityAgate || (input.isDefective() && input instanceof EntityRutile));

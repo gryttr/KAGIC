@@ -168,6 +168,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public int nativeColor = 12;
 	public boolean uniformColorChanged = false;
+	public boolean commanded = false;
 	
 	public boolean isSoldier;
 	public boolean isDiamond;
@@ -270,6 +271,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		}
 		compound.setBoolean("sitting", this.isSitting());
 		compound.setInteger("servitude", this.servitude);
+		compound.setBoolean("commanded", this.commanded);
 		compound.setInteger("fallbackServitude", this.fallbackServitude);
 		compound.setInteger("timeUntilBetrayal", this.timeUntilBetrayal);
 		compound.setInteger("dimensionOfCreation", this.dimensionOfCreation);
@@ -395,6 +397,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		}
 		this.isSitting = compound.getBoolean("sitting");
 		this.servitude = compound.getInteger("servitude");
+		this.commanded = compound.getBoolean("commanded");
 		this.fallbackServitude = compound.getInteger("fallbackServitude");
 		this.timeUntilBetrayal = compound.getInteger("timeUntilBetrayal");
 		this.wantsToFuse = compound.getBoolean("wantsToFuse");

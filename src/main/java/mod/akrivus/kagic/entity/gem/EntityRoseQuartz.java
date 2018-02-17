@@ -62,9 +62,9 @@ public class EntityRoseQuartz extends EntityQuartzSoldier {
 		ROSE_RECIPES.put(Items.WHEAT, Items.BREAD);
 	}
 	
-	public static final int SKIN_COLOR_BEGIN = 0xFEDED3;
+	public static final int SKIN_COLOR_BEGIN = 0xFDDAC9;
 	
-	public static final int SKIN_COLOR_END = 0xFFBFFF;
+	public static final int SKIN_COLOR_END = 0xFDDCCB;
 	
 	private static final int NUM_HAIRSTYLES = 1;
 	
