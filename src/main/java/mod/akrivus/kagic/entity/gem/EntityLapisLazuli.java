@@ -7,6 +7,7 @@ import java.util.List;
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAIExtinguishEntities;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIGoToWater;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
@@ -72,10 +73,10 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
 	private int harvestTimer = 0;
 
 	private static final int SKIN_COLOR_BEGIN = 0x4FEEFB;
-	private static final int SKIN_COLOR_END = 0x4FEEFB;
+	private static final int SKIN_COLOR_END = 0x5EC2FA;
 	private static final int NUM_HAIRSTYLES = 1;
-	private static final int HAIR_COLOR_BEGIN = 0x1B6AD6;
-	private static final int HAIR_COLOR_END = 0x1B6AD6;
+	private static final int HAIR_COLOR_BEGIN = 0x1B69D5;
+	private static final int HAIR_COLOR_END = 0x4D4CBA;
 	
 	public EntityLapisLazuli(World worldIn) {
 		super(worldIn);
@@ -104,6 +105,7 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
 		this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
         this.tasks.addTask(3, new EntityAIOpenDoor(this, true));
         this.tasks.addTask(4, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
+        this.tasks.addTask(4, new EntityAIExtinguishEntities(this, 1.2D));
         this.tasks.addTask(4, new EntityAITillFarmland(this, 0.6D));
         this.tasks.addTask(4, new EntityAIGoToWater(this, 0.6D));
         this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
