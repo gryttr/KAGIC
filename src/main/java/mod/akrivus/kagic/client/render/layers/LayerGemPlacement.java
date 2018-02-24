@@ -3,6 +3,7 @@ package mod.akrivus.kagic.client.render.layers;
 import mod.akrivus.kagic.entity.EntityGem;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityList;
@@ -30,7 +31,6 @@ public class LayerGemPlacement implements LayerRenderer<EntityGem> {
 			GlStateManager.color(colors[0], colors[1], colors[2]);
 			this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
 	        this.gemModel.render(gem, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-	        GlStateManager.disableBlend();
 		}
 	}
 	

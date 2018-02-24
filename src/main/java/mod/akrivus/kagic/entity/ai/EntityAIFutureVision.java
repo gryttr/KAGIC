@@ -26,9 +26,7 @@ public class EntityAIFutureVision extends EntityAIBase {
 	
 	@Override
 	public boolean shouldExecute() {
-		boolean execute = this.gem.getOwner() != null && this.gem.getOwner().getDistance(this.gem) < 16 && this.gem.world.getTotalWorldTime() - this.lastPrediction > 200 + this.gem.world.rand.nextInt(200);
-		//KAGIC.instance.chatInfoMessage("Execute is " + execute);
-		return execute;
+		return !this.gem.isDefective() && this.gem.getOwner() != null && this.gem.getOwner().getDistance(this.gem) < 16 && this.gem.world.getTotalWorldTime() - this.lastPrediction > 200 + this.gem.world.rand.nextInt(200);
 	}
 	
 	@Override
@@ -37,7 +35,6 @@ public class EntityAIFutureVision extends EntityAIBase {
 		if (world.rand.nextInt(100) == 0 && world.rand.nextBoolean() && KAGIC.isBirthdayTomorrow() /*&& !this.lastMessage.equals("birthday")*/) {
 			this.sendMessage("birthday");
 		}
-		
 		List<EntityLivingBase> list = this.gem.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.gem.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D));
         double maxDistance = Double.MAX_VALUE;
         for (EntityLivingBase weirdo : list) {

@@ -1,30 +1,38 @@
 package mod.akrivus.kagic.client.render;
 
+import mod.akrivus.kagic.client.model.ModelGem;
+import mod.akrivus.kagic.client.model.ModelNothing;
 import mod.akrivus.kagic.client.model.ModelRutile;
+import mod.akrivus.kagic.client.model.ModelTwinRutile;
 import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
-import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
-import mod.akrivus.kagic.client.render.layers.LayerHair;
-import mod.akrivus.kagic.client.render.layers.LayerInsignia;
+import mod.akrivus.kagic.client.render.layers.LayerRutileGemPlacement;
+import mod.akrivus.kagic.client.render.layers.LayerRutileHair;
+import mod.akrivus.kagic.client.render.layers.LayerRutileInsignia;
+import mod.akrivus.kagic.client.render.layers.LayerRutileItem;
+import mod.akrivus.kagic.client.render.layers.LayerRutileModel;
+import mod.akrivus.kagic.client.render.layers.LayerRutileSkin;
+import mod.akrivus.kagic.client.render.layers.LayerRutileUniform;
+import mod.akrivus.kagic.client.render.layers.LayerRutileVisor;
 import mod.akrivus.kagic.client.render.layers.LayerSantaHat;
-import mod.akrivus.kagic.client.render.layers.LayerSkin;
-import mod.akrivus.kagic.client.render.layers.LayerUniform;
-import mod.akrivus.kagic.client.render.layers.LayerVisor;
 import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.entity.gem.EntityRutile;
 import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderRutile extends RenderGemBase<EntityRutile> {
+	private ModelGem normalRutile = new ModelRutile();
+	private ModelGem twinRutile = new ModelTwinRutile();
 	public RenderRutile() {
-        super(Minecraft.getMinecraft().getRenderManager(), new ModelRutile(), 0.25F);
-        this.addLayer(new LayerSkin(this));
-        this.addLayer(new LayerUniform(this));
-        this.addLayer(new LayerInsignia(this));
-        this.addLayer(new LayerHair(this));
-        this.addLayer(new LayerVisor(this));
-        this.addLayer(new LayerGemPlacement(this));
+        super(Minecraft.getMinecraft().getRenderManager(), new ModelNothing(), 0.25F);
+        this.addLayer(new LayerRutileModel(this));
+        this.addLayer(new LayerRutileItem(this));
+        this.addLayer(new LayerRutileSkin(this));
+        this.addLayer(new LayerRutileUniform(this));
+        this.addLayer(new LayerRutileInsignia(this));
+        this.addLayer(new LayerRutileHair(this));
+        this.addLayer(new LayerRutileVisor(this));
+        this.addLayer(new LayerRutileGemPlacement(this));
 		if (KAGIC.isBirthday()) {
 			this.addLayer(new LayerBirthdayHat(this));
 		} else if (KAGIC.isHalloween()) {
@@ -37,5 +45,12 @@ public class RenderRutile extends RenderGemBase<EntityRutile> {
 	@Override
 	protected ResourceLocation getEntityTexture(EntityRutile entity) {
 		return new ResourceLocation("kagic:textures/entities/rutile/rutile.png");
+	}
+	
+	public ModelGem getModel(boolean defective) {
+		if (defective) {
+			return this.twinRutile;
+		}
+		return this.normalRutile;
 	}
 }

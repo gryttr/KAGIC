@@ -62,6 +62,7 @@ import net.minecraft.entity.ai.EntityAIRestrictOpenDoor;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.item.EntityFireworkRocket;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Enchantments;
@@ -157,6 +158,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public int compatIndex;
 	
 	protected ArrayList<UUID> jointOwners = new ArrayList<UUID>();
+	public boolean followingGem = false;
 	private UUID leader = null;
 	private BlockPos restPosition;
 	
@@ -217,7 +219,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.dataManager.register(SPECIAL, 0);
 		this.dataManager.register(FUSION_COUNT, 1);
 		this.dataManager.register(FUSION_PLACEMENTS, "");
-		this.compatIndex = worldIn.rand.nextInt(GemPlacements.values().length);
+		this.compatIndex = worldIn.rand.nextInt(20);
 	}
 
 	/*********************************************************
@@ -256,6 +258,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		else {
 			compound.setString("leaderId", this.leader.toString());
 		}
+		compound.setBoolean("followingGem", this.followingGem);
 		NBTTagList owners = new NBTTagList();
 		for (int i = 0; i < this.jointOwners.size(); ++i) {
 			UUID ownerId = this.jointOwners.get(i);
@@ -344,6 +347,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			this.whenPrimary();
 		}
 		
+		this.followingGem = compound.getBoolean("followingGem");
 		NBTTagList fusionMembers = compound.getTagList("fusionMembers", 10);
 		for (int i = 0; i < fusionMembers.tagCount(); ++i) {
 			this.fusionMembers.add(fusionMembers.getCompoundTagAt(i));
@@ -444,7 +448,17 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.setDimensionOfCreation(this.dimension);
 		this.setAttackAI();
 		if (this.fallbackServitude == -1) {
-			this.fallbackServitude = 0;
+				if (ModConfigs.canRebel) {
+					if ((this.isDefective() && this.rand.nextInt(5) == 0) || this.rand.nextInt(50) == 0) {
+						this.fallbackServitude = EntityGem.SERVE_REBELLION;
+					}
+					else {
+						this.fallbackServitude = 0;
+					}
+				}
+				else {
+					this.fallbackServitude = 0;
+				}
 		}
 		this.pitch = 0.7F + (this.rand.nextFloat() / 2);
 		return super.onInitialSpawn(difficulty, livingdata);
@@ -483,7 +497,6 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	 *********************************************************/
 	public void onLivingUpdate() {
 		if (this.world.isRemote) {
-			this.setGlowing(this.isSelected());
 			if (this.getServitude() == EntityGem.SERVE_REBELLION) {
 				for (int i = 0; i < 2; ++i) {
 					this.world.spawnParticle(EnumParticleTypes.PORTAL, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - 0.25D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, (this.rand.nextDouble() - 0.5D) * 2.0D, -this.rand.nextDouble(), (this.rand.nextDouble() - 0.5D) * 2.0D);
@@ -496,15 +509,18 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			}
 		}
 		else {
+			/*if (this.world.getLightFor(EnumSkyBlock.BLOCK, this.getPosition()) < 8) {
+				this.setSelected(true);
+			}
+			else {
+				this.setSelected(false);
+			}*/
 			if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL && this.getAttackTarget() instanceof EntityPlayer) {
 				this.setAttackTarget(null);
 			}
 			if (this.isPeaceful) {
 				this.setAttackTarget(null);
 				this.isPeaceful = false;
-			}
-			if (this.isDefective()) {
-				//this.whenDefective();
 			}
 			if (this.fallbackServitude > 0 && ModConfigs.canRebel) {
 				if (this.timeUntilBetrayal > (this.rand.nextDouble() * 4) * 24000) {
@@ -513,6 +529,15 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 				++this.timeUntilBetrayal;
 			}
 		}
+		this.world.profiler.startSection("looting");
+        if (!this.world.isRemote && this.canPickUpLoot() && !this.dead && !this.world.getGameRules().getBoolean("mobGriefing")) {
+            for (EntityItem entityitem : this.world.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().grow(1.0D, 0.0D, 1.0D))) {
+                if (!entityitem.isDead && !entityitem.getItem().isEmpty() && !entityitem.cannotPickup()) {
+                    this.updateEquipmentIfNeeded(entityitem);
+                }
+            }
+        }
+        this.world.profiler.endSection();
 		super.onLivingUpdate();
 	}
 	
@@ -569,14 +594,20 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		if (!this.world.isRemote) {
 			if (hand == EnumHand.MAIN_HAND) {
 				ItemStack stack = player.getHeldItemMainhand();
-				if (stack.getItem() == ModItems.GEM_STAFF) {
+				if (stack.getItem() == ModItems.GEM_STAFF || stack.getItem() == ModItems.COMMANDER_STAFF) {
 					if (this.isTamed()) {
 						if (player.isSneaking()) {
-							/*if (this.isOwnedBy(player)) {
-								this.setSelected(!this.isSelected());
-							}*/
-							this.alternateInteract(player);
-							this.playObeySound();
+							if (this.isOwner(player)) {
+								if (this.getHeldItemMainhand().getItem() == ModItems.COMMANDER_STAFF) {
+									this.entityDropItem(this.getHeldItemMainhand(), 0.0F);
+									this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+									this.playObeySound();
+								}
+								else {
+									this.alternateInteract(player);
+									this.playObeySound();
+								}
+							}
 						}
 						else {
 							if (this.isOwner(player)) {
@@ -589,7 +620,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 							}
 						}
 					}
-					else {
+					else if (stack.getItem() != ModItems.COMMANDER_STAFF) {
 						this.setOwnerId(player.getUniqueID());
 						this.setLeader(player);
 						this.setServitude(EntityGem.SERVE_HUMAN);
@@ -600,21 +631,6 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 						this.world.setEntityState(this, (byte) 7);
 						this.playObeySound();
 						//player.addStat(ModAchievements.I_MADE_YOU);
-						player.sendMessage(new TextComponentTranslation("command.kagic.now_serves_you", this.getName()));
-						return true;
-					}
-				}
-				else if (stack.getItem() == ModItems.CRACKED_BLUE_DIAMOND_GEM || stack.getItem() == ModItems.CRACKED_YELLOW_DIAMOND_GEM || stack.getItem() == ModItems.BLUE_DIAMOND_GEM || stack.getItem() == ModItems.YELLOW_DIAMOND_GEM) {
-					if (this.getServitude() != EntityGem.SERVE_HUMAN) {
-						this.setOwnerId(player.getUniqueID());
-						this.setLeader(player);
-						this.setServitude(EntityGem.SERVE_HUMAN);
-						this.navigator.clearPath();
-						this.setAttackTarget(null);
-						this.setHealth(this.getMaxHealth());
-						this.playTameEffect();
-						this.world.setEntityState(this, (byte) 7);
-						this.playObeySound();
 						player.sendMessage(new TextComponentTranslation("command.kagic.now_serves_you", this.getName()));
 						return true;
 					}
@@ -881,6 +897,19 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 				}
 				else if (this.isSoldier) {
 					return super.processInteract(player, hand) || this.setAttackWeapon(player, hand, stack);
+				}
+			}
+			else {
+				ItemStack stack = player.getHeldItemOffhand();
+				if (stack.getItem() == ModItems.COMMANDER_STAFF) {
+					if (this.isTamed()) {
+						if (this.isOwner(player) && this.getHeldItemMainhand().isEmpty()) {
+							this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, stack.copy());
+							if (!player.capabilities.isCreativeMode) {
+								stack.shrink(1);
+							}
+						}
+					}
 				}
 			}
 		}
@@ -1153,6 +1182,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		else if (stack.getItem() == ModItems.GEM_STAFF) {
 			return true;
 		}
+		else if (stack.getItem() == ModItems.COMMANDER_STAFF) {
+			return true;
+		}
 		else if (stack.getItem() == ModItems.TRANSFER_CONTRACT) {
 			return true;
 		}
@@ -1384,19 +1416,25 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		return this.isSitting;
 	}
 	
-	public void setSitting(EntityPlayer player) {
-		if (player != null) {
+	public void setSitting(EntityLivingBase player) {
+		if (player instanceof EntityPlayer) {
 			if (this.isSitting()) {
 				player.sendMessage(new TextComponentTranslation("command.kagic.will_follow_you", this.getName()));
 				this.isSitting = false;
 				this.restPosition = null;
+				this.setLeader(player);
 			}
 			else {
 				player.sendMessage(new TextComponentTranslation("command.kagic.will_not_follow_you", this.getName()));
 				this.isSitting = true;
 				this.restPosition = this.getPosition();
-				this.setLeader(player);
 			}
+			this.followingGem = false;
+		}
+		else {
+			this.isSitting = false;
+			this.restPosition = null;
+			this.followingGem = true;
 		}
 	}
 	public void setOwnerId(UUID ownerId) {
@@ -1448,13 +1486,14 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		}  
 	}
 	
-	public void setLeader(EntityPlayer newLeader) {
+	public void setLeader(EntityLivingBase entity) {
 		try {
-			if (this.leader != null && !this.leader.equals(EntityPlayer.getUUID(newLeader.getGameProfile()))) {
+			EntityPlayer player = (EntityPlayer) entity;
+			if (this.leader != null && !this.leader.equals(EntityPlayer.getUUID(player.getGameProfile()))) {
 				EntityPlayer oldLeader = this.world.getPlayerEntityByUUID(this.leader);
-				oldLeader.sendMessage(new TextComponentTranslation("command.kagic.following_someone_else", this.getName(), newLeader.getName()));
+				oldLeader.sendMessage(new TextComponentTranslation("command.kagic.following_someone_else", this.getName(), player.getName()));
 			}
-			this.leader = EntityPlayer.getUUID(newLeader.getGameProfile());
+			this.leader = EntityPlayer.getUUID(player.getGameProfile());
 		}
 		catch (Exception e) {
 			this.leader = null;
@@ -1463,6 +1502,10 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	public void setLeader(UUID newLeader) {
 		this.leader = newLeader; 	
+	}
+	
+	public void resetLeader() {
+		this.leader = null;
 	}
 	
 	public void setSelected(boolean selected) {
@@ -1496,6 +1539,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 					}
 				}
 			}
+			if (entityIn.getHeldItemMainhand().getItem() == ModItems.COMMANDER_STAFF) {
+				return this.isOwnerId(ModItems.COMMANDER_STAFF.getOwner(entityIn.getHeldItemMainhand()));
+			}
 		}
 		else if (this.servitude == EntityGem.SERVE_BLUE_DIAMOND) {
 			return entityIn instanceof EntityBlueDiamond;
@@ -1507,13 +1553,15 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	public boolean isOwnerId(UUID uuid) {
-		if (uuid.equals(this.getOwnerId())) {
-			return true;
-		}
-		else {
-			for (UUID ownerId : this.jointOwners) {
-				if (uuid.equals(ownerId)) {
-					return true;
+		if (uuid != null) {
+			if (uuid.equals(this.getOwnerId())) {
+				return true;
+			}
+			else {
+				for (UUID ownerId : this.jointOwners) {
+					if (uuid.equals(ownerId)) {
+						return true;
+					}
 				}
 			}
 		}
@@ -1632,25 +1680,24 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 									this.unfuse();
 								}
 								else {
-									this.attackEntityFrom(new PoofDamage(), this.getHealth() * 2);
+									this.attackEntityFrom(new PoofDamage(), this.getMaxHealth());
 								}
 							}
 						}
 					}
-					else if (heldItem.getItem() == ModItems.GEM_STAFF) {
+					else if (heldItem.getItem() == ModItems.GEM_STAFF || heldItem.getItem() == ModItems.COMMANDER_STAFF) {
 						if (this.isOwner(attacker)) {
 							if (this.isFusion()) {
 								this.unfuse();
 							}
 							else {
-								this.attackEntityFrom(new PoofDamage(), this.getHealth() * 2);
+								this.attackEntityFrom(new PoofDamage(), this.getMaxHealth());
 							}
 						}
 					}
 				}
 			}
 		}
-		this.canTalk = false;
 		return super.attackEntityFrom(source, amount);
 	}
 	
@@ -1800,28 +1847,31 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	public boolean isOnSameTeam(Entity entity) {
-		if (entity instanceof EntityGem) {
-			EntityGem gem = (EntityGem) entity;
-			if (gem.getServitude() == this.getServitude()) {
-				if (gem.getServitude() == SERVE_HUMAN) {
-					if (gem.getOwnerId().equals(this.getOwnerId())) {
-						return true;
+		if (entity != null) {
+			if (entity instanceof EntityGem) {
+				EntityGem gem = (EntityGem) entity;
+				if (gem.getServitude() == this.getServitude()) {
+					if (gem.getServitude() == SERVE_HUMAN) {
+						if (gem.getOwnerId().equals(this.getOwnerId())) {
+							return true;
+						}
+						return false;
 					}
-					return false;
+					return true;
 				}
-				return true;
 			}
+			else if (this.isTamed()) {
+				EntityLivingBase entitylivingbase = this.getOwner();
+				if (entity.equals(entitylivingbase)) {
+					return true;
+				}
+				if (entitylivingbase != null) {
+					return entitylivingbase.isOnSameTeam(entity);
+				}
+			}
+			return super.isOnSameTeam(entity);
 		}
-		else if (this.isTamed()) {
-			EntityLivingBase entitylivingbase = this.getOwner();
-			if (entity.equals(entitylivingbase)) {
-				return true;
-			}
-			if (entitylivingbase != null) {
-				return entitylivingbase.isOnSameTeam(entity);
-			}
-		}
-		return super.isOnSameTeam(entity);
+		return false;
 	}
 	
 	public int getServitude() {
@@ -1898,52 +1948,30 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			}
 			else {
 				ItemStack stack = new ItemStack(this.droppedGemItem);
-				boolean shattered = false;
-				boolean enchanted = false;
+				boolean shatterGem = false;
 				if (cause.getTrueSource() instanceof EntityLivingBase) {
-					ItemStack heldItem = ((EntityLivingBase)cause.getTrueSource()).getHeldItemMainhand();
-						if (heldItem.isItemEnchanted()) {
-							NBTTagList enchantments = heldItem.getEnchantmentTagList();
-							for (int i = 0; i < enchantments.tagCount(); i++) {
-								if (enchantments.getCompoundTagAt(i).getInteger("id") == Enchantment.getEnchantmentID(ModEnchantments.BREAKING_POINT)) {
-									/*if (cause.getTrueSource() instanceof EntityPlayer) {
-										EntityPlayer player = (EntityPlayer) cause.getTrueSource();
-										player.addStat(ModAchievements.NOW_THATS_A_WEAPON);
-									}*/
-									stack = new ItemStack(this.droppedCrackedGemItem);
-									enchanted = true;
-									shattered = true;
-								}
-								else if (enchantments.getCompoundTagAt(i).getInteger("id") == Enchantment.getEnchantmentID(ModEnchantments.FAIR_FIGHT)) {
-									/*if (cause.getTrueSource() instanceof EntityPlayer) {
-										EntityPlayer player = (EntityPlayer) cause.getTrueSource();
-										player.addStat(ModAchievements.MY_BEST_WORK);
-									}*/
-									stack = new ItemStack(this.droppedGemItem);
-									enchanted = true;
-								}
+					EntityLivingBase attacker = (EntityLivingBase) cause.getTrueSource();
+					ItemStack heldItem = attacker.getHeldItemMainhand();
+					if (heldItem.isItemEnchanted()) {
+						NBTTagList enchantments = heldItem.getEnchantmentTagList();
+						for (int i = 0; i < enchantments.tagCount(); i++) {
+							if (enchantments.getCompoundTagAt(i).getInteger("id") == Enchantment.getEnchantmentID(ModEnchantments.BREAKING_POINT)) {
+								shatterGem = true;
 							}
 						}
-						else if (heldItem.getItem() == ModItems.GEM_STAFF) {
-							stack = new ItemStack(this.droppedGemItem);
-							enchanted = true;
-						}
-				}
-				if (!enchanted) {
-					if (this.rand.nextInt(80) == 0) {
-						stack = new ItemStack(this.droppedCrackedGemItem);
-						shattered = true;
 					}
-					else {
-						stack = new ItemStack(this.droppedGemItem);
+					else if (heldItem.getItem() != ModItems.GEM_STAFF || heldItem.getItem() != ModItems.COMMANDER_STAFF) {
+						shatterGem = this.rand.nextInt(60) == 0;
 					}
 				}
-				if (shattered) {
+				if (shatterGem) {
 					this.playSound(ModSounds.GEM_SHATTER, 3.0F, 1.0F);
+					stack = new ItemStack(this.droppedCrackedGemItem);
 					cause = new ShatterDamage();
 				}
 				else {
 					this.playSound(ModSounds.GEM_POOF, 3.0F, 1.0F);
+					stack = new ItemStack(this.droppedGemItem);
 					cause = new PoofDamage();
 				}
 				if (cause.getTrueSource() instanceof EntitySlag) {
@@ -1973,6 +2001,18 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	protected void dropEquipment(boolean wasRecentlyHit, int lootingModifier) {
 		return;
+	}
+	public void sendMessage(String line, Object[] formatting) {
+		List<EntityPlayer> list = this.world.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().grow(24.0D, 16.0D, 24.0D));
+		for (EntityPlayer player : list) {
+			player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation(line, formatting).getUnformattedComponentText()));
+		}
+	}
+	public void sendMessage(String line) {
+		List<EntityPlayer> list = this.world.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().grow(24.0D, 16.0D, 24.0D));
+		for (EntityPlayer player : list) {
+			player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation(line).getUnformattedComponentText()));
+		}
 	}
 	
 	/*********************************************************

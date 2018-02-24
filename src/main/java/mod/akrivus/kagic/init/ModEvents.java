@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAIFollowTopaz;
 import mod.akrivus.kagic.entity.gem.EntityAgate;
 import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
 import mod.akrivus.kagic.entity.gem.EntityRuby;
@@ -19,6 +20,7 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
@@ -26,7 +28,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootEntryItem;
 import net.minecraft.world.storage.loot.LootPool;
@@ -67,10 +68,12 @@ public class ModEvents {
 				//player.addStat(ModAchievements.INSTALLED_KAGIC);
 			}
 		}
+		
 		if (e.getEntity() instanceof EntityPadparadscha) {
 			EntityPadparadscha paddy = (EntityPadparadscha) e.getEntity();
 			e.getWorld().spawnEntity(EntitySapphire.convertFrom(paddy));
 		}
+		
 		if (e.getEntity() instanceof EntityMob) {
 			EntityMob mob = (EntityMob) e.getEntity();
 			if (!(e.getEntity() instanceof EntityEnderman || e.getEntity() instanceof EntityGolem)) {
@@ -80,7 +83,15 @@ public class ModEvents {
 		            }
 		        }));
 			}
-			mob.tasks.addTask(1, new EntityAIAvoidEntity<EntityAgate>(mob, EntityAgate.class, 6.0F, 1.0D, 1.2D));
+			mob.tasks.addTask(1, new EntityAIAvoidEntity<EntityAgate>(mob, EntityAgate.class, new Predicate<EntityAgate>() {
+				public boolean apply(EntityAgate input) {
+					return !input.isDefective();
+				}
+			}, 6.0F, 1.0D, 1.2D));
+		}
+		if (e.getEntity() instanceof EntityAnimal) {
+			EntityAnimal animal = (EntityAnimal) e.getEntity();
+			animal.targetTasks.addTask(3, new EntityAIFollowTopaz(animal, 0.9D));
 		}
 		else if (e.getEntity() instanceof EntityGolem) {
 			EntityGolem golem = (EntityGolem) e.getEntity();

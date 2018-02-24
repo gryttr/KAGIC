@@ -1,7 +1,7 @@
 package mod.akrivus.kagic.client.model;
 
+import mod.akrivus.kagic.entity.gem.EntityTopaz;
 import mod.akrivus.kagic.init.KAGIC;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
@@ -68,5 +68,20 @@ public class ModelTopaz extends ModelGem {
 	@Override
 	public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn) {
 		super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
+		if (entityIn instanceof EntityTopaz) {
+			EntityTopaz topaz = (EntityTopaz) entityIn;
+			if (topaz.isHolding()) {
+				this.bipedLeftArm.rotationPointY = -4F;
+				this.bipedLeftArm.rotateAngleX = 3.15F;
+				//this.bipedLeftArm.rotateAngleZ = 0.15F;
+				this.bipedRightArm.rotationPointY = -4F;
+				this.bipedRightArm.rotateAngleX = 3.15F;
+				//this.bipedRightArm.rotateAngleZ = -0.15F;
+			}
+			else {
+				this.bipedLeftArm.rotationPointY = 0F;
+				this.bipedRightArm.rotationPointY = 0F;
+			}
+		}
 	}
 }

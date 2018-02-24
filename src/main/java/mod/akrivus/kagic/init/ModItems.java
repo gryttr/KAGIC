@@ -5,6 +5,7 @@ import java.util.HashMap;
 import mod.akrivus.kagic.items.ItemActiveGemBase;
 import mod.akrivus.kagic.items.ItemActiveGemShard;
 import mod.akrivus.kagic.items.ItemAutonomyContract;
+import mod.akrivus.kagic.items.ItemCommanderStaff;
 import mod.akrivus.kagic.items.ItemGem;
 import mod.akrivus.kagic.items.ItemGemStaff;
 import mod.akrivus.kagic.items.ItemInactiveGemBase;
@@ -55,6 +56,7 @@ public class ModItems {
 	public static final ItemWarDeclaration WAR_DECLARATION = new ItemWarDeclaration();
 	public static final ItemPeaceTreaty PEACE_TREATY = new ItemPeaceTreaty();
 	public static final ItemGemStaff GEM_STAFF = new ItemGemStaff();
+	public static final ItemCommanderStaff COMMANDER_STAFF = new ItemCommanderStaff();
 	public static final ItemVehicle ROAMING_EYE = new ItemVehicle("roaming_eye");
 	public static final Item LASER_BEAM = new Item().setUnlocalizedName("laser_beam");
 	public static final ItemWarpWhistle WARP_WHISTLE = new ItemWarpWhistle();
@@ -152,6 +154,7 @@ public class ModItems {
 	public static final ItemGem ZIRCON_GEM = new ItemGem("zircon");
 	
 	public static final ItemGem RUTILE_GEM = new ItemGem("rutile");
+	public static final ItemGem TWIN_RUTILE_GEM = new ItemGem("rutile_1");
 
 	public static final ItemGem YELLOW_DIAMOND_GEM = new ItemGem("yellow_diamond");
 	public static final ItemGem BLUE_DIAMOND_GEM = new ItemGem("blue_diamond");
@@ -247,6 +250,7 @@ public class ModItems {
 	public static final ItemGem CRACKED_ZIRCON_GEM = new ItemGem("zircon", true);
 	
 	public static final ItemGem CRACKED_RUTILE_GEM = new ItemGem("rutile", true);
+	public static final ItemGem CRACKED_TWIN_RUTILE_GEM = new ItemGem("rutile_1", true);
 
 	public static final ItemGem CRACKED_YELLOW_DIAMOND_GEM = new ItemGem("yellow_diamond", true);
 	public static final ItemGem CRACKED_BLUE_DIAMOND_GEM = new ItemGem("blue_diamond", true);
@@ -383,7 +387,9 @@ public class ModItems {
 		registerGem(RED_ZIRCON_GEM, CRACKED_RED_ZIRCON_GEM, event);
 		registerGem(BLACK_ZIRCON_GEM, CRACKED_BLACK_ZIRCON_GEM, event);
 		registerGem(ZIRCON_GEM, CRACKED_ZIRCON_GEM, event);
+		
 		registerGem(RUTILE_GEM, CRACKED_RUTILE_GEM, event);
+		registerGem(TWIN_RUTILE_GEM, CRACKED_TWIN_RUTILE_GEM, event);
 
 		registerGem(YELLOW_DIAMOND_GEM, CRACKED_YELLOW_DIAMOND_GEM, event);
 		registerGem(BLUE_DIAMOND_GEM, CRACKED_BLUE_DIAMOND_GEM, event);
@@ -433,6 +439,7 @@ public class ModItems {
 		registerItem(WAR_DECLARATION, event);
 		registerItem(PEACE_TREATY, event);
 		registerItem(GEM_STAFF, event);
+		registerItem(COMMANDER_STAFF, event);
 		registerItem(ROAMING_EYE, event);
 		registerItem(LASER_BEAM, event);
 		registerItem(WARP_WHISTLE, event);

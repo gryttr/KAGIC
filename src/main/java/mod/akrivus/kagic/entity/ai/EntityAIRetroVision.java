@@ -17,7 +17,7 @@ public class EntityAIRetroVision extends EntityAIBase {
 	
 	@Override
 	public boolean shouldExecute() {
-		return this.gem.getOwner() != null && this.gem.getOwner().getDistance(this.gem) < 16 && this.gem.world.getTotalWorldTime() - this.lastPrediction > 200 + this.gem.world.rand.nextInt(200);
+		return this.gem.isDefective() && this.gem.getOwner() != null && this.gem.getOwner().getDistance(this.gem) < 16 && this.gem.world.getTotalWorldTime() - this.lastPrediction > 200 + this.gem.world.rand.nextInt(200);
 	}
 	
 	@Override

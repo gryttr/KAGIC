@@ -102,8 +102,10 @@ entity.kagic.hessonite.name=Hessonite
 entity.kagic.hessonite.name.plural=Hessonites
 entity.kagic.topaz.name=Topaz
 entity.kagic.topaz.name.plural=Topazes
+entity.kagic.topaz_1.name=Blue Topaz
 entity.kagic.rutile.name=Rutile
 entity.kagic.rutile.name.plural=Rutiles
+entity.kagic.rutile_1.name=Rutile
 entity.kagic.zircon.name=Zircon
 entity.kagic.zircon.name.plural=Zircons
 entity.kagic.zircon_0.name=White Zircon
@@ -177,6 +179,8 @@ item.war_declaration.signedname=%1$s's War Declaration
 item.peace_treaty.name=Peace Treaty
 item.peace_treaty.signedname=%1$s's Peace Treaty
 item.gem_staff.name=Gem Staff
+item.commander_staff.name=Commander Staff
+item.commander_staff.signedname=%1$s's Commander Staff
 item.warp_whistle.name=Warp Whistle
 item.roaming_eye.name=Roaming Eye
 item.laser_beam.name=Laser Beam
@@ -255,8 +259,9 @@ item.sapphire_15_gem.name=Black Sapphire Gem
 item.sapphire_16_gem.name=Padparadscha Gem
 
 item.topaz_gem.name=Topaz Gem
-item.topaz_1_gem.name=Topaz Gem
+item.topaz_1_gem.name=Blue Topaz Gem
 item.rutile_gem.name=Rutile Gem
+item.rutile_1_gem.name=Twin Rutile Gem
 
 item.zircon_gem.name=Zircon Gem
 item.zircon_0_gem.name=White Zircon Gem
@@ -348,8 +353,9 @@ item.cracked_sapphire_15_gem.name=Cracked Black Sapphire Gem
 item.cracked_sapphire_16_gem.name=Cracked Padparadscha Gem
 
 item.cracked_topaz_gem.name=Cracked Topaz Gem
-item.cracked_topaz_1_gem.name=Cracked Topaz Gem
+item.cracked_topaz_1_gem.name=Cracked Blue Topaz Gem
 item.cracked_rutile_gem.name=Cracked Rutile Gem
+item.cracked_rutile_1_gem.name=Cracked Twin Rutile Gem
 
 item.cracked_zircon_gem.name=Cracked Zircon Gem
 item.cracked_zircon_0_gem.name=Cracked White Zircon Gem
@@ -475,27 +481,6 @@ command.kagic.will_follow_you=%1$s will follow you.
 command.kagic.will_not_follow_you=%1$s will not follow you.
 command.kagic.following_someone_else=%1$s is now following %2$s.
 
-command.kagic.team_0=Team White
-command.kagic.team_1=Team Orange
-command.kagic.team_2=Team Magenta
-command.kagic.team_3=Team Light Blue
-command.kagic.team_4=Team Yellow
-command.kagic.team_5=Team Lime
-command.kagic.team_6=Team Pink
-command.kagic.team_7=Team Gray
-command.kagic.team_8=Team Light Gray
-command.kagic.team_9=Team Cyan
-command.kagic.team_10=Team Purple
-command.kagic.team_11=Team Blue
-command.kagic.team_12=Team Brown
-command.kagic.team_13=Team Green
-command.kagic.team_14=Team Red
-command.kagic.team_15=Team Black
-
-command.kagic.commander_lead=%1$s is now the commander of %2$s.
-command.kagic.commander_join=%1$s is now a member of %2$s.
-command.kagic.commander_left=%1$s is no longer a member of %2$s.
-
 command.kagic.does_not_serve_you=%1$s does not serve you.
 command.kagic.already_serves_you=%1$s already serves you.
 command.kagic.now_serves_you=%1$s now serves you.
@@ -520,11 +505,39 @@ command.kagic.peridot_find_gem=You'll find %1$s here, with %2$s defectivity.
 command.kagic.peridot_cant_find_gem=You'll find nothing but slag here.
 command.kagic.peridot_harvest=Here are all the crops I've harvested.
 command.kagic.peridot_no_harvest=Sorry, I haven't harvested enough crop yet.
+command.kagic.peridot_haul=Here's the haul, boss.
+command.kagic.peridot_no_haul=Sorry boss, ain't found nothing.
 command.kagic.peridot_inventory=%1$s's Harvest
 command.kagic.peridot_seeds=%1$s's Seeds
+command.kagic.peridot_mine_haul=%1$s's Haul
+
+command.kagic.peridot_scream_0=Rocks, muddy cloddy clumps!
+command.kagic.peridot_scream_1=Stupid clod!
+command.kagic.peridot_scream_2=Filthy dirt bomb!
+command.kagic.peridot_scream_3=Muddy clod!
+command.kagic.peridot_scream_4=Filthy clod!
+command.kagic.peridot_scream_5=Dull as dirt!
+command.kagic.peridot_scream_6=Lumpy clumpy clod!
+command.kagic.peridot_scream_7=Mega clod!
+command.kagic.peridot_scream_8=Pebble!
+command.kagic.peridot_scream_9=Muddy clod!
+command.kagic.peridot_scream_10=Clod!
+command.kagic.peridot_scream_11=Clod!
+command.kagic.peridot_scream_12=Clod!
+command.kagic.peridot_scream_13=Clod!
+command.kagic.peridot_scream_14=Clod!
+command.kagic.peridot_scream_15=Clod!
+command.kagic.peridot_scream_16=Clod!
+command.kagic.peridot_scream_17=Clod!
+command.kagic.peridot_scream_18=Clod!
+command.kagic.peridot_scream_19=Clod!
+
+command.kagic.peridot_rebel=I'm a traitorous clod!
+
 command.kagic.lapis_harvest=Here are all the fish I've caught.
 command.kagic.lapis_no_harvest=Sorry, I haven't caught enough fish yet.
 command.kagic.lapis_inventory=%1$s's Catch
+
 command.kagic.spawning_all_nearby_gems=Spawning all nearby Gems...
 command.kagic.spawned_all_nearby_gems=Spawned all nearby Gems.
 command.kagic.meteor_ruby=Meteor Ruby spawning at coodinates X=%1$d, Y=%2$d, Z=%3$d
@@ -533,6 +546,8 @@ command.kagic.new_version_adds=KAGIC v%1$s adds the following:
 command.kagic.click_here_to_download=Click here to download.
 command.kagic.right_click_to_sign=Right click to sign.
 command.kagic.signed=Signed.
+command.kagic.right_click_to_bind=Right click to bind.
+command.kagic.bound=Bound.
 command.kagic.not_hovering=Roaming Eye is no longer hovering.
 command.kagic.hovering=Roaming Eye is hovering.
 command.kagic.not_resting=%1$s is no longer resting.
@@ -587,6 +602,16 @@ command.kagic.aquamarine_scanning=Let me see...
 
 command.kagic.to_homeworld=Setting a course for Homeworld
 command.kagic.to_earth=Setting a course for Earth
+
+command.kagic.servitude_0=Unaligned
+command.kagic.servitude_1=Owned by %1$s
+command.kagic.servitude_2=Owned by Yellow Diamond
+command.kagic.servitude_3=Owned by Blue Diamond
+command.kagic.servitude_4=Owned by White Diamond
+command.kagic.servitude_5=Rebel
+command.kagic.servitude_6=Loner
+command.kagic.servitude_7=Hostile
+command.kagic.servitude_x=Unknown
 
 regex.kagic.me=me
 regex.kagic.follow=follow|come with me

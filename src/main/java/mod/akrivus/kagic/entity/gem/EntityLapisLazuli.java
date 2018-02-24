@@ -7,7 +7,9 @@ import java.util.List;
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
 import mod.akrivus.kagic.entity.ai.EntityAIExtinguishEntities;
+import mod.akrivus.kagic.entity.ai.EntityAIExtinguishFires;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIGoToWater;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
@@ -103,7 +105,9 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
 			}
         }, 6.0F, 1.0D, 1.2D));
 		this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
+        this.tasks.addTask(1, new EntityAICommandGems(this, 0.6D));
         this.tasks.addTask(3, new EntityAIOpenDoor(this, true));
+        this.tasks.addTask(3, new EntityAIExtinguishFires(this, 0.6D, 8));
         this.tasks.addTask(4, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
         this.tasks.addTask(4, new EntityAIExtinguishEntities(this, 1.2D));
         this.tasks.addTask(4, new EntityAITillFarmland(this, 0.6D));
@@ -191,6 +195,7 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
 				if (this.isOwner(player)) {
 					if (this.isFarmer()) {
 						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
+						this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
 					}
 					else if (this.isPrimary()) {
 						this.world.getWorldInfo().setCleanWeatherTime(0);

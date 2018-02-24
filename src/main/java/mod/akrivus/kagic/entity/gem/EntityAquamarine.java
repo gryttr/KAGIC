@@ -3,7 +3,12 @@ package mod.akrivus.kagic.entity.gem;
 import java.util.HashMap;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAIAttackAquamarine;
+import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
+import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
+import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
+import mod.akrivus.kagic.entity.ai.EntityAIParalyzeEnemies;
 import mod.akrivus.kagic.entity.ai.EntityAIScan;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
@@ -14,9 +19,8 @@ import mod.akrivus.kagic.util.flying.PathNavigateFlying;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
@@ -58,14 +62,19 @@ public class EntityAquamarine extends EntityGem {
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
         this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
+        this.tasks.addTask(1, new EntityAICommandGems(this, 0.6D));
         this.tasks.addTask(2, new EntityAIScan(this));
         this.tasks.addTask(3, new EntityAIOpenDoor(this, true));
-        this.tasks.addTask(3, new EntityAIAttackMelee(this, 1.0D, true));
-        this.tasks.addTask(3, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
-        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
-        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
-        this.tasks.addTask(5, new EntityAIStandGuard(this, 0.6D));
-        this.tasks.addTask(6, new EntityAILookIdle(this));
+        this.tasks.addTask(3, new EntityAIAttackAquamarine(this, 1.0D));
+        this.tasks.addTask(4, new EntityAIParalyzeEnemies(this));
+        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
+        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
+        this.tasks.addTask(6, new EntityAIStandGuard(this, 0.6D));
+        this.tasks.addTask(7, new EntityAILookIdle(this));
+        
+        this.targetTasks.addTask(1, new EntityAIDiamondHurtByTarget(this));
+		this.targetTasks.addTask(2, new EntityAIDiamondHurtTarget(this));
+		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false, new Class[0]));
         
         // Apply entity attributes.
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);

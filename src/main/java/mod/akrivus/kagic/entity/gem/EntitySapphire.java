@@ -9,6 +9,7 @@ import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.blocks.BlockRoseTears;
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIFutureVision;
 import mod.akrivus.kagic.entity.ai.EntityAIRetroVision;
@@ -94,6 +95,7 @@ public class EntitySapphire extends EntityGem {
 			}
         }, 6.0F, 1.0D, 1.2D));
 		this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
+        this.tasks.addTask(1, new EntityAICommandGems(this, 0.6D));
 		this.tasks.addTask(2, new EntityAIFutureVision(this));
 		this.tasks.addTask(3, new EntityAIRetroVision(this));
 		this.tasks.addTask(3, new EntityAIRestrictOpenDoor(this));

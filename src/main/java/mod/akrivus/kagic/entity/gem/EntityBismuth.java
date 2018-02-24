@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
@@ -43,7 +44,6 @@ public class EntityBismuth extends EntityGem {
 	public static final double BISMUTH_DEPTH_THRESHOLD = 0;
 	public static final HashMap<Integer, ResourceLocation> BISMUTH_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 
-
 	private static final int SKIN_COLOR_BEGIN = 0x91A8CF; 
 	private static final int SKIN_COLOR_END = 0x503243; 
 	
@@ -62,6 +62,7 @@ public class EntityBismuth extends EntityGem {
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
         this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
+        this.tasks.addTask(1, new EntityAICommandGems(this, 0.6D));
         this.tasks.addTask(2, new EntityAIRestrictOpenDoor(this));
         this.tasks.addTask(3, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
         this.tasks.addTask(3, new EntityAIAttackMelee(this, 1.0d, true));

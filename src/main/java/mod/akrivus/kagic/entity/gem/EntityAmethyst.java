@@ -60,7 +60,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityAmethyst extends EntityQuartzSoldier {
 	public static final HashMap<IBlockState, Double> AMETHYST_YIELDS = new HashMap<IBlockState, Double>();
 	public static final double AMETHYST_DEFECTIVITY_MULTIPLIER = 1.5;
-	public static final double AMETHYST_DEPTH_THRESHHOLD = 64;
+	public static final double AMETHYST_DEPTH_THRESHHOLD = 72;
 	public static final HashMap<Integer, ResourceLocation> AMETHYST_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private static final DataParameter<Boolean> CHARGED = EntityDataManager.<Boolean>createKey(EntityAmethyst.class, DataSerializers.BOOLEAN);
 	

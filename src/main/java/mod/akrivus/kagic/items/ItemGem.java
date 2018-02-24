@@ -60,9 +60,32 @@ public class ItemGem extends Item {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		try {
-			String name = stack.getTagCompound().getString("name");
-			if (!name.isEmpty()) {
-				tooltip.add(name);
+			NBTTagCompound tag = stack.getTagCompound();
+			if (tag.hasKey("name")) {
+				String name = tag.getString("name");
+				if (!name.isEmpty()) {
+					tooltip.add(name);
+				}
+			}
+			if (worldIn != null) {
+				String name = "nobody";
+				if (tag.hasKey("ownerId")) {
+					name = worldIn.getMinecraftServer().getPlayerProfileCache().getProfileByUUID(tag.getUniqueId("ownerId")).getName();
+				}
+				int i = 0;
+				if (tag.hasKey("servitude")) {
+					switch (i = tag.getInteger("servitude")) {
+					case 0: case 2: case 3: case 4: case 5: case 6: case 7:
+						tooltip.add(new TextComponentTranslation("command.servitude_" + i).getUnformattedComponentText());
+					case 1:
+						tooltip.add(new TextComponentTranslation("command.servitude_1", name).getUnformattedComponentText());
+					default:
+						tooltip.add(new TextComponentTranslation("command.servitude_x").getUnformattedComponentText());
+					}
+				}
+				else {
+					tooltip.add(new TextComponentTranslation("command.servitude_0").getUnformattedComponentText());
+				}
 			}
 		}
 		catch (NullPointerException e) {
@@ -167,5 +190,14 @@ public class ItemGem extends Item {
 			}
 		}
         return false;
+    }
+	
+	@SideOnly(Side.CLIENT)
+    public boolean hasEffect(ItemStack stack) {
+		if (stack.getTagCompound() != null) {
+			NBTTagCompound tag = stack.getTagCompound();
+			return tag.getBoolean("primary");
+		}
+		return false;
     }
 }

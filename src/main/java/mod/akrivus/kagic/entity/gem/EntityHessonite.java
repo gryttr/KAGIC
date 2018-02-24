@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
@@ -77,6 +78,7 @@ public class EntityHessonite extends EntityGem {
 		// Apply entity AI
 		this.stayAI = new EntityAIStay(this);
 		this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
+        this.tasks.addTask(1, new EntityAICommandGems(this, 0.6D));
 		this.tasks.addTask(2, new EntityAISitStill(this, 1.0D));
 		this.tasks.addTask(3, new EntityAIScareMobs(this));
 		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
