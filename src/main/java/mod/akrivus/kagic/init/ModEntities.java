@@ -11,7 +11,29 @@ import mod.akrivus.kagic.entity.EntityCorruptedGem;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.EntityLaser;
 import mod.akrivus.kagic.entity.EntitySlag;
-import mod.akrivus.kagic.entity.EntitySteven;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomAgate;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomAquamarine;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomBismuth;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomDefectivePeridot;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomDefectiveQuartz;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomGarnet;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomHessonite;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomLapisLazuli;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomMalachite;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomOpal;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomPearl;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomPeridot;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomQuartz;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomRainbowQuartz;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomRhodonite;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomRobeDiamond;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomRuby;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomRutile;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomRutileTwins;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomSapphire;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomShoulderDiamond;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomTopaz;
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomZircon;
 import mod.akrivus.kagic.entity.gem.EntityAgate;
 import mod.akrivus.kagic.entity.gem.EntityAmethyst;
 import mod.akrivus.kagic.entity.gem.EntityAquamarine;
@@ -46,6 +68,8 @@ import mod.akrivus.kagic.entity.gem.fusion.EntityMalachite;
 import mod.akrivus.kagic.entity.gem.fusion.EntityOpal;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRainbowQuartz;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRhodonite;
+import mod.akrivus.kagic.entity.humans.EntityConnie;
+import mod.akrivus.kagic.entity.humans.EntitySteven;
 import mod.akrivus.kagic.entity.pepo.EntityCactus;
 import mod.akrivus.kagic.entity.pepo.EntityMelon;
 import mod.akrivus.kagic.entity.pepo.EntityPumpkin;
@@ -132,8 +156,35 @@ public class ModEntities {
 		registerMob("strawberry", EntityStrawberry.class, 0xEF4B69, 0x80855A);
 		registerMob("slag", EntitySlag.class, 0xFFFFFF, 0x00FF5D);
 		registerMob("steven", EntitySteven.class, 0xFD6270, 0xFFD248);
+		registerMob("connie", EntityConnie.class, 0x99D3CD, 0xAF4E3D);
 		registerEntity("roaming_eye", EntityRoamingEye.class);
 		registerEntity("laser", EntityLaser.class);
+		
+		// custom npcs wrapper entities
+		registerCustomEntity("agate", EntityCustomAgate.class);
+		registerCustomEntity("aquamarine", EntityCustomAquamarine.class);
+		registerCustomEntity("bismuth", EntityCustomBismuth.class);
+		registerCustomEntity("defective_peridot", EntityCustomDefectivePeridot.class);
+		registerCustomEntity("defective_quartz", EntityCustomDefectiveQuartz.class);
+		registerCustomEntity("garnet", EntityCustomGarnet.class);
+		registerCustomEntity("hessonite", EntityCustomHessonite.class);
+		registerCustomEntity("lapis_lazuli", EntityCustomLapisLazuli.class);
+		registerCustomEntity("malachite", EntityCustomMalachite.class);
+		registerCustomEntity("opal", EntityCustomOpal.class);
+		registerCustomEntity("pearl", EntityCustomPearl.class);
+		registerCustomEntity("peridot", EntityCustomPeridot.class);
+		registerCustomEntity("quartz", EntityCustomQuartz.class);
+		registerCustomEntity("rainbow_quartz", EntityCustomRainbowQuartz.class);
+		registerCustomEntity("rhodonite", EntityCustomRhodonite.class);
+		registerCustomEntity("robe_diamond", EntityCustomRobeDiamond.class);
+		registerCustomEntity("ruby", EntityCustomRuby.class);
+		registerCustomEntity("rutile", EntityCustomRutile.class);
+		registerCustomEntity("rutile_twins", EntityCustomRutileTwins.class);
+		registerCustomEntity("sapphire", EntityCustomSapphire.class);
+		registerCustomEntity("shoulder_diamond", EntityCustomShoulderDiamond.class);
+		registerCustomEntity("topaz", EntityCustomTopaz.class);
+		registerCustomEntity("zircon", EntityCustomZircon.class);
+		
 		//registerGemYields();
 		registerGemAddons();
 	}
@@ -538,6 +589,35 @@ public class ModEntities {
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			try {
 				Class<Render<? extends T>> render = (Class<Render<? extends T>>) KAGIC.class.getClassLoader().loadClass("mod/akrivus/kagic/client/render/" + entity.getName().replaceAll(".+?Entity", "Render"));
+				if (GENERATE_FACTORIES_INSTEAD_OF_INSTANCES) {
+					IRenderFactory<T> factory = null;
+	                try {
+	                    MethodHandles.Lookup lookup = MethodHandles.lookup();
+	                    MethodHandle constructor = lookup.findConstructor(render, MethodType.methodType(void.class, String.class));
+	                    MethodType type = constructor.type().changeReturnType(IRenderFactory.class);
+	                    factory = (IRenderFactory<T>) LambdaMetafactory.metafactory(lookup, "getInstance", MethodType.methodType(IRenderFactory.class), type, constructor, type).getTarget().invokeExact();
+	                }
+	                catch (Throwable t) {
+	                	CrashReport.makeCrashReport(t, "Something went wrong registering an entity.");
+	                }
+	                RenderingRegistry.registerEntityRenderingHandler(entity, factory);
+				}
+				else {
+					RenderingRegistry.registerEntityRenderingHandler(entity, render.newInstance());
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		++currentID;
+	}
+	@SuppressWarnings({ "unchecked" })
+	public static <T extends Entity> void registerCustomEntity(String name, Class<T> entity) {
+		EntityRegistry.registerModEntity(new ResourceLocation("kagic:kagic.custom_" + name), entity, "kagic.custom_" + name, currentID, KAGIC.instance, 256, 1, true);
+		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+			try {
+				Class<Render<? extends T>> render = (Class<Render<? extends T>>) KAGIC.class.getClassLoader().loadClass("mod/akrivus/kagic/client/render/customnpcs/" + entity.getName().replaceAll(".+?Entity", "Render"));
 				if (GENERATE_FACTORIES_INSTEAD_OF_INSTANCES) {
 					IRenderFactory<T> factory = null;
 	                try {

@@ -127,6 +127,7 @@ entity.kagic.zircon_15.name=Black Zircon
 entity.kagic.slag.name=Slag
 entity.kagic.slag.super=Super Slag
 entity.kagic.steven.name=Steven
+entity.kagic.connie.name=Connie
 
 entity.kagic.handbody.name=Shard Fusion
 entity.kagic.handbody.name.plural=Shard Fusions
@@ -163,6 +164,8 @@ entity.kagic.water_bear_1.name.plural=Corrupted Hiddenites
 entity.kagic.corrupted_watermelon_tourmaline.name=Corrupted Watermelon Tourmaline
 entity.kagic.corrupted_watermelon_tourmaline.name.plural=Corrupted Watermelon Tourmalines
 
+item.steven_stone.name=Steven's Gem
+item.connie_bracelet.name=Connie's Glow Bracelet
 item.active_gem_base.name=Active Gem Base
 item.inactive_gem_base.name=Inactive Gem Base
 item.active_gem_shard.name=Active Gem Shard
@@ -445,6 +448,8 @@ item.record.pyramid.desc=Aivi & Surasshu - Heart of the Pyramid
 item.record_underwater_temple.name=Music Disc
 item.record.underwater_temple.desc=Aivi & Surasshu - The Underwater Temple
 
+item.record.connie_bracelet.desc=Aivi & Surasshu - Love Like You
+
 itemGroup.gems=KAGIC (Gems)
 itemGroup.other=KAGIC (Items & Blocks)
 itemGroup.music=KAGIC (Music Discs)
@@ -602,6 +607,12 @@ command.kagic.aquamarine_scanning=Let me see...
 
 command.kagic.to_homeworld=Setting a course for Homeworld
 command.kagic.to_earth=Setting a course for Earth
+
+command.kagic.steven_doesnt_spawn=If only it was that easy for him to return.
+command.kagic.connie_doesnt_spawn=At least someone besides her parents cared.
+
+command.kagic.cheeseburger_backpack.name=Cheeseburger Backpack
+command.kagic.connie_backpack.name=Connie's Backpack
 
 command.kagic.servitude_0=Unaligned
 command.kagic.servitude_1=Owned by %1$s

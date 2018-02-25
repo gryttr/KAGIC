@@ -538,6 +538,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
             }
         }
         this.world.profiler.endSection();
+        this.updateArmSwingProgress();
 		super.onLivingUpdate();
 	}
 	

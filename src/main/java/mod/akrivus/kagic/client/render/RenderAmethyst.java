@@ -59,7 +59,7 @@ public class RenderAmethyst extends RenderGemBase<EntityAmethyst> {
 	@Override
 	protected void preRenderCallback(EntityAmethyst amethyst, float partialTickTime) {
 		if (amethyst.isDefective()) {
-			GlStateManager.scale(0.75F, 0.6F, 0.75F);
+			GlStateManager.scale(0.9F, 0.72F, 0.9F);
 		} else if (amethyst.isPrimary()) {
 			GlStateManager.scale(1.1F, 1.1F, 1.1F);
 		}

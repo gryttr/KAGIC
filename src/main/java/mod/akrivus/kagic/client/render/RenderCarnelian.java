@@ -65,7 +65,7 @@ public class RenderCarnelian extends RenderGemBase<EntityCarnelian> {
 	@Override
 	protected void preRenderCallback(EntityCarnelian carnelian, float partialTickTime) {
 		if (carnelian.isDefective()) {
-			GlStateManager.scale(0.8F, 0.667F, 0.8F);
+			GlStateManager.scale(0.9F, 0.75F, 0.9F);
 		} else if (carnelian.isPrimary()) {
 			GlStateManager.scale(1.1F, 1.1F, 1.1F);
 		}

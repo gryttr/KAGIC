@@ -1,7 +1,14 @@
 package mod.akrivus.kagic.client.model;
 
+import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.init.KAGIC;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumHandSide;
 
 public class ModelHessonite extends ModelGem {
 	private final ModelRenderer bipedCape;
@@ -77,6 +84,24 @@ public class ModelHessonite extends ModelGem {
 		this.bipedCapeBack.setTextureSize(64, 64);
 		this.bipedCapeBack.addBox(-15.0F, -4.0F, -1.525f, 30, 20, 1, modelSize);
 		this.bipedCape.addChild(this.bipedCapeBack);
+	}
+	
+	public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float p_78086_2_, float p_78086_3_, float partialTickTime) {
+		this.rightArmPose = ModelBiped.ArmPose.EMPTY;
+		this.leftArmPose = ModelBiped.ArmPose.EMPTY;
+		if (entitylivingbaseIn instanceof EntityGem) {
+			ItemStack itemstack = entitylivingbaseIn.getHeldItem(EnumHand.MAIN_HAND);
+			EntityGem gem = (EntityGem) entitylivingbaseIn;
+			if (itemstack != null && itemstack.getItem() == Items.BOW && gem.isSwingingArms()) {
+				if (entitylivingbaseIn.getPrimaryHand() == EnumHandSide.RIGHT) {
+					this.rightArmPose = ModelBiped.ArmPose.BOW_AND_ARROW;
+				}
+				else {
+					this.leftArmPose = ModelBiped.ArmPose.BOW_AND_ARROW;
+				}
+			}
+		}
+		super.setLivingAnimations(entitylivingbaseIn, p_78086_2_, p_78086_3_, partialTickTime);
 	}
 
 	@Override

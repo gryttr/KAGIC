@@ -1,8 +1,8 @@
 package mod.akrivus.kagic.client.model;
 
+import mod.akrivus.kagic.entity.customnpcs.EntityCustomDefectivePeridot;
 import mod.akrivus.kagic.entity.gem.EntityPeridot;
 import mod.akrivus.kagic.init.KAGIC;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
@@ -91,18 +91,35 @@ public class ModelPeridot extends ModelGem {
 	}
 	
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		if (!((EntityPeridot) entity).isDefective()) {
-			this.bipedBody = this.normalBody;
-			this.bipedRightArm = this.normalRightArm;
-			this.bipedLeftArm = this.normalLeftArm;
-			this.bipedRightLeg = this.normalRightLeg;
-			this.bipedLeftLeg = this.normalLeftLeg;
-		} else {
+		if (entity instanceof EntityPeridot) {
+			EntityPeridot peridot = (EntityPeridot) entity;
+			if (!peridot.isDefective()) {
+				this.bipedBody = this.normalBody;
+				this.bipedRightArm = this.normalRightArm;
+				this.bipedLeftArm = this.normalLeftArm;
+				this.bipedRightLeg = this.normalRightLeg;
+				this.bipedLeftLeg = this.normalLeftLeg;
+			} else {
+				this.bipedBody = this.smallBody;
+				this.bipedRightArm = this.smallRightArm;
+				this.bipedLeftArm = this.smallLeftArm;
+				this.bipedRightLeg = this.smallRightLeg;
+				this.bipedLeftLeg = this.smallLeftLeg;
+			}
+		}
+		else if (entity instanceof EntityCustomDefectivePeridot) {
 			this.bipedBody = this.smallBody;
 			this.bipedRightArm = this.smallRightArm;
 			this.bipedLeftArm = this.smallLeftArm;
 			this.bipedRightLeg = this.smallRightLeg;
 			this.bipedLeftLeg = this.smallLeftLeg;
+		}
+		else {
+			this.bipedBody = this.normalBody;
+			this.bipedRightArm = this.normalRightArm;
+			this.bipedLeftArm = this.normalLeftArm;
+			this.bipedRightLeg = this.normalRightLeg;
+			this.bipedLeftLeg = this.normalLeftLeg;
 		}
 		
 		this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entity);
@@ -121,17 +138,23 @@ public class ModelPeridot extends ModelGem {
 		this.bipedHeadwear.rotateAngleX = 0;
 		this.bipedHeadwear.rotateAngleY = 0;
 		this.bipedHeadwear.rotateAngleZ = 0.7853982f;
-		if (!((EntityPeridot) entity).isDefective()) {
+		if (entity instanceof EntityPeridot) {
+			EntityPeridot peridot = (EntityPeridot) entity;
+			if (!peridot.isDefective()) {
+				this.bipedHead.offsetY = -0.2F;
+			} else {
+				this.bipedHead.offsetY = .05F;
+			}
+		}
+		else {
 			this.bipedHead.offsetY = -0.2F;
-		} else {
-			this.bipedHead.offsetY = .05F;
 		}
 	}
 	
 	@Override
 	public void renderWitchHat(float scale) {
 		boolean isHidden = this.squareHair.isHidden;
-		this.squareHair.isHidden = true;;
+		this.squareHair.isHidden = true;
 		this.bipedHead.render(scale);
 		this.squareHair.isHidden = isHidden;
 	}

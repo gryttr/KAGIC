@@ -6,12 +6,14 @@ import mod.akrivus.kagic.items.ItemActiveGemBase;
 import mod.akrivus.kagic.items.ItemActiveGemShard;
 import mod.akrivus.kagic.items.ItemAutonomyContract;
 import mod.akrivus.kagic.items.ItemCommanderStaff;
+import mod.akrivus.kagic.items.ItemConnieBracelet;
 import mod.akrivus.kagic.items.ItemGem;
 import mod.akrivus.kagic.items.ItemGemStaff;
 import mod.akrivus.kagic.items.ItemInactiveGemBase;
 import mod.akrivus.kagic.items.ItemJointContract;
 import mod.akrivus.kagic.items.ItemLiberationContract;
 import mod.akrivus.kagic.items.ItemPeaceTreaty;
+import mod.akrivus.kagic.items.ItemStevenStone;
 import mod.akrivus.kagic.items.ItemTransferContract;
 import mod.akrivus.kagic.items.ItemVehicle;
 import mod.akrivus.kagic.items.ItemWarDeclaration;
@@ -46,6 +48,8 @@ public class ModItems {
 	public static final ModRecord RECORD_HEART_OF_THE_PYRAMID = new ModRecord("pyramid", ModSounds.RECORD_HEART_OF_THE_PYRAMID);
 	public static final ModRecord RECORD_UNDERWATER_TEMPLE = new ModRecord("underwater_temple", ModSounds.RECORD_UNDERWATER_TEMPLE);
 
+	public static final ItemStevenStone STEVEN_GEM = new ItemStevenStone();
+	public static final ItemConnieBracelet CONNIE_BRACELET = new ItemConnieBracelet();
 	public static final ItemActiveGemShard ACTIVATED_GEM_SHARD = new ItemActiveGemShard();
 	public static final ItemActiveGemBase ACTIVATED_GEM_BASE = new ItemActiveGemBase();
 	public static final ItemInactiveGemBase INACTIVE_GEM_BASE = new ItemInactiveGemBase();
@@ -429,6 +433,8 @@ public class ModItems {
 		registerItem(RECORD_GEM_SHARDS, event, "record");
 		registerItem(RECORD_HEART_OF_THE_PYRAMID, event, "record");
 		registerItem(RECORD_UNDERWATER_TEMPLE, event, "record");
+		registerItem(STEVEN_GEM, event);
+		registerItem(CONNIE_BRACELET, event);
 		registerItem(ACTIVATED_GEM_SHARD, event);
 		registerItem(ACTIVATED_GEM_BASE, event);
 		registerItem(INACTIVE_GEM_BASE, event);

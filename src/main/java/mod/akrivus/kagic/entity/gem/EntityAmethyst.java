@@ -198,7 +198,7 @@ public class EntityAmethyst extends EntityQuartzSoldier {
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50.0D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.0D);
-        this.setSize(0.72F, 1.38F);
+        this.setSize(0.82F, 1.48F);
 	}
 	
     /*********************************************************

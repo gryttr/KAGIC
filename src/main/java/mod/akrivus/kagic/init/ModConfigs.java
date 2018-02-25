@@ -41,11 +41,14 @@ public class ModConfigs {
 		ModConfigs.instructInjectors = ModConfigs.settings.getBoolean("Instruct Injector setup:", "preferences", true, "Instructs players on how to set up injectors.");
 		ModConfigs.canRebel = ModConfigs.settings.getBoolean("Gems can rebel: ", "preferences", false, "Whether or not navel gems and meteor rubies have a chance of rebelling after a short time serving you");
 
-		ModConfigs.settings.addCustomCategoryComment("World", "These affect the behavior of KAGIC's worldgen elements.");
+		ModConfigs.settings.addCustomCategoryComment("world", "These affect the behavior of KAGIC's worldgen elements.");
 		ModConfigs.kindergartenWeight = ModConfigs.settings.getInt("Kindergarten biome weight:", "world", 1, 1, 1000000, "Rarity of the Kindergarten biome. Plains = 10");
 		ModConfigs.floatingPeaksWeight = ModConfigs.settings.getInt("Floating Peaks biome weight:", "world", 1, 1, 1000000, "Rarity of the Floating Peaks biome. Extreme Hills = 10");
 		ModConfigs.strawberryBattlefieldWeight = ModConfigs.settings.getInt("Strawberry Battlefield biome weight:", "world", 1, 1, 1000000, "Rarity of the Strawberry Battlefield biome. Plains = 10");
-		ModConfigs.ruinDimensions = ModConfigs.settings.get("World", "Ruin Dimensions", new int[] {0}, "List of dimension IDs to generate ruins in.");
+		ModConfigs.ruinDimensions = ModConfigs.settings.get("world", "Ruin Dimensions", new int[] {0}, "List of dimension IDs to generate ruins in.");
+		
+		ModConfigs.settings.addCustomCategoryComment("steven", "These are settings for Steven.");
+		//ModConfigs.notifyOnUpdates = ModConfigs.settings.getBoolean("Update notifications:", "preferences", true, "Setting to false might expose you to possible bugs.");		
 		ModConfigs.settings.save();
 	}
 	

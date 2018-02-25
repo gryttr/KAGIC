@@ -504,6 +504,10 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 			this.dropItem(ModItems.RECORD_LITTLE_PERIDOT, 1);
 		}
 	}
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		this.sayClod();
+		return super.attackEntityFrom(source, amount);
+	}
 	public boolean attackEntityAsMob(Entity entityIn) {
 		if (this.isTraitor() && entityIn instanceof EntityPlayer) {
 			this.sayClod();
