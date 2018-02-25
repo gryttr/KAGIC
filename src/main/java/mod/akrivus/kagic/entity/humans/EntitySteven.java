@@ -189,6 +189,7 @@ public class EntitySteven extends EntityCreature implements IInventoryChangedLis
 	}
 	public void setBackpack(boolean backpacked) {
 		this.dataManager.set(BACKPACKED, backpacked);
+		this.setCanPickUpLoot(backpacked);
 	}
     public boolean canDespawn() {
 		return false;
