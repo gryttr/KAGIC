@@ -20,7 +20,7 @@ public class ModSounds {
 	public static final SoundEvent RECORD_GEM_SHARDS = new SoundEvent(new ResourceLocation("kagic:records.gem_shards"));
 	public static final SoundEvent RECORD_HEART_OF_THE_PYRAMID = new SoundEvent(new ResourceLocation("kagic:records.pyramid"));
 	public static final SoundEvent RECORD_UNDERWATER_TEMPLE = new SoundEvent(new ResourceLocation("kagic:records.underwater_temple"));
-
+	
 	public static final SoundEvent BLOCK_GEM_SEED_HATCH = new SoundEvent(new ResourceLocation("kagic:blocks.gem_seed_hatch"));
 	public static final SoundEvent BLOCK_INJECTOR_OPEN = new SoundEvent(new ResourceLocation("kagic:blocks.injector_open"));
 	public static final SoundEvent BLOCK_INJECTOR_CLOSE = new SoundEvent(new ResourceLocation("kagic:blocks.injector_close"));
@@ -127,6 +127,8 @@ public class ModSounds {
 	public static final SoundEvent TONGUE_MONSTER_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.tongue_monster.death"));
 	
 	public static final SoundEvent WARP_PAD = new SoundEvent(new ResourceLocation("kagic:blocks.warp_pad"));
+	
+	public static final SoundEvent[] JAM_BUD_SONG_PARTS = new SoundEvent[40];
 	
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
 		registerSound(RECORD_LITTLE_PERIDOT, new ResourceLocation("kagic:records.little_peridot"), event);
@@ -244,6 +246,10 @@ public class ModSounds {
 		registerSound(TONGUE_MONSTER_HURT, new ResourceLocation("kagic:entities.tongue_monster.hurt"), event);
 		registerSound(TONGUE_MONSTER_DEATH, new ResourceLocation("kagic:entities.tongue_monster.death"), event);
 		registerSound(WARP_PAD, new ResourceLocation(KAGIC.MODID, "warp_pad"), event);
+		for (int i = 0; i < JAM_BUD_SONG_PARTS.length; ++i) {
+			int part = i + 1; JAM_BUD_SONG_PARTS[i] = new SoundEvent(new ResourceLocation("kagic:song.jam_buds_" + part));
+			registerSound(JAM_BUD_SONG_PARTS[i], new ResourceLocation("kagic:song.jam_buds_" + part), event);
+		}
 	}
 	
 	private static void registerSound(SoundEvent sound, ResourceLocation location, RegistryEvent.Register<SoundEvent> event) {

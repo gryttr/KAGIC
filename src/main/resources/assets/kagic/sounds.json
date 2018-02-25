@@ -857,5 +857,205 @@
             { "name": "kagic:blocks/warp_pad_1"},
             { "name": "kagic:blocks/warp_pad_2"}
         ]
+    },
+	"song.jam_buds_1": {
+        "sounds": [
+            { "name": "kagic:song/part01", "stream": true }
+        ]
+    },
+	"song.jam_buds_2": {
+        "sounds": [
+            { "name": "kagic:song/part02", "stream": true }
+        ]
+    },
+	"song.jam_buds_3": {
+        "sounds": [
+            { "name": "kagic:song/part03", "stream": true }
+        ]
+    },
+	"song.jam_buds_4": {
+        "sounds": [
+            { "name": "kagic:song/part04", "stream": true }
+        ]
+    },
+	"song.jam_buds_5": {
+        "sounds": [
+            { "name": "kagic:song/part05", "stream": true }
+        ]
+    },
+	"song.jam_buds_6": {
+        "sounds": [
+            { "name": "kagic:song/part06", "stream": true }
+        ]
+    },
+	"song.jam_buds_7": {
+        "sounds": [
+            { "name": "kagic:song/part07", "stream": true }
+        ]
+    },
+	"song.jam_buds_8": {
+        "sounds": [
+            { "name": "kagic:song/part08", "stream": true }
+        ]
+    },
+	"song.jam_buds_9": {
+        "sounds": [
+            { "name": "kagic:song/part09", "stream": true }
+        ]
+    },
+	"song.jam_buds_10": {
+        "sounds": [
+            { "name": "kagic:song/part10", "stream": true }
+        ]
+    },
+	"song.jam_buds_11": {
+        "sounds": [
+            { "name": "kagic:song/part11", "stream": true }
+        ]
+    },
+	"song.jam_buds_12": {
+        "sounds": [
+            { "name": "kagic:song/part12", "stream": true }
+        ]
+    },
+	"song.jam_buds_13": {
+        "sounds": [
+            { "name": "kagic:song/part13", "stream": true }
+        ]
+    },
+	"song.jam_buds_14": {
+        "sounds": [
+            { "name": "kagic:song/part14", "stream": true }
+        ]
+    },
+	"song.jam_buds_15": {
+        "sounds": [
+            { "name": "kagic:song/part15", "stream": true }
+        ]
+    },
+	"song.jam_buds_16": {
+        "sounds": [
+            { "name": "kagic:song/part16", "stream": true }
+        ]
+    },
+	"song.jam_buds_17": {
+        "sounds": [
+            { "name": "kagic:song/part17", "stream": true }
+        ]
+    },
+	"song.jam_buds_18": {
+        "sounds": [
+            { "name": "kagic:song/part18", "stream": true }
+        ]
+    },
+	"song.jam_buds_19": {
+        "sounds": [
+            { "name": "kagic:song/part19", "stream": true }
+        ]
+    },
+	"song.jam_buds_20": {
+        "sounds": [
+            { "name": "kagic:song/part20", "stream": true }
+        ]
+    },
+	"song.jam_buds_21": {
+        "sounds": [
+            { "name": "kagic:song/part21", "stream": true }
+        ]
+    },
+	"song.jam_buds_22": {
+        "sounds": [
+            { "name": "kagic:song/part22", "stream": true }
+        ]
+    },
+	"song.jam_buds_23": {
+        "sounds": [
+            { "name": "kagic:song/part23", "stream": true }
+        ]
+    },
+	"song.jam_buds_24": {
+        "sounds": [
+            { "name": "kagic:song/part24", "stream": true }
+        ]
+    },
+	"song.jam_buds_25": {
+        "sounds": [
+            { "name": "kagic:song/part25", "stream": true }
+        ]
+    },
+	"song.jam_buds_26": {
+        "sounds": [
+            { "name": "kagic:song/part26", "stream": true }
+        ]
+    },
+	"song.jam_buds_27": {
+        "sounds": [
+            { "name": "kagic:song/part27", "stream": true }
+        ]
+    },
+	"song.jam_buds_28": {
+        "sounds": [
+            { "name": "kagic:song/part28", "stream": true }
+        ]
+    },
+	"song.jam_buds_29": {
+        "sounds": [
+            { "name": "kagic:song/part29", "stream": true }
+        ]
+    },
+	"song.jam_buds_30": {
+        "sounds": [
+            { "name": "kagic:song/part30", "stream": true }
+        ]
+    },
+	"song.jam_buds_31": {
+        "sounds": [
+            { "name": "kagic:song/part31", "stream": true }
+        ]
+    },
+	"song.jam_buds_32": {
+        "sounds": [
+            { "name": "kagic:song/part32", "stream": true }
+        ]
+    },
+	"song.jam_buds_33": {
+        "sounds": [
+            { "name": "kagic:song/part33", "stream": true }
+        ]
+    },
+	"song.jam_buds_34": {
+        "sounds": [
+            { "name": "kagic:song/part34", "stream": true }
+        ]
+    },
+	"song.jam_buds_35": {
+        "sounds": [
+            { "name": "kagic:song/part35", "stream": true }
+        ]
+    },
+	"song.jam_buds_36": {
+        "sounds": [
+            { "name": "kagic:song/part36", "stream": true }
+        ]
+    },
+	"song.jam_buds_37": {
+        "sounds": [
+            { "name": "kagic:song/part37", "stream": true }
+        ]
+    },
+	"song.jam_buds_38": {
+        "sounds": [
+            { "name": "kagic:song/part38", "stream": true }
+        ]
+    },
+	"song.jam_buds_39": {
+        "sounds": [
+            { "name": "kagic:song/part39", "stream": true }
+        ]
+    },
+	"song.jam_buds_40": {
+        "sounds": [
+            { "name": "kagic:song/part40", "stream": true }
+        ]
     }
 }

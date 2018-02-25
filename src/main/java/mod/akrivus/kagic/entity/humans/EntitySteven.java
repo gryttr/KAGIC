@@ -5,6 +5,7 @@ import com.google.common.base.Predicate;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowGem;
 import mod.akrivus.kagic.entity.ai.EntityAIProtectConnie;
 import mod.akrivus.kagic.entity.ai.EntityAIProtectVillagers;
+import mod.akrivus.kagic.entity.ai.EntityAISingJamBuds;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -57,6 +58,7 @@ public class EntitySteven extends EntityCreature implements IInventoryChangedLis
 	private static final DataParameter<Boolean> BACKPACKED = EntityDataManager.<Boolean>createKey(EntitySteven.class, DataSerializers.BOOLEAN);
 	public InventoryBasic backpack;
 	public InvWrapper backpackHandler;
+	public boolean silent;
 	public EntitySteven(World worldIn) {
 		super(worldIn);
 		this.setSize(0.5F, 1.5F);
@@ -80,6 +82,7 @@ public class EntitySteven extends EntityCreature implements IInventoryChangedLis
         this.tasks.addTask(3, new EntityAIFollowGem(this, 0.9D));
         this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
+        this.tasks.addTask(6, new EntityAISingJamBuds(this));
         this.tasks.addTask(7, new EntityAIWander(this, 0.6D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
@@ -249,10 +252,15 @@ public class EntitySteven extends EntityCreature implements IInventoryChangedLis
 		this.playSound(ModSounds.STEVEN_HELLO, this.getSoundVolume(), this.getSoundPitch());
 	}
 	protected SoundEvent getAmbientSound() {
-		if (BiomeDictionary.hasType(this.world.getBiome(this.getPosition()), Type.MAGICAL)) {
-			return ModSounds.STEVEN_SNEEZE;
+		if (!this.silent) {
+			if (BiomeDictionary.hasType(this.world.getBiome(this.getPosition()), Type.MAGICAL)) {
+				return ModSounds.STEVEN_SNEEZE;
+			}
+			return ModSounds.STEVEN_LIVING;
 		}
-		return ModSounds.STEVEN_LIVING;
+		else {
+			return null;
+		}
 	}
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.STEVEN_HURT;

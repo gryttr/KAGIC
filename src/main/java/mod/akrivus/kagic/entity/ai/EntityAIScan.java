@@ -30,7 +30,7 @@ public class EntityAIScan extends EntityAIBase {
 		this.setMutexBits(0);
 	}
 	public boolean shouldExecute() {
-		return this.gem.getOwner() != null && this.gem.getOwner().getDistance(this.gem) < 16 && (this.gem.wantsToScan || this.gem.world.getTotalWorldTime() - this.lastScan > 200 + this.gem.world.rand.nextInt(200));
+		return !this.gem.isDefective() && this.gem.getOwner() != null && this.gem.getOwner().getDistance(this.gem) < 16 && (this.gem.wantsToScan || this.gem.world.getTotalWorldTime() - this.lastScan > 200 + this.gem.world.rand.nextInt(200));
 	}
 	public void startExecuting() {
 		boolean wantsToScan = this.gem.wantsToScan;

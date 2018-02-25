@@ -23,6 +23,7 @@ import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.pathfinding.PathNavigate;
@@ -88,7 +89,7 @@ public class EntityAquamarine extends EntityGem {
     }
 
 	public float[] getGemColor() {
-    	return new float[] { 127F / 255F, 253F / 255F, 240F / 255F };
+    	return new float[] { 79F / 255F, 252F / 255F, 231F / 255F };
     }
 	public void convertGems(int placement) {
     	this.setGemCut(GemCuts.TINY.id);
@@ -104,6 +105,16 @@ public class EntityAquamarine extends EntityGem {
     		break;
     	}
     }
+	
+	public void setDefective(boolean defective) {
+		super.setDefective(defective);
+		if (defective) {
+			this.moveHelper = new EntityMoveHelper(this);
+		}
+		else {
+			this.moveHelper = new EntityFlyHelper(this);
+		}
+	}
 	
 	/*********************************************************
      * Methods related to entity interaction.                *

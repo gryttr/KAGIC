@@ -1,7 +1,7 @@
 package mod.akrivus.kagic.client.model;
 
+import mod.akrivus.kagic.entity.gem.EntityAquamarine;
 import mod.akrivus.kagic.init.KAGIC;
-import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
@@ -62,12 +62,17 @@ public class ModelAquamarine extends ModelGem {
     }
 	public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		this.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale, entityIn);
+		if (entityIn instanceof EntityAquamarine) {
+			EntityAquamarine aquamarine = (EntityAquamarine) entityIn;
+			if (!aquamarine.isDefective()/* && !lapis.isFarmer()*/) {
+				this.bipedRightWing.render(scale);
+				this.bipedLeftWing.render(scale);
+			}
+		}
 		this.bipedHead.render(scale);
 		this.bipedHeadwear.render(scale);
 		this.bipedBody.render(scale);
 		this.bipedSkirt.render(scale);
-		this.bipedRightWing.render(scale);
-		this.bipedLeftWing.render(scale);
 		this.bipedRightArm.render(scale);
 		this.bipedLeftArm.render(scale);
 		this.bipedRightLeg.render(scale);
