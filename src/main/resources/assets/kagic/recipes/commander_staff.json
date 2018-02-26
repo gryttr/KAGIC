@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "kagic:commander_staff"
+  },
+  "pattern": [
+    "  p",
+    " n ",
+    "n  "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "n": {
+      "item": "minecraft:iron_nugget"
+    },
+    "p": {
+      "item": "minecraft:ender_pearl"
+    }
+  }
+}
