@@ -1526,29 +1526,31 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	}
 	
 	public boolean isOwner(EntityLivingBase entityIn) {
-		if (this.servitude == EntityGem.SERVE_HUMAN) {
-			if (entityIn instanceof EntityPlayer) {
-				EntityPlayer playerIn = (EntityPlayer) entityIn;
-				if (playerIn.getUniqueID().equals(this.getOwnerId())) {
-					return true;
-				}
-				else {
-					for (UUID ownerId : this.jointOwners) {
-						if (playerIn.getUniqueID().equals(ownerId)) {
-							return true;
+		if (entityIn != null) {
+			if (this.servitude == EntityGem.SERVE_HUMAN) {
+				if (entityIn instanceof EntityPlayer) {
+					EntityPlayer playerIn = (EntityPlayer) entityIn;
+					if (playerIn.getUniqueID().equals(this.getOwnerId())) {
+						return true;
+					}
+					else {
+						for (UUID ownerId : this.jointOwners) {
+							if (playerIn.getUniqueID().equals(ownerId)) {
+								return true;
+							}
 						}
 					}
 				}
+				if (entityIn.getHeldItemMainhand().getItem() == ModItems.COMMANDER_STAFF) {
+					return this.isOwnerId(ModItems.COMMANDER_STAFF.getOwner(entityIn.getHeldItemMainhand()));
+				}
 			}
-			if (entityIn.getHeldItemMainhand().getItem() == ModItems.COMMANDER_STAFF) {
-				return this.isOwnerId(ModItems.COMMANDER_STAFF.getOwner(entityIn.getHeldItemMainhand()));
+			else if (this.servitude == EntityGem.SERVE_BLUE_DIAMOND) {
+				return entityIn instanceof EntityBlueDiamond;
 			}
-		}
-		else if (this.servitude == EntityGem.SERVE_BLUE_DIAMOND) {
-			return entityIn instanceof EntityBlueDiamond;
-		}
-		else if (this.servitude == EntityGem.SERVE_YELLOW_DIAMOND) {
-			return entityIn instanceof EntityYellowDiamond;
+			else if (this.servitude == EntityGem.SERVE_YELLOW_DIAMOND) {
+				return entityIn instanceof EntityYellowDiamond;
+			}
 		}
 		return false;
 	}

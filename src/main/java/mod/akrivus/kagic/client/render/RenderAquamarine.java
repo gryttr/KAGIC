@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.client.render;
 
 import mod.akrivus.kagic.client.model.ModelAquamarine;
+import mod.akrivus.kagic.client.render.layers.LayerAquamarineItem;
 import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
 import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerInsignia;
@@ -11,12 +12,12 @@ import mod.akrivus.kagic.entity.gem.EntityAquamarine;
 import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderAquamarine extends RenderGemBase<EntityAquamarine> {
 	public RenderAquamarine() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelAquamarine(), 0.25F);
+        this.addLayer(new LayerAquamarineItem(this));
         this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerInsignia(this));
         this.addLayer(new LayerGemPlacement(this));

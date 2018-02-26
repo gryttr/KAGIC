@@ -10,7 +10,6 @@ import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAISitStill;
-import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.entity.ai.EntityAITopazFuse;
 import mod.akrivus.kagic.entity.ai.EntityAITopazTarget;
@@ -274,7 +273,7 @@ public class EntityTopaz extends EntityGem {
 		if (!this.world.isRemote) {
 			for (int i = 0; i < this.heldEntities.size(); ++i) {
 				EntityLivingBase entity = this.heldEntities.get(i);
-				if (entity != null && entity.isEntityAlive()) {
+				if (entity != null && (entity.isEntityAlive() || entity.getDistanceSq(this) < 16)) {
 					double[] offset = new double[] {0, this.height, 0};
 					if (this.isFusion()) {
 						switch (i) {
@@ -344,7 +343,7 @@ public class EntityTopaz extends EntityGem {
 				}
 			}
 			if (this.heldEntities.isEmpty()) {
-				this.addHeldEntity(null);
+				this.dataManager.set(HOLDING, false);
 			}
 			else if (this.isFusion()) {
 				this.motionX = 0;
@@ -496,10 +495,7 @@ public class EntityTopaz extends EntityGem {
      * Methods related to entity combat.                     *
      *********************************************************/
     public boolean attackEntityFrom(DamageSource source, float amount) {
-    	if (this.getHeldEntities().isEmpty() || source.isUnblockable()) {
-    		return super.attackEntityFrom(source, amount);
-    	}
-    	return false;
+    	return super.attackEntityFrom(source, amount);
 	}
 	public boolean attackEntityAsMob(Entity entityIn) {
 		/*if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
