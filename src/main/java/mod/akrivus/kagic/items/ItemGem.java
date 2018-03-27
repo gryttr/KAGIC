@@ -67,26 +67,6 @@ public class ItemGem extends Item {
 					tooltip.add(name);
 				}
 			}
-			if (worldIn != null) {
-				String name = "nobody";
-				if (tag.hasKey("ownerId")) {
-					name = worldIn.getMinecraftServer().getPlayerProfileCache().getProfileByUUID(tag.getUniqueId("ownerId")).getName();
-				}
-				int i = 0;
-				if (tag.hasKey("servitude")) {
-					switch (i = tag.getInteger("servitude")) {
-					case 0: case 2: case 3: case 4: case 5: case 6: case 7:
-						tooltip.add(new TextComponentTranslation("command.servitude_" + i).getUnformattedComponentText());
-					case 1:
-						tooltip.add(new TextComponentTranslation("command.servitude_1", name).getUnformattedComponentText());
-					default:
-						tooltip.add(new TextComponentTranslation("command.servitude_x").getUnformattedComponentText());
-					}
-				}
-				else {
-					tooltip.add(new TextComponentTranslation("command.servitude_0").getUnformattedComponentText());
-				}
-			}
 		}
 		catch (NullPointerException e) {
 			tooltip.add(this.gemName);
@@ -115,53 +95,57 @@ public class ItemGem extends Item {
 	}
 	
 	public boolean spawnGem(World worldIn, EntityPlayer playerIn, BlockPos blockpos, ItemStack stack) {
-		if (this.isCracked) {
-			return false;
-		}
-		else {
-			EntityGem newGem = new EntityRuby(worldIn);
-			for (String key : ModEntities.GEMS.keySet()) {
-				try {
-					if (this.getUnlocalizedName().contains(key)) {
-						newGem = (EntityGem) ModEntities.GEMS.get(key).getConstructors()[0].newInstance(worldIn);
+		if (!worldIn.isRemote) {
+			if (this.isCracked) {
+				return false;
+			}
+			else {
+				EntityGem newGem = new EntityRuby(worldIn);
+				for (String key : ModEntities.GEMS.keySet()) {
+					try {
+						String name = this.getUnlocalizedName().replaceAll("^item\\.(cracked_)*", "").replaceAll("_(\\d*_)*gem$", "");
+						if (name.equals(key)) {
+							newGem = (EntityGem) ModEntities.GEMS.get(key).getConstructors()[0].newInstance(worldIn);
+						}
+					}
+					catch (Exception e) {
+						e.printStackTrace();
+						System.out.println("Error creating gem: " + e.getMessage());
 					}
 				}
-				catch (Exception e) {
-					e.printStackTrace();
-					System.out.println("Error creating gem: " + e.getMessage());
-				}
+		    	try {
+					newGem.readFromNBT(stack.getTagCompound());
+					newGem.setUniqueId(MathHelper.getRandomUUID(worldIn.rand));
+		    	}
+		    	catch (Exception e) {
+		    		Matcher matcher = Pattern.compile("_(\\d+)_").matcher(this.getUnlocalizedName());
+	            	newGem.onInitialSpawn(worldIn.getDifficultyForLocation(blockpos), null);
+	            	if (matcher.find()) {
+	            		newGem.itemDataToGemData(Integer.parseInt(matcher.group(1)));
+	            	}
+		    		if (playerIn != null && !newGem.isDiamond && !(newGem instanceof EntityShardFusion) && !(newGem instanceof EntityCorruptedGem)) {
+		    			newGem.setOwnerId(EntityPlayer.getUUID(playerIn.getGameProfile()));
+		    			newGem.setLeader(playerIn);
+		        		newGem.setServitude(EntityGem.SERVE_HUMAN);
+		            	newGem.getNavigator().clearPath();
+		            	newGem.setAttackTarget(null);
+		            	newGem.setHealth(newGem.getMaxHealth());
+		            	newGem.playTameEffect();
+		            	newGem.world.setEntityState(newGem, (byte) 7);
+		            	newGem.playObeySound();
+		    		}
+		    	}
+				newGem.setPosition(blockpos.getX() + 0.5, blockpos.getY() + 1.0, blockpos.getZ() + 0.5);
+				newGem.setRestPosition(newGem.getPosition());
+				newGem.setHealth(newGem.getMaxHealth());
+				newGem.setAttackTarget(null);
+				newGem.extinguish();
+				newGem.clearActivePotions();
+				worldIn.spawnEntity(newGem);
+				return true;
 			}
-	    	try {
-				newGem.readFromNBT(stack.getTagCompound());
-				newGem.setUniqueId(MathHelper.getRandomUUID(worldIn.rand));
-	    	}
-	    	catch (Exception e) {
-	    		newGem.onInitialSpawn(worldIn.getDifficultyForLocation(blockpos), null);
-	    		Matcher matcher = Pattern.compile("_(\\d+)_").matcher(this.getUnlocalizedName());
-            	if (matcher.find()) {
-            		newGem.itemDataToGemData(Integer.parseInt(matcher.group(1)));
-            	}
-	    		if (playerIn != null && !newGem.isDiamond && !(newGem instanceof EntityShardFusion) && !(newGem instanceof EntityCorruptedGem)) {
-	    			newGem.setOwnerId(EntityPlayer.getUUID(playerIn.getGameProfile()));
-	    			newGem.setLeader(playerIn);
-	        		newGem.setServitude(EntityGem.SERVE_HUMAN);
-	            	newGem.getNavigator().clearPath();
-	            	newGem.setAttackTarget(null);
-	            	newGem.setHealth(newGem.getMaxHealth());
-	            	newGem.playTameEffect();
-	            	newGem.world.setEntityState(newGem, (byte) 7);
-	            	newGem.playObeySound();
-	    		}
-	    	}
-			newGem.setPosition(blockpos.getX() + 0.5, blockpos.getY() + 1.0, blockpos.getZ() + 0.5);
-			newGem.setRestPosition(newGem.getPosition());
-			newGem.setHealth(newGem.getMaxHealth());
-			newGem.setAttackTarget(null);
-			newGem.extinguish();
-			newGem.clearActivePotions();
-			worldIn.spawnEntity(newGem);
-			return true;
 		}
+		return false;
 	}
 	
 	@Override

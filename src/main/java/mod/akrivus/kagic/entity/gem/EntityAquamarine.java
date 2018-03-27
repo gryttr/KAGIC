@@ -14,9 +14,11 @@ import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.akrivus.kagic.util.flying.EntityFlyHelper;
 import mod.akrivus.kagic.util.flying.PathNavigateFlying;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -88,8 +90,8 @@ public class EntityAquamarine extends EntityGem {
         return new PathNavigateFlying(this, worldIn);
     }
 
-	public float[] getGemColor() {
-    	return new float[] { 79F / 255F, 252F / 255F, 231F / 255F };
+	protected int generateGemColor() {
+    	return 0x4FFCE7;
     }
 	public void convertGems(int placement) {
     	this.setGemCut(GemCuts.TINY.id);

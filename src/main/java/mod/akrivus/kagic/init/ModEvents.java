@@ -3,17 +3,23 @@ package mod.akrivus.kagic.init;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.google.common.base.Predicate;
 
+import mod.akrivus.kagic.entity.EntityCrystalSkills;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowTopaz;
 import mod.akrivus.kagic.entity.gem.EntityAgate;
 import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
+import mod.akrivus.kagic.entity.gem.EntityPearl;
 import mod.akrivus.kagic.entity.gem.EntityRuby;
 import mod.akrivus.kagic.entity.gem.EntityRutile;
 import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import mod.akrivus.kagic.init.ModMetrics.Update;
+import mod.akrivus.kagic.linguistics.LinguisticsHelper;
 import mod.akrivus.kagic.server.SpaceStuff;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
@@ -28,6 +34,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootEntryItem;
 import net.minecraft.world.storage.loot.LootPool;
@@ -40,6 +48,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -68,12 +77,10 @@ public class ModEvents {
 				//player.addStat(ModAchievements.INSTALLED_KAGIC);
 			}
 		}
-		
 		if (e.getEntity() instanceof EntityPadparadscha) {
 			EntityPadparadscha paddy = (EntityPadparadscha) e.getEntity();
 			e.getWorld().spawnEntity(EntitySapphire.convertFrom(paddy));
 		}
-		
 		if (e.getEntity() instanceof EntityMob) {
 			EntityMob mob = (EntityMob) e.getEntity();
 			if (!(e.getEntity() instanceof EntityEnderman || e.getEntity() instanceof EntityGolem)) {
@@ -100,6 +107,18 @@ public class ModEvents {
 	                return input.getServitude() > EntityGem.SERVE_HUMAN;
 	            }
 	        }));
+		}
+	}
+	@SubscribeEvent
+	public void onLivingHurt(LivingHurtEvent e) {
+		if (e.getEntity() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) e.getEntity();
+			if (!e.getEntity().world.isRemote) {
+				List<EntityPearl> list = player.world.<EntityPearl>getEntitiesWithinAABB(EntityPearl.class, player.getEntityBoundingBox().grow(8.0D, 4.0D, 8.0D));
+				for (EntityPearl entity : list) {
+					entity.sendMessage(new TextComponentTranslation("command.kagic.pearl_warning", player.getName()));
+		        }
+			}
 		}
 	}
 	@SubscribeEvent
@@ -213,13 +232,17 @@ public class ModEvents {
 	}
 	@SubscribeEvent
 	public void onServerChat(ServerChatEvent e) {
-		List<EntityGem> list = e.getPlayer().world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, e.getPlayer().getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
-		for (EntityGem gem : list) {
-        	boolean obeyed = gem.onSpokenTo(e.getPlayer(), e.getMessage());
-            if (obeyed) {
-            	gem.playObeySound();
-            	e.setCanceled(true);
-            }
+		System.out.println(ArrayUtils.toString(LinguisticsHelper.parseSentences(e.getMessage())));
+		EntityPlayer player = e.getPlayer();
+		List<Entity> list = player.world.<Entity>getEntitiesWithinAABB(Entity.class, e.getPlayer().getEntityBoundingBox().grow(64.0D, 16.0D, 64.0D));
+		for (Entity entity : list) {
+			if (entity instanceof EntityCrystalSkills) {
+				EntityCrystalSkills gem = (EntityCrystalSkills) entity;
+	    		boolean result = gem.spokenTo(player, e.getMessage());
+	    		if (result) {
+	    			e.getComponent().getStyle().setColor(TextFormatting.YELLOW);
+	    		}
+			}
         }
 	}
 }

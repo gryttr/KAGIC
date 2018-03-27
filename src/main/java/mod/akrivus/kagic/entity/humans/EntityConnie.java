@@ -3,10 +3,11 @@ package mod.akrivus.kagic.entity.humans;
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.ai.EntityAIFollowGem;
+import mod.akrivus.kagic.entity.ai.EntityAIFollowPlayer;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowSteven;
-import mod.akrivus.kagic.entity.ai.EntityAIPickUpItemsIndiscriminately;
-import mod.akrivus.kagic.entity.ai.EntityAIProtectSteven;
-import mod.akrivus.kagic.entity.ai.EntityAIProtectVillagers;
+import mod.akrivus.kagic.entity.humans.ai.EntityAIPickUpItemsIndiscriminately;
+import mod.akrivus.kagic.entity.humans.ai.EntityAIProtectSteven;
+import mod.akrivus.kagic.entity.humans.ai.EntityAIProtectVillagers;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -97,8 +98,9 @@ public class EntityConnie extends EntityCreature implements IInventoryChangedLis
         this.tasks.addTask(3, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
         this.tasks.addTask(3, new EntityAIMoveThroughVillage(this, 0.8D, true));
         this.tasks.addTask(3, new EntityAIFollowSteven(this, 0.9D));
-        this.tasks.addTask(3, new EntityAIFollowGem(this, 0.9D));
-        this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
+        this.tasks.addTask(4, new EntityAIFollowGem(this, 0.9D));
+        this.tasks.addTask(4, new EntityAIFollowPlayer(this, 0.9D));
+        this.tasks.addTask(5, new EntityAIOpenDoor(this, true));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(6, new EntityAIPickUpItemsIndiscriminately(this, 0.9D));
         this.tasks.addTask(7, new EntityAIWander(this, 0.6D));

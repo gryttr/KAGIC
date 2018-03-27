@@ -18,8 +18,10 @@ import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.items.ItemGem;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -115,8 +117,8 @@ public class EntityRoseQuartz extends EntityQuartzSoldier {
 		this.droppedCrackedGemItem = ModItems.CRACKED_ROSE_QUARTZ_GEM;
 	}
 
-	public float[] getGemColor() {
-		return new float[] { 255F / 255F, 162F / 255F, 230F / 255F };
+	protected int generateGemColor() {
+		return 0xFFA2E6;
 	}
 	public void convertGems(int placement) {
 		this.setGemCut(GemCuts.FACETED.id);

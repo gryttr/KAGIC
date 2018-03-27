@@ -14,6 +14,7 @@ import mod.akrivus.kagic.items.ItemJointContract;
 import mod.akrivus.kagic.items.ItemLiberationContract;
 import mod.akrivus.kagic.items.ItemPeaceTreaty;
 import mod.akrivus.kagic.items.ItemStevenStone;
+import mod.akrivus.kagic.items.ItemTimeGlass;
 import mod.akrivus.kagic.items.ItemTransferContract;
 import mod.akrivus.kagic.items.ItemVehicle;
 import mod.akrivus.kagic.items.ItemWarDeclaration;
@@ -66,8 +67,10 @@ public class ModItems {
 	public static final ItemWarpWhistle WARP_WHISTLE = new ItemWarpWhistle();
 	public static final ItemFood STRAWBERRY_SLICE = (ItemFood) new ItemFood(2, 0.3F, false).setUnlocalizedName("strawberry_slice").setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
 	public static final ItemSeeds STRAWBERRY_SEEDS = (ItemSeeds) new ItemSeeds(ModBlocks.GIANT_STRAWBERRY_STEM, Blocks.FARMLAND).setUnlocalizedName("strawberry_seeds").setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
+	public static final ItemTimeGlass TIME_GLASS = new ItemTimeGlass();
 	
 	public static final ItemGem RUBY_GEM = new ItemGem("ruby");
+	public static final ItemGem ENDER_PEARL_GEM = new ItemGem("ender_pearl");
 	public static final ItemGem WHITE_PEARL_GEM = new ItemGem("pearl_0");
 	public static final ItemGem ORANGE_PEARL_GEM = new ItemGem("pearl_1");
 	public static final ItemGem MAGENTA_PEARL_GEM = new ItemGem("pearl_2");
@@ -164,6 +167,7 @@ public class ModItems {
 	public static final ItemGem BLUE_DIAMOND_GEM = new ItemGem("blue_diamond");
 
 	public static final ItemGem CRACKED_RUBY_GEM = new ItemGem("ruby", true);
+	public static final ItemGem CRACKED_ENDER_PEARL_GEM = new ItemGem("ender_pearl", true);
 	public static final ItemGem CRACKED_WHITE_PEARL_GEM = new ItemGem("pearl_0", true);
 	public static final ItemGem CRACKED_ORANGE_PEARL_GEM = new ItemGem("pearl_1", true);
 	public static final ItemGem CRACKED_MAGENTA_PEARL_GEM = new ItemGem("pearl_2", true);
@@ -303,6 +307,7 @@ public class ModItems {
 
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		registerGem(RUBY_GEM, CRACKED_RUBY_GEM, event);
+		registerGem(ENDER_PEARL_GEM, CRACKED_ENDER_PEARL_GEM, event);
 		registerGem(WHITE_PEARL_GEM, CRACKED_WHITE_PEARL_GEM, event);
 		registerGem(ORANGE_PEARL_GEM, CRACKED_ORANGE_PEARL_GEM, event);
 		registerGem(MAGENTA_PEARL_GEM, CRACKED_MAGENTA_PEARL_GEM, event);
@@ -452,6 +457,7 @@ public class ModItems {
 		registerItem(STRAWBERRY_SLICE, event, "cropGiantStrawberry");
 		OreDictionary.registerOre("cropStrawberry", STRAWBERRY_SLICE);
 		registerItem(STRAWBERRY_SEEDS, event, "seedGiantStrawberry");
+		registerItem(TIME_GLASS, event);
 	}
 	public static void registerGem(ItemGem normal, ItemGem broken, RegistryEvent.Register<Item> event) {
 		GEM_TABLE.put(normal, broken);

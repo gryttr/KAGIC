@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.entity.ai;
 
 import mod.akrivus.kagic.entity.gem.EntityRutile;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -30,7 +31,7 @@ public class EntityAIFindDarkSpots extends EntityAIBase {
 	
 	@Override
 	public boolean shouldExecute() {
-		if (!this.gem.getHeldItemMainhand().isEmpty()) {
+		if (!this.gem.getHeldItemMainhand().isEmpty() && Block.getBlockFromItem(this.gem.getHeldItemMainhand().getItem()) == Blocks.TORCH) {
 			if (this.delay > 0) {
 				--this.delay;
 				return false;
@@ -99,7 +100,7 @@ public class EntityAIFindDarkSpots extends EntityAIBase {
 		BlockPos pos = new BlockPos(this.posX, this.posY, this.posZ);
 		this.gem.getNavigator().tryMoveToXYZ(this.posX, this.posY, this.posZ, this.movementSpeed);
 		if (this.gem.getDistanceSq(this.posX, this.posY, this.posZ) < 5 && (this.gem.world.isAirBlock(pos) || this.isFallingBlock(pos)) && !this.placed) {
-			this.gem.world.setBlockState(new BlockPos(this.posX, this.posY, this.posZ), Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.UP));
+			this.gem.placeBlock(Blocks.TORCH.getDefaultState().withProperty(BlockTorch.FACING, EnumFacing.UP), new BlockPos(this.posX, this.posY, this.posZ));
 			if (this.isFallingBlock(new BlockPos(this.posX, this.posY + 1, this.posZ))) {
 				this.gem.world.destroyBlock(new BlockPos(this.posX, this.posY + 1, this.posZ), true);
 			}

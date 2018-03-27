@@ -54,9 +54,9 @@ public class EntityCorruptedAmethyst extends EntityCorruptedGem {
 	 * Methods related to rendering.						 *
 	 *********************************************************/
 	@Override
-	public float[] getGemColor() {
-		return new float[] { 220F / 255F, 100F / 255F, 253F / 255F };
-	}
+    protected int generateGemColor() {
+    	return 0xDC64FD;
+    }
 	
 	@Override
 	protected int generateSkinColor() {

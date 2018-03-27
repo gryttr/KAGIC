@@ -154,7 +154,11 @@ public class InjectorResult {
 										resultTable.put(gemClass, 0.0);
 									}
 									if (yield.containsKey(state)) {
-										resultTable.put(gemClass, resultTable.get(gemClass) + yield.get(state));
+										double result = yield.get(state);
+										if (result < 1.98) {
+											result *= depthFactor;
+										}
+										resultTable.put(gemClass, resultTable.get(gemClass) + result);
 										frictionFactor += 0.0036;
 										defectivityRate -= 0.2;
 										
@@ -191,7 +195,7 @@ public class InjectorResult {
 					}
 					drainedChecked = true;
 					defectivity.put(gemClass, Math.max(0.0, defectivityRate * defectivityMultiplier));
-					resultTable.put(gemClass, resultTable.get(gemClass) * depthFactor);
+					resultTable.put(gemClass, resultTable.get(gemClass));
 					friction.put(gemClass, frictionFactor * pressureFactor);
 					System.out.println(gemType + " | RESULT = " + resultTable.get(gemClass) + " | DEF = " + defectivity.get(gemClass) + " | FRI = " + friction.get(gemClass) + " | DEP = " + depthFactor);
 				}

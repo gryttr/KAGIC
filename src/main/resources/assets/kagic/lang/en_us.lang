@@ -27,6 +27,7 @@ entity.kagic.opal.name=Opal
 entity.kagic.opal.name.plural=Opals
 entity.kagic.peridot.name=Peridot
 entity.kagic.peridot.name.plural=Peridots
+entity.kagic.ender_pearl.name=Ender Pearl
 entity.kagic.pearl.name=Pearl
 entity.kagic.pearl.name.plural=Pearls
 entity.kagic.pearl_0.name=White Pearl
@@ -189,10 +190,12 @@ item.roaming_eye.name=Roaming Eye
 item.laser_beam.name=Laser Beam
 item.strawberry_slice.name=Giant Strawberry Slice
 item.strawberry_seeds.name=Giant Strawberry Seeds
+item.time_glass.name=The Glass of Time
 
 item.ruby_gem.name=Ruby Gem
 item.padparadscha_gem.name=Padparadscha Gem
 item.peridot_gem.name=Peridot Gem
+item.ender_pearl_gem.name=Ender Pearl Gem
 item.pearl_gem.name=Pearl Gem
 item.pearl_0_gem.name=White Pearl Gem
 item.pearl_1_gem.name=Orange Pearl Gem
@@ -287,6 +290,7 @@ item.zircon_15_gem.name=Black Zircon Gem
 item.cracked_ruby_gem.name=Cracked Ruby Gem
 item.cracked_padparadscha_gem.name=Cracked Padparadscha Gem
 item.cracked_peridot_gem.name=Cracked Peridot Gem
+item.cracked_ender_pearl_gem.name=Cracked Ender Pearl Gem
 item.cracked_pearl_gem.name=Cracked Pearl Gem
 item.cracked_pearl_0_gem.name=Cracked White Pearl Gem
 item.cracked_pearl_1_gem.name=Cracked Orange Pearl Gem
@@ -506,7 +510,7 @@ command.kagic.peace_treaty_by=%1$s has been retired from the gem war by %2$s.
 command.kagic.peace_treaty=%1$s has been retired from the gem war.
 
 command.kagic.peridot_find_gem=You'll find lots of high quality %1$s in this location.
-command.kagic.peridot_find_gem=You'll find %1$s here, with %2$s defectivity.
+command.kagic.peridot_find_prime_gem=You'll find %1$s here, with %2$s defectivity.
 command.kagic.peridot_cant_find_gem=You'll find nothing but slag here.
 command.kagic.peridot_harvest=Here are all the crops I've harvested.
 command.kagic.peridot_no_harvest=Sorry, I haven't harvested enough crop yet.
@@ -604,6 +608,8 @@ command.kagic.aquamarine_cave_around=I sense a cave around us.
 command.kagic.aquamarine_liquid_around=I sense a pool of %1$s around us.
 command.kagic.aquamarine_nothing=I sense nothing...
 command.kagic.aquamarine_scanning=Let me see...
+
+command.kagic.pearl_warning=Watch out my %1$s!
 
 command.kagic.to_homeworld=Setting a course for Homeworld
 command.kagic.to_earth=Setting a course for Earth

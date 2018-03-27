@@ -14,9 +14,11 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -92,7 +94,9 @@ public class EntityRutile extends EntityGem {
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.4D);
 	}
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		return super.onInitialSpawn(difficulty, livingdata);
+		livingdata = super.onInitialSpawn(difficulty, livingdata);
+		this.setInsigniaColor(15);
+		return livingdata;
 	}
 	public void setDefective(boolean defective) {
 		super.setDefective(defective);
@@ -114,8 +118,8 @@ public class EntityRutile extends EntityGem {
 		}
 		super.onDeath(cause); 
 	}
-	public float[] getGemColor() {
-    	return new float[] { 183F / 255F, 81F / 255F, 61F / 255F };
+	protected int generateGemColor() {
+    	return 0xB7513D;
     }
 	protected SoundEvent getAmbientSound() {
 		return ModSounds.RUTILE_LIVING;

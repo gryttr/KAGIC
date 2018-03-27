@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,10 +18,12 @@ import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -66,7 +69,8 @@ public class EntitySapphire extends EntityGem {
 			10,	10,							//Purple
 			11, 11, 11, 11, 11,	11, 11, 11, //Blue
 			13,	13,							//Green
-			15								//Black
+			15,								//Black
+			16, 16							//Paddy
 	)); 
 	private static final int NUM_HAIRSTYLES = 2;
 
@@ -117,35 +121,22 @@ public class EntitySapphire extends EntityGem {
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
 		livingdata = super.onInitialSpawn(difficulty, livingdata);
 		int color = this.SKIN_COLORS.get(this.rand.nextInt(this.SKIN_COLORS.size()));
-		this.setSpecial(color);
-		this.setSkinColor(this.generateSkinColor());
-		this.setHairColor(this.getSkinColor());
-		if (color == 16) {
-			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.sapphire_16.name").getUnformattedComponentText());
-			this.setHairColor(0xF9D5BD);
-			this.setUniformColor(1);
-			this.nativeColor = 1;
-			this.setInsigniaColor(1);
-		}
-		else {
-			this.setUniformColor(color);
-			this.nativeColor = color;
-			this.setInsigniaColor(color);
-		}
+		this.itemDataToGemData(color);
 		return livingdata;
 	}
 	
 	@Override
 	public void itemDataToGemData(int data) {
 		this.setSpecial(data);
+		this.setGemColor(this.generateGemColor());
 		this.setSkinColor(this.generateSkinColor());
 		this.setHairColor(this.getSkinColor());
 		if (data == 16) {
 			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.sapphire_16.name").getUnformattedComponentText());
-			this.setHairColor(0xF9D5BD);
-			this.setUniformColor(1);
-			this.nativeColor = 1;
-			this.setInsigniaColor(1);
+			this.setHairColor(0xF4745A);
+			this.setUniformColor(6);
+			this.nativeColor = 6;
+			this.setInsigniaColor(6);
 		}
 		else {
 			this.setUniformColor(data);
@@ -155,11 +146,42 @@ public class EntitySapphire extends EntityGem {
 	}
 	
 	@Override
-	public float[] getGemColor() {
-		if (this.getSpecial() < 16) {
-			return EntitySheep.getDyeRgb(EnumDyeColor.values()[this.getSpecial()]);
-		}
-		return new float[] { 237F / 255F, 177F / 255F, 166F / 255F };
+	protected int generateGemColor() {
+		switch (this.getSpecial()) {
+    	case 0:
+    		return 0xFFFFFF;
+    	case 1:
+    		return 0xCB7226;
+    	case 2:
+    		return 0xAE48D4;
+    	case 3:
+    		return 0x215493;
+    	case 4:
+    		return 0xFEFE4C;
+    	case 5:
+    		return 0x469300;
+    	case 6:
+    		return 0xE8759B;
+    	case 7:
+    		return 0x939393;
+    	case 8:
+    		return 0x8F8F8F;
+    	case 9:
+    		return 0x6699B3;
+    	case 10:
+    		return 0x7B3BAE;
+    	case 11:
+    		return 0x3B54BA;
+    	case 12:
+    		return 0x4E341B;
+    	case 13:
+    		return 0x4C6519;
+    	case 14:
+    		return 0x963030;
+    	case 15:
+    		return 0x333333;
+    	}
+		return 0xDE7565;
     }
 	
 	@Override
@@ -378,7 +400,7 @@ public class EntitySapphire extends EntityGem {
 			} catch (Exception e) {}
 		}
 		else {
-			colorValue = 0xFF8D32;
+			colorValue = 0xE54E37;
 		}
 		return colorValue;
 	}

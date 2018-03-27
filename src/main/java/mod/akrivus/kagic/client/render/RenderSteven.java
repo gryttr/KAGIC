@@ -2,6 +2,7 @@ package mod.akrivus.kagic.client.render;
 
 import mod.akrivus.kagic.client.model.ModelSteven;
 import mod.akrivus.kagic.client.render.layers.LayerCheeseburgerBackpack;
+import mod.akrivus.kagic.client.render.layers.LayerGlowBracelet;
 import mod.akrivus.kagic.client.render.layers.LayerStevenItem;
 import mod.akrivus.kagic.entity.humans.EntitySteven;
 import net.minecraft.client.Minecraft;
@@ -14,6 +15,7 @@ public class RenderSteven extends RenderLivingBase<EntitySteven> {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelSteven(), 0.25F);
         this.addLayer(new LayerStevenItem(this));
         this.addLayer(new LayerCheeseburgerBackpack(this));
+        this.addLayer(new LayerGlowBracelet(this));
         this.addLayer(new LayerArrow(this));
     }
 	protected ResourceLocation getEntityTexture(EntitySteven entity) {

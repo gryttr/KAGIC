@@ -41,6 +41,7 @@ import mod.akrivus.kagic.entity.gem.EntityBismuth;
 import mod.akrivus.kagic.entity.gem.EntityBlueDiamond;
 import mod.akrivus.kagic.entity.gem.EntityCarnelian;
 import mod.akrivus.kagic.entity.gem.EntityCitrine;
+import mod.akrivus.kagic.entity.gem.EntityEnderPearl;
 import mod.akrivus.kagic.entity.gem.EntityHessonite;
 import mod.akrivus.kagic.entity.gem.EntityHoloPearl;
 import mod.akrivus.kagic.entity.gem.EntityJasper;
@@ -69,6 +70,7 @@ import mod.akrivus.kagic.entity.gem.fusion.EntityOpal;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRainbowQuartz;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRhodonite;
 import mod.akrivus.kagic.entity.humans.EntityConnie;
+import mod.akrivus.kagic.entity.humans.EntityDoppelganger;
 import mod.akrivus.kagic.entity.humans.EntitySteven;
 import mod.akrivus.kagic.entity.pepo.EntityCactus;
 import mod.akrivus.kagic.entity.pepo.EntityMelon;
@@ -124,6 +126,7 @@ public class ModEntities {
 		registerGem("zircon", EntityZircon.class, 0x458FBE, 0x57C7CF, false);
 		registerGem("hessonite", EntityHessonite.class, 0xBE331C, 0xEDCC41, false);
 		registerGem("citrine", EntityCitrine.class, 0xECF404, 0xEBFD64, false);
+		registerGem("ender_pearl", EntityEnderPearl.class, 0x000000, 0xFF00FF, false);
 		registerDiamond("yellow_diamond", EntityYellowDiamond.class);
 		registerDiamond("blue_diamond", EntityBlueDiamond.class);
 		
@@ -159,6 +162,7 @@ public class ModEntities {
 		registerMob("connie", EntityConnie.class, 0x99D3CD, 0xAF4E3D);
 		registerEntity("roaming_eye", EntityRoamingEye.class);
 		registerEntity("laser", EntityLaser.class);
+		registerEntity("doppelganger", EntityDoppelganger.class);
 		
 		// custom npcs wrapper entities
 		registerCustomEntity("agate", EntityCustomAgate.class);
@@ -246,6 +250,9 @@ public class ModEntities {
 		EntityPearl.PEARL_YIELDS.put(Blocks.PINK_SHULKER_BOX.getDefaultState(), 5.99);
 		EntityPearl.PEARL_YIELDS.put(Blocks.PURPLE_SHULKER_BOX.getDefaultState(), 5.99);	
 		ModEntities.registerWithOreDictionary(EntityPearl.PEARL_YIELDS, "Pearl", "Salt", "Calcite", "Amber");
+		
+		EntityEnderPearl.ENDER_PEARL_YIELDS.put(Blocks.END_BRICKS.getDefaultState(), 5.99);
+		EntityEnderPearl.ENDER_PEARL_YIELDS.put(Blocks.END_STONE.getDefaultState(), 2.99);
 		
 		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.99, "oreDiamond");
 		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.99, "oreGold");
@@ -432,6 +439,7 @@ public class ModEntities {
 		EntityPearl.PEARL_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/hair/yellow.png"));
 		EntityPearl.PEARL_DRESS_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/dress/dumpy.png"));
 		EntityPearl.PEARL_DRESS_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/dress/flower.png"));
+		EntityPearl.PEARL_DRESS_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/dress/hijab.png"));
 		EntityPearl.PEARL_DRESS_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/dress/jumpsuit.png"));
 		EntityPearl.PEARL_DRESS_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/dress/leather.png"));
 		EntityPearl.PEARL_DRESS_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/dress/legacy.png"));

@@ -1,7 +1,5 @@
 package mod.akrivus.kagic.entity.gem.corrupted;
 
-import javax.annotation.Nullable;
-
 import mod.akrivus.kagic.entity.EntityCorruptedGem;
 import mod.akrivus.kagic.entity.gem.GemCuts;
 import mod.akrivus.kagic.entity.gem.GemPlacements;
@@ -12,7 +10,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 

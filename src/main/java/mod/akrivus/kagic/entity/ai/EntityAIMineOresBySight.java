@@ -105,7 +105,7 @@ public class EntityAIMineOresBySight extends EntityAIBase {
 	public void updateTask() {
 		this.gem.getNavigator().tryMoveToXYZ(this.posX, this.posY, this.posZ, this.movementSpeed);
 		if (this.gem.getDistanceSq(this.posX, this.posY, this.posZ) < 8 && !this.placed) {
-			this.gem.world.destroyBlock(new BlockPos(this.posX, this.posY, this.posZ), true);
+			this.gem.breakBlock(new BlockPos(this.posX, this.posY, this.posZ));
 			this.placed = true;
 		}
 	}

@@ -1,7 +1,5 @@
 package mod.akrivus.kagic.entity.ai;
 
-import java.util.List;
-
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityBlueDiamond;
 import mod.akrivus.kagic.entity.gem.EntityYellowDiamond;
@@ -23,7 +21,7 @@ public class EntityAIFollowDiamond extends EntityAIBase {
     }
     public boolean shouldExecute() {
         EntityLivingBase owner = this.getDiamond();
-        if (owner == null || (owner instanceof EntityPlayer && ((EntityPlayer) owner).isSpectator()) || this.theGem.isSitting() || this.theGem.isAttacking) {
+        if (owner == null || (owner instanceof EntityPlayer && ((EntityPlayer) owner).isSpectator()) || owner.isInvisible() || this.theGem.isSitting() || this.theGem.isAttacking) {
         	return false;
         }
         else {

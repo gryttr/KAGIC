@@ -3,9 +3,11 @@ package mod.akrivus.kagic.entity.humans;
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.ai.EntityAIFollowGem;
-import mod.akrivus.kagic.entity.ai.EntityAIProtectConnie;
-import mod.akrivus.kagic.entity.ai.EntityAIProtectVillagers;
-import mod.akrivus.kagic.entity.ai.EntityAISingJamBuds;
+import mod.akrivus.kagic.entity.ai.EntityAIFollowPlayer;
+import mod.akrivus.kagic.entity.humans.ai.EntityAIProtectConnie;
+import mod.akrivus.kagic.entity.humans.ai.EntityAIProtectVillagers;
+import mod.akrivus.kagic.entity.humans.ai.EntityAISingJamBuds;
+import mod.akrivus.kagic.entity.humans.ai.EntityAISpawnConnie;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -56,6 +58,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class EntitySteven extends EntityCreature implements IInventoryChangedListener {
 	private static final DataParameter<Boolean> BACKPACKED = EntityDataManager.<Boolean>createKey(EntitySteven.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> WRISTBAND = EntityDataManager.<Boolean>createKey(EntitySteven.class, DataSerializers.BOOLEAN);
 	public InventoryBasic backpack;
 	public InvWrapper backpackHandler;
 	public boolean silent;
@@ -63,6 +66,7 @@ public class EntitySteven extends EntityCreature implements IInventoryChangedLis
 		super(worldIn);
 		this.setSize(0.5F, 1.5F);
 		this.dataManager.register(BACKPACKED, false);
+		this.dataManager.register(WRISTBAND, true);
 		this.initStorage();
 		
 		// See doors and stuff.
@@ -80,7 +84,9 @@ public class EntitySteven extends EntityCreature implements IInventoryChangedLis
         this.tasks.addTask(3, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
         this.tasks.addTask(3, new EntityAIMoveThroughVillage(this, 0.6D, true));
         this.tasks.addTask(3, new EntityAIFollowGem(this, 0.9D));
+        this.tasks.addTask(3, new EntityAIFollowPlayer(this, 0.9D));
         this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
+        this.tasks.addTask(5, new EntityAISpawnConnie(this));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(6, new EntityAISingJamBuds(this));
         this.tasks.addTask(7, new EntityAIWander(this, 0.6D));
@@ -110,6 +116,7 @@ public class EntitySteven extends EntityCreature implements IInventoryChangedLis
         }
         compound.setTag("items", nbttaglist);
         compound.setBoolean("backpacked", this.isBackpacked());
+        compound.setBoolean("wristband", this.hasWristband());
 	}
     public void readEntityFromNBT(NBTTagCompound compound) {
         super.readEntityFromNBT(compound);
@@ -123,6 +130,7 @@ public class EntitySteven extends EntityCreature implements IInventoryChangedLis
             }
         }
         this.setBackpack(compound.getBoolean("backpacked"));
+        this.setWristband(compound.getBoolean("wristband"));
     }
     public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
@@ -139,6 +147,13 @@ public class EntitySteven extends EntityCreature implements IInventoryChangedLis
 			}
 			if (player.getHeldItem(hand).getItem() == Items.NAME_TAG) {
 				this.sayHello();
+				return true;
+			}
+			else if (player.getHeldItem(hand).getItem() == ModItems.CONNIE_BRACELET) {
+				this.playProtectSound(0);
+				if (!this.hasWristband()) {
+					this.setWristband(true);
+				}
 				return true;
 			}
 		}
@@ -194,7 +209,13 @@ public class EntitySteven extends EntityCreature implements IInventoryChangedLis
 		this.dataManager.set(BACKPACKED, backpacked);
 		this.setCanPickUpLoot(backpacked);
 	}
-    public boolean canDespawn() {
+	public boolean hasWristband() {
+		return this.dataManager.get(WRISTBAND);
+	}
+	public void setWristband(boolean wristband) {
+		this.dataManager.set(WRISTBAND, wristband);
+	}
+	public boolean canDespawn() {
 		return false;
     }
     public boolean shouldAttackEntity(EntityLivingBase var1, EntityLivingBase var2) {

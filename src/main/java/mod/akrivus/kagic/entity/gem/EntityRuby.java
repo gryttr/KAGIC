@@ -21,9 +21,11 @@ import mod.akrivus.kagic.entity.gem.fusion.EntityGarnet;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRhodonite;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -36,7 +38,6 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
@@ -171,8 +172,8 @@ public class EntityRuby extends EntityGem {
         this.dataManager.register(ANGER, 0);
 	}
 
-    public float[] getGemColor() {
-    	return new float[] { 238F / 255F, 35F / 255F, 49F / 255F };
+    protected int generateGemColor() {
+    	return 0xEE2331;
     }
     public void convertGems(int placement) {
     	this.setGemCut(GemCuts.FACETED.id);
@@ -291,29 +292,6 @@ public class EntityRuby extends EntityGem {
     	this.wantsToFuse = true;
     	super.alternateInteract(player);
     	return true;
-    }
-    public boolean onSpokenTo(EntityPlayer player, String message) {
-    	boolean spokenTo = super.onSpokenTo(player, message);
-    	if (!spokenTo) {
-    		message = message.toLowerCase();
-    		if (this.isBeingCalledBy(player, message)) {
-    			this.getLookHelper().setLookPositionWithEntity(player, 30.0F, 30.0F);
-    			if (this.isOwner(player)) {
-    				if (this.isMatching("regex.kagic.fuse", message)) {
-    					this.wantsToFuse = true;
-    					return true;
-    				}
-    				else if (this.isMatching("regex.kagic.unfuse", message)) {
-    					this.wantsToFuse = false;
-    					if (this.isFusion()) {
-    						this.unfuse();
-    					}
-    					return true;
-    				}
-    			}
-    		}
-    	}
-    	return spokenTo;
     }
 	public boolean canFuseWith(EntityRuby other) {
 		if (this.canFuse() && other.canFuse() && this.getServitude() == other.getServitude() && this.getGemPlacement() != other.getGemPlacement()) {

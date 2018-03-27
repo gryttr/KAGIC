@@ -36,10 +36,6 @@ public class EntityRainbowQuartz extends EntityFusionGem {
 	/*********************************************************
 	 * Methods related to rendering.						 *
 	 *********************************************************/
-	@Override
-	public float[] getGemColor() {
-		return new float[] { 1F, 1F, 1F };
-	}
 	
 	@Override
 	protected int generateSkinColor() {

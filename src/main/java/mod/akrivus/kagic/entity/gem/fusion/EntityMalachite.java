@@ -124,8 +124,8 @@ public class EntityMalachite extends EntityFusionGem {
 	 * Methods related to entity rendering.                  *
 	 *********************************************************/
 	@Override
-	public float[] getGemColor() {
-		return new float[] { 54F / 255F, 193F / 255F, 110F / 255F };
+	protected int generateGemColor() {
+    	return 0x36C16E;
     }
 
 	@Override

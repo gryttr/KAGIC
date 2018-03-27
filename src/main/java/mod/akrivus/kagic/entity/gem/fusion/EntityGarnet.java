@@ -55,9 +55,9 @@ public class EntityGarnet extends EntityFusionGem {
 	 * Methods related to rendering.                         *
 	 *********************************************************/
 	@Override
-	public float[] getGemColor() {
-		return new float[] { 255F/ 255F, 61F / 255F, 122F / 255F };
-	}
+	protected int generateGemColor() {
+    	return 0xFF337A;
+    }
 
 	@Override
 	protected int generateSkinColor() {

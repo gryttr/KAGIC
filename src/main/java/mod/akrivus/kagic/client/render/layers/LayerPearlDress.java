@@ -11,10 +11,10 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.EnumDyeColor;
 
 public class LayerPearlDress implements LayerRenderer<EntityPearl> {
-	private final RenderPearl pearlRenderer;
+	private final RenderGemBase pearlRenderer;
 	private final ModelPearl pearlModel = new ModelPearl();
 	
-	public LayerPearlDress(RenderPearl pearlRendererIn) {
+	public LayerPearlDress(RenderGemBase pearlRendererIn) {
 		this.pearlRenderer = pearlRendererIn;
 	}
 	

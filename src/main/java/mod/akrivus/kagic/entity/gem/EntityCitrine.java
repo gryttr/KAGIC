@@ -18,8 +18,10 @@ import mod.akrivus.kagic.entity.gem.fusion.EntityOpal;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -152,8 +154,8 @@ public class EntityCitrine extends EntityQuartzSoldier {
     }
 
     @Override
-    public float[] getGemColor() {
-    	return new float[] { 235F / 255F, 253F / 255F, 100F / 255F };
+    protected int generateGemColor() {
+    	return this.getSpecial() == 1 ? 0xDC64FD : 0xEBFD64;
     }
     
     @Override

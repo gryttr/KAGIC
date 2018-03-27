@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,29 +85,31 @@ public class EntityZircon extends EntityGem {
 		this.droppedCrackedGemItem = ModItems.CRACKED_ZIRCON_GEM;
 	}
 
-	public float[] getGemColor() {
+	protected int generateGemColor() {
 		switch (this.getSpecial()) {
 		case 0:
-			return EntitySheep.getDyeRgb(EnumDyeColor.values()[this.getInsigniaColor()]);
+			float[] c = EntitySheep.getDyeRgb(EnumDyeColor.values()[this.getInsigniaColor()]).clone();
+	    	return Color.HSBtoRGB(c[0], c[1], c[2]);
 		case 1:	
-			return new float[] { 7F / 255F, 68F / 255F, 100F / 255F };
+			return 0x074464;
 		}
-		return new float[] { 7F / 255F, 68F / 255F, 100F / 255F };
+		return 0x074464;
 	}
 	
 	@Override
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		this.setInsigniaColor(this.rand.nextInt(16));
-		this.setUniformColor(this.getInsigniaColor());
-		this.nativeColor = this.getInsigniaColor();
+		int color = this.rand.nextInt(16);
+		this.itemDataToGemData(color);
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
 	
 	@Override
 	public void itemDataToGemData(int data) {
 		this.setInsigniaColor(data);
+		this.nativeColor = this.getInsigniaColor();
 		this.setUniformColor(data);
 		this.setSkinColor(this.generateSkinColor());
+		this.setGemColor(data);
 	}
 	
 	/*********************************************************

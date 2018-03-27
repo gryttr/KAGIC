@@ -1,4 +1,4 @@
-package mod.akrivus.kagic.entity.ai;
+package mod.akrivus.kagic.entity.humans.ai;
 
 import java.util.List;
 

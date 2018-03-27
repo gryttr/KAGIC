@@ -44,10 +44,6 @@ public class EntityOpal extends EntityFusionGem {
 	/*********************************************************
 	 * Methods related to rendering.                         *
 	 *********************************************************/
-	@Override
-	public float[] getGemColor() {
-		return new float[] { 1, 1, 1 };
-	}
 	
 	@Override
 	protected int generateSkinColor() {

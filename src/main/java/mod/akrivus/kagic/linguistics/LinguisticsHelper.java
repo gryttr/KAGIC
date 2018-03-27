@@ -3,11 +3,14 @@ package mod.akrivus.kagic.linguistics;
 import mod.akrivus.kagic.init.KAGIC;
 
 public class LinguisticsHelper {
-	/*public static String[] getSentences(String message) {
+	public static String[] getSentences(String message) {
 		return KAGIC.sentDetector.sentDetect(message);
 	}
 	public static String[] getTokens(String message) {
-		String[] tokens = message.replaceAll("[^A-Za-z0-9 ]", "").toLowerCase().split(" ");
+		String[] tokens = message.toLowerCase().split(" ");
+		for (int i = 0; i < tokens.length; ++i) {
+			tokens[i].replaceAll("[^A-Za-z0-9]", "");
+		}
 		return tokens;
 	}
 	public static String[] getParts(String message) {
@@ -36,21 +39,6 @@ public class LinguisticsHelper {
 		}
 		return pieces;
 	}
-	public static String createTrainingAsset(String message) {
-		String[][] parsedMessage = LinguisticsHelper.parseSentences(message);
-		String singleMessage = "";
-		for (int i = 0; i < parsedMessage.length; ++i) {
-			for (int part = 0; part < parsedMessage[i].length; ++part) {
-				if (part % 2 == 0) {
-					singleMessage += parsedMessage[i][part] + "_";
-				}
-				else {
-					singleMessage += parsedMessage[i][part] + " ";
-				}
-			}
-		}
-		return singleMessage;
-	}
 	public static int getDistance(String a, String b, boolean purify) {
         a = a.toLowerCase();
         b = b.toLowerCase();
@@ -74,6 +62,6 @@ public class LinguisticsHelper {
         return costs[b.length()];
     }
 	public static int getDistance(String a, String b) {
-		return LinguisticsHelper.getDistance(a, b, true);
-	}*/
+		return LinguisticsHelper.getDistance(a, b, false);
+	}
 }

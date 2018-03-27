@@ -45,7 +45,7 @@ public class EntityAITillFarmland extends EntityAIMoveToBlock {
 		super.updateTask();
 		this.gem.getLookHelper().setLookPosition((double) this.destinationBlock.getX() + 0.5D, (double)(this.destinationBlock.getY() + 1), (double) this.destinationBlock.getZ() + 0.5D, 10.0F, (float) this.gem.getVerticalFaceSpeed());
 		if (this.getIsAboveDestination()) {
-            this.world.setBlockState(this.destinationBlock, Blocks.FARMLAND.getDefaultState().withProperty(BlockFarmland.MOISTURE, 7), 2);
+            this.gem.placeBlock(Blocks.FARMLAND.getDefaultState().withProperty(BlockFarmland.MOISTURE, 7), this.destinationBlock);
             this.world.playSound(null, this.gem.getPosition(), SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
 		}
 	}

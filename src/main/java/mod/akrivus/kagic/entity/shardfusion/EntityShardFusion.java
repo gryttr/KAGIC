@@ -82,7 +82,7 @@ public class EntityShardFusion extends EntityGem {
 	}
 	
 	@Override
-	public boolean onSpokenTo(EntityPlayer player, String message) {
+	public boolean spokenTo(EntityPlayer player, String message) {
 		player.sendMessage(new TextComponentTranslation("command.kagic.does_not_understand", this.getName()));
 		return false;
 	}

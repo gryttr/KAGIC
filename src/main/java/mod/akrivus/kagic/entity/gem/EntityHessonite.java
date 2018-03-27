@@ -16,9 +16,11 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import mod.heimrarnadalr.kagic.util.GemPlayerLoot;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -105,20 +107,12 @@ public class EntityHessonite extends EntityGem {
 	}
 
 	@Override
-	public float[] getGemColor() {
-		return new float[] { 255F / 255F, 255F / 255F, 255F / 255F };
-	}
-
-	@Override
-	public void onLivingUpdate()
-	{
-		/*if (this.world.isRemote)
-		{
-			for (int i = 0; i < 2; ++i)
-			{
+	public void onLivingUpdate() {
+		if (this.world.isRemote) {
+			for (int i = 0; i < 2; ++i) {
 				this.world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - 0.25D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, (this.rand.nextDouble() - 0.5D) * 2.0D, -this.rand.nextDouble(), (this.rand.nextDouble() - 0.5D) * 2.0D);
 			}
-		}*/
+		}
 		super.onLivingUpdate();
 	}
 

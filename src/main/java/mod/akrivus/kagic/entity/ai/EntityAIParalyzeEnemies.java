@@ -31,10 +31,10 @@ public class EntityAIParalyzeEnemies extends EntityAIBase {
         return this.target != null && !this.observer.isDefective();
     }
     public void startExecuting() {
-    	this.target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 200, 8));
-    	this.target.addPotionEffect(new PotionEffect(MobEffects.GLOWING, 200));
+    	this.target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 600, 8));
+    	this.target.addPotionEffect(new PotionEffect(MobEffects.GLOWING, 600));
     	if (this.observer.isPrimary()) {
-    		this.target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200));
+    		this.target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 600));
     	}
     }
     public void resetTask() {

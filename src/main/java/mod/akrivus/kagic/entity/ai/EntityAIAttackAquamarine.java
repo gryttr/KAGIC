@@ -77,10 +77,10 @@ public class EntityAIAttackAquamarine extends EntityAIBase {
 			double distance = this.gem.getDistanceSq(target.posX, target.getEntityBoundingBox().minY, target.posZ);
 			boolean flag = this.gem.getEntitySenses().canSee(target);
 			if (distance < 32 && flag && !this.gem.isDefective()) {
-				target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 200, 8));
-		    	target.addPotionEffect(new PotionEffect(MobEffects.GLOWING, 200));
+				target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 600, 8));
+		    	target.addPotionEffect(new PotionEffect(MobEffects.GLOWING, 600));
 		    	if (this.gem.isPrimary()) {
-		    		target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200));
+		    		target.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 600));
 		    	}
 			}
 		}

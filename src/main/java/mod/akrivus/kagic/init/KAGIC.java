@@ -1,16 +1,48 @@
 package mod.akrivus.kagic.init;
 
+import java.io.InputStream;
 import java.util.Calendar;
 
 import org.apache.logging.log4j.Logger;
 
-import mod.akrivus.kagic.blocks.BlockPinkSandstone;
 import mod.akrivus.kagic.client.gui.KTGUIProxy;
 import mod.akrivus.kagic.command.CommandMeteorRuby;
 import mod.akrivus.kagic.command.CommandScanGems;
 import mod.akrivus.kagic.command.CommandSpawnGems;
+import mod.akrivus.kagic.entity.EntityCrystalSkills;
 import mod.akrivus.kagic.entity.gem.fusion.FusionSpawnHandler;
 import mod.akrivus.kagic.server.SpaceStuff;
+import mod.akrivus.kagic.skills.SkillBase;
+import mod.akrivus.kagic.skills.pack.BreedLivestock;
+import mod.akrivus.kagic.skills.pack.CollectLiquids;
+import mod.akrivus.kagic.skills.pack.Come;
+import mod.akrivus.kagic.skills.pack.CutDownTrees;
+import mod.akrivus.kagic.skills.pack.Defend;
+import mod.akrivus.kagic.skills.pack.DumpChestsBismuth;
+import mod.akrivus.kagic.skills.pack.DumpChestsLapis;
+import mod.akrivus.kagic.skills.pack.DumpChestsPearl;
+import mod.akrivus.kagic.skills.pack.DumpChestsPeridot;
+import mod.akrivus.kagic.skills.pack.FetchChestsBismuth;
+import mod.akrivus.kagic.skills.pack.FetchChestsPearl;
+import mod.akrivus.kagic.skills.pack.Follow;
+import mod.akrivus.kagic.skills.pack.Harvest;
+import mod.akrivus.kagic.skills.pack.HarvestCacti;
+import mod.akrivus.kagic.skills.pack.HarvestMelons;
+import mod.akrivus.kagic.skills.pack.HarvestNetherWart;
+import mod.akrivus.kagic.skills.pack.HarvestPumpkins;
+import mod.akrivus.kagic.skills.pack.HarvestReeds;
+import mod.akrivus.kagic.skills.pack.KillOtherEntities;
+import mod.akrivus.kagic.skills.pack.Look;
+import mod.akrivus.kagic.skills.pack.MilkCows;
+import mod.akrivus.kagic.skills.pack.Mine;
+import mod.akrivus.kagic.skills.pack.MowGrass;
+import mod.akrivus.kagic.skills.pack.PickFlowers;
+import mod.akrivus.kagic.skills.pack.PlantSaplingsBismuth;
+import mod.akrivus.kagic.skills.pack.PlantSaplingsPearl;
+import mod.akrivus.kagic.skills.pack.PlantSaplingsPeridot;
+import mod.akrivus.kagic.skills.pack.SingSong;
+import mod.akrivus.kagic.skills.pack.Stop;
+import mod.akrivus.kagic.skills.pack.Warp;
 import mod.heimrarnadalr.kagic.chunk.KAGICChunkCallback;
 import mod.heimrarnadalr.kagic.crafting.KAGICSmeltingRecipes;
 import mod.heimrarnadalr.kagic.dispenser.DispenserBehaviors;
@@ -22,11 +54,9 @@ import mod.heimrarnadalr.kagic.world.Fogger;
 import mod.heimrarnadalr.kagic.world.GenEventCanceller;
 import mod.heimrarnadalr.kagic.world.KAGICWorldGenerator;
 import mod.heimrarnadalr.kagic.world.structure.LootTables;
-import net.minecraft.block.BlockDispenser;
-import net.minecraft.client.renderer.block.statemap.StateMap;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -42,6 +72,10 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import opennlp.tools.postag.POSModel;
+import opennlp.tools.postag.POSTaggerME;
+import opennlp.tools.sentdetect.SentenceDetectorME;
+import opennlp.tools.sentdetect.SentenceModel;
 
 @Mod(modid = KAGIC.MODID, version = KAGIC.VERSION, acceptedMinecraftVersions = KAGIC.MCVERSION, guiFactory = "mod.akrivus.kagic.client.gui.GuiFactory")
 public class KAGIC {
@@ -56,6 +90,11 @@ public class KAGIC {
     public static KAGIC instance;
     public static SpaceStuff spaceStuff;
     public static KAGICWorldGenerator worldGen;
+    
+    public static SentenceModel sentModel;
+    public static SentenceDetectorME sentDetector;
+    public static POSModel posModel;
+    public static POSTaggerME posTagger;
 
     static {
     	FluidRegistry.enableUniversalBucket();
@@ -75,6 +114,18 @@ public class KAGIC {
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new KAGICChunkCallback());
 		LootTables.register();
 		KAGIC.worldGen = new KAGICWorldGenerator();
+		try {
+    		InputStream input = null;
+    		input = this.getClass().getClassLoader().getResourceAsStream("assets/kagic/lang/processing/en-sent.bin");
+    		KAGIC.sentModel = new SentenceModel(input);
+    		KAGIC.sentDetector = new SentenceDetectorME(KAGIC.sentModel);
+    		input = this.getClass().getClassLoader().getResourceAsStream("assets/kagic/lang/processing/en-pos-perceptron.bin");
+    		KAGIC.posModel = new POSModel(input);
+    		KAGIC.posTagger = new POSTaggerME(KAGIC.posModel);
+    	}
+    	catch (Exception ex) {
+    		CrashReport.makeCrashReport(ex, "Something went wrong loading OpenNLP.");
+    	}
     }
     
     @EventHandler
@@ -102,6 +153,36 @@ public class KAGIC {
     @EventHandler
     public void postInit(FMLPostInitializationEvent e) {
     	ModEntities.registerGemYields();
+		KAGIC.addSkill(BreedLivestock.class);
+		KAGIC.addSkill(CollectLiquids.class);
+		KAGIC.addSkill(Come.class);
+		KAGIC.addSkill(CutDownTrees.class);
+		KAGIC.addSkill(Defend.class);
+		KAGIC.addSkill(DumpChestsBismuth.class);
+		KAGIC.addSkill(DumpChestsLapis.class);
+		KAGIC.addSkill(DumpChestsPearl.class);
+		KAGIC.addSkill(DumpChestsPeridot.class);
+		KAGIC.addSkill(FetchChestsBismuth.class);
+		KAGIC.addSkill(FetchChestsPearl.class);
+		KAGIC.addSkill(Follow.class);
+		KAGIC.addSkill(Harvest.class);
+		KAGIC.addSkill(HarvestCacti.class);
+		KAGIC.addSkill(HarvestMelons.class);
+		KAGIC.addSkill(HarvestNetherWart.class);
+		KAGIC.addSkill(HarvestPumpkins.class);
+		KAGIC.addSkill(HarvestReeds.class);
+		KAGIC.addSkill(KillOtherEntities.class);
+		KAGIC.addSkill(Look.class);
+		KAGIC.addSkill(MilkCows.class);
+		KAGIC.addSkill(Mine.class);
+		KAGIC.addSkill(MowGrass.class);
+		KAGIC.addSkill(PickFlowers.class);
+		KAGIC.addSkill(PlantSaplingsBismuth.class);
+		KAGIC.addSkill(PlantSaplingsPearl.class);
+		KAGIC.addSkill(PlantSaplingsPeridot.class);
+		KAGIC.addSkill(SingSong.class);
+		KAGIC.addSkill(Stop.class);
+		KAGIC.addSkill(Warp.class);
     }
     
     @EventHandler
@@ -121,7 +202,7 @@ public class KAGIC {
     
     //Used for debugging
 	public void chatInfoMessage(String message) {
-		if (DEVELOPER && FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
+		if (DEVELOPER /*&& FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER*/) {
 			PlayerList list = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList();
 			logger.info(message);
 			list.sendMessage(new TextComponentString(message));
@@ -172,4 +253,7 @@ public class KAGIC {
     public static boolean isBirthdayTomorrow() {
     	return KAGIC.isDayToday(1, 16) || KAGIC.isDayToday(10, 23) || KAGIC.isDayToday(10, 21);
     }
+	public static void addSkill(Class<? extends SkillBase> skillToAdd) {
+		EntityCrystalSkills.SKILLS.add(skillToAdd);
+	}
 }

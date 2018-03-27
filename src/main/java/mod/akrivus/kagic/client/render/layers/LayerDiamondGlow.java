@@ -12,9 +12,14 @@ import net.minecraft.util.ResourceLocation;
 public class LayerDiamondGlow implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
+	private final String name;
 	public LayerDiamondGlow(RenderLivingBase<?> gemRendererIn) {
+		this(gemRendererIn, null);
+	}
+	public LayerDiamondGlow(RenderLivingBase<?> gemRendererIn, String name) {
 		this.gemRenderer = gemRendererIn;
 		this.gemModel = gemRendererIn.getMainModel();
+		this.name = name;
 	}
 	public void doRenderLayer(EntityGem entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		this.gemRenderer.bindTexture(this.getTexture(entitylivingbaseIn));
@@ -33,13 +38,16 @@ public class LayerDiamondGlow implements LayerRenderer<EntityGem> {
 		return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/glow.png");
 	}
 	public String getName(EntityGem gem) {
-		ResourceLocation loc = EntityList.getKey(gem);
-		if (loc.getResourceDomain().equals("kagic")) {
-	        return loc.getResourcePath().replaceFirst("kagic.", "");
+		if (this.name == null) {
+			ResourceLocation loc = EntityList.getKey(gem);
+			if (loc.getResourceDomain().equals("kagic")) {
+		        return loc.getResourcePath().replaceFirst("kagic.", "");
+			}
+			else {
+		        return loc.getResourcePath();
+			}
 		}
-		else {
-	        return loc.getResourcePath();
-		}
+		return this.name;
 	}
 	public boolean shouldCombineTextures() {
 		return false;

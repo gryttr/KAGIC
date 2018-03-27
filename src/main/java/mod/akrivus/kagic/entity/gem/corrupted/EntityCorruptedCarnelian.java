@@ -56,9 +56,9 @@ public class EntityCorruptedCarnelian extends EntityCorruptedGem {
 	 * Methods related to rendering.						 *
 	 *********************************************************/
 	@Override
-	public float[] getGemColor() {
-		return new float[] { 1F, 45F / 255F, 93F / 255F };
-	}
+	protected int generateGemColor() {
+    	return 0xFF2D5D;
+    }
 	
 	@Override
 	protected int generateSkinColor() {

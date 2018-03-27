@@ -12,10 +12,10 @@ import net.minecraft.item.EnumDyeColor;
 
 public class LayerPearlHair implements LayerRenderer<EntityPearl> {
 	private static final float OFFSET = .5f;
-	private final RenderPearl pearlRenderer;
+	private final RenderGemBase pearlRenderer;
 	private final ModelPearl pearlModel = new ModelPearl();
 
-	public LayerPearlHair(RenderPearl pearlRendererIn) {
+	public LayerPearlHair(RenderGemBase pearlRendererIn) {
 		this.pearlRenderer = pearlRendererIn;
 	}
 	

@@ -5,49 +5,37 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
-import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
-import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
-import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIProtectionFuse;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
-import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.entity.gem.fusion.EntityMalachite;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -327,26 +315,26 @@ public class EntityJasper extends EntityQuartzSoldier {
 		this.dataManager.register(MARK_2, 0);
 	}
 
-	public float[] getGemColor() {
+	protected int generateGemColor() {
 		switch (this.getSpecial()) {
 		case 1:
-			return new float[] { 88F / 255F, 211F / 255F, 207F / 255F };
+			return 0x58D3CF;
 		case 2:
-			return new float[] { 212F / 255F, 135F / 255F, 104F / 255F };
+			return 0xD48768;
 		case 3:
-			return new float[] { 186F / 255F, 209F / 255F, 181F / 255F };
+			return 0xBAD1B5;
 		case 4:
-			return new float[] { 255F / 255F, 197F / 255F, 131F / 255F };
+			return 0xFFC583;
 		case 5:
-			return new float[] { 215F / 255F, 163F / 255F, 230F / 255F };
+			return 0xD7A3E6;
 		case 6:
-			return new float[] { 199F / 255F, 136F / 255F, 115F / 255F };
+			return 0xC78873;
 		case 7:
-			return new float[] { 243F / 255F, 242F / 255F, 249F / 255F };
+			return 0xF3F2F9;
 		case 8:
-			return new float[] { 176F / 255F, 46F / 255F, 38F / 255F };
+			return 0xB02E26;
 		default:
-			return new float[] { 255F / 255F, 63F / 255F, 1F / 255F };
+			return 0xFF3F01;
 		}
 	}
 	public void convertGems(int placement) {
@@ -437,49 +425,41 @@ public class EntityJasper extends EntityQuartzSoldier {
 			biomeSpecial = 7;
 		}
 		special = KAGIC.isChristmas() ? 8 : this.rand.nextFloat() < 0.9 ? biomeSpecial : special;
-		if (special == 0) {
-			this.nativeColor = 1;
-		} else if (special == 1) {
-			this.nativeColor = 9;
-		} else if (special == 2) {
-			this.nativeColor = 12;
-		} else if (special == 3) {
-			this.nativeColor = 13;
-		} else if (special == 4) {
-			this.nativeColor = 12;
-		} else if (special == 5) {
-			this.nativeColor = 10;
-		} else if (special == 6) {
-			this.nativeColor = 14;
-		} else if (special == 7) {
-			this.nativeColor = 8;
-		} else if (special == 8) {
-			this.nativeColor = 4;
-		}
-		this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", special)).getUnformattedComponentText());
-		this.setSpecial(special);
-		this.setMark1(this.generateMark1());
-		this.setMark1Color(this.generateMark1Color());
-		if (this.hasSecondMarking()) {
-			this.setMark2(this.generateMark2());
-			this.setMark2Color(this.generateMark2Color());
-		}
+		this.itemDataToGemData(special);
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
 	
 	@Override
 	public void itemDataToGemData(int data) {
+		if (data == 0) {
+			this.nativeColor = 1;
+		} else if (data == 1) {
+			this.nativeColor = 9;
+		} else if (data == 2) {
+			this.nativeColor = 12;
+		} else if (data == 3) {
+			this.nativeColor = 13;
+		} else if (data == 4) {
+			this.nativeColor = 12;
+		} else if (data == 5) {
+			this.nativeColor = 10;
+		} else if (data == 6) {
+			this.nativeColor = 14;
+		} else if (data == 7) {
+			this.nativeColor = 8;
+		} else if (data == 8) {
+			this.nativeColor = 4;
+		}
 		this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.jasper_%1$d.name", data)).getUnformattedComponentText());
 		this.setSpecial(data);
-		this.setNewCutPlacement();
 		this.setMark1(this.generateMark1());
 		this.setMark1Color(this.generateMark1Color());
+		this.setUniformColor(this.nativeColor);
+		this.setGemColor(this.generateGemColor());
 		if (this.hasSecondMarking()) {
 			this.setMark2(this.generateMark2());
 			this.setMark2Color(this.generateMark2Color());
 		}
-		this.setSkinColor(this.generateSkinColor());
-		this.setHairColor(this.generateHairColor());
 	}
 	
 	@Override

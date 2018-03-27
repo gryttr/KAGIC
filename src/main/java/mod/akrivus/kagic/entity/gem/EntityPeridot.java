@@ -13,15 +13,16 @@ import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIHarvestFarmland;
 import mod.akrivus.kagic.entity.ai.EntityAIMineOresBySight;
 import mod.akrivus.kagic.entity.ai.EntityAIPickUpItems;
-import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.akrivus.kagic.util.injector.InjectorResult;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -32,6 +33,7 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIOpenDoor;
+import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
@@ -120,7 +122,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		this.tasks.addTask(5, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
-		this.tasks.addTask(7, new EntityAIStandGuard(this, 0.6D));
+		this.tasks.addTask(7, new EntityAIWander(this, 0.6D));
 		this.tasks.addTask(8, new EntityAILookIdle(this));
 		
 		// Apply target AI.
@@ -136,8 +138,8 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	}
 	
 	@Override
-	public float[] getGemColor() {
-		return new float[] { 47F / 255F, 248F / 255F, 42F / 255F };
+	protected int generateGemColor() {
+		return 0x2FF82A;
 	}
 		
 	@Override
@@ -343,27 +345,6 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		}
 		return super.processInteract(player, hand);
 	}
-	
-	@Override
-	public boolean onSpokenTo(EntityPlayer player, String message) {
-		boolean spokenTo = super.onSpokenTo(player, message);
-		message = message.toLowerCase();
-		if (this.isBeingCalledBy(player, message)) {
-			this.getLookHelper().setLookPositionWithEntity(player, 30.0F, 30.0F);
-			if (this.isOwner(player)) {
-				if (this.isMatching("regex.kagic.harvest", message)) {
-					for (int i = 0; i < this.harvest.getSizeInventory(); ++i) {
-						if (player.inventory.getFirstEmptyStack() > -1) {
-							player.inventory.addItemStackToInventory(this.harvest.getStackInSlot(i));
-						}
-					}
-				}
-				this.playObeySound();
-			}
-		}
-		return spokenTo;
-	}
-	
 	public void checkSurroundings(World worldIn, BlockPos pos) {
 		if (!worldIn.isRemote) {
 			InjectorResult result = ((this.lastCheckPos != null && this.getDistanceSq(this.lastCheckPos) > 32.0F) || this.lastCheckPos == null || this.world.getTotalWorldTime() - this.lastCheckTime > 2400) ? InjectorResult.create(worldIn, pos, false) : this.lastResult;

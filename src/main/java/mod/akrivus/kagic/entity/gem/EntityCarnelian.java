@@ -15,8 +15,10 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -135,8 +137,8 @@ public class EntityCarnelian extends EntityQuartzSoldier {
         this.dataManager.register(CHARGED, false);
 	}
 
-	public float[] getGemColor() {
-    	return new float[] { 1F, 45F / 255F, 93F / 255F };
+	protected int generateGemColor() {
+    	return 0xFF2D5D;
     }
 	public void convertGems(int placement) {
     	this.setGemCut(GemCuts.FACETED.id);

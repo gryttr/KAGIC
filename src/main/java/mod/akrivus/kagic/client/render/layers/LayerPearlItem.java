@@ -18,7 +18,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class LayerPearlItem implements LayerRenderer<EntityLivingBase> {
 	protected final RenderGemBase livingEntityRenderer;
 	
-	public LayerPearlItem(RenderPearl renderPearl) {
+	public LayerPearlItem(RenderGemBase renderPearl) {
 		this.livingEntityRenderer = renderPearl;
 	}
 	

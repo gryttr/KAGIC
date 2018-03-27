@@ -48,7 +48,6 @@ import mod.heimrarnadalr.kagic.worlddata.WorldDataWarpPad;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.IEntityOwnable;
@@ -73,6 +72,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -102,7 +102,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.DyeUtils;
 
-public class EntityGem extends EntityCreature implements IEntityOwnable, IRangedAttackMob, IEntityAdditionalSpawnData {
+public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IRangedAttackMob, IEntityAdditionalSpawnData {
 	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityGem.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 	protected static final DataParameter<Boolean> SELECTED = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
 	protected static final DataParameter<Boolean> SWINGING_ARMS = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
@@ -111,6 +111,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	protected static final DataParameter<Integer> UNIFORM_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
 	protected static final DataParameter<Integer> SKIN_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
 	protected static final DataParameter<Integer> HAIR_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
+	protected static final DataParameter<Integer> GEM_COLOR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
 	protected static final DataParameter<Integer> HAIR = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
 	protected static final DataParameter<Integer> GEM_CUT = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
 	protected static final DataParameter<Integer> GEM_PLACEMENT = EntityDataManager.<Integer>createKey(EntityGem.class, DataSerializers.VARINT);
@@ -161,9 +162,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	public boolean followingGem = false;
 	private UUID leader = null;
 	private BlockPos restPosition;
-	
-	public HashMap<String, Integer> crystalQueue = new HashMap<String, Integer>();
-	
+
 	public ItemGem droppedGemItem;
 	public ItemGem droppedCrackedGemItem;
 	public int fallbackServitude = -1;
@@ -212,6 +211,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.dataManager.register(UNIFORM_COLOR, 12);
 		this.dataManager.register(SKIN_COLOR, 0);
 		this.dataManager.register(HAIR_COLOR, 0);
+		this.dataManager.register(GEM_COLOR, 0);
 		this.dataManager.register(HAIR, 0);
 		this.dataManager.register(SWINGING_ARMS, false);
 		this.dataManager.register(DEFECTIVE, false);
@@ -235,6 +235,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		compound.setInteger("skinColor", this.getSkinColor());
 		compound.setInteger("hair", this.getHairStyle());
 		compound.setInteger("hairColor", this.getHairColor());
+		compound.setInteger("gemColor", this.getGemColor());
 		compound.setBoolean("defective", this.isDefective());
 		compound.setBoolean("primary", this.isPrimary());
 		compound.setInteger("special", this.getSpecial());
@@ -337,6 +338,13 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		}
 
 		this.setHairStyle(compound.getInteger("hair"));
+		
+		if (compound.hasKey("gemColor")) {
+			this.setGemColor(compound.getInteger("gemColor"));
+		}
+		else {
+			this.setGemColor(this.generateGemColor());
+		}
 		
 		this.setDefective(compound.getBoolean("defective"));
 		if (this.isDefective()) {
@@ -443,6 +451,7 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		this.setSkinColor(this.generateSkinColor());
 		this.setHairStyle(this.generateHairStyle());
 		this.setHairColor(this.generateHairColor());
+		this.setGemColor(this.generateGemColor());
 		this.applyGemPlacementBuffs(true);
 		this.setHasVisor(this.rand.nextInt(visorChanceReciprocal) == 0);
 		this.setDimensionOfCreation(this.dimension);
@@ -474,6 +483,10 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 	
 	protected int generateHairColor() {
 		return 0;
+	}
+	
+	protected int generateGemColor() {
+		return 0xFFFFFF;
 	}
 
 	public boolean canChangeInsigniaColorByDefault() {
@@ -538,7 +551,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
             }
         }
         this.world.profiler.endSection();
-        this.updateArmSwingProgress();
+        if (!(this instanceof EntityFusionGem)) {
+        	this.updateArmSwingProgress();
+        }
 		super.onLivingUpdate();
 	}
 	
@@ -640,6 +655,15 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 					if (this.isTamed()) {
 						if (this.isOwner(player)) {
 							this.setUniformColor(this.nativeColor);
+							return true;
+						}
+					}
+				}
+				else if (stack.getItem() == Items.BUCKET) {
+					if (this.isTamed()) {
+						if (this.isOwner(player)) {
+							this.entityDropItem(this.getHeldItemMainhand(), 0.0F);
+							this.setHeldItem(EnumHand.MAIN_HAND, stack);
 							return true;
 						}
 					}
@@ -899,6 +923,9 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 				else if (this.isSoldier) {
 					return super.processInteract(player, hand) || this.setAttackWeapon(player, hand, stack);
 				}
+				else if (this.isSneaking() && this.getHeldItemMainhand().getItem() instanceof ItemBucket) {
+					this.entityDropItem(this.getHeldItemMainhand(), 0.0F);
+				}
 			}
 			else {
 				ItemStack stack = player.getHeldItemOffhand();
@@ -909,6 +936,13 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 							if (!player.capabilities.isCreativeMode) {
 								stack.shrink(1);
 							}
+						}
+					}
+				}
+				else if (stack.getItem() == ModItems.GEM_STAFF) {
+					if (this.isTamed()) {
+						if (this.isOwner(player) && player.isSneaking()) {
+							this.setSelected(!this.isSelected());
 						}
 					}
 				}
@@ -988,102 +1022,6 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 			this.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, heldItem);
 		}
 		this.setAttackAI();
-	}
-	
-	public boolean onSpokenTo(EntityPlayer player, String message) {
-		message = message.toLowerCase();
-		if (this.isBeingCalledBy(player, message)) {
-			this.getLookHelper().setLookPositionWithEntity(player, 30.0F, 30.0F);
-			if (this.isOwner(player)) {
-				if (this.isMatching("regex.kagic.follow", message)) {
-					if (this.isSitting()) {
-						this.isSitting = false;
-						this.restPosition = null;
-						return true;
-					}
-					return false;
-				}
-				else if (this.isMatching("regex.kagic.come", message)) {
-					this.setRestPosition(player.getPosition());
-					this.getNavigator().tryMoveToEntityLiving(player, 1.0F);
-					return true;
-				}
-				else if (this.isMatching("regex.kagic.stop", message)) {
-					this.getNavigator().clearPath();
-					if (!this.isSitting()) {
-						this.isSitting = true;
-						this.restPosition = this.getPosition();
-						this.setLeader(player);
-					}
-					return true;
-				} else if (this.isMatching("regex.kagic.warp", message)) {
-					ArrayList<String> args = this.getArgsFrom("regex.kagic.warp", message);
-					if (args.size() > 0) {
-						this.warp(player, args.get(0));
-					}
-				} else if (this.isSoldier) {
-					if (this.isMatching("regex.kagic.kill", message)) {
-						ArrayList<String> args = this.getArgsFrom("regex.kagic.kill", message);
-						if (args.size() > 0) {
-							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
-							double distance = Double.MAX_VALUE;
-							for (EntityLivingBase base : list) {
-								double newDistance = this.getDistanceSq(base);
-								if (newDistance <= distance && base.getName().toLowerCase().contains(args.get(0)) && this.shouldAttackEntity(this, base)) {
-									this.setRevengeTarget(base);
-									distance = newDistance;
-								}
-							}
-						}
-						return this.getRevengeTarget() != null;
-					}
-					else if (this.isMatching("regex.kagic.help", message)) {
-						ArrayList<String> args = this.getArgsFrom("regex.kagic.help", message);
-						if (args.size() > 0) {
-							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
-							double distance = Double.MAX_VALUE;
-							for (EntityLivingBase base : list) {
-								double newDistance = this.getDistanceSq(base);
-								if (newDistance <= distance && base.getName().toLowerCase().contains(args.get(0)) && this.shouldAttackEntity(this, base)) {
-									this.getNavigator().tryMoveToEntityLiving(base, 1.0);
-									this.setRevengeTarget(base.getRevengeTarget());
-									distance = newDistance;
-								}
-							}
-						}
-						return this.getRevengeTarget() != null;
-					}
-					else if (this.isMatching("regex.kagic.retreat", message)) {
-						boolean retreated = this.getAttackTarget() != null;
-						this.setAttackTarget(null);
-						return retreated;
-					}
-				}
-			}
-		}
-		return false;
-	}
-	
-	public ArrayList<String> getArgsFrom(String key, String message) {
-		Matcher matcher = Pattern.compile(new TextComponentTranslation(key).getUnformattedComponentText()).matcher(message);
-		ArrayList<String> results = new ArrayList<String>();
-		if (matcher.find()) {
-			MatchResult matches = matcher.toMatchResult();
-			for (int i = 1; i < matches.groupCount(); ++i) {
-				if (matches.group(i) != null) {
-					results.add(matches.group(i));
-				}
-			}
-		}
-		return results;
-	}
-	
-	public boolean isMatching(String key, String message) {
-		return Pattern.compile(new TextComponentTranslation(key).getUnformattedComponentText()).matcher(message).find();
-	}
-	
-	public boolean isBeingCalledBy(EntityPlayer player, String message) {
-		return message.contains(this.getName().toLowerCase()) || message.contains(new TextComponentTranslation(this.getEntityString().replaceFirst("kagic:", "entity.") + ".name.plural").getUnformattedComponentText().toLowerCase()) || message.contains(new TextComponentTranslation("entity.kagic.gem.name.plural").getFormattedText().toLowerCase()) || this.isPlayerLookingAt(player);
 	}
 	
 	public boolean isPlayerLookingAt(EntityPlayer player) {
@@ -1210,11 +1148,20 @@ public class EntityGem extends EntityCreature implements IEntityOwnable, IRanged
 		else if (stack.getItem() == Items.LEAD) {
 			return true;
 		}
+		else if (stack.getItem() == Items.WATER_BUCKET) {
+			return true;
+		}
+		else if (stack.getItem() == Items.BUCKET) {
+			return true;
+		}
 		return false;
 	}
 	
-	public float[] getGemColor() {
-		return new float[] { 1, 1, 1 };
+	public int getGemColor() {
+		return this.dataManager.get(GEM_COLOR);
+	}
+	public void setGemColor(int color) {
+		this.dataManager.set(GEM_COLOR, color);
 	}
 	
 	public void setCutPlacement(GemCuts cut, GemPlacements placement) {

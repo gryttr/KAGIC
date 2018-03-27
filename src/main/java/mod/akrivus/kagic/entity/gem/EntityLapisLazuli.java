@@ -17,9 +17,11 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.entity.ai.EntityAITillFarmland;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -129,8 +131,8 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
 	}
 
 	@Override
-	public float[] getGemColor() {
-    	return new float[] { 30F / 255F, 143F / 255F, 244F / 255F };
+	protected int generateGemColor() {
+    	return 0x1E8FF4;
     }
 
 	@Override
@@ -460,6 +462,24 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
     protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) {
 		if (!this.isBeingRidden()) {
 			super.updateFallState(y, onGroundIn, state, pos);
+			if (this.isTamed()) {
+				if (!this.world.isRemote) {
+					List<EntityPlayer> list = this.world.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().grow(2.0D, 2.0D, 2.0D));
+					for (EntityPlayer entity : list) {
+						if (this.isOwnedBy(entity)) {
+							int blocksThatAreAir = 0;
+							for (int i = -4; i < 0; ++i) {
+								if (this.world.isAirBlock(entity.getPosition().add(0, i, 0))) {
+									++blocksThatAreAir;
+								}
+							}
+							if (blocksThatAreAir == 4) {
+								entity.startRiding(this);
+							}
+						}
+			        }
+				}
+			}
 		}
 	}
 	

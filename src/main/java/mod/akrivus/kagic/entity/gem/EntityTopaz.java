@@ -15,8 +15,10 @@ import mod.akrivus.kagic.entity.ai.EntityAITopazFuse;
 import mod.akrivus.kagic.entity.ai.EntityAITopazTarget;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -109,14 +111,14 @@ public class EntityTopaz extends EntityGem {
 		this.dataManager.register(HOLDING, false);
 	}
 
-	public float[] getGemColor() {
+	protected int generateGemColor() {
 		if (this.getSpecial() == 1) {
-			return new float[] { 93F / 255F, 115F / 255F, 255F / 255F };
+			return 0x5D73FF;
 		}
 		else if (this.getSpecial() == 2) {
-			return new float[] { 72F / 255F, 218F / 255F, 168F / 255F };
+			return 0x48DAA8;
 		}
-    	return new float[] { 250F / 255F, 255F / 255F, 93F / 255F };
+    	return 0xFAFF5D;
     }
 	public String getColor() {
 		switch (this.getSpecial()) {
@@ -154,12 +156,7 @@ public class EntityTopaz extends EntityGem {
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
     	this.setSpecial(this.rand.nextInt(7) == 0 ? 1 : 0);
-    	if (this.getSpecial() == 1) {
-    		this.nativeColor = 11;
-    	}
-    	else {
-    		this.nativeColor = 14;
-    	}
+    	this.itemDataToGemData(this.getSpecial());
 		return super.onInitialSpawn(difficulty, livingdata);
     }
     public void itemDataToGemData(int data) {
@@ -167,7 +164,12 @@ public class EntityTopaz extends EntityGem {
         this.setSkinColor(this.generateSkinColor());
 		this.setHairStyle(this.generateHairStyle());
 		this.setHairColor(this.generateHairColor());
-		this.nativeColor = 11;
+		if (this.getSpecial() == 1) {
+    		this.nativeColor = 11;
+    	}
+    	else {
+    		this.nativeColor = 14;
+    	}
 	}
     /*********************************************************
      * Methods related to entity interaction.                *
@@ -205,31 +207,6 @@ public class EntityTopaz extends EntityGem {
     		this.wantsToFuse = true;
     	}
     	return true;
-    }
-    
-    @Override
-    public boolean onSpokenTo(EntityPlayer player, String message) {
-    	boolean spokenTo = super.onSpokenTo(player, message);
-    	if (!spokenTo) {
-    		message = message.toLowerCase();
-    		if (this.isBeingCalledBy(player, message)) {
-    			this.getLookHelper().setLookPositionWithEntity(player, 30.0F, 30.0F);
-    			if (this.isOwner(player)) {
-    				if (this.isMatching("regex.kagic.fuse", message)) {
-    					this.wantsToFuse = true;
-    					return true;
-    				}
-    				else if (this.isMatching("regex.kagic.unfuse", message)) {
-    					this.wantsToFuse = false;
-    					if (this.isFusion()) {
-    						this.unfuse();
-    					}
-    					return true;
-    				}
-    			}
-    		}
-    	}
-    	return spokenTo;
     }
     
     public void whenFused() {

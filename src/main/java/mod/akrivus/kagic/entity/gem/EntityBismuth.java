@@ -12,8 +12,10 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModEnchantments;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -26,10 +28,17 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAIRestrictOpenDoor;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.IInventoryChangedListener;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
@@ -37,8 +46,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class EntityBismuth extends EntityGem {
+public class EntityBismuth extends EntityGem implements IInventoryChangedListener {
 	public static final HashMap<IBlockState, Double> BISMUTH_YIELDS = new HashMap<IBlockState, Double>();
 	public static final double BISMUTH_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double BISMUTH_DEPTH_THRESHOLD = 0;
@@ -47,10 +57,14 @@ public class EntityBismuth extends EntityGem {
 	private static final int SKIN_COLOR_BEGIN = 0x91A8CF; 
 	private static final int SKIN_COLOR_END = 0x503243; 
 	
+	public InventoryBasic gemStorage;
+	public InvWrapper gemStorageHandler;
+	
 	public EntityBismuth(World worldIn) {
 		super(worldIn);
 		this.nativeColor = 10;
 		this.isImmuneToFire = true;
+		this.initGemStorage();
 		this.setSize(0.9F, 2.3F);
 		
 		//Define valid gem cuts and placements
@@ -98,6 +112,30 @@ public class EntityBismuth extends EntityGem {
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
 		return super.onInitialSpawn(difficulty, livingdata);
     }
+	public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        NBTTagList nbttaglist = new NBTTagList();
+        for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
+            ItemStack itemstack = this.gemStorage.getStackInSlot(i);
+            NBTTagCompound nbttagcompound = new NBTTagCompound();
+            nbttagcompound.setByte("slot", (byte)i);
+            itemstack.writeToNBT(nbttagcompound);
+            nbttaglist.appendTag(nbttagcompound);
+        }
+        compound.setTag("items", nbttaglist);
+	}
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+        NBTTagList nbttaglist = compound.getTagList("items", 10);
+        this.initGemStorage();
+        for (int i = 0; i < nbttaglist.tagCount(); ++i) {
+            NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
+            int j = nbttagcompound.getByte("slot") & 255;
+            if (j >= 0 && j < this.gemStorage.getSizeInventory()) {
+                this.gemStorage.setInventorySlotContents(j, new ItemStack(nbttagcompound));
+            }
+        }
+    }
 	
 	/*********************************************************
      * Methods related to entity interaction.                *
@@ -111,6 +149,11 @@ public class EntityBismuth extends EntityGem {
 					if (this.isOwner(player)) {
 						if (this.isCoreItem(stack)) {
 							return super.processInteract(player, hand);
+						}
+						else if (this.isSneaking() && !this.isDefective()) {
+		            		this.openGUI(player);
+		            		this.playObeySound();
+		            		return true;
 						}
 						else if (stack.isItemStackDamageable() && !this.isDefective()) {
 							if (stack.isItemDamaged()) {
@@ -160,10 +203,55 @@ public class EntityBismuth extends EntityGem {
 		}
 		return super.processInteract(player, hand);
     }
+	public void onInventoryChanged(IInventory inventory) {
+		ItemStack firstItem = this.gemStorage.getStackInSlot(0);
+		this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, firstItem);
+		/*if (firstItem.getItem() instanceof ItemSword) {
+			if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
+            	this.getOwner().addStat(ModAchievements.RENEGADE_PEARL);
+            }
+		}*/
+	}
+	protected void updateEquipmentIfNeeded(EntityItem itementity) {
+        ItemStack itemstack = itementity.getItem();
+        ItemStack itemstack1 = this.gemStorage.addItem(itemstack);
+        if (itemstack1.isEmpty()) {
+            itementity.setDead();
+        }
+        else {
+            itemstack.setCount(itemstack1.getCount());
+        }
+    }
+	public boolean canPickUpItem(Item itemIn) {
+		return true;
+	}
+	public InventoryBasic getInventory() {
+		return this.gemStorage;
+	}
 	
 	public ItemStack smeltItem(ItemStack stack) {
 		ItemStack result = FurnaceRecipes.instance().getSmeltingResult(stack).copy();
 		return result;
+    }
+	private void initGemStorage() {
+        InventoryBasic gemstorage = this.gemStorage;
+        this.gemStorage = new InventoryBasic("gemStorage", false, 36);
+        if (gemstorage != null) {
+            gemstorage.removeInventoryChangeListener(this);
+            for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
+                ItemStack itemstack = gemstorage.getStackInSlot(i);
+                this.gemStorage.setInventorySlotContents(i, itemstack.copy());
+            }
+        }
+        this.gemStorage.addInventoryChangeListener(this);
+        this.gemStorageHandler = new InvWrapper(this.gemStorage);
+        this.setCanPickUpLoot(this.isTamed());
+    }
+	public void openGUI(EntityPlayer playerEntity) {
+        if (!this.world.isRemote && this.isTamed()) {
+            this.gemStorage.setCustomName(this.getName());
+            playerEntity.displayGUIChest(this.gemStorage);
+        }
     }
 	
 	@Override

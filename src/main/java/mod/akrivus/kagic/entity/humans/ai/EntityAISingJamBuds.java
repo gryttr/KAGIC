@@ -1,4 +1,4 @@
-package mod.akrivus.kagic.entity.ai;
+package mod.akrivus.kagic.entity.humans.ai;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class EntityAISingJamBuds extends EntityAIBase {
 		this.connie.silent = true;
 		this.lastSongTime = this.steven.world.getWorldTime();
 		if (this.steven.ticksExisted % 20 == 0) {
-			this.steven.playSound(ModSounds.JAM_BUD_SONG_PARTS[this.step], 8.0F, 1.0F);
+			this.steven.playSound(ModSounds.JAM_BUDS_SONG_PARTS[this.step], 8.0F, 1.0F);
 			++this.step;
 		}
 	}

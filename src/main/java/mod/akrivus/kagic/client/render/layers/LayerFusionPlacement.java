@@ -21,8 +21,11 @@ public class LayerFusionPlacement implements LayerRenderer<EntityGem> {
 			String[] placements = gem.getFusionPlacements().split(" ");
 			for (String placement : placements) {
 				this.gemRenderer.bindTexture(this.getTexture(gem, placement));
-				float[] colors = gem.getGemColor();
-				GlStateManager.color(colors[0], colors[1], colors[2]);
+				int color = gem.getGemColor();
+				float r = (float) ((color & 16711680) >> 16) / 255f;
+		        float g = (float) ((color & 65280) >> 8) / 255f;
+		        float b = (float) ((color & 255) >> 0) / 255f;
+				GlStateManager.color(r, g, b);
 				this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());
 		        this.gemModel.render(gem, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 			}
