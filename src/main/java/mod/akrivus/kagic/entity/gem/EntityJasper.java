@@ -28,6 +28,7 @@ import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
@@ -48,7 +49,7 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityJasper extends EntityQuartzSoldier {
+public class EntityJasper extends EntityQuartzSoldier implements IAnimals {
 	public static final HashMap<IBlockState, Double> JASPER_YIELDS = new HashMap<IBlockState, Double>();
 	public static final double JASPER_DEFECTIVITY_MULTIPLIER = 1.25;
 	public static final double JASPER_DEPTH_THRESHOLD = 128;

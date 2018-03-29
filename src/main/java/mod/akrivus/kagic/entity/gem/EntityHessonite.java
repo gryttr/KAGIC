@@ -32,6 +32,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -48,7 +49,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class EntityHessonite extends EntityGem {
+public class EntityHessonite extends EntityGem implements IAnimals {
 	public static final HashMap<IBlockState, Double> HESSONITE_YIELDS = new HashMap<IBlockState, Double>();
 	public static final double HESSONITE_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double HESSONITE_DEPTH_THRESHOLD = 32;

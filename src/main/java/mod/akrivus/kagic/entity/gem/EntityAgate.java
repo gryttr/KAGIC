@@ -11,11 +11,10 @@ import mod.akrivus.kagic.entity.ai.EntityAISitStill;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
-import mod.akrivus.kagic.skills.SkillBase;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -28,7 +27,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
-public class EntityAgate extends EntityQuartzSoldier {
+public class EntityAgate extends EntityQuartzSoldier implements IAnimals {
 	public static final HashMap<IBlockState, Double> AGATE_YIELDS = new HashMap<IBlockState, Double>();
 	public static final double AGATE_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double AGATE_DEPTH_THRESHOLD = 64;

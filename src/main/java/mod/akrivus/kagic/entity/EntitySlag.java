@@ -15,6 +15,7 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -33,7 +34,7 @@ import net.minecraft.world.BossInfoServer;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
-public class EntitySlag extends EntityMob {
+public class EntitySlag extends EntityMob implements IMob {
 	protected static final DataParameter<Integer> COUNT = EntityDataManager.<Integer>createKey(EntitySlag.class, DataSerializers.VARINT);
 	protected static final DataParameter<Integer> VARIANT = EntityDataManager.<Integer>createKey(EntitySlag.class, DataSerializers.VARINT);
 	private BossInfoServer healthBar = new BossInfoServer(new TextComponentTranslation("entity.kagic.slag.super"), BossInfo.Color.GREEN, BossInfo.Overlay.PROGRESS);

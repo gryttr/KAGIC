@@ -17,14 +17,13 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.entity.ai.EntityAITillFarmland;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
-import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.BlockFarmland;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.INpc;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -65,7 +64,7 @@ import net.minecraft.world.storage.loot.LootTable;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class EntityLapisLazuli extends EntityGem implements IInventoryChangedListener {
+public class EntityLapisLazuli extends EntityGem implements IInventoryChangedListener, INpc {
 	public static final HashMap<IBlockState, Double> LAPIS_LAZULI_YIELDS = new HashMap<IBlockState, Double>();
 	public static final double LAPIS_LAZULI_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double LAPIS_LAZULI_DEPTH_THRESHOLD = 72;

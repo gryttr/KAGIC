@@ -52,6 +52,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ModEvents {
@@ -59,24 +60,21 @@ public class ModEvents {
 		MinecraftForge.EVENT_BUS.register(new ModEvents());
 	}
 	@SubscribeEvent
-	public void onEntitySpawn(EntityJoinWorldEvent e) {
-		if (e.getEntity() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) e.getEntity();
-			if (e.getEntity().world.isRemote) {
-				if (KAGIC.DEVELOPER) {
-					player.sendMessage(new TextComponentString("You are playing KAGIC " + KAGIC.VERSION + " in DEVELOPER mode."));
-					player.sendMessage(new TextComponentString("Note that some features may be removed!"));
-				}
-				else if (ModConfigs.notifyOnUpdates) {
-					Update result = ModMetrics.checkForUpdates();
-					if (result != null && !KAGIC.VERSION.equals(result.getNewVersion())) {
-						player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§cKAGIC v" + result.getNewVersion() + " is out for Minecraft " + KAGIC.MCVERSION + "§f\"}]"));
-						player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§e§nDownload§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDownloadLink() + "\"}}, {\"text\":\" | \"}, {\"text\":\"§3§nDiscord§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDiscordLink() + "\"}}]"));
-					}
-				}
-				//player.addStat(ModAchievements.INSTALLED_KAGIC);
+	public void onPlayerLoggedIn(PlayerLoggedInEvent e) {
+		if (KAGIC.DEVELOPER) {
+			e.player.sendMessage(new TextComponentString("You are playing KAGIC " + KAGIC.VERSION + " in DEVELOPER mode."));
+			e.player.sendMessage(new TextComponentString("Note that some features may be removed!"));
+		}
+		else if (ModConfigs.notifyOnUpdates) {
+			Update result = ModMetrics.checkForUpdates();
+			if (result != null && !KAGIC.VERSION.equals(result.getNewVersion())) {
+				e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§cKAGIC v" + result.getNewVersion() + " is out for Minecraft " + KAGIC.MCVERSION + "§f\"}]"));
+				e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§e§nDownload§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDownloadLink() + "\"}}, {\"text\":\" | \"}, {\"text\":\"§3§nDiscord§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDiscordLink() + "\"}}]"));
 			}
 		}
+	}
+	@SubscribeEvent
+	public void onEntitySpawn(EntityJoinWorldEvent e) {
 		if (e.getEntity() instanceof EntityPadparadscha) {
 			EntityPadparadscha paddy = (EntityPadparadscha) e.getEntity();
 			e.getWorld().spawnEntity(EntitySapphire.convertFrom(paddy));

@@ -16,11 +16,10 @@ import mod.akrivus.kagic.entity.ai.EntityAISitStill;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
-import mod.akrivus.kagic.skills.SkillBase;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.INpc;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -55,7 +54,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.oredict.DyeUtils;
 
-public class EntityPearl extends EntityGem implements IInventoryChangedListener {
+public class EntityPearl extends EntityGem implements IInventoryChangedListener, INpc {
 	public static final HashMap<IBlockState, Double> PEARL_YIELDS = new HashMap<IBlockState, Double>();
 	public static final double PEARL_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double PEARL_DEPTH_THRESHOLD = 0;
@@ -226,7 +225,6 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
     	else {
     		this.setHairColor(this.getColor());
     	}
-    	this.pitch = 1.0F + this.rand.nextFloat();
     	this.nativeColor = this.getColor();
         return livingdata;
     }
@@ -589,19 +587,19 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 		// 5 = whole rest
 		switch (tone) {
 		case 0:
-			this.playSound(sound, 2.0F, this.pitch * 1.0F);
+			this.playSound(sound, 20.0F, this.pitch * 1.0F);
 		case 5:
 			return 5;
 		case 1:
-			this.playSound(sound, 2.0F, this.pitch * 1.5F);
+			this.playSound(sound, 20.0F, this.pitch * 1.5F);
 		case 6:
 			return 4;
 		case 2:
-			this.playSound(sound, 2.0F, this.pitch * 2.0F);
+			this.playSound(sound, 20.0F, this.pitch * 2.0F);
 		case 7:
 			return 3;
 		case 3:
-			this.playSound(sound, 2.0F, this.pitch * 2.5F);
+			this.playSound(sound, 20.0F, this.pitch * 2.5F);
 		case 8:
 			return 2;
 		case 4:

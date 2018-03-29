@@ -14,6 +14,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.INpc;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -56,7 +57,7 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class EntitySteven extends EntityCreature implements IInventoryChangedListener {
+public class EntitySteven extends EntityCreature implements IInventoryChangedListener, INpc {
 	private static final DataParameter<Boolean> BACKPACKED = EntityDataManager.<Boolean>createKey(EntitySteven.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<Boolean> WRISTBAND = EntityDataManager.<Boolean>createKey(EntitySteven.class, DataSerializers.BOOLEAN);
 	public InventoryBasic backpack;

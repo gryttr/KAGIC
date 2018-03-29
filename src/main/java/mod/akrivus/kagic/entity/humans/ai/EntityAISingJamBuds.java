@@ -42,7 +42,7 @@ public class EntityAISingJamBuds extends EntityAIBase {
 				}
 			}
 		}
-		return noteblockNearby && this.steven.world.getWorldTime() - this.lastSongTime > 24000 && this.connie != null && this.steven.getDistanceSq(this.connie) < 8;
+		return noteblockNearby && this.connie != null && this.steven.getDistanceSq(this.connie) < 8;
 	}
 
 	@Override

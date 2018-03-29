@@ -42,6 +42,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Blocks;
@@ -69,7 +70,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
-public class EntityRuby extends EntityGem {
+public class EntityRuby extends EntityGem implements IAnimals {
 	public static final HashMap<IBlockState, Double> RUBY_YIELDS = new HashMap<IBlockState, Double>();
 	public static final double RUBY_DEFECTIVITY_MULTIPLIER = 0.75;
 	public static final double RUBY_DEPTH_THRESHOLD = 0;

@@ -15,6 +15,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.INpc;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -59,7 +60,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class EntityConnie extends EntityCreature implements IInventoryChangedListener {
+public class EntityConnie extends EntityCreature implements IInventoryChangedListener, INpc {
 	private static final DataParameter<Boolean> BACKPACKED = EntityDataManager.<Boolean>createKey(EntityConnie.class, DataSerializers.BOOLEAN);
 	private static final DataParameter<ItemStack> SHEATHED = EntityDataManager.<ItemStack>createKey(EntityConnie.class, DataSerializers.ITEM_STACK);
 	private static final DataParameter<Integer> CLOTHING = EntityDataManager.<Integer>createKey(EntityConnie.class, DataSerializers.VARINT);

@@ -27,6 +27,7 @@ import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.DamageSource;
@@ -37,7 +38,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityAquamarine extends EntityGem {
+public class EntityAquamarine extends EntityGem implements IAnimals {
 	public static final HashMap<IBlockState, Double> AQUAMARINE_YIELDS = new HashMap<IBlockState, Double>();
 	public static final double AQUAMARINE_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double AQUAMARINE_DEPTH_THRESHOLD = 0;

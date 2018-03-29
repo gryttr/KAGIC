@@ -509,8 +509,8 @@ command.kagic.gem_war=%1$s has been enlisted into the gem war.
 command.kagic.peace_treaty_by=%1$s has been retired from the gem war by %2$s.
 command.kagic.peace_treaty=%1$s has been retired from the gem war.
 
-command.kagic.peridot_find_gem=You'll find lots of high quality %1$s in this location.
-command.kagic.peridot_find_prime_gem=You'll find %1$s here, with %2$s defectivity.
+command.kagic.peridot_find_prime_gem=You'll find lots of high quality %1$s in this location.
+command.kagic.peridot_find_gem=You'll find %1$s here, with %2$s defectivity.
 command.kagic.peridot_cant_find_gem=You'll find nothing but slag here.
 command.kagic.peridot_harvest=Here are all the crops I've harvested.
 command.kagic.peridot_no_harvest=Sorry, I haven't harvested enough crop yet.

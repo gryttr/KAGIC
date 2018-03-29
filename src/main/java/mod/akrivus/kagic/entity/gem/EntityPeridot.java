@@ -17,14 +17,13 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
-import mod.akrivus.kagic.skills.SkillBase;
 import mod.akrivus.kagic.util.injector.InjectorResult;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.INpc;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -66,7 +65,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class EntityPeridot extends EntityGem implements IInventoryChangedListener {
+public class EntityPeridot extends EntityGem implements IInventoryChangedListener, INpc {
 	public static final HashMap<IBlockState, Double> PERIDOT_YIELDS = new HashMap<IBlockState, Double>();
 	public static final double PERIDOT_DEFECTIVITY_MULTIPLIER = 3;
 	public static final double PERIDOT_DEPTH_THRESHOLD = 72;
@@ -349,6 +348,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		if (!worldIn.isRemote) {
 			InjectorResult result = ((this.lastCheckPos != null && this.getDistanceSq(this.lastCheckPos) > 32.0F) || this.lastCheckPos == null || this.world.getTotalWorldTime() - this.lastCheckTime > 2400) ? InjectorResult.create(worldIn, pos, false) : this.lastResult;
 			String defectivity = Math.round(result.getDefectivity() * 100) + "%";
+			System.out.println("k: " + defectivity);
 			if (result.getGem() != null) {
 				if (result.isPrimary()) {
 					this.getOwner().sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_find_prime_gem", result.getName()).getUnformattedComponentText()));

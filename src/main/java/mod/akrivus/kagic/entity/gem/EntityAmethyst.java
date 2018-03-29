@@ -36,6 +36,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -59,7 +60,7 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityAmethyst extends EntityQuartzSoldier {
+public class EntityAmethyst extends EntityQuartzSoldier implements IAnimals {
 	public static final HashMap<IBlockState, Double> AMETHYST_YIELDS = new HashMap<IBlockState, Double>();
 	public static final double AMETHYST_DEFECTIVITY_MULTIPLIER = 1.5;
 	public static final double AMETHYST_DEPTH_THRESHHOLD = 72;

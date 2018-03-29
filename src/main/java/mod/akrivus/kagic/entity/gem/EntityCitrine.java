@@ -36,6 +36,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -59,7 +60,7 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityCitrine extends EntityQuartzSoldier {
+public class EntityCitrine extends EntityQuartzSoldier implements IAnimals {
 	public static final HashMap<IBlockState, Double> CITRINE_YIELDS = new HashMap<IBlockState, Double>();
 	public static final double CITRINE_DEFECTIVITY_MULTIPLIER = 2;
 	public static final double CITRINE_DEPTH_THRESHOLD = 64;

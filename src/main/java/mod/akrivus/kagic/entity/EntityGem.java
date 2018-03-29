@@ -1602,14 +1602,15 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 				// Gems don't need to breathe
 				return false;
 			}
+			else if (source == DamageSource.IN_WALL) {
+				this.jump();
+				return true;
+			}
 			else {
 				switch (this.dimensionOfCreation) {
 				case -1:
 					if (source.isExplosion() || source.isFireDamage()) {
 						return false;
-					}
-					else if (source == DamageSource.OUT_OF_WORLD) {
-						this.jump();
 					}
 					break;
 				case 1:
@@ -1618,7 +1619,6 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 					}
 					break;
 				}
-				
 				if (source.getTrueSource() instanceof EntityLivingBase) {
 					EntityLivingBase attacker = (EntityLivingBase) source.getTrueSource();
 					ItemStack heldItem = attacker.getHeldItemMainhand();
