@@ -52,7 +52,9 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
@@ -293,6 +295,28 @@ public class EntityRuby extends EntityGem implements IAnimals {
     	this.wantsToFuse = true;
     	super.alternateInteract(player);
     	return true;
+    }
+	@Override
+	public boolean processInteract(EntityPlayer player, EnumHand hand) {
+		if (!this.world.isRemote) {
+			if (hand == EnumHand.MAIN_HAND) {
+				if (this.isTamed() && this.isOwnedBy(player)) {
+					ItemStack stack = player.getHeldItemMainhand();
+					Item item = stack.getItem();
+					if (stack.getItem() == Items.BUCKET) {
+						this.entityDropItem(this.getHeldItemMainhand(), 0.0F);
+						this.setHeldItem(EnumHand.MAIN_HAND, stack);
+						return true;
+					}
+					else if (player.isSneaking() && this.getHeldItemMainhand().getItem() instanceof ItemBucket) {
+						this.entityDropItem(this.getHeldItemMainhand(), 0.0F);
+						this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+						return true;
+					}
+				}
+			}
+		}
+		return super.processInteract(player, hand);
     }
 	public boolean canFuseWith(EntityRuby other) {
 		if (this.canFuse() && other.canFuse() && this.getServitude() == other.getServitude() && this.getGemPlacement() != other.getGemPlacement()) {

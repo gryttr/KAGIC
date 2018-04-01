@@ -14,9 +14,11 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
@@ -66,7 +68,18 @@ public class EntityQuartzSoldier extends EntityGem {
 						}
 						this.playObeySound();
 						return true;
-					} else if (player.isSneaking() && stack.isEmpty()) {
+					}
+					else if (stack.getItem() == Items.BUCKET) {
+						this.entityDropItem(this.getHeldItemMainhand(), 0.0F);
+						this.setHeldItem(EnumHand.MAIN_HAND, stack);
+						return true;
+					}
+					else if (player.isSneaking() && this.getHeldItemMainhand().getItem() instanceof ItemBucket) {
+						this.entityDropItem(this.getHeldItemMainhand(), 0.0F);
+						this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+						return true;
+					}
+					else if (player.isSneaking() && stack.isEmpty()) {
 						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.HEAD), 2.3F);
 						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.CHEST), 1.7F);
 						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.LEGS), 1.0F);

@@ -658,15 +658,6 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 						}
 					}
 				}
-				else if (stack.getItem() == Items.BUCKET) {
-					if (this.isTamed()) {
-						if (this.isOwner(player)) {
-							this.entityDropItem(this.getHeldItemMainhand(), 0.0F);
-							this.setHeldItem(EnumHand.MAIN_HAND, stack);
-							return true;
-						}
-					}
-				}
 				else if (stack.getItem() == ModItems.TRANSFER_CONTRACT) {
 					if (this.isTamed()) {
 						if (this.isOwner(player)) {
@@ -921,9 +912,6 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 				}
 				else if (this.isSoldier) {
 					return super.processInteract(player, hand) || this.setAttackWeapon(player, hand, stack);
-				}
-				else if (this.isSneaking() && this.getHeldItemMainhand().getItem() instanceof ItemBucket) {
-					this.entityDropItem(this.getHeldItemMainhand(), 0.0F);
 				}
 			}
 			else {
