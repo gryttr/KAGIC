@@ -1,0 +1,43 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "textures": {
+            "front": "kagic:blocks/injector_equipped_side",
+            "side": "kagic:blocks/injector_equipped_side",
+            "base": "kagic:blocks/injector_base",
+            "top": "kagic:blocks/injector_top",
+            "legs": "kagic:blocks/injector_legs",
+			"metal": "kagic:blocks/injector_metal",
+            "particle": "kagic:blocks/injector_metal"
+        }
+    },
+    "variants": {
+        "facing=down": {
+            "model": "kagic:injector",
+            "y": 90
+        },
+        "facing=up": {
+            "model": "kagic:injector",
+            "y": 90
+        },
+        "facing=east": {
+            "model": "kagic:injector"
+        },
+        "facing=west": {
+            "model": "kagic:injector",
+            "y": 180
+        },
+        "facing=north": {
+            "model": "kagic:injector",
+            "y": 270
+        },
+        "facing=south": {
+            "model": "kagic:injector",
+            "y": 90
+        },
+        "inventory": {
+            "model": "kagic:injector",
+            "y": 90
+        }
+    }
+}
