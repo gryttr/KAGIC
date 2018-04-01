@@ -249,8 +249,8 @@ public class ModEntities {
 		EntityPearl.PEARL_YIELDS.put(Blocks.PURPLE_SHULKER_BOX.getDefaultState(), 5.99);	
 		ModEntities.registerWithOreDictionary(EntityPearl.PEARL_YIELDS, "Pearl", "Salt", "Calcite", "Amber");
 		
-		EntityEnderPearl.ENDER_PEARL_YIELDS.put(Blocks.END_BRICKS.getDefaultState(), 5.99);
-		EntityEnderPearl.ENDER_PEARL_YIELDS.put(Blocks.END_STONE.getDefaultState(), 2.99);
+		EntityEnderPearl.ENDER_PEARL_YIELDS.put(Blocks.END_BRICKS.getDefaultState(), 2.99);
+		EntityEnderPearl.ENDER_PEARL_YIELDS.put(Blocks.END_STONE.getDefaultState(), 0.99);
 		
 		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.99, "oreDiamond");
 		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.99, "oreGold");

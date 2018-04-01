@@ -369,6 +369,7 @@ public class EntityTopaz extends EntityGem implements INpc {
 		topaz.setHairColor(topaz.generateHairColor());
 		topaz.setInsigniaColor(this.getInsigniaColor());
 		topaz.setUniformColor(this.getUniformColor());
+		topaz.setGemColor(this.generateGemColor());
 		topaz.setHasVisor(this.hasVisor());
 		topaz.setAttackTarget(this.getAttackTarget());
 		topaz.setRevengeTarget(this.getAttackingEntity());
