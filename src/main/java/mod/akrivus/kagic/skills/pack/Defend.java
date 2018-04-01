@@ -85,24 +85,7 @@ public class Defend extends Speak<EntityGem> {
 	@Override
 	public void run(EntityGem gem) {
 		if (this.principle != null) {
-			if (gem.getAttackTarget() != null) {
-				gem.lookAt(this.enemy);
-				if (gem.getDistanceSq(this.enemy) < 5) {
-					if (this.lastHitTime > 5) {
-						gem.attackEntityAsMob(this.enemy);
-						this.lastHitTime = 0;
-					}
-					++this.lastHitTime;
-				}
-				else {
-					gem.tryToMoveTo(this.enemy.getPosition());
-				}
-				if (this.enemy.isDead) {
-					this.enemy = null;
-					this.init(gem);
-				}
-			}
-			else {
+			if (gem.getAttackTarget() == null) {
 				gem.lookAt(this.principle);
 				if (gem.getDistanceSq(this.principle) > 5) {
 					gem.tryToMoveTo(this.principle.getPosition());
