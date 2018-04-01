@@ -63,7 +63,7 @@ public class BlockInjector extends Block {
 				worldIn.setBlockState(new BlockPos(pos.getX(), newPosY, pos.getZ()), ModBlocks.GEM_SEED.getDefaultState());
 				worldIn.setBlockState(pos, ModBlocks.INJECTOR.getDefaultState().withProperty(FACING, worldIn.getBlockState(pos).getValue(FACING)));
 				worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.NEUTRAL, 1.0F, 1.0F, true);
-				worldIn.playSound(null, pos, ModSounds.BLOCK_INJECTOR_FIRE, SoundCategory.BLOCKS, 512.0F, 1.0F);
+				worldIn.playSound(null, pos, ModSounds.BLOCK_INJECTOR_FIRE, SoundCategory.BLOCKS, 1000.0F, 1.0F);
 				Injector.tellNearbyPlayers(worldIn, pos, "injector_success", false, pos.getX(), newPosY, pos.getZ());
 				Injector.awardNearbyPlayers(worldIn, pos);
 			}

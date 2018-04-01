@@ -163,6 +163,7 @@ public class EntityTopaz extends EntityGem implements INpc {
         this.setSkinColor(this.generateSkinColor());
 		this.setHairStyle(this.generateHairStyle());
 		this.setHairColor(this.generateHairColor());
+		this.setGemColor(this.generateGemColor());
 		if (this.getSpecial() == 1) {
     		this.nativeColor = 11;
     	}

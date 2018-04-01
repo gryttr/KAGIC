@@ -66,11 +66,6 @@ public class EntityEnderPearl extends EntityPearl implements INpc {
 		    			if (DyeUtils.isDye(stack)) {
 			        		return true;
 		    			}
-		    			else if (!this.isCoreItem(stack) && stack.getItem() != Item.getItemFromBlock(Blocks.WOOL) && stack.getItem() != Items.SHEARS) {
-		            		this.openGUI(player);
-		            		this.playObeySound();
-		            		return true;
-		            	}
 		        	}
 				}
 			}
