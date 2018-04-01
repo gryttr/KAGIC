@@ -36,8 +36,7 @@
             "y": 90
         },
         "inventory": {
-            "model": "kagic:injector",
-            "y": 90
+            "model": "kagic:injector"
         }
     }
 }

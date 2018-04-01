@@ -355,7 +355,6 @@ public class EntityJasper extends EntityQuartzSoldier implements IAnimals {
 	 *********************************************************/
 	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
-		super.writeEntityToNBT(compound);
 		compound.setBoolean("charged", this.dataManager.get(CHARGED).booleanValue());
 		compound.setInteger("charge_ticks", this.charge_ticks);
 		compound.setInteger("hit_count", this.hit_count);
@@ -363,11 +362,11 @@ public class EntityJasper extends EntityQuartzSoldier implements IAnimals {
 		compound.setInteger("mark1", this.getMark1());
 		compound.setInteger("mark2color", this.getMark2Color());
 		compound.setInteger("mark2", this.getMark2());
+		super.writeEntityToNBT(compound);
 	}
 	
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
-		super.readEntityFromNBT(compound);
 		this.dataManager.set(CHARGED, compound.getBoolean("charged"));
 		this.charge_ticks = compound.getInteger("charge_ticks");
 		this.hit_count = compound.getInteger("hit_count");
@@ -393,7 +392,7 @@ public class EntityJasper extends EntityQuartzSoldier implements IAnimals {
 		} else {
 			this.setMark2(this.generateMark2());
 		}
-
+		super.readEntityFromNBT(compound);
 	}
 
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {

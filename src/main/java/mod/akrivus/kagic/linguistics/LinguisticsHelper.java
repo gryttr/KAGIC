@@ -4,10 +4,10 @@ import mod.akrivus.kagic.init.KAGIC;
 
 public class LinguisticsHelper {
 	public static String[] getSentences(String message) {
-		return KAGIC.sentDetector.sentDetect(message);
+		return KAGIC.sentDetector.sentDetect(message.replaceAll("[^A-Za-z0-9 ]", ""));
 	}
 	public static String[] getTokens(String message) {
-		String[] tokens = message.toLowerCase().split(" ");
+		String[] tokens = message.toLowerCase().replaceAll("[^A-Za-z0-9 ]", "").split(" ");
 		for (int i = 0; i < tokens.length; ++i) {
 			tokens[i].replaceAll("[^A-Za-z0-9]", "");
 		}
@@ -43,8 +43,8 @@ public class LinguisticsHelper {
         a = a.toLowerCase();
         b = b.toLowerCase();
         if (purify) {
-        	a.replaceAll("[^A-Za-z0-9]", "");
-        	b.replaceAll("[^A-Za-z0-9]", "");
+        	a.replaceAll("[^A-Za-z0-9 ]", "");
+        	b.replaceAll("[^A-Za-z0-9 ]", "");
         }
         int[] costs = new int[b.length() + 1];
         for (int j = 0; j < costs.length; j++) {

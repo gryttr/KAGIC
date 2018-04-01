@@ -2,6 +2,8 @@ package mod.akrivus.kagic.init;
 
 import java.util.HashMap;
 
+import com.google.gson.Gson;
+
 import mod.akrivus.kagic.items.ItemActiveGemBase;
 import mod.akrivus.kagic.items.ItemActiveGemShard;
 import mod.akrivus.kagic.items.ItemAutonomyContract;
@@ -24,10 +26,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemSeeds;
+import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 

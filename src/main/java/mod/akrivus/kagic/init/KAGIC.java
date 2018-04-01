@@ -13,7 +13,14 @@ import mod.akrivus.kagic.entity.EntityCrystalSkills;
 import mod.akrivus.kagic.entity.gem.fusion.FusionSpawnHandler;
 import mod.akrivus.kagic.server.SpaceStuff;
 import mod.akrivus.kagic.skills.SkillBase;
+import mod.akrivus.kagic.skills.pack.AlignGems;
 import mod.akrivus.kagic.skills.pack.BreedLivestock;
+import mod.akrivus.kagic.skills.pack.BuildBox;
+import mod.akrivus.kagic.skills.pack.BuildBridge;
+import mod.akrivus.kagic.skills.pack.BuildRamp;
+import mod.akrivus.kagic.skills.pack.BuildStairs;
+import mod.akrivus.kagic.skills.pack.BuildTower;
+import mod.akrivus.kagic.skills.pack.BuildWall;
 import mod.akrivus.kagic.skills.pack.CollectLiquids;
 import mod.akrivus.kagic.skills.pack.Come;
 import mod.akrivus.kagic.skills.pack.CutDownTrees;
@@ -45,6 +52,12 @@ import mod.akrivus.kagic.skills.pack.PlantSaplingsPearl;
 import mod.akrivus.kagic.skills.pack.PlantSaplingsPeridot;
 import mod.akrivus.kagic.skills.pack.SingSong;
 import mod.akrivus.kagic.skills.pack.Stop;
+import mod.akrivus.kagic.skills.pack.TameCats;
+import mod.akrivus.kagic.skills.pack.TameDogs;
+import mod.akrivus.kagic.skills.pack.TameParrots;
+import mod.akrivus.kagic.skills.pack.TellFuture;
+import mod.akrivus.kagic.skills.pack.TellFutureGarnet;
+import mod.akrivus.kagic.skills.pack.TellReport;
 import mod.akrivus.kagic.skills.pack.Warp;
 import mod.heimrarnadalr.kagic.chunk.KAGICChunkCallback;
 import mod.heimrarnadalr.kagic.crafting.KAGICSmeltingRecipes;
@@ -156,7 +169,14 @@ public class KAGIC {
     @EventHandler
     public void postInit(FMLPostInitializationEvent e) {
     	ModEntities.registerGemYields();
-		KAGIC.addSkill(BreedLivestock.class);
+		KAGIC.addSkill(AlignGems.class);
+    	KAGIC.addSkill(BreedLivestock.class);
+    	KAGIC.addSkill(BuildBox.class);
+		KAGIC.addSkill(BuildBridge.class);
+		KAGIC.addSkill(BuildStairs.class);
+		KAGIC.addSkill(BuildTower.class);
+		KAGIC.addSkill(BuildWall.class);
+		KAGIC.addSkill(BuildRamp.class);
 		KAGIC.addSkill(CollectLiquids.class);
 		KAGIC.addSkill(Come.class);
 		KAGIC.addSkill(CutDownTrees.class);
@@ -188,6 +208,12 @@ public class KAGIC {
 		KAGIC.addSkill(PlantSaplingsPeridot.class);
 		KAGIC.addSkill(SingSong.class);
 		KAGIC.addSkill(Stop.class);
+		KAGIC.addSkill(TameCats.class);
+		KAGIC.addSkill(TameDogs.class);
+		KAGIC.addSkill(TameParrots.class);
+		KAGIC.addSkill(TellFuture.class);
+		KAGIC.addSkill(TellFutureGarnet.class);
+		KAGIC.addSkill(TellReport.class);
 		KAGIC.addSkill(Warp.class);
     }
     

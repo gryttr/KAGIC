@@ -149,16 +149,16 @@ public class EntityAmethyst extends EntityQuartzSoldier implements IAnimals {
     }
 	
 	public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
         compound.setBoolean("charged", this.dataManager.get(CHARGED).booleanValue());
         compound.setInteger("charge_ticks", this.charge_ticks);
         compound.setInteger("hit_count", this.hit_count);
+        super.writeEntityToNBT(compound);
     }
     public void readEntityFromNBT(NBTTagCompound compound) {
-        super.readEntityFromNBT(compound);
         this.dataManager.set(CHARGED, compound.getBoolean("charged"));
         this.charge_ticks = compound.getInteger("charge_ticks");
         this.hit_count = compound.getInteger("hit_count");
+        super.readEntityFromNBT(compound);
     }
 
     @Override

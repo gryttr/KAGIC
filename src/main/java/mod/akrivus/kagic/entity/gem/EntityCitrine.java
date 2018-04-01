@@ -140,18 +140,18 @@ public class EntityCitrine extends EntityQuartzSoldier implements IAnimals {
     }
 	
 	public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
         compound.setBoolean("charged", this.dataManager.get(CHARGED).booleanValue());
         compound.setInteger("charge_ticks", this.charge_ticks);
         compound.setInteger("hit_count", this.hit_count);
         compound.setInteger("defectiveColors", this.dataManager.get(DEFECTIVE_COLOR));
+        super.writeEntityToNBT(compound);
     }
     public void readEntityFromNBT(NBTTagCompound compound) {
-        super.readEntityFromNBT(compound);
         this.dataManager.set(CHARGED, compound.getBoolean("charged"));
         this.charge_ticks = compound.getInteger("charge_ticks");
         this.hit_count = compound.getInteger("hit_count");
         this.dataManager.set(DEFECTIVE_COLOR, compound.getInteger("defectiveColors"));
+        super.readEntityFromNBT(compound);
     }
 
     @Override

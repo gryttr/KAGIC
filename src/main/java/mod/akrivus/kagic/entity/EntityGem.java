@@ -299,7 +299,7 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 		}
 
 		this.applyGemPlacementBuffs(false);
-		
+		this.setSpecial(compound.getInteger("special"));
 		this.setHasVisor(compound.getBoolean("hasVisor"));
 		if (compound.hasKey("insigniaColor")) {
 			this.setInsigniaColor(compound.getInteger("insigniaColor"));
@@ -363,7 +363,6 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 		this.setFusionCount(compound.getInteger("fusionCount"));
 		this.setFusionPlacements(compound.getString("fusionPlacements"));
 		this.uniformColorChanged = compound.getBoolean("uniformColorChanged");
-		this.setSpecial(compound.getInteger("special"));
 		String ownerId;
 		if (compound.hasKey("ownerId", 8)) {
 			ownerId = compound.getString("ownerId");
@@ -627,7 +626,7 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 						}
 						else {
 							if (this.isOwner(player)) {
-								this.setSitting(player);
+								this.setSitting(player, !this.isSitting());
 								this.playObeySound();
 							}
 							else {
@@ -1364,9 +1363,9 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 		return this.isSitting;
 	}
 	
-	public void setSitting(EntityLivingBase player) {
+	public void setSitting(EntityLivingBase player, boolean isSitting) {
 		if (player instanceof EntityPlayer) {
-			if (this.isSitting()) {
+			if (!isSitting) {
 				player.sendMessage(new TextComponentTranslation("command.kagic.will_follow_you", this.getName()));
 				this.isSitting = false;
 				this.restPosition = null;

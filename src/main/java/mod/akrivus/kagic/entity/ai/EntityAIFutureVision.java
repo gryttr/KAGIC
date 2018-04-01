@@ -74,14 +74,14 @@ public class EntityAIFutureVision extends EntityAIBase {
     }
     
     private void sendMessage(String line, String formatting) {
-		this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.sapphire_" + line, formatting).getUnformattedComponentText()));
+		this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.sapphire_" + line, formatting).getUnformattedText()));
 		//this.gem.getOwner().addStat(ModAchievements.YOUR_CLARITY);
 		this.lastPrediction = this.gem.world.getTotalWorldTime();
 		this.lastMessage = formatting;
 	}
     
 	private void sendMessage(String line) {
-		this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.sapphire_" + line).getUnformattedComponentText()));
+		this.gem.getOwner().sendMessage(new TextComponentString("<" + this.gem.getName() + "> " + new TextComponentTranslation("command.kagic.sapphire_" + line).getUnformattedText()));
 		//this.gem.getOwner().addStat(ModAchievements.WHAT_A_MYSTERY);
 		this.lastPrediction = this.gem.world.getTotalWorldTime();
 		this.lastMessage = line;

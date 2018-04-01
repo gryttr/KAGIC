@@ -59,15 +59,15 @@ public class EntitySapphire extends EntityGem implements INpc {
 	private int luckTicks = 0;
 
 	private static final List<Integer> SKIN_COLORS = new ArrayList<Integer>(Arrays.asList(
-			0,								//White
-			1, 1,							//Orange
-			4, 4, 4, 4,						//Yellow
-			6, 6, 6,						//Pink
-			10,	10,							//Purple
-			11, 11, 11, 11, 11,	11, 11, 11, //Blue
-			13,	13,							//Green
-			15,								//Black
-			16, 16							//Paddy
+			0,									//White
+			1,									//Orange
+			4, 4, 4, 4,							//Yellow
+			6, 6, 6,							//Pink
+			10,	10,								//Purple
+			11, 11, 11, 11, 11,	11, 11, 11, 11, //Blue
+			13,	13,								//Green
+			15,									//Black
+			16, 16								//Paddy
 	)); 
 	private static final int NUM_HAIRSTYLES = 2;
 
@@ -183,7 +183,6 @@ public class EntitySapphire extends EntityGem implements INpc {
 	
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
-		super.readEntityFromNBT(compound);
 		if (compound.hasKey("skinColor")) {
 			if (compound.getInteger("skinColor") == 0) {
 				this.setSpecial(11);
@@ -200,6 +199,7 @@ public class EntitySapphire extends EntityGem implements INpc {
 			this.setUniformColor(11);
 			this.setInsigniaColor(11);
 		}
+		super.readEntityFromNBT(compound);
 	}
 	
 	@Override

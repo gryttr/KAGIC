@@ -70,7 +70,6 @@ import mod.akrivus.kagic.entity.gem.fusion.EntityOpal;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRainbowQuartz;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRhodonite;
 import mod.akrivus.kagic.entity.humans.EntityConnie;
-import mod.akrivus.kagic.entity.humans.EntityDoppelganger;
 import mod.akrivus.kagic.entity.humans.EntitySteven;
 import mod.akrivus.kagic.entity.pepo.EntityCactus;
 import mod.akrivus.kagic.entity.pepo.EntityMelon;
@@ -80,6 +79,7 @@ import mod.akrivus.kagic.entity.shardfusion.EntityFootArm;
 import mod.akrivus.kagic.entity.shardfusion.EntityHandBody;
 import mod.akrivus.kagic.entity.shardfusion.EntityMouthTorso;
 import mod.akrivus.kagic.entity.vehicles.EntityRoamingEye;
+import mod.akrivus.kagic.hijcog.EntityPuppetGem;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.entity.Render;
@@ -130,6 +130,9 @@ public class ModEntities {
 		registerDiamond("yellow_diamond", EntityYellowDiamond.class);
 		registerDiamond("blue_diamond", EntityBlueDiamond.class);
 		
+		// HIJCOG STUFF
+		registerDiamond("puppet_gem", EntityPuppetGem.class);
+		
 		// removed gem, still needs to be registered though
 		registerDiamond("padparadscha", EntityPadparadscha.class);
 		
@@ -162,7 +165,6 @@ public class ModEntities {
 		registerMob("connie", EntityConnie.class, 0x99D3CD, 0xAF4E3D);
 		registerEntity("roaming_eye", EntityRoamingEye.class);
 		registerEntity("laser", EntityLaser.class);
-		registerEntity("doppelganger", EntityDoppelganger.class);
 		
 		// custom npcs wrapper entities
 		registerCustomEntity("agate", EntityCustomAgate.class);

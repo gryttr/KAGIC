@@ -159,7 +159,6 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
     }
 	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
-		super.writeEntityToNBT(compound);
 		NBTTagList nbttaglist = new NBTTagList();
 		for (int i = 0; i < this.harvest.getSizeInventory(); ++i) {
 			ItemStack itemstack = this.harvest.getStackInSlot(i);
@@ -170,11 +169,11 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
 		}
 		compound.setTag("harvestItems", nbttaglist);
 		compound.setInteger("harvestTimer", this.harvestTimer);
+		super.writeEntityToNBT(compound);
 	}
 	
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
-		super.readEntityFromNBT(compound);
 		this.initGemStorage();
 		NBTTagList nbttaglist = compound.getTagList("harvestItems", 10);
 		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
@@ -185,6 +184,7 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
 			}
 		}
 		this.harvestTimer = compound.getInteger("harvestTimer");
+		super.readEntityFromNBT(compound);
 	}
 
 	/*********************************************************
@@ -194,15 +194,17 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
 		if (!this.world.isRemote) {
 			if (this.isTamed()) {
 				if (this.isOwner(player)) {
-					if (this.isFarmer()) {
+					if (this.isFarmer() || this.isAngler()) {
 						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
 						this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+						return true;
 					}
 					else if (this.isPrimary()) {
 						this.world.getWorldInfo().setCleanWeatherTime(0);
 			    		this.world.getWorldInfo().setRainTime(1200);
 			    		this.world.getWorldInfo().setThunderTime(1200);
 			    		this.world.getWorldInfo().setRaining(true);
+			    		return true;
 					}
 				}
 				else {
@@ -462,10 +464,10 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
 		if (!this.isBeingRidden()) {
 			super.updateFallState(y, onGroundIn, state, pos);
 			if (this.isTamed()) {
-				if (!this.world.isRemote) {
+				if (!this.world.isRemote && !this.isDefective()) {
 					List<EntityPlayer> list = this.world.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().grow(2.0D, 2.0D, 2.0D));
 					for (EntityPlayer entity : list) {
-						if (this.isOwnedBy(entity)) {
+						if (this.isOwnedBy(entity) && !entity.isCreative()) {
 							int blocksThatAreAir = 0;
 							for (int i = -4; i < 0; ++i) {
 								if (this.world.isAirBlock(entity.getPosition().add(0, i, 0))) {

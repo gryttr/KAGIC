@@ -111,43 +111,118 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
         this.dataManager.register(NAKED, false);
 	}
 
-	protected int generateGemColor() {
+	@Override
+	public int generateGemColor() {
 		switch (this.getColor()) {
     	case 0:
     		return 0xFFFFFF;
     	case 1:
-    		return 0xCB7226;
+    		return 0xC6A68B;
     	case 2:
-    		return 0xAE48D4;
+    		return 0xBF92D1;
     	case 3:
-    		return 0x215493;
+    		return 0x657991;
     	case 4:
-    		return 0xFEFE4C;
+    		return 0xFCFCB0;
     	case 5:
-    		return 0x469300;
+    		return 0x7A9165;
     	case 6:
-    		return 0xE8759B;
+    		return 0xE5A0B7;
     	case 7:
-    		return 0x939393;
+    		return 0xB2B2B2;
     	case 8:
-    		return 0x8F8F8F;
+    		return 0x545454;
     	case 9:
-    		return 0x6699B3;
+    		return 0x7CA0B2;
     	case 10:
-    		return 0x7B3BAE;
+    		return 0x9579AD;
     	case 11:
-    		return 0x3B54BA;
+    		return 0x808BB7;
     	case 12:
-    		return 0x4E341B;
+    		return 0xB2763E;
     	case 13:
-    		return 0x4C6519;
+    		return 0x88B22C;
     	case 14:
-    		return 0x963030;
+    		return 0xB23939;
+    	case 15:
+    		return 0x4C4C4C;
+    	}
+		return 0xFFFFFF;
+    }
+	public int generateSkinColor() {
+		switch (this.getColor()) {
+    	case 0:
+    		return 0xE9ECEC;
+    	case 1:
+    		return 0xED975A;
+    	case 2:
+    		return 0xBC7CB8;
+    	case 3:
+    		return 0x7BC1D8;
+    	case 4:
+    		return 0xF7D571;
+    	case 5:
+    		return 0x89B750;
+    	case 6:
+    		return 0xEAD3DA;
+    	case 7:
+    		return 0x7F8B91;
+    	case 8:
+    		return 0xD8D8CD;
+    	case 9:
+    		return 0x63D2D8;
+    	case 10:
+    		return 0x8C5DAA;
+    	case 11:
+    		return 0x63669B;
+    	case 12:
+    		return 0xBC7643;
+    	case 13:
+    		return 0x8EB72D;
+    	case 14:
+    		return 0xED9693;
     	case 15:
     		return 0x333333;
     	}
 		return 0xFFFFFF;
-    }
+	}
+	public int generateHairColor() {
+		switch (this.getHairColor()) {
+    	case 0:
+    		return 0xFFFFFF;
+    	case 1:
+    		return 0xFF7200;
+    	case 2:
+    		return 0xAE00FF;
+    	case 3:
+    		return 0xB2D6FF;
+    	case 4:
+    		return 0xF9F900;
+    	case 5:
+    		return 0xD7FFB2;
+    	case 6:
+    		return 0xFFB2CB;
+    	case 7:
+    		return 0xD8D8D8;
+    	case 8:
+    		return 0xAFAFAF;
+    	case 9:
+    		return 0xB2E6FF;
+    	case 10:
+    		return 0xC07CFF;
+    	case 11:
+    		return 0xB2C1FF;
+    	case 12:
+    		return 0xCC8547;
+    	case 13:
+    		return 0xC5FF3F;
+    	case 14:
+    		return 0xFF5454;
+    	case 15:
+    		return 0x000000;
+    	}
+		return 0xFFFFFF;
+	}
 	public void convertGems(int placement) {
     	this.setGemCut(GemCuts.CABOCHON.id);
     	switch (placement) {
@@ -177,7 +252,6 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
 	 * Methods related to loading.                           *
 	 *********************************************************/
 	public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
         compound.setInteger("color", this.getColor());
         compound.setInteger("hairColor", this.getHairColor());
         compound.setInteger("dressStyle", this.getDressStyle());
@@ -192,9 +266,9 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
             nbttaglist.appendTag(nbttagcompound);
         }
         compound.setTag("items", nbttaglist);
+        super.writeEntityToNBT(compound);
 	}
     public void readEntityFromNBT(NBTTagCompound compound) {
-        super.readEntityFromNBT(compound);
         this.setColor(compound.getInteger("color"));
         if (compound.hasKey("hairColor")) {
         	this.setHairColor(compound.getInteger("hairColor"));
@@ -214,6 +288,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
                 this.gemStorage.setInventorySlotContents(j, new ItemStack(nbttagcompound));
             }
         }
+        super.readEntityFromNBT(compound);
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
     	livingdata = super.onInitialSpawn(difficulty, livingdata);
@@ -370,6 +445,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
 	
 	public void setColor(int color) {
 		this.dataManager.set(COLOR, color);
+		this.setGemColor(this.generateGemColor());
 	}
 	public int getColor() {
 		return this.dataManager.get(COLOR);

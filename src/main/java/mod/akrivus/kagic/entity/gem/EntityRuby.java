@@ -207,12 +207,12 @@ public class EntityRuby extends EntityGem implements IAnimals {
 	 * Methods related to loading.                           *
 	 *********************************************************/
 	public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
         compound.setInteger("anger", this.getAnger());
+        super.writeEntityToNBT(compound);
     }
     public void readEntityFromNBT(NBTTagCompound compound) {
-        super.readEntityFromNBT(compound);
         this.setAnger(compound.getInteger("anger"));
+        super.readEntityFromNBT(compound);
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
     	this.setSpecial(this.rand.nextInt(6));
@@ -354,6 +354,7 @@ public class EntityRuby extends EntityGem implements IAnimals {
     	ruby.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0F);
     	ruby.stepHeight = ruby.getFusionCount();
     	ruby.setHealth(ruby.getMaxHealth());
+    	ruby.setGemColor(this.getGemColor());
     	
     	ItemStack weapon = this.getHeldItem(EnumHand.MAIN_HAND);
     	if (weapon.getItem() == Items.AIR) {

@@ -1,6 +1,5 @@
 package mod.akrivus.kagic.entity.gem;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +28,6 @@ import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -87,13 +85,40 @@ public class EntityZircon extends EntityGem implements INpc {
 	}
 
 	protected int generateGemColor() {
-		switch (this.getSpecial()) {
-		case 0:
-			float[] c = EntitySheep.getDyeRgb(EnumDyeColor.values()[this.getInsigniaColor()]).clone();
-	    	return Color.HSBtoRGB(c[0], c[1], c[2]);
-		case 1:	
-			return 0x074464;
-		}
+		switch (this.getInsigniaColor()) {
+    	case 0:
+    		return 0xFFFFFF;
+    	case 1:
+    		return 0xCB7226;
+    	case 2:
+    		return 0xAE48D4;
+    	case 3:
+    		return 0x215493;
+    	case 4:
+    		return 0xFEFE4C;
+    	case 5:
+    		return 0x469300;
+    	case 6:
+    		return 0xE8759B;
+    	case 7:
+    		return 0x939393;
+    	case 8:
+    		return 0x8F8F8F;
+    	case 9:
+    		return 0x6699B3;
+    	case 10:
+    		return 0x7B3BAE;
+    	case 11:
+    		return 0x3B54BA;
+    	case 12:
+    		return 0x4E341B;
+    	case 13:
+    		return 0x4C6519;
+    	case 14:
+    		return 0x963030;
+    	case 15:
+    		return 0x333333;
+    	}
 		return 0x074464;
 	}
 	
@@ -110,7 +135,7 @@ public class EntityZircon extends EntityGem implements INpc {
 		this.nativeColor = this.getInsigniaColor();
 		this.setUniformColor(data);
 		this.setSkinColor(this.generateSkinColor());
-		this.setGemColor(data);
+		this.setGemColor(this.generateGemColor());
 	}
 	
 	/*********************************************************

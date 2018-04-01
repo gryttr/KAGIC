@@ -37,7 +37,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockInjector extends Block {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
-	private final boolean isEquipped;
+	protected final boolean isEquipped;
 	public BlockInjector(boolean isEquipped) {
 		super(Material.GLASS, MapColor.MAGENTA);
 		this.setUnlocalizedName("injector");
@@ -59,11 +59,11 @@ public class BlockInjector extends Block {
 		}
 		else if (this.isEquipped) {
 			int newPosY = this.calcDistance(worldIn, pos);
-			if (newPosY > 6) {
+			if (newPosY > 5) {
 				worldIn.setBlockState(new BlockPos(pos.getX(), newPosY, pos.getZ()), ModBlocks.GEM_SEED.getDefaultState());
 				worldIn.setBlockState(pos, ModBlocks.INJECTOR.getDefaultState().withProperty(FACING, worldIn.getBlockState(pos).getValue(FACING)));
 				worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_PISTON_EXTEND, SoundCategory.NEUTRAL, 1.0F, 1.0F, true);
-				worldIn.playSound(null, pos, ModSounds.BLOCK_INJECTOR_FIRE, SoundCategory.BLOCKS, 1000.0F, 1.0F);
+				worldIn.playSound(null, pos, ModSounds.BLOCK_INJECTOR_FIRE, SoundCategory.BLOCKS, 512.0F, 1.0F);
 				Injector.tellNearbyPlayers(worldIn, pos, "injector_success", false, pos.getX(), newPosY, pos.getZ());
 				Injector.awardNearbyPlayers(worldIn, pos);
 			}
@@ -135,8 +135,8 @@ public class BlockInjector extends Block {
 	
 	public int calcDistance(World worldIn, BlockPos pos) {
     	int bestDepth = -1;
-    	int worstDepth = 6;
-		for (bestDepth = pos.down(5).getY(); bestDepth > worstDepth; --bestDepth) {
+    	int worstDepth = 5;
+		for (bestDepth = pos.down(6).getY(); bestDepth > worstDepth; --bestDepth) {
 			boolean aerated = false;
 			BlockPos newBlockPos = new BlockPos(pos.getX(), bestDepth, pos.getZ());
 			if (worldIn.getBlockState(newBlockPos).getBlock() == ModBlocks.GEM_SEED 

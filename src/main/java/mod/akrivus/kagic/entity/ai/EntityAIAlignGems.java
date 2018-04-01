@@ -66,7 +66,6 @@ public class EntityAIAlignGems extends EntityAIBase {
 		else if (!this.unalignedGem.isTamed()) {
 			if (this.alignedGem.getServitude() == EntityGem.SERVE_HUMAN) {
 				this.unalignedGem.setOwnerId(this.alignedGem.getOwnerId());
-				this.unalignedGem.setLeader(this.alignedGem.getOwner());
 			}
 			this.unalignedGem.setServitude(this.alignedGem.getServitude());
 			this.unalignedGem.getNavigator().clearPath();

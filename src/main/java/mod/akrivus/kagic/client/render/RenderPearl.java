@@ -21,7 +21,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderPearl extends RenderGemBase<EntityPearl> {
-	private static final float OFFSET = .75f;
+	private static final float OFFSET = .0f;
 
 	public RenderPearl() {
         super(Minecraft.getMinecraft().getRenderManager(), new ModelPearl(), 0.25F);
@@ -44,8 +44,12 @@ public class RenderPearl extends RenderGemBase<EntityPearl> {
 	@Override
 	protected void preRenderCallback(EntityPearl gem, float partialTickTime) {
 		if (gem.getSpecialSkin().equals("_0")) {
-			float[] afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[((EntityPearl) gem).getColor()]);
-			GlStateManager.color(afloat[0] + OFFSET, afloat[1] + OFFSET, afloat[2] + OFFSET);
+			int skin = gem.generateSkinColor();
+			float r = (float) ((skin & 16711680) >> 16) / 255f;
+			float g = (float) ((skin & 65280) >> 8) / 255f;
+			float b = (float) ((skin & 255) >> 0) / 255f;
+			//KAGIC.instance.chatInfoMessage("Skin color is " + r + " , " + g + " , " + b);
+			GlStateManager.color(r + this.OFFSET, g + this.OFFSET, b + this.OFFSET, 1f);
 		}
 	}
 	

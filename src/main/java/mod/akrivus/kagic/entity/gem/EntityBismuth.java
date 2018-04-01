@@ -112,7 +112,6 @@ public class EntityBismuth extends EntityGem implements IInventoryChangedListene
 		return super.onInitialSpawn(difficulty, livingdata);
     }
 	public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
         NBTTagList nbttaglist = new NBTTagList();
         for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
             ItemStack itemstack = this.gemStorage.getStackInSlot(i);
@@ -122,9 +121,9 @@ public class EntityBismuth extends EntityGem implements IInventoryChangedListene
             nbttaglist.appendTag(nbttagcompound);
         }
         compound.setTag("items", nbttaglist);
+        super.writeEntityToNBT(compound);
 	}
     public void readEntityFromNBT(NBTTagCompound compound) {
-        super.readEntityFromNBT(compound);
         NBTTagList nbttaglist = compound.getTagList("items", 10);
         this.initGemStorage();
         for (int i = 0; i < nbttaglist.tagCount(); ++i) {
@@ -134,6 +133,7 @@ public class EntityBismuth extends EntityGem implements IInventoryChangedListene
                 this.gemStorage.setInventorySlotContents(j, new ItemStack(nbttagcompound));
             }
         }
+        super.readEntityFromNBT(compound);
     }
 	
 	/*********************************************************
@@ -149,7 +149,7 @@ public class EntityBismuth extends EntityGem implements IInventoryChangedListene
 						if (this.isCoreItem(stack)) {
 							return super.processInteract(player, hand);
 						}
-						else if (this.isSneaking() && !this.isDefective()) {
+						else if (player.isSneaking() && !this.isDefective()) {
 		            		this.openGUI(player);
 		            		this.playObeySound();
 		            		return true;

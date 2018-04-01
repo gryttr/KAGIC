@@ -116,35 +116,35 @@ public class EntityAgate extends EntityQuartzSoldier implements IAnimals {
     	case 0:
     		return 0xFFFFFF;
     	case 1:
-    		return 0xCB7226;
+    		return 0xC6A68B;
     	case 2:
-    		return 0xAE48D4;
+    		return 0xBF92D1;
     	case 3:
-    		return 0x215493;
+    		return 0x657991;
     	case 4:
-    		return 0xFEFE4C;
+    		return 0xFCFCB0;
     	case 5:
-    		return 0x469300;
+    		return 0x7A9165;
     	case 6:
-    		return 0xE8759B;
+    		return 0xE5A0B7;
     	case 7:
-    		return 0x939393;
+    		return 0xB2B2B2;
     	case 8:
-    		return 0x8F8F8F;
+    		return 0x545454;
     	case 9:
-    		return 0x6699B3;
+    		return 0x7CA0B2;
     	case 10:
-    		return 0x7B3BAE;
+    		return 0x9579AD;
     	case 11:
-    		return 0x3B54BA;
+    		return 0x808BB7;
     	case 12:
-    		return 0x4E341B;
+    		return 0xB2763E;
     	case 13:
-    		return 0x4C6519;
+    		return 0x88B22C;
     	case 14:
-    		return 0x963030;
+    		return 0xB23939;
     	case 15:
-    		return 0x333333;
+    		return 0x4C4C4C;
     	}
     	return 0x9367F8;
     }
@@ -170,17 +170,17 @@ public class EntityAgate extends EntityQuartzSoldier implements IAnimals {
 	 * Methods related to loading.                           *
 	 *********************************************************/
 	public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
         compound.setInteger("color", this.dataManager.get(COLOR).intValue());
+        super.writeEntityToNBT(compound);
 	}
     public void readEntityFromNBT(NBTTagCompound compound) {
-        super.readEntityFromNBT(compound);
         this.dataManager.set(COLOR, compound.getInteger("color"));
         if (compound.hasKey("holly")) {
         	this.setSpecial(compound.getBoolean("holly") ? 1 : 0);
         	this.setGemPlacement(GemPlacements.BACK_OF_HEAD.id);
         	this.setGemCut(GemCuts.TEARDROP.id);
         }
+        super.readEntityFromNBT(compound);
     }
     
     @Override
@@ -211,7 +211,6 @@ public class EntityAgate extends EntityQuartzSoldier implements IAnimals {
 		this.setHairStyle(this.generateHairStyle());
 		this.setHairColor(this.generateHairColor());
 		this.setGemColor(this.generateGemColor());
-		System.out.println(this.generateGemColor());
         this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.agate_%1$d.name", data)).getUnformattedComponentText());
         if (data == 16) {
         	this.setGemPlacement(GemPlacements.BACK_OF_HEAD.id);

@@ -20,6 +20,7 @@ public class ModConfigs {
 	public static int meteorRubyRate;
 	public static boolean instructInjectors;
 	public static boolean canRebel;
+	public static boolean disableClod;
 	public static Property ruinDimensions;
 	
 	public static int kindergartenWeight;
@@ -40,7 +41,8 @@ public class ModConfigs {
 		ModConfigs.meteorRubyRate = ModConfigs.settings.getInt("Meteor Ruby spawn rate:", "preferences", 10, 0, 365, "Amount of days minimum between Meteor Rubies.");
 		ModConfigs.instructInjectors = ModConfigs.settings.getBoolean("Instruct Injector setup:", "preferences", true, "Instructs players on how to set up injectors.");
 		ModConfigs.canRebel = ModConfigs.settings.getBoolean("Gems can rebel: ", "preferences", false, "Whether or not navel gems and meteor rubies have a chance of rebelling after a short time serving you");
-
+		ModConfigs.disableClod = ModConfigs.settings.getBoolean("Disable clod:", "preference", false, "Set to true if you're tired of being called a clod.");
+		
 		ModConfigs.settings.addCustomCategoryComment("world", "These affect the behavior of KAGIC's worldgen elements.");
 		ModConfigs.kindergartenWeight = ModConfigs.settings.getInt("Kindergarten biome weight:", "world", 1, 1, 1000000, "Rarity of the Kindergarten biome. Plains = 10");
 		ModConfigs.floatingPeaksWeight = ModConfigs.settings.getInt("Floating Peaks biome weight:", "world", 1, 1, 1000000, "Rarity of the Floating Peaks biome. Extreme Hills = 10");

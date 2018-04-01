@@ -454,7 +454,8 @@ item.record.underwater_temple.desc=Aivi & Surasshu - The Underwater Temple
 
 item.record.connie_bracelet.desc=Aivi & Surasshu - Love Like You
 
-itemGroup.gems=KAGIC (Gems)
+itemGroup.good_gems=KAGIC (Gems)
+itemGroup.bad_gems=KAGIC (Corruptions & Shard Fusions)
 itemGroup.other=KAGIC (Items & Blocks)
 itemGroup.music=KAGIC (Music Discs)
 
@@ -463,7 +464,9 @@ enchantment.fair_fight.name=Destabilize
 
 tile.gem_drill.name=Gem Drill
 tile.gem_seed.name=Gem Seed
-tile.injector.name=Injector
+tile.injector.name=Automatic Injector
+tile.analog_injector.name=Analog Injector
+tile.pneumatic_injector.name=Pneumatic Injector
 tile.incubator.name=Incubator
 tile.drained_block.name=Drained Block
 tile.drained_block_2.name=Drained Block
@@ -591,10 +594,12 @@ command.kagic.padparadscha_moonset=I predict that we will try to sleep!
 command.kagic.padparadscha_love=I predict that you love me.
 command.kagic.padparadscha_hate=Oh no! I was wrong, you hate me!
 command.kagic.padparadscha_interact=I predict you will approach me!
+command.kagic.padparadscha_none=I foresee you asking me about the future.
 
 command.kagic.sapphire_rebel=Keep an eye on %1$s, I see them rebelling...
 command.kagic.sapphire_attacker=Get ready, %1$s is about to attack.
 command.kagic.sapphire_birthday=A special day will soon be here!
+command.kagic.sapphire_none=I can see the path of fate as it stretches toward the horizon.
 
 command.kagic.aquamarine_entities=I sense a %1$s not too far from us.
 command.kagic.aquamarine_blocks_below=I sense %1$s below us.

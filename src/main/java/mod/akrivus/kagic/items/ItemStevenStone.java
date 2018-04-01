@@ -17,7 +17,7 @@ public class ItemStevenStone extends Item {
 	public ItemStevenStone() {
 		this.setUnlocalizedName("steven_stone");
 		this.setMaxStackSize(1);
-		this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_GEMS);
+		this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
 	}
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {

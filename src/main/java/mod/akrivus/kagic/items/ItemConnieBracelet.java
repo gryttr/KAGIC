@@ -26,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemConnieBracelet extends ModRecord {
 	public ItemConnieBracelet() {
 		super("connie_bracelet", ModSounds.RECORD_LOVE_LIKE_YOU, false);
-		this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_GEMS);
+		this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_OTHER);
 	}
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {

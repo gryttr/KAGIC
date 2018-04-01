@@ -15,6 +15,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIMineOresBySight;
 import mod.akrivus.kagic.entity.ai.EntityAIPickUpItems;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModBlocks;
+import mod.akrivus.kagic.init.ModConfigs;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.util.injector.InjectorResult;
@@ -165,7 +166,6 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 
 	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
-		super.writeEntityToNBT(compound);
 		NBTTagList nbttaglist = new NBTTagList();
 		for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
 			ItemStack itemstack = this.gemStorage.getStackInSlot(i);
@@ -185,11 +185,11 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		}
 		compound.setTag("harvestItems", nbttaglist);
 		compound.setInteger("harvestTimer", this.harvestTimer);
+		super.writeEntityToNBT(compound);
 	}
 	
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
-		super.readEntityFromNBT(compound);
 		NBTTagList nbttaglist = compound.getTagList("items", 10);
 		this.initGemStorage();
 		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
@@ -208,6 +208,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 			}
 		}
 		this.harvestTimer = compound.getInteger("harvestTimer");
+		super.readEntityFromNBT(compound);
 	}
 	
 	public void whenDefective() {
@@ -225,6 +226,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
 						this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
 						this.setCanPickUpLoot(false);
+						return true;
 					}
 				}
 				else {
@@ -486,7 +488,6 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		}
 	}
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		this.sayClod();
 		return super.attackEntityFrom(source, amount);
 	}
 	public boolean attackEntityAsMob(Entity entityIn) {
@@ -500,12 +501,17 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	}
 	public void sayClod() {
 		this.playHurtSound(DamageSource.GENERIC);
-		if (this.getServitude() == EntityGem.SERVE_REBELLION) {
-			this.sendMessage("command.kagic.peridot_rebel");
+		if (ModConfigs.disableClod) {
+			// rip.
 		}
 		else {
-			int index = this.rand.nextInt(20);
-			this.sendMessage("command.kagic.peridot_scream_" + index);
+			if (this.getServitude() == EntityGem.SERVE_REBELLION) {
+				this.sendMessage("command.kagic.peridot_rebel");
+			}
+			else {
+				int index = this.rand.nextInt(20);
+				this.sendMessage("command.kagic.peridot_scream_" + index);
+			}
 		}
 	}
 

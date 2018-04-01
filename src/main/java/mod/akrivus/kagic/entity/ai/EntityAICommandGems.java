@@ -58,7 +58,7 @@ public class EntityAICommandGems extends EntityAIBase {
 			this.gem.getNavigator().tryMoveToEntityLiving(this.target, this.movementSpeed);
 		}
 		else if (this.target.isSitting()) {
-			this.target.setSitting(null);
+			this.target.setSitting(null, false);
 		}
 	}
 }
