@@ -79,7 +79,6 @@ import mod.akrivus.kagic.entity.shardfusion.EntityFootArm;
 import mod.akrivus.kagic.entity.shardfusion.EntityHandBody;
 import mod.akrivus.kagic.entity.shardfusion.EntityMouthTorso;
 import mod.akrivus.kagic.entity.vehicles.EntityRoamingEye;
-import mod.akrivus.kagic.hijcog.EntityPuppetGem;
 import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.entity.Render;
@@ -129,9 +128,6 @@ public class ModEntities {
 		registerGem("ender_pearl", EntityEnderPearl.class, 0x000000, 0xFF00FF, false);
 		registerDiamond("yellow_diamond", EntityYellowDiamond.class);
 		registerDiamond("blue_diamond", EntityBlueDiamond.class);
-		
-		// HIJCOG STUFF
-		registerDiamond("puppet_gem", EntityPuppetGem.class);
 		
 		// removed gem, still needs to be registered though
 		registerDiamond("padparadscha", EntityPadparadscha.class);
