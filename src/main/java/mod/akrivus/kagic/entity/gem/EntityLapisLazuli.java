@@ -314,15 +314,7 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
             forward = ((EntityLivingBase) entity).moveForward;
             strafe = ((EntityLivingBase) entity).moveStrafing;
             if (this.canPassengerSteer()) {
-                if (this.isInWater()) {
-                	this.moveRelative(strafe, up, 0.91F, 0.02F);
-                	this.motionY = forward / 10;
-                    this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-                    this.motionX *= 0.800000011920929D;
-                    this.motionY *= 0.800000011920929D;
-                    this.motionZ *= 0.800000011920929D;
-                }
-                else if (this.isInLava()) {
+                if (this.isInLava()) {
                 	this.moveRelative(strafe, up, 0.91F, 0.02F);
                 	this.motionY = forward / 10;
                     this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
@@ -436,6 +428,20 @@ public class EntityLapisLazuli extends EntityGem implements IInventoryChangedLis
 		        }
 			}
 		}
+		if (this.isTamed()) {
+            if (!this.world.isRemote && !this.isDefective()) {
+                List<EntityPlayer> list = this.world.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().grow(2.0D, 2.0D, 2.0D));
+                for (EntityPlayer entity : list) {
+                    if (entity.isWet() && this.isOwnedBy(entity) && !entity.isCreative()) {
+                        for (int i = 0; i < 2; ++i) {
+                            if (this.world.getBlockState(entity.getPosition().add(0, i, 0)).getBlock() == Blocks.WATER) {
+                            	this.world.setBlockToAir(entity.getPosition().add(0, i, 0));
+                            }
+                        }
+                    }
+                }
+            }
+        }
 		super.onLivingUpdate();
 	}
 	
