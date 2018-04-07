@@ -125,7 +125,10 @@ public class BuildBox extends Speak<EntityBismuth> {
 							gem.setPosition(nextPos.getX(), nextPos.getY() + y + 1, nextPos.getZ());
 							this.placeStack.shrink(1);
 							if (this.placeStack.isEmpty()) {
-								this.getBlock(gem);
+								placed = this.getBlock(gem) && placed;
+								if (!placed) {
+									break;
+								}
 							}
 						}
 						else {

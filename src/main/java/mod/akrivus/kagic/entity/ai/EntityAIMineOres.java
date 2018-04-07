@@ -45,6 +45,40 @@ public class EntityAIMineOres extends EntityAIBase {
 			}
 			else {
 				this.delay = this.gem.getRNG().nextInt(20);
+				boolean found = false;
+				for (int x = -this.searchRadius; x <= this.searchRadius && !found; ++x) {
+					for (int y = -2; y <= 2 && !found; ++y) {
+						for (int z = -this.searchRadius; z <= this.searchRadius && !found; ++z) {
+							BlockPos tempPos = this.gem.getPosition().add(new BlockPos(x, y, z));
+							Block block =  this.gem.world.getBlockState(tempPos).getBlock();
+							if (block instanceof BlockOre) {
+								boolean canBeSeen = false;
+								for (int ox = -1; ox <= 1 && !canBeSeen; ++ox) {
+									if (this.gem.world.isAirBlock(tempPos.add(ox, 0, 0))) {
+										canBeSeen = true;
+									}
+								}
+								for (int oy = -1; oy <= 1 && !canBeSeen; ++oy) {
+									if (this.gem.world.isAirBlock(tempPos.add(0, oy, 0))) {
+										canBeSeen = true;
+									}
+								}
+								for (int oz = -1; oz <= 1 && !canBeSeen; ++oz) {
+									if (this.gem.world.isAirBlock(tempPos.add(0, 0, oz))) {
+										canBeSeen = true;
+									}
+								}
+								if (canBeSeen) {
+									this.posX = tempPos.getX();
+									this.posY = tempPos.getY();
+									this.posZ = tempPos.getZ();
+									found = true;
+									break;
+								}
+							}
+						}
+					}
+				}
 				return true;
 			}
 		}
@@ -54,49 +88,13 @@ public class EntityAIMineOres extends EntityAIBase {
 	@Override
 	public void startExecuting() {
 		if (!this.gem.isDefective()) {
-			boolean found = false;
-			for (int x = -this.searchRadius; x <= this.searchRadius && !found; ++x) {
-				for (int y = -2; y <= 2 && !found; ++y) {
-					for (int z = -this.searchRadius; z <= this.searchRadius && !found; ++z) {
-						BlockPos tempPos = this.gem.getPosition().add(new BlockPos(x, y, z));
-						Block block =  this.gem.world.getBlockState(tempPos).getBlock();
-						if (block instanceof BlockOre) {
-							boolean canBeSeen = false;
-							for (int ox = -1; ox <= 1 && !canBeSeen; ++ox) {
-								if (this.gem.world.isAirBlock(tempPos.add(ox, 0, 0))) {
-									canBeSeen = true;
-								}
-							}
-							for (int oy = -1; oy <= 1 && !canBeSeen; ++oy) {
-								if (this.gem.world.isAirBlock(tempPos.add(0, oy, 0))) {
-									canBeSeen = true;
-								}
-							}
-							for (int oz = -1; oz <= 1 && !canBeSeen; ++oz) {
-								if (this.gem.world.isAirBlock(tempPos.add(0, 0, oz))) {
-									canBeSeen = true;
-								}
-							}
-							if (canBeSeen) {
-								this.posX = tempPos.getX();
-								this.posY = tempPos.getY();
-								this.posZ = tempPos.getZ();
-								found = true;
-								break;
-							}
-						}
-					}
-				}
-			}
-			if (found) {
-				this.gem.getNavigator().tryMoveToXYZ(this.posX, this.posY, this.posZ, this.movementSpeed);
-			}
+			this.gem.getNavigator().tryMoveToXYZ(this.posX, this.posY, this.posZ, this.movementSpeed);
 		}
 	}
 	
 	@Override
 	public boolean shouldContinueExecuting() {
-		return !this.gem.getNavigator().noPath() && !this.gem.isDefective();
+		return !this.gem.getNavigator().noPath() && !this.gem.isDefective() && !this.placed && !this.gem.world.isAirBlock(new BlockPos(this.posX, this.posY, this.posZ));
 	}
 	
 	@Override
@@ -108,9 +106,8 @@ public class EntityAIMineOres extends EntityAIBase {
 	@Override
 	public void updateTask() {
 		this.gem.getNavigator().tryMoveToXYZ(this.posX, this.posY, this.posZ, this.movementSpeed);
-		if (this.gem.getDistanceSq(this.posX, this.posY, this.posZ) < 8 && !this.placed) {
-			this.gem.breakBlock(new BlockPos(this.posX, this.posY, this.posZ));
-			this.placed = true;
+		if (this.gem.getDistanceSq(this.posX, this.posY, this.posZ) < 8) {
+			this.placed = this.gem.breakBlock(new BlockPos(this.posX, this.posY, this.posZ));
 		}
 	}
 }

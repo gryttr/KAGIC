@@ -52,7 +52,7 @@ public class CollectLiquids extends Speak<EntityGem> {
 	}
 	@Override
 	public boolean proceed(EntityGem gem) {
-		return this.liquidLocation != null && gem.getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.BUCKET;
+		return this.liquidLocation != null && gem.getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.BUCKET && gem.isSoldier;
 	}
 	@Override
 	public void init(EntityGem gem) {

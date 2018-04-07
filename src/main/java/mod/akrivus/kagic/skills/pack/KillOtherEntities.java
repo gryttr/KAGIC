@@ -20,7 +20,9 @@ public class KillOtherEntities extends Speak<EntityGem> {
 			"kill",
 			"destroy",
 			"slay",
-			"hunt"
+			"hunt",
+			"find",
+			"catch"
 		}));
 		this.TRIGGER_NOUNS = new ArrayList<String>();
 		this.canBeStopped = true;

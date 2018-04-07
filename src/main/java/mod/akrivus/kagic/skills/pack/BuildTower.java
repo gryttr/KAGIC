@@ -78,7 +78,7 @@ public class BuildTower extends Speak<EntityBismuth> {
 					gem.setPosition(nextPos.getX(), nextPos.getY() + 1, nextPos.getZ());
 					this.placeStack.shrink(1);
 					if (this.placeStack.isEmpty()) {
-						this.getBlock(gem);
+						placed = this.getBlock(gem) && placed;
 					}
 				}
 				this.stillBuilding = placed;

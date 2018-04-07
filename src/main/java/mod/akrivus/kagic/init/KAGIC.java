@@ -33,6 +33,7 @@ import mod.akrivus.kagic.skills.pack.EnderPearlWarp;
 import mod.akrivus.kagic.skills.pack.FetchChestsBismuth;
 import mod.akrivus.kagic.skills.pack.FetchChestsPearl;
 import mod.akrivus.kagic.skills.pack.Follow;
+import mod.akrivus.kagic.skills.pack.FuseTopaz;
 import mod.akrivus.kagic.skills.pack.Harvest;
 import mod.akrivus.kagic.skills.pack.HarvestAndReplant;
 import mod.akrivus.kagic.skills.pack.HarvestAndReplantNetherWart;
@@ -58,6 +59,7 @@ import mod.akrivus.kagic.skills.pack.TameParrots;
 import mod.akrivus.kagic.skills.pack.TellFuture;
 import mod.akrivus.kagic.skills.pack.TellFutureGarnet;
 import mod.akrivus.kagic.skills.pack.TellReport;
+import mod.akrivus.kagic.skills.pack.UnfuseTopaz;
 import mod.akrivus.kagic.skills.pack.Warp;
 import mod.heimrarnadalr.kagic.chunk.KAGICChunkCallback;
 import mod.heimrarnadalr.kagic.crafting.KAGICSmeltingRecipes;
@@ -189,6 +191,7 @@ public class KAGIC {
 		KAGIC.addSkill(FetchChestsBismuth.class);
 		KAGIC.addSkill(FetchChestsPearl.class);
 		KAGIC.addSkill(Follow.class);
+		KAGIC.addSkill(FuseTopaz.class);
 		KAGIC.addSkill(Harvest.class);
 		KAGIC.addSkill(HarvestAndReplant.class);
 		KAGIC.addSkill(HarvestAndReplantNetherWart.class);
@@ -214,6 +217,7 @@ public class KAGIC {
 		KAGIC.addSkill(TellFuture.class);
 		KAGIC.addSkill(TellFutureGarnet.class);
 		KAGIC.addSkill(TellReport.class);
+		KAGIC.addSkill(UnfuseTopaz.class);
 		KAGIC.addSkill(Warp.class);
     }
     

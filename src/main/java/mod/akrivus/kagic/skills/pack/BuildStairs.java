@@ -112,7 +112,10 @@ public class BuildStairs extends Speak<EntityBismuth> {
 					if (placed) {
 						this.placeStack.shrink(1);
 						if (this.placeStack.isEmpty()) {
-							this.getBlock(gem);
+							placed = this.getBlock(gem) && placed;
+							if (!placed) {
+								break;
+							}
 						}
 					}
 				}

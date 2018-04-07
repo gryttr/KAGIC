@@ -179,6 +179,11 @@ public class EntityAgate extends EntityQuartzSoldier implements IAnimals {
         	this.setSpecial(compound.getBoolean("holly") ? 1 : 0);
         	this.setGemPlacement(GemPlacements.BACK_OF_HEAD.id);
         	this.setGemCut(GemCuts.TEARDROP.id);
+        	if (this.getUniformColor() > 15) {
+            	this.setUniformColor(3);
+            	this.nativeColor = 3;
+            	this.setSpecial(1);
+        	}
         }
         super.readEntityFromNBT(compound);
     }
@@ -205,18 +210,18 @@ public class EntityAgate extends EntityQuartzSoldier implements IAnimals {
     @Override
     public void itemDataToGemData(int data) {
     	this.dataManager.set(COLOR, data);
-		this.setUniformColor(data);
-		this.nativeColor = data;
 		this.setSkinColor(this.generateSkinColor());
 		this.setHairStyle(this.generateHairStyle());
 		this.setHairColor(this.generateHairColor());
 		this.setGemColor(this.generateGemColor());
         this.setCustomNameTag(new TextComponentTranslation(String.format("entity.kagic.agate_%1$d.name", data)).getUnformattedComponentText());
-        if (data == 16) {
-        	this.setGemPlacement(GemPlacements.BACK_OF_HEAD.id);
-        	this.setGemCut(GemCuts.TEARDROP.id);
+        if (data > 15) {
+        	this.setUniformColor(3);
+        	this.nativeColor = 3;
         	this.setSpecial(1);
         } else {
+        	this.setUniformColor(data);
+    		this.nativeColor = data;
         	this.setSpecial(0);
         }
 	}

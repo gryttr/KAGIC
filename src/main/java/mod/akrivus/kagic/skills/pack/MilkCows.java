@@ -34,7 +34,7 @@ public class MilkCows extends Speak<EntityGem> {
 	}
 	@Override
 	public boolean proceed(EntityGem gem) {
-		return this.otherCow != null && this.otherCow.getGrowingAge() == 0 && gem.getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.BUCKET;
+		return this.otherCow != null && this.otherCow.getGrowingAge() == 0 && gem.getHeldItem(EnumHand.MAIN_HAND).getItem() == Items.BUCKET && gem.isSoldier;
 	}
 	@Override
 	public void init(EntityGem gem) {
