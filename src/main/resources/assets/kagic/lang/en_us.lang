@@ -466,7 +466,6 @@ tile.gem_drill.name=Gem Drill
 tile.gem_seed.name=Gem Seed
 tile.injector.name=Automatic Injector
 tile.analog_injector.name=Analog Injector
-tile.pneumatic_injector.name=Pneumatic Injector
 tile.incubator.name=Incubator
 tile.drained_block.name=Drained Block
 tile.drained_block_2.name=Drained Block
@@ -486,6 +485,7 @@ tile.pink_sandstone_stairs.name=Pink Sandstone Stairs
 tile.wavy_pink_sandstone_stairs.name=Wavy Pink Sandstone Stairs
 tile.pink_sandstone_slab.pink_sandstone.name=Pink Sandstone Slab
 tile.giant_strawberry.name=Giant Strawberry
+tile.iris.name=Iris
 
 fluid.rose_tears=Healing Tears
 

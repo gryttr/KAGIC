@@ -65,13 +65,16 @@ public class ModEvents {
 			e.player.sendMessage(new TextComponentString("You are playing KAGIC " + KAGIC.VERSION + " in DEVELOPER mode."));
 			e.player.sendMessage(new TextComponentString("Note that some features may be removed!"));
 		}
-		else if (ModConfigs.notifyOnUpdates) {
+		else {
+			e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§dKAGIC X10§f\"}, {\"text\":\" - \"}, {\"text\":\"§3[Discord]§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://discord.gg/MwEuu9x\"}}, {\"text\":\" | \"}, {\"text\":\"§e[Wiki]§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"http://kagic.wikia.com/\"}}]"));
+		}
+		/*else if (ModConfigs.notifyOnUpdates) {
 			Update result = ModMetrics.checkForUpdates();
 			if (result != null && !KAGIC.VERSION.equals(result.getNewVersion())) {
 				e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§cKAGIC v" + result.getNewVersion() + " is out for Minecraft " + KAGIC.MCVERSION + "§f\"}]"));
 				e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§e§nDownload§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDownloadLink() + "\"}}, {\"text\":\" | \"}, {\"text\":\"§3§nDiscord§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDiscordLink() + "\"}}]"));
 			}
-		}
+		}*/
 	}
 	@SubscribeEvent
 	public void onEntitySpawn(EntityJoinWorldEvent e) {

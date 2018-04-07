@@ -280,7 +280,11 @@ public class InjectorResult {
 		Block block = state.getBlock();
 		
 		if (block instanceof BlockBush) {
-			world.destroyBlock(ore, false);
+			if (world.rand.nextInt(3) == 0) {
+				world.setBlockState(ore, ModBlocks.IRIS.getDefaultState());
+			} else {
+				world.destroyBlock(ore, false);
+			}
 			return;
 		} else if (block == Blocks.BEDROCK) {
 			return;
