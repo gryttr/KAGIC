@@ -24,6 +24,7 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
@@ -85,5 +86,10 @@ public class EntityShardFusion extends EntityGem {
 	public boolean spokenTo(EntityPlayer player, String message) {
 		player.sendMessage(new TextComponentTranslation("command.kagic.does_not_understand", this.getName()));
 		return false;
+	}
+	
+	@Override
+	public String generateSpecificName(BlockPos pos) {
+		return "Fusion";
 	}
 }

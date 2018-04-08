@@ -38,12 +38,12 @@ public class ItemGem extends Item {
 	
 	public ItemGem(String name) {
 		this(name, false);
-		this.setMaxDamage(60);
 	}
 	
 	public ItemGem(String name, boolean cracked) {
 		this.setUnlocalizedName((cracked ? "cracked_" : "") + name + "_gem");
 		this.setMaxStackSize(1);
+		this.setMaxDamage(60);
 		if (name.contains("corrupted") || name.contains("tongue_monster") || name.contains("water_bear") || name.contains("handbody") || name.contains("footarm") || name.contains("mouthtorso")) {
 			this.setCreativeTab(ModCreativeTabs.CREATIVE_TAB_BAD_GEMS);
 		}
@@ -70,6 +70,12 @@ public class ItemGem extends Item {
 			NBTTagCompound tag = stack.getTagCompound();
 			if (tag.hasKey("name")) {
 				String name = tag.getString("name");
+				if (!name.isEmpty()) {
+					tooltip.add(name);
+				}
+			}
+			if (tag.hasKey("specificName")) {
+				String name = tag.getString("specificName");
 				if (!name.isEmpty()) {
 					tooltip.add(name);
 				}

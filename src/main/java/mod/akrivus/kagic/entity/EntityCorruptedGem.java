@@ -131,4 +131,9 @@ public class EntityCorruptedGem extends EntityGem {
 	public int getMaxSpawnedInChunk() {
 		return 1;
 	}
+	
+	@Override
+	public String generateSpecificName(BlockPos pos) {
+		return "Corrupted";
+	}
 }

@@ -143,9 +143,6 @@ public class ModItems {
 	public static final ItemGem TOPAZ_GEM = new ItemGem("topaz");
 	public static final ItemGem BLUE_TOPAZ_GEM = new ItemGem("topaz_1");
 	
-	public static final ItemGem CITRINE_GEM = new ItemGem("citrine");
-	public static final ItemGem AMETRINE_GEM = new ItemGem("citrine_1");
-	
 	public static final ItemGem WHITE_ZIRCON_GEM = new ItemGem("zircon_0");
 	public static final ItemGem ORANGE_ZIRCON_GEM = new ItemGem("zircon_1");
 	public static final ItemGem MAGENTA_ZIRCON_GEM = new ItemGem("zircon_2");
@@ -239,9 +236,6 @@ public class ModItems {
 
 	public static final ItemGem CRACKED_TOPAZ_GEM = new ItemGem("topaz", true);
 	public static final ItemGem CRACKED_BLUE_TOPAZ_GEM = new ItemGem("topaz_1", true);
-	
-	public static final ItemGem CRACKED_CITRINE_GEM = new ItemGem("citrine", true);
-	public static final ItemGem CRACKED_AMETRINE_GEM = new ItemGem("citrine_1", true);
 
 	public static final ItemGem CRACKED_WHITE_ZIRCON_GEM = new ItemGem("zircon_0", true);
 	public static final ItemGem CRACKED_ORANGE_ZIRCON_GEM = new ItemGem("zircon_1", true);
@@ -379,9 +373,6 @@ public class ModItems {
 		
 		registerGem(TOPAZ_GEM, CRACKED_TOPAZ_GEM, event);
 		registerGem(BLUE_TOPAZ_GEM, CRACKED_BLUE_TOPAZ_GEM, event);
-		
-		registerGem(CITRINE_GEM, CRACKED_CITRINE_GEM, event);
-		registerGem(AMETRINE_GEM, CRACKED_AMETRINE_GEM, event);
 		
 		registerGem(WHITE_ZIRCON_GEM, CRACKED_WHITE_ZIRCON_GEM, event);
 		registerGem(ORANGE_ZIRCON_GEM, CRACKED_ORANGE_ZIRCON_GEM, event);
