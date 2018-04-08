@@ -281,7 +281,7 @@ public class InjectorResult {
 		
 		if (block instanceof BlockBush) {
 			if (world.rand.nextInt(3) == 0) {
-				world.setBlockState(ore, ModBlocks.IRIS.getDefaultState());
+				world.setBlockState(ore, ModBlocks.DRAIN_LILY.getDefaultState());
 			} else {
 				world.destroyBlock(ore, false);
 			}

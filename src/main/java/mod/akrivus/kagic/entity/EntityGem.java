@@ -1885,34 +1885,53 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 			}
 			else {
 				ItemStack stack = new ItemStack(this.droppedGemItem);
-				boolean shatterGem = false;
+				boolean shatterGem = cause.isExplosion() ? true : (this.rand.nextInt(20) == 0);
+				boolean poofGem = true;
 				if (cause.getTrueSource() instanceof EntityLivingBase) {
-					EntityLivingBase attacker = (EntityLivingBase) cause.getTrueSource();
-					ItemStack heldItem = attacker.getHeldItemMainhand();
-					if (heldItem.isItemEnchanted()) {
-						NBTTagList enchantments = heldItem.getEnchantmentTagList();
-						for (int i = 0; i < enchantments.tagCount(); i++) {
-							if (enchantments.getCompoundTagAt(i).getInteger("id") == Enchantment.getEnchantmentID(ModEnchantments.BREAKING_POINT)) {
-								shatterGem = true;
+					if (cause.getTrueSource() instanceof EntitySlag) {
+						cause = new SlagDamage();
+						shatterGem = false;
+						poofGem = false;
+					}
+					else {
+						EntityLivingBase attacker = (EntityLivingBase) cause.getTrueSource();
+						ItemStack heldItem = attacker.getHeldItemMainhand();
+						if (heldItem.getItem() != ModItems.GEM_STAFF && heldItem.getItem() != ModItems.COMMANDER_STAFF) {
+							shatterGem = this.rand.nextInt(60) == 0;
+							if (heldItem.isItemEnchanted()) {
+								NBTTagList enchantments = heldItem.getEnchantmentTagList();
+								for (int i = 0; i < enchantments.tagCount(); i++) {
+									if (enchantments.getCompoundTagAt(i).getInteger("id") == Enchantment.getEnchantmentID(ModEnchantments.BREAKING_POINT)) {
+										shatterGem = true;
+									}
+								}
 							}
 						}
+						else {
+							stack = new ItemStack(this.droppedGemItem);
+							cause = new PoofDamage();
+							stack.setItemDamage(0);
+							shatterGem = false;
+							poofGem = false;
+						}
 					}
-					else if (heldItem.getItem() != ModItems.GEM_STAFF || heldItem.getItem() != ModItems.COMMANDER_STAFF) {
-						shatterGem = this.rand.nextInt(60) == 0;
-					}
+				}
+				else if (cause instanceof PoofDamage) {
+					stack.setItemDamage(0);
+					shatterGem = false;
+					poofGem = false;
 				}
 				if (shatterGem) {
 					this.playSound(ModSounds.GEM_SHATTER, 3.0F, 1.0F);
 					stack = new ItemStack(this.droppedCrackedGemItem);
 					cause = new ShatterDamage();
+					stack.setItemDamage(0);
 				}
-				else {
+				else if (poofGem) {
 					this.playSound(ModSounds.GEM_POOF, 3.0F, 1.0F);
 					stack = new ItemStack(this.droppedGemItem);
 					cause = new PoofDamage();
-				}
-				if (cause.getTrueSource() instanceof EntitySlag) {
-					cause = new SlagDamage();
+					stack.setItemDamage(60);
 				}
 				if (this.world.getGameRules().getBoolean("showDeathMessages")) {
 					for (EntityPlayer playerIn : this.world.playerEntities) {

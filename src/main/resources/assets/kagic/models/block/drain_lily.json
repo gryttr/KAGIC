@@ -1,0 +1,7 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "particle": "kagic:blocks/drain_lily",
+        "cross": "kagic:blocks/drain_lily"
+    }
+}

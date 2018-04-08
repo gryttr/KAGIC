@@ -9,7 +9,7 @@ import mod.akrivus.kagic.blocks.BlockGiantStrawberry;
 import mod.akrivus.kagic.blocks.BlockGiantStrawberryStem;
 import mod.akrivus.kagic.blocks.BlockIncubator;
 import mod.akrivus.kagic.blocks.BlockInjector;
-import mod.akrivus.kagic.blocks.BlockIris;
+import mod.akrivus.kagic.blocks.BlockDrainLily;
 import mod.akrivus.kagic.blocks.BlockPinkSandstone;
 import mod.akrivus.kagic.blocks.BlockPinkSandstoneDoubleSlab;
 import mod.akrivus.kagic.blocks.BlockPinkSandstoneSlab;
@@ -76,7 +76,7 @@ public class ModBlocks {
 	public static final BlockPinkSandstoneDoubleSlab PINK_SANDSTONE_DOUBLE_SLAB = new BlockPinkSandstoneDoubleSlab();
 	public static final BlockGiantStrawberry GIANT_STRAWBERRY = new BlockGiantStrawberry();
 	public static final BlockGiantStrawberryStem GIANT_STRAWBERRY_STEM = new BlockGiantStrawberryStem(GIANT_STRAWBERRY);
-	public static final BlockIris IRIS = new BlockIris();
+	public static final BlockDrainLily DRAIN_LILY = new BlockDrainLily();
 	
 	public static final Fluid FLUID_ROSE_TEARS = new Fluid("rose_tears", new ResourceLocation("kagic:blocks/rose_tears_still"), new ResourceLocation("kagic:blocks/rose_tears_flowing"));
 	public static BlockRoseTears ROSE_TEARS;
@@ -106,7 +106,7 @@ public class ModBlocks {
 		registerBlock(PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_double_slab"), event);
 		registerBlock(GIANT_STRAWBERRY, new ResourceLocation("kagic:giant_strawberry_block"), event);
 		registerBlock(GIANT_STRAWBERRY_STEM, new ResourceLocation("kagic:giant_strawberry_stem"), event);
-		registerBlock(IRIS, new ResourceLocation("kagic:iris"), event);
+		registerBlock(DRAIN_LILY, new ResourceLocation("kagic:drain_lily"), event);
 		
 		registerFluid(FLUID_ROSE_TEARS);
 		ROSE_TEARS = new BlockRoseTears(FLUID_ROSE_TEARS, Material.WATER);
@@ -148,7 +148,7 @@ public class ModBlocks {
 		registerBlockItem(WAVY_PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:wavy_pink_sandstone_stairs"), event);		
 		registerBlockItemSlab(PINK_SANDSTONE_SLAB, PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_slab"), event);		
 		registerBlockItem(GIANT_STRAWBERRY, new ResourceLocation("kagic:giant_strawberry_block"), event, "blockGiantStrawberry");
-		registerBlockItem(IRIS, new ResourceLocation("kagic:iris"), event);
+		registerBlockItem(DRAIN_LILY, new ResourceLocation("kagic:drain_lily"), event);
 	}
 	
 	public static void registerBlockItem(Block block, ResourceLocation location, RegistryEvent.Register<Item> event) {

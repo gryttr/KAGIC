@@ -11,16 +11,13 @@ import mod.akrivus.kagic.entity.ai.EntityAIAlignGems;
 import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIHarvestFarmland;
-import mod.akrivus.kagic.entity.ai.EntityAIMineOresBySight;
 import mod.akrivus.kagic.entity.ai.EntityAIPickUpItems;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
-import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModConfigs;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.util.injector.InjectorResult;
 import mod.heimrarnadalr.kagic.util.Colors;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
@@ -41,7 +38,6 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.IInventoryChangedListener;
@@ -53,7 +49,6 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.DamageSource;
@@ -117,7 +112,6 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		this.tasks.addTask(3, new EntityAIPickUpItems(this, 0.9D));
 		this.tasks.addTask(4, new EntityAIAlignGems(this, 0.9D));
 		this.tasks.addTask(4, new EntityAIHarvestFarmland(this, 0.6D));
-		this.tasks.addTask(4, new EntityAIMineOresBySight(this, 0.9D, 4));
 		this.tasks.addTask(5, new EntityAIAttackMelee(this, 1.0D, true));
 		this.tasks.addTask(5, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
@@ -222,7 +216,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		if (!this.world.isRemote) {
 			if (this.isTamed()) {
 				if (this.isOwner(player)) {
-					if (this.isFarmer() || this.isMiner()) {
+					if (this.isFarmer()) {
 						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
 						this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
 						this.setCanPickUpLoot(false);
@@ -291,45 +285,6 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 							this.playObeySound();
 							return true;
 						}
-						else if (this.isMiner()) {
-							if (!this.isDefective() && player.isSneaking()) {
-								for (int x = -4; x <= 4; ++x) {
-									for (int y = -4; y <= 4; ++y) {
-										for (int z = -4; z <= 4; ++z) {
-											BlockPos tempPos = this.getPosition().add(x, y, z);
-											Block block =  this.world.getBlockState(tempPos).getBlock();
-											if (block.getUnlocalizedName().contains("ore")) {
-												ItemStack result = FurnaceRecipes.instance().getSmeltingResult(new ItemStack(Item.getItemFromBlock(block))).copy();
-												if (result.getUnlocalizedName().contains("ingot")) {
-													this.gemStorage.addItem(result);
-													this.playSound(SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE, 0.1F, this.getSoundPitch());
-													if (this.isPrimary()) {
-														this.gemStorage.addItem(result.copy()); // Primaries double output like an IC2 macerator
-													}
-													if (tempPos.getY() % 6 == 0 || tempPos.getY() % 6 == 1) {
-														this.world.setBlockState(tempPos, ModBlocks.DRAINED_BLOCK_2.getDefaultState());
-													}
-													else if (tempPos.getY() % 5 == 0) {
-														this.world.setBlockState(tempPos, ModBlocks.DRAINED_BANDS.getDefaultState());
-													}
-													else {
-														this.world.setBlockState(tempPos, ModBlocks.DRAINED_BLOCK.getDefaultState());
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-							if (this.gemStorage.isEmpty()) {
-								player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_no_haul").getUnformattedComponentText()));
-							}
-							else {
-								player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_haul").getUnformattedComponentText()));
-							}
-							this.openGUI(player);
-							this.playObeySound();
-						}
 						else {
 							this.checkSurroundings(this.world, this.getPosition());
 							//player.addStat(ModAchievements.IM_REPORTING_THIS);
@@ -350,7 +305,6 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		if (!worldIn.isRemote) {
 			InjectorResult result = ((this.lastCheckPos != null && this.getDistanceSq(this.lastCheckPos) > 32.0F) || this.lastCheckPos == null || this.world.getTotalWorldTime() - this.lastCheckTime > 2400) ? InjectorResult.create(worldIn, pos, false) : this.lastResult;
 			String defectivity = Math.round(result.getDefectivity() * 100) + "%";
-			System.out.println("k: " + defectivity);
 			if (result.getGem() != null) {
 				if (result.isPrimary()) {
 					this.getOwner().sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_find_prime_gem", result.getName()).getUnformattedComponentText()));
@@ -374,7 +328,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	@Override
 	public void onLivingUpdate() {
 		if (!this.canPickUpLoot() && this.dropTimer > 40) {
-			this.setCanPickUpLoot(this.isFarmer() || this.isMiner());
+			this.setCanPickUpLoot(this.isFarmer());
 		}
 		if (this.isFarmer()) {
 			++this.harvestTimer;
@@ -465,17 +419,11 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		if (this.isFarmer()) {
 			return itemIn instanceof ItemSeeds || itemIn instanceof ItemSeedFood || itemIn instanceof ItemFood || itemIn == Items.WHEAT;
 		}
-		else if (this.isMiner()) {
-			return itemIn.getUnlocalizedName().contains("ore") || itemIn.getUnlocalizedName().contains("ingot");
-		}
 		return false;
 	}
 	
 	public boolean isFarmer() {
 		return this.isTamed() && this.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemHoe;
-	}
-	public boolean isMiner() {
-		return this.isTamed() && this.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemPickaxe;
 	}
 	
 	/*********************************************************

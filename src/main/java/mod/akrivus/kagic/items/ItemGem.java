@@ -15,6 +15,7 @@ import mod.akrivus.kagic.init.ModCreativeTabs;
 import mod.akrivus.kagic.init.ModEntities;
 import mod.akrivus.kagic.init.ModItems;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -37,6 +38,7 @@ public class ItemGem extends Item {
 	
 	public ItemGem(String name) {
 		this(name, false);
+		this.setMaxDamage(60);
 	}
 	
 	public ItemGem(String name, boolean cracked) {
@@ -82,18 +84,20 @@ public class ItemGem extends Item {
 	public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote) {
 			ItemStack stack = playerIn.getHeldItem(hand);
-			if (!this.isCracked) {
-				RayTraceResult raytraceresult = this.rayTrace(worldIn, playerIn, true);
-		        if (raytraceresult != null && raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK) {
-		            BlockPos blockpos = raytraceresult.getBlockPos();
-		            if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos, raytraceresult.sideHit, stack)) {
-		            	boolean spawned = spawnGem(worldIn, playerIn, blockpos, stack);
-						if (!playerIn.capabilities.isCreativeMode && spawned) {
-							stack.shrink(1);
-						}
-	            	}
-	            }
-	        }
+			if (stack.getItemDamage() == 0) {
+				if (!this.isCracked) {
+					RayTraceResult raytraceresult = this.rayTrace(worldIn, playerIn, true);
+			        if (raytraceresult != null && raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK) {
+			            BlockPos blockpos = raytraceresult.getBlockPos();
+			            if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos, raytraceresult.sideHit, stack)) {
+			            	boolean spawned = spawnGem(worldIn, playerIn, blockpos, stack);
+							if (!playerIn.capabilities.isCreativeMode && spawned) {
+								stack.shrink(1);
+							}
+		            	}
+		            }
+		        }
+			}
 	       	return EnumActionResult.SUCCESS;
 		}
 		return EnumActionResult.PASS;
@@ -158,21 +162,28 @@ public class ItemGem extends Item {
 		entity.isDead = false;
 		entity.setEntityInvulnerable(true);
 		entity.extinguish();
-		if (!this.isCracked && entity.ticksExisted > 1200 && !entity.world.isRemote) {
-			ItemGem gem = (ItemGem) entity.getItem().getItem();
-			boolean spawned = gem.spawnGem(entity.world, null, entity.getPosition(), entity.getItem());
-			if (spawned) {
-				entity.setDead();
+		if (entity.getAge() > 600) {
+			entity.setNoDespawn();
+		}
+		if (!this.isCracked && !entity.world.isRemote && entity.getAge() < 0) {
+			ItemStack stack = entity.getItem();
+			if (entity.getEntityWorld().getWorldTime() % 20 == 0 && stack.getItemDamage() > 0) {
+				stack.setItemDamage(Math.max(stack.getItemDamage() - 2, 0));
+			}
+			if (stack.getItemDamage() == 0) {
+				ItemGem gem = (ItemGem) stack.getItem();
+				boolean spawned = gem.spawnGem(entity.world, null, entity.getPosition(), entity.getItem());
+				if (spawned) {
+					entity.setDead();
+				}
 			}
 		}
 		else if (this.isCracked) { 
-			if (entity.ticksExisted > 4800) {
-				entity.setNoDespawn();
-			}
 			if (!entity.world.isRemote && entity.world.getBlockState(entity.getPosition()).getBlock() == ModBlocks.ROSE_TEARS) {
 				ItemStack crackedGemStack = entity.getItem();
 				ItemStack healedGemStack = new ItemStack(ModItems.GEM_TABLE.get(crackedGemStack.getItem()));
 				healedGemStack.setTagCompound(crackedGemStack.getTagCompound());
+				healedGemStack.setItemDamage(0);
 				EntityItem healedGem = new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, healedGemStack);
 				entity.world.spawnEntity(healedGem);
 				entity.setDead();
@@ -180,6 +191,12 @@ public class ItemGem extends Item {
 		}
         return false;
     }
+	@Override
+	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		if (worldIn.getWorldTime() % 20 == 0 && stack.getItemDamage() > 0) {
+			stack.setItemDamage(Math.max(stack.getItemDamage() - (1 * (isSelected ? 2 : 1)), 0));
+		}
+	}
 	
 	@SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack stack) {

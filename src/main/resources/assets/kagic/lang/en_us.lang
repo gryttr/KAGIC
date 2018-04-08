@@ -485,7 +485,7 @@ tile.pink_sandstone_stairs.name=Pink Sandstone Stairs
 tile.wavy_pink_sandstone_stairs.name=Wavy Pink Sandstone Stairs
 tile.pink_sandstone_slab.pink_sandstone.name=Pink Sandstone Slab
 tile.giant_strawberry.name=Giant Strawberry
-tile.iris.name=Iris
+tile.drain_lily.name=Drain Lily
 
 fluid.rose_tears=Healing Tears
 

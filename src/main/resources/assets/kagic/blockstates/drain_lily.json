@@ -2,10 +2,10 @@
     "forge_marker": 1,
     "variants": {
         "normal": {
-            "model": "kagic:iris"
+            "model": "kagic:drain_lily"
         },
         "inventory": {
-            "model": "kagic:iris"
+            "model": "kagic:drain_lily"
         }
     }
 }

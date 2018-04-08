@@ -5,7 +5,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "kagic:iris"
+      "item": "kagic:drain_lily"
     }
   ]
 }

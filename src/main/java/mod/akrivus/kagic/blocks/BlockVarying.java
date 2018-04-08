@@ -28,7 +28,7 @@ public class BlockVarying extends Block {
 					BlockPos newp = pos.add(x, y, z);
 					Block block = worldIn.getBlockState(pos.up()).getBlock();
 					if (block instanceof BlockBush) {
-						if (block instanceof BlockIris) {}
+						if (block instanceof BlockDrainLily) {}
 						else {
 							worldIn.destroyBlock(newp, false);
 						}

@@ -60,7 +60,6 @@ public class EntitySapphire extends EntityGem implements INpc {
 
 	private static final List<Integer> SKIN_COLORS = new ArrayList<Integer>(Arrays.asList(
 			0,									//White
-			1,									//Orange
 			4, 4, 4, 4,							//Yellow
 			6, 6, 6,							//Pink
 			10,	10,								//Purple
@@ -130,10 +129,10 @@ public class EntitySapphire extends EntityGem implements INpc {
 		this.setHairColor(this.getSkinColor());
 		if (data == 16) {
 			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.sapphire_16.name").getUnformattedComponentText());
-			this.setHairColor(0xF4745A);
-			this.setUniformColor(6);
-			this.nativeColor = 6;
-			this.setInsigniaColor(6);
+			this.setHairColor(0xF9D5BD);
+			this.setUniformColor(1);
+			this.nativeColor = 1;
+			this.setInsigniaColor(1);
 		}
 		else {
 			this.setUniformColor(data);
@@ -397,7 +396,7 @@ public class EntitySapphire extends EntityGem implements INpc {
 			} catch (Exception e) {}
 		}
 		else {
-			colorValue = 0xE54E37;
+			colorValue = 0xFF8D32;
 		}
 		return colorValue;
 	}
