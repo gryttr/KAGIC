@@ -1576,7 +1576,7 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 		else {
 			int x = pos.getX(); int y = pos.getY(); int z = pos.getZ();
 			String cutX = Integer.toString(Math.abs((x%10))).toUpperCase();
-			String cutY = Integer.toString(Math.abs((26-(y%26))+10),36).toUpperCase();
+			String cutY = Integer.toString(Math.abs(((25-(int)(y/9.8F)))+10),36).toUpperCase();
 			String cutZ = Integer.toString(Math.abs((z%26)+10),36).toUpperCase();
 			String face = Integer.toString(Math.abs((x+z)/48),36).toUpperCase();
 			String cut = "Cut " + (cutX+cutZ+cutY);

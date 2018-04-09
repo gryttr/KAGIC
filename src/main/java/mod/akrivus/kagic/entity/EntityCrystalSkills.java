@@ -3,11 +3,10 @@ package mod.akrivus.kagic.entity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import mod.akrivus.kagic.init.KAGIC;
-import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.skills.SkillBase;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
@@ -89,7 +88,7 @@ public class EntityCrystalSkills extends EntityCreature {
 		this.lastPlayerSpokenTo = player;
 		boolean canRunCommands = this.isSelected();
 		for (String name : this.getNames(new ArrayList<String>())) {
-			canRunCommands = canRunCommands || message.toLowerCase().contains(name.toLowerCase());
+			canRunCommands = Pattern.compile("\\b" + name.toLowerCase() + "\\b").matcher(message.toLowerCase()).find() || canRunCommands;
 		}
 		if (canRunCommands) {
 			for (Class<? extends SkillBase> skillClass : SKILLS) {

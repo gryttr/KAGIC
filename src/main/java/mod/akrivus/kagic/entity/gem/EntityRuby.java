@@ -495,7 +495,7 @@ public class EntityRuby extends EntityGem implements IAnimals {
         this.world.spawnEntity(arrow);
     }
 	public void jump() {
-		if (this.isDefective()) {
+		if (this.isDefective() && !this.world.isRemote) {
 			this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
 		}

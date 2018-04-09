@@ -5,6 +5,7 @@ import java.util.Iterator;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.init.ModConfigs;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
