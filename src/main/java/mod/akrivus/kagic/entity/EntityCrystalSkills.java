@@ -87,7 +87,10 @@ public class EntityCrystalSkills extends EntityCreature {
 	public boolean spokenTo(EntityPlayer player, String message) {
 		boolean result = false;
 		this.lastPlayerSpokenTo = player;
-		boolean canRunCommands = this.isSelected() || message.toLowerCase().contains(this.getName().toLowerCase());
+		boolean canRunCommands = this.isSelected();
+		for (String name : this.getNames(new ArrayList<String>())) {
+			canRunCommands = canRunCommands || message.toLowerCase().contains(name.toLowerCase());
+		}
 		if (canRunCommands) {
 			for (Class<? extends SkillBase> skillClass : SKILLS) {
 				try {
@@ -104,6 +107,13 @@ public class EntityCrystalSkills extends EntityCreature {
 			}
 		}
 		return result;
+	}
+	public void setCallibleNames(ArrayList<String> list) {
+		list.add(this.getName());
+	}
+	public String[] getNames(ArrayList<String> list) {
+		this.setCallibleNames(list);
+		return list.toArray(new String[0]);
 	}
 	@Override
 	public void onLivingUpdate() {

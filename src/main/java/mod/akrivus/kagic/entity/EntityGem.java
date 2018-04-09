@@ -1583,6 +1583,27 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 			return "Facet " + face + " " + cut;
 		}
 	}
+	public String getFacet() {
+		String[] s = this.getSpecificName().split(" ");
+		if (s.length == 4) {
+			return s[1];
+		}
+		return null;
+	}
+	public String getCut() {
+		String[] s = this.getSpecificName().split(" ");
+		if (s.length == 4) {
+			return s[3];
+		}
+		return null;
+	}
+	
+	@Override
+	public void setCallibleNames(ArrayList<String> list) {
+		super.setCallibleNames(list);
+		list.add(this.getFacet());
+		list.add(this.getCut());
+	}
 
 	/*********************************************************
 	 * Methods related to entity combat.					 *

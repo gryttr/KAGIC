@@ -449,17 +449,12 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	}
 	public void sayClod() {
 		this.playHurtSound(DamageSource.GENERIC);
-		if (ModConfigs.disableClod) {
-			// rip.
+		if (this.getServitude() == EntityGem.SERVE_REBELLION) {
+			this.sendMessage("command.kagic.peridot_rebel");
 		}
 		else {
-			if (this.getServitude() == EntityGem.SERVE_REBELLION) {
-				this.sendMessage("command.kagic.peridot_rebel");
-			}
-			else {
-				int index = this.rand.nextInt(20);
-				this.sendMessage("command.kagic.peridot_scream_" + index);
-			}
+			int index = this.rand.nextInt(20);
+			this.sendMessage("command.kagic.peridot_scream_" + index);
 		}
 	}
 
