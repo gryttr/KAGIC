@@ -74,7 +74,7 @@ import net.minecraft.world.World;
 
 public class EntityRuby extends EntityGem implements IAnimals {
 	public static final HashMap<IBlockState, Double> RUBY_YIELDS = new HashMap<IBlockState, Double>();
-	public static final double RUBY_DEFECTIVITY_MULTIPLIER = 0.75;
+	public static final double RUBY_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double RUBY_DEPTH_THRESHOLD = 0;
 	private static final DataParameter<Integer> ANGER = EntityDataManager.<Integer>createKey(EntityRuby.class, DataSerializers.VARINT);
 	private int angerTicks = 0;

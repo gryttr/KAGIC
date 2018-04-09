@@ -40,7 +40,7 @@ import net.minecraft.world.World;
 
 public class EntityRutile extends EntityGem implements INpc {
 	public static final HashMap<IBlockState, Double> RUTILE_YIELDS = new HashMap<IBlockState, Double>();
-	public static final double RUTILE_DEFECTIVITY_MULTIPLIER = 1.75;
+	public static final double RUTILE_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double RUTILE_DEPTH_THRESHOLD = 0;
 	private static final int SKIN_COLOR_BEGIN = 0x5F243F; 
 	private static final int SKIN_COLOR_END = 0xC4695C; 

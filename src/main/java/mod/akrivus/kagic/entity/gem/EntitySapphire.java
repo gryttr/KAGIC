@@ -53,7 +53,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class EntitySapphire extends EntityGem implements INpc {
 	public static final HashMap<IBlockState, Double> SAPPHIRE_YIELDS = new HashMap<IBlockState, Double>();
-	public static final double SAPPHIRE_DEFECTIVITY_MULTIPLIER = 1.75;
+	public static final double SAPPHIRE_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double SAPPHIRE_DEPTH_THRESHOLD = 0;
 	public static final HashMap<Integer, ResourceLocation> SAPPHIRE_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private int luckTicks = 0;

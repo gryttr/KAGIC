@@ -63,7 +63,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class EntityPeridot extends EntityGem implements IInventoryChangedListener, INpc {
 	public static final HashMap<IBlockState, Double> PERIDOT_YIELDS = new HashMap<IBlockState, Double>();
-	public static final double PERIDOT_DEFECTIVITY_MULTIPLIER = 3;
+	public static final double PERIDOT_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double PERIDOT_DEPTH_THRESHOLD = 72;
 	public InventoryBasic gemStorage;
 	public InvWrapper gemStorageHandler;

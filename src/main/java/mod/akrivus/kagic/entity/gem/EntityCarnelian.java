@@ -40,7 +40,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityCarnelian extends EntityQuartzSoldier implements IAnimals {
 	public static final HashMap<IBlockState, Double> CARNELIAN_YIELDS = new HashMap<IBlockState, Double>();
-	public static final double CARNELIAN_DEFECTIVITY_MULTIPLIER = 1.75;
+	public static final double CARNELIAN_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double CARNELIAN_DEPTH_THRESHOLD = 64;
 	public static final HashMap<Integer, ResourceLocation> CARNELIAN_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private static final DataParameter<Boolean> CHARGED = EntityDataManager.<Boolean>createKey(EntityCarnelian.class, DataSerializers.BOOLEAN);
