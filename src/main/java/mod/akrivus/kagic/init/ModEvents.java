@@ -66,7 +66,7 @@ public class ModEvents {
 			e.player.sendMessage(new TextComponentString("Note that some features may be removed!"));
 		}
 		else {
-			e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§dKAGIC X10§f\"}, {\"text\":\" - \"}, {\"text\":\"§3[Discord]§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://discord.gg/MwEuu9x\"}}, {\"text\":\" | \"}, {\"text\":\"§e[Wiki]§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"http://kagic.wikia.com/\"}}]"));
+			e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§dKAGIC " + KAGIC.VERSION + "§f\"}, {\"text\":\" - \"}, {\"text\":\"§3[Discord]§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://discord.gg/MwEuu9x\"}}, {\"text\":\" | \"}, {\"text\":\"§e[Wiki]§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"http://kagic.wikia.com/\"}}]"));
 		}
 		/*else if (ModConfigs.notifyOnUpdates) {
 			Update result = ModMetrics.checkForUpdates();
