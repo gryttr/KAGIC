@@ -456,6 +456,7 @@ public class EntityJasper extends EntityQuartzSoldier implements IAnimals {
 		this.setMark1Color(this.generateMark1Color());
 		this.setUniformColor(this.nativeColor);
 		this.setGemColor(this.generateGemColor());
+		this.setSkinColor(this.generateSkinColor());
 		if (this.hasSecondMarking()) {
 			this.setMark2(this.generateMark2());
 			this.setMark2Color(this.generateMark2Color());

@@ -104,6 +104,7 @@ import net.minecraftforge.oredict.DyeUtils;
 
 public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IRangedAttackMob, IEntityAdditionalSpawnData {
 	protected static final DataParameter<Optional<UUID>> OWNER_UNIQUE_ID = EntityDataManager.<Optional<UUID>>createKey(EntityGem.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+	protected static final DataParameter<Optional<UUID>> GEUUID = EntityDataManager.<Optional<UUID>>createKey(EntityGem.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 	protected static final DataParameter<String> SPECIFIC_NAME = EntityDataManager.<String>createKey(EntityGem.class, DataSerializers.STRING);
 	protected static final DataParameter<Boolean> SELECTED = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
 	protected static final DataParameter<Boolean> SWINGING_ARMS = EntityDataManager.<Boolean>createKey(EntityGem.class, DataSerializers.BOOLEAN);
@@ -204,6 +205,7 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIRestrictOpenDoor(this));
 		this.dataManager.register(OWNER_UNIQUE_ID, Optional.<UUID>absent());
+		this.dataManager.register(GEUUID, Optional.<UUID>absent());
 		this.dataManager.register(SPECIFIC_NAME, "");
 		this.dataManager.register(SELECTED, false);
 		this.dataManager.register(GEM_PLACEMENT, -1);
@@ -255,6 +257,12 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 		}
 		else {
 			compound.setString("ownerId", this.getOwnerId().toString());
+		}
+		if (this.getGemId() == null) {
+			compound.setString("gemId", MathHelper.getRandomUUID().toString());
+		}
+		else {
+			compound.setString("gemId", this.getGemId().toString());
 		}
 		if (this.getLeader() == null) {
 			compound.setString("leaderId", "");
@@ -377,6 +385,16 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 		if (!ownerId.isEmpty()) {
 			this.setOwnerId(UUID.fromString(ownerId));
 		}
+		String gemId;
+		if (compound.hasKey("gemId", 8)) {
+			gemId = compound.getString("gemId");
+		}
+		else {
+			gemId = MathHelper.getRandomUUID().toString();
+		}
+		if (!gemId.isEmpty()) {
+			this.setGemId(UUID.fromString(gemId));
+		}
 		String leaderId;
 		if (compound.hasKey("leaderId", 8)) {
 			leaderId = compound.getString("leaderId");
@@ -446,6 +464,7 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 	
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
 		this.setHealth(this.getMaxHealth());
+		this.setGemId(MathHelper.getRandomUUID());
 		if (!this.isGemPlacementDefined() || !this.isGemCutDefined() || !this.isCorrectCutPlacement()) {
 			this.setNewCutPlacement();
 		}
@@ -1391,6 +1410,16 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 		return (UUID) ((Optional<UUID>) this.dataManager.get(OWNER_UNIQUE_ID)).orNull();
 	}
 	
+	public void setGemId(UUID gemId) {
+		this.dataManager.set(GEUUID, Optional.fromNullable(gemId));
+	}
+	public void setGemId(String gemId) {
+		this.dataManager.set(GEUUID, Optional.fromNullable(UUID.fromString(gemId)));
+	}
+	public UUID getGemId() {
+		return (UUID) ((Optional<UUID>) this.dataManager.get(GEUUID)).orNull();
+	}
+	
 	public EntityPlayer getOwner() {
 		EntityPlayer owner = null;
 		double distance = Double.MAX_VALUE;
@@ -1576,7 +1605,7 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 		else {
 			int x = pos.getX(); int y = pos.getY(); int z = pos.getZ();
 			String cutX = Integer.toString(Math.abs((x%10))).toUpperCase();
-			String cutY = Integer.toString(Math.abs(((25-(int)(y/9.8F)))+10),36).toUpperCase();
+			String cutY = Integer.toString(Math.abs((y/4)%36),36).toUpperCase();
 			String cutZ = Integer.toString(Math.abs((z%26)+10),36).toUpperCase();
 			String face = Integer.toString(Math.abs((x+z)/48),36).toUpperCase();
 			String cut = "Cut " + (cutX+cutZ+cutY);
@@ -1971,6 +2000,7 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 					shatterGem = false;
 					poofGem = false;
 				}
+				this.playSound(ModSounds.GEM_POOF, 3.0F, 1.0F);
 				if (shatterGem) {
 					this.playSound(ModSounds.GEM_SHATTER, 3.0F, 1.0F);
 					stack = new ItemStack(this.droppedCrackedGemItem);
@@ -1978,7 +2008,6 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 					stack.setItemDamage(0);
 				}
 				else if (poofGem) {
-					this.playSound(ModSounds.GEM_POOF, 3.0F, 1.0F);
 					stack = new ItemStack(this.droppedGemItem);
 					cause = new PoofDamage();
 					stack.setItemDamage(60);

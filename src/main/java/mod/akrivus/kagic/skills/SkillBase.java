@@ -200,6 +200,7 @@ public class SkillBase<T extends EntityCrystalSkills> {
 	}
 	@Deprecated
 	public void resetTask(T gem) {
+		gem.getNavigator().clearPath();
 		try {
 			this.isAllowedToRun = false;
 			this.readyForRemoval = true;
