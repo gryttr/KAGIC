@@ -120,6 +120,6 @@ public class CollectLiquids extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.liquidLocation;
+		return "collecting " + this.selectedNoun;
 	}
 }

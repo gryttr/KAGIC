@@ -92,6 +92,6 @@ public class DumpChestsBismuth extends Speak<EntityBismuth> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.chestLocation;
+		return "putting things away";
 	}
 }

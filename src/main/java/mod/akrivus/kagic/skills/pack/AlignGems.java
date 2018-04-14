@@ -76,6 +76,6 @@ public class AlignGems extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.unalignedGem;
+		return "recruiting " + this.unalignedGem.getName();
 	}
 }

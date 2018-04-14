@@ -377,10 +377,12 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
 		    			}
 		    			else if (stack.getItem() == Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE)) {
 		    				if (player.isSneaking()) {
-		    					ItemStack newstack = new ItemStack(Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE));
-		    					Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE).setDamage(newstack, this.getVisorColor());
-		    					this.entityDropItem(newstack, 0.0F);
-		    					this.setHasVisor(false);
+		    					if (this.hasVisor()) {
+			    					ItemStack newstack = new ItemStack(Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE));
+			    					Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE).setDamage(newstack, this.getVisorColor());
+			    					this.entityDropItem(newstack, 0.0F);
+			    					this.setHasVisor(false);
+		    					}
 		    				}
 		    				else {
 			    				if (this.hasVisor()) {
@@ -556,14 +558,6 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
 				}
 	        }
 		}
-		/*
-		if (!this.world.isRemote) {
-			if (this.getRevengeTarget() != null) {
-				KAGIC.instance.chatInfoMessage("Revenge target is " + this.getRevengeTarget());
-			} else {
-				KAGIC.instance.chatInfoMessage("Revenge target is null");
-			}
-		}*/
 		super.onLivingUpdate();
 	}
 	

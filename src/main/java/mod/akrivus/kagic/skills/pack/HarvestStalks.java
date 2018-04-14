@@ -144,6 +144,6 @@ public class HarvestStalks extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.harvestLocation;
+		return "harvesting " + this.selectedNoun;
 	}
 }

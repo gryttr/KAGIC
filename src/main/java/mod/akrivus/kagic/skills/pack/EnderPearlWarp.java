@@ -45,14 +45,14 @@ public class EnderPearlWarp extends Speak<EntityEnderPearl> {
 			if (this.entireMessage.toLowerCase().contains(data.name.toLowerCase())) {
 				TileEntityWarpPadCore dest = (TileEntityWarpPadCore) gem.getEntityWorld().getTileEntity(pos);
 				if (!dest.isValid()) {
-					gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.destnotvalid").getUnformattedComponentText());
+					gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.destnotvalid").getUnformattedComponentText());
 					return;
 				}
 				if (!dest.isClear()) {
-					gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.destnotclear").getUnformattedComponentText());
+					gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.destnotclear").getUnformattedComponentText());
 					return;
 				}
-				gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.warping", data.name).getUnformattedComponentText());
+				gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.warping", data.name).getUnformattedComponentText());
 				gem.playObeySound();
 				this.commandingPlayer.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
 				gem.setPosition(pos.getX(), pos.getY() + 1, pos.getZ());
@@ -60,10 +60,10 @@ public class EnderPearlWarp extends Speak<EntityEnderPearl> {
 				return;
 			}
 		}
-		gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.nopad", "this").getUnformattedComponentText());
+		gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.nopad", "this").getUnformattedComponentText());
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName();
+		return "warping away";
 	}
 }

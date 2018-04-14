@@ -63,6 +63,6 @@ public class Come extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.destination;
+		return "coming to " + this.destination.getName();
 	}
 }

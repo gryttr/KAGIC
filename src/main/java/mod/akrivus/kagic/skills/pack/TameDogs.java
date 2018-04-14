@@ -65,6 +65,6 @@ public class TameDogs extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.wolf;
+		return "taming " + this.wolf.getName();
 	}
 }

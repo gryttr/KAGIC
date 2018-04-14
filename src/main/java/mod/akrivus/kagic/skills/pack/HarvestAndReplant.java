@@ -160,6 +160,6 @@ public class HarvestAndReplant extends Speak<EntityPeridot> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.harvestLocation;
+		return "harvesting " + this.selectedNoun;
 	}
 }

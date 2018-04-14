@@ -103,6 +103,6 @@ public class Defend extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.principle;
+		return "defending " + this.principle.getName();
 	}
 }

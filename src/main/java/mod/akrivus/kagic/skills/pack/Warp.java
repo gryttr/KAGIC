@@ -43,15 +43,15 @@ public class Warp extends Speak<EntityGem> {
 		TileEntityWarpPadCore pad = TileEntityWarpPadCore.getEntityPad(gem);
 		if (pad != null && pad.isValidPad() && !pad.isWarping()) {
 			if (!pad.isValid()) {
-				gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.padnotvalid").getUnformattedComponentText());
+				gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.padnotvalid").getUnformattedComponentText());
 				return;
 			}
 			if (!pad.isClear()) {
-				gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.padnotclear").getUnformattedComponentText());
+				gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.padnotclear").getUnformattedComponentText());
 				return;
 			}
 			if (this.entireMessage.toLowerCase().contains(pad.name.toLowerCase())) {
-				gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.alreadyhere").getUnformattedComponentText());
+				gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.alreadyhere").getUnformattedComponentText());
 				return;
 			}
 			
@@ -64,14 +64,14 @@ public class Warp extends Speak<EntityGem> {
 					WarpPadDataEntry data = padData.get(dest);
 					if (this.entireMessage.toLowerCase().contains(data.name.toLowerCase())) {
 						if (!data.valid) {
-							gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.destnotvalid").getUnformattedComponentText());
+							gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.destnotvalid").getUnformattedComponentText());
 							return;
 						}
 						if (!data.clear) {
-							gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.destnotclear").getUnformattedComponentText());
+							gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.destnotclear").getUnformattedComponentText());
 							return;
 						}
-						gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.warping", data.name).getUnformattedComponentText());
+						gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.warping", data.name).getUnformattedComponentText());
 						gem.playObeySound();
 						((TileEntityGalaxyPadCore) pad).beginWarp(dest);
 						return;
@@ -88,25 +88,25 @@ public class Warp extends Speak<EntityGem> {
 					if (this.entireMessage.toLowerCase().contains(data.name.toLowerCase())) {
 						TileEntityWarpPadCore dest = (TileEntityWarpPadCore) gem.getEntityWorld().getTileEntity(pos);
 						if (!dest.isValid()) {
-							gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.destnotvalid").getUnformattedComponentText());
+							gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.destnotvalid").getUnformattedComponentText());
 							return;
 						}
 						if (!dest.isClear()) {
-							gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.destnotclear").getUnformattedComponentText());
+							gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.destnotclear").getUnformattedComponentText());
 							return;
 						}
-						gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.warping", data.name).getUnformattedComponentText());
+						gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.warping", data.name).getUnformattedComponentText());
 						gem.playObeySound();
 						pad.beginWarp(pos);
 						return;
 					}
 				}
 			}
-			gem.talkTo(this.commandingPlayer, new TextComponentTranslation("notify.kagic.nopad", "this").getUnformattedComponentText());
+			gem.feedback(this.commandingPlayer, new TextComponentTranslation("notify.kagic.nopad", "this").getUnformattedComponentText());
 		}
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName();
+		return "warping";
 	}
 }

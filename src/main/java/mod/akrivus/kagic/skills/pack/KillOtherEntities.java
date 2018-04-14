@@ -87,6 +87,6 @@ public class KillOtherEntities extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.otherEntity;
+		return "killing " + this.otherEntity.getName();
 	}
 }

@@ -100,6 +100,6 @@ public class DumpChestsPeridot extends Speak<EntityPeridot> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.chestLocation;
+		return "putting things away";
 	}
 }

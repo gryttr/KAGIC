@@ -99,7 +99,7 @@ public class BreedLivestock extends Speak<EntityPeridot> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.otherAnimal;
+		return "breeding " + this.otherAnimal.getName();
 	}
 	public ItemStack getBreedingItem(EntityPeridot gem, EntityAnimal animal) {
 		for (int i = 0; i < gem.harvest.getSizeInventory(); ++i) {

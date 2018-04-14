@@ -122,6 +122,6 @@ public class Mine extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.blockLocation;
+		return "mining " + this.selectedNoun;
 	}
 }

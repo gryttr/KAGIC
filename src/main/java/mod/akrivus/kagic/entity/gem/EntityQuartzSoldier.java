@@ -34,7 +34,7 @@ public class EntityQuartzSoldier extends EntityGem {
 		this.stayAI = new EntityAIStay(this);
 		this.tasks.addTask(4, new EntityAIFollowDiamond(this, 1.0D));
         this.tasks.addTask(4, new EntityAICommandGems(this, 0.6D));
-        this.tasks.addTask(5, new EntityAIMineOres(this, 0.6D, 8));
+        this.tasks.addTask(5, new EntityAIMineOres(this, 8));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
         this.tasks.addTask(7, new EntityAILookIdle(this));

@@ -33,6 +33,6 @@ public class UnfuseTopaz extends Speak<EntityTopaz> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName();
+		return "unfusing";
 	}
 }

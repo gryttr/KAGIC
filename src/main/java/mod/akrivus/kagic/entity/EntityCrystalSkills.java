@@ -150,9 +150,32 @@ public class EntityCrystalSkills extends EntityCreature {
 	public void feedback(String message) {
 		for (EntityPlayer player : this.world.playerEntities) {
 			if (player.getDistance(this) < 16) {
-				player.sendMessage(new TextComponentString("<" + this.getName() + "> " + message));
+				String name = this.getName();
+				new Thread(new Runnable() {
+			        public void run()  {
+			        	try {
+			        		Thread.sleep(1000);
+			        	} catch (InterruptedException e) { }
+			        	finally {
+			        		player.sendMessage(new TextComponentString("<" + name + "> " + message));
+			        	}
+			        }
+				}).start();
 			}
 		}
+	}
+	public void feedback(EntityPlayer player, String message) {
+		String name = this.getName();
+		new Thread(new Runnable() {
+	        public void run()  {
+	        	try {
+	        		Thread.sleep(1000);
+	        	} catch (InterruptedException e) { }
+	        	finally {
+	        		player.sendMessage(new TextComponentString("<" + name + "> " + message));
+	        	}
+	        }
+		}).start();
 	}
 	public boolean tryToMoveTo(int x, int y, int z) {
 		return this.getNavigator().tryMoveToXYZ(x, y, z, 0.8F);

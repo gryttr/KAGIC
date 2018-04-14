@@ -227,6 +227,6 @@ public class BuildBox extends Speak<EntityBismuth> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName();
+		return "building a box";
 	}
 }

@@ -36,6 +36,7 @@ import mod.akrivus.kagic.skills.pack.Follow;
 import mod.akrivus.kagic.skills.pack.FuseTopaz;
 import mod.akrivus.kagic.skills.pack.GetFacet;
 import mod.akrivus.kagic.skills.pack.GetHealth;
+import mod.akrivus.kagic.skills.pack.GetSkills;
 import mod.akrivus.kagic.skills.pack.Harvest;
 import mod.akrivus.kagic.skills.pack.HarvestAndReplant;
 import mod.akrivus.kagic.skills.pack.HarvestAndReplantNetherWart;
@@ -196,6 +197,7 @@ public class KAGIC {
 		KAGIC.addSkill(FuseTopaz.class);
 		KAGIC.addSkill(GetFacet.class);
 		KAGIC.addSkill(GetHealth.class);
+		KAGIC.addSkill(GetSkills.class);
 		KAGIC.addSkill(Harvest.class);
 		KAGIC.addSkill(HarvestAndReplant.class);
 		KAGIC.addSkill(HarvestAndReplantNetherWart.class);

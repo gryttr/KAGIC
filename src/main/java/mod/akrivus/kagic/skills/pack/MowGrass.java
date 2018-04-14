@@ -89,6 +89,6 @@ public class MowGrass extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.grassLocation;
+		return "moving grass";
 	}
 }

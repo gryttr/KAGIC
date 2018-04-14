@@ -92,6 +92,6 @@ public class DumpChestsLapis extends Speak<EntityLapisLazuli> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.chestLocation;
+		return "putting things away";
 	}
 }

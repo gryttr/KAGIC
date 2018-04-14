@@ -125,14 +125,14 @@ public class TellFutureGarnet extends Speak<EntityGarnet> {
 		}
 	}
 	private void sendMessage(EntityGarnet sapphire, String line, String formatting) {
-		sapphire.talkTo(this.commandingPlayer, new TextComponentTranslation("command.kagic." + (sapphire.isDefective() ? "padparadscha" : "sapphire") + "_" + line, formatting).getUnformattedText());
+		sapphire.feedback(this.commandingPlayer, new TextComponentTranslation("command.kagic." + (sapphire.isDefective() ? "padparadscha" : "sapphire") + "_" + line, formatting).getUnformattedText());
 	}
     
 	private void sendMessage(EntityGarnet sapphire, String line) {
-		sapphire.talkTo(this.commandingPlayer, new TextComponentTranslation("command.kagic." + (sapphire.isDefective() ? "padparadscha" : "sapphire") + "_" + line).getUnformattedText());
+		sapphire.feedback(this.commandingPlayer, new TextComponentTranslation("command.kagic." + (sapphire.isDefective() ? "padparadscha" : "sapphire") + "_" + line).getUnformattedText());
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName();
+		return "telling the future";
 	}
 }

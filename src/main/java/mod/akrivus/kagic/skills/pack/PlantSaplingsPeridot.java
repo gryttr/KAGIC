@@ -122,7 +122,7 @@ public class PlantSaplingsPeridot extends Speak<EntityPeridot> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.plantLocation;
+		return "planting trees";
 	}
 	public ItemStack getSapling(EntityPeridot gem) {
 		InventoryBasic inventory = gem.gemStorage;

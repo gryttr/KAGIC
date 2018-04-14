@@ -67,6 +67,6 @@ public class TameCats extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.ocelot;
+		return "taming " + this.ocelot.getName();
 	}
 }

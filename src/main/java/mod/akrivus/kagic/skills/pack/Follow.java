@@ -66,6 +66,6 @@ public class Follow extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.destination;
+		return "following " + this.destination.getName();
 	}
 }

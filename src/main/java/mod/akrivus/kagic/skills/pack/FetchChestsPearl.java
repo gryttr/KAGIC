@@ -91,6 +91,6 @@ public class FetchChestsPearl extends Speak<EntityPearl> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.chestLocation;
+		return "getting things";
 	}
 }

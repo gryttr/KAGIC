@@ -110,6 +110,6 @@ public class PickFlowers extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.flowerLocation;
+		return "picking flowers";
 	}
 }

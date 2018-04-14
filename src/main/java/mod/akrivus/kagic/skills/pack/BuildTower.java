@@ -117,6 +117,6 @@ public class BuildTower extends Speak<EntityBismuth> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName();
+		return "building a tower";
 	}
 }

@@ -126,14 +126,14 @@ public class TellFuture extends Speak<EntitySapphire> {
 		}
 	}
 	private void sendMessage(EntitySapphire sapphire, String line, String formatting) {
-		sapphire.talkTo(this.commandingPlayer, new TextComponentTranslation("command.kagic." + (sapphire.isDefective() ? "padparadscha" : "sapphire") + "_" + line, formatting).getUnformattedText());
+		sapphire.feedback(this.commandingPlayer, new TextComponentTranslation("command.kagic." + (sapphire.isDefective() ? "padparadscha" : "sapphire") + "_" + line, formatting).getUnformattedText());
 	}
     
 	private void sendMessage(EntitySapphire sapphire, String line) {
-		sapphire.talkTo(this.commandingPlayer, new TextComponentTranslation("command.kagic." + (sapphire.isDefective() ? "padparadscha" : "sapphire") + "_" + line).getUnformattedText());
+		sapphire.feedback(this.commandingPlayer, new TextComponentTranslation("command.kagic." + (sapphire.isDefective() ? "padparadscha" : "sapphire") + "_" + line).getUnformattedText());
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName();
+		return "telling the future";
 	}
 }

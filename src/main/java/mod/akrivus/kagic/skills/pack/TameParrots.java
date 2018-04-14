@@ -63,6 +63,6 @@ public class TameParrots extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.parrot;
+		return "taming " + this.parrot.getName();
 	}
 }

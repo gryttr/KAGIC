@@ -122,7 +122,7 @@ public class PlantSaplingsPearl extends Speak<EntityPearl> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.plantLocation;
+		return "planting trees";
 	}
 	public ItemStack getSapling(EntityPearl gem) {
 		InventoryBasic inventory = gem.gemStorage;

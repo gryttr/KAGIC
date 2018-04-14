@@ -178,6 +178,6 @@ public class CutDownTrees extends Speak<EntityGem> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.treeLocation;
+		return "cutting down a tree";
 	}
 }

@@ -76,6 +76,6 @@ public class SingSong extends Speak<EntityPearl> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.song;
+		return "singing";
 	}
 }

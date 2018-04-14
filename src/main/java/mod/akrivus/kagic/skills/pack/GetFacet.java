@@ -44,6 +44,6 @@ public class GetFacet extends Speak<EntityPeridot> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName();
+		return "getting location";
 	}
 }

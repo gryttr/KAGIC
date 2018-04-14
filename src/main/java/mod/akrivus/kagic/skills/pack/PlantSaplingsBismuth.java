@@ -122,7 +122,7 @@ public class PlantSaplingsBismuth extends Speak<EntityBismuth> {
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName() + ": " + this.plantLocation;
+		return "planting trees";
 	}
 	public ItemStack getSapling(EntityBismuth gem) {
 		InventoryBasic inventory = gem.gemStorage;

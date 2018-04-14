@@ -33,7 +33,7 @@ public class EntityAITillFarmland extends EntityAIMoveToBlock {
 		return false;
 	}
 	public boolean shouldContinueExecuting() {
-		return super.shouldContinueExecuting() && this.gem.isFarmer();
+		return super.shouldContinueExecuting() && this.gem.isFarmer() && !this.gem.getNavigator().noPath();
 	}
 	public void startExecuting() {
 		super.startExecuting();

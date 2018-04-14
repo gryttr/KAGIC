@@ -26,10 +26,19 @@ public class TellReport extends Speak<EntityPeridot> {
 	}
 	@Override
 	public void init(EntityPeridot gem) {
-		gem.checkSurroundings(gem.world, gem.getPosition());
+		new Thread(new Runnable() {
+	        public void run()  {
+	        	try {
+	        		Thread.sleep(1000);
+	        	} catch (InterruptedException e) { }
+	        	finally {
+	        		gem.checkSurroundings(gem.world, gem.getPosition());
+	        	}
+	        }
+		}).start();
 	}
 	@Override
 	public String toString() {
-		return this.getClass().getSimpleName();
+		return "analyzing";
 	}
 }

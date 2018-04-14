@@ -42,7 +42,7 @@ public class EntityAIHarvestFarmland extends EntityAIMoveToBlock {
 		return false;
 	}
 	public boolean shouldContinueExecuting() {
-		return super.shouldContinueExecuting() && this.currentTask >= 0 && this.gem.isFarmer();
+		return super.shouldContinueExecuting() && this.currentTask >= 0 && this.gem.isFarmer() && !this.gem.getNavigator().noPath();
 	}
 	public void startExecuting() {
 		super.startExecuting();
