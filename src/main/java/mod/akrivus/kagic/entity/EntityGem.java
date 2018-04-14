@@ -1494,7 +1494,12 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 	public void setRestPosition(BlockPos pos) {
 		this.restPosition = pos;
 	}
-	
+	public boolean spokenTo(EntityPlayer player, String message) {
+		if (this.isTamed() && this.isOwner(player)) {
+			return super.spokenTo(player, message);
+		}
+		return false;
+	}
 	public boolean isOwner(EntityLivingBase entityIn) {
 		if (entityIn != null) {
 			if (this.servitude == EntityGem.SERVE_HUMAN) {
@@ -1607,7 +1612,7 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 			String cutX = Integer.toString(Math.abs((x%10))).toUpperCase();
 			String cutY = Integer.toString(Math.abs((y/4)%36),36).toUpperCase();
 			String cutZ = Integer.toString(Math.abs((z%26)+10),36).toUpperCase();
-			String face = Integer.toString(Math.abs((x+z)/48),36).toUpperCase();
+			String face = Integer.toString(Math.abs(((x/16)+(z/16))/3),36).toUpperCase();
 			String cut = "Cut " + (cutX+cutZ+cutY);
 			return "Facet " + face + " " + cut;
 		}

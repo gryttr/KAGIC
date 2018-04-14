@@ -72,7 +72,7 @@ public class EntityAIHarvestFarmland extends EntityAIMoveToBlock {
 					if (!itemstack.isEmpty()) {
 						if (this.world.getBlockState(blockpos.down()).getBlock() == Blocks.FARMLAND) {
 							if (itemstack.getItem() instanceof IPlantable) {
-								this.gem.placeBlock(((IPlantable) itemstack.getItem()).getPlant(this.world, blockpos), blockpos);
+								this.gem.world.setBlockState(blockpos, ((IPlantable) itemstack.getItem()).getPlant(this.world, blockpos));
 								flag = true;
 							}
 							/*
@@ -95,7 +95,7 @@ public class EntityAIHarvestFarmland extends EntityAIMoveToBlock {
 						}
 						else if (this.world.getBlockState(blockpos.down()).getBlock() == Blocks.SOUL_SAND) {
 							if (itemstack.getItem() == Items.NETHER_WART) {
-								this.gem.placeBlock(Blocks.NETHER_WART.getDefaultState(), blockpos);
+								this.gem.world.setBlockState(blockpos, Blocks.NETHER_WART.getDefaultState());
 								flag = true;
 							}
 						}

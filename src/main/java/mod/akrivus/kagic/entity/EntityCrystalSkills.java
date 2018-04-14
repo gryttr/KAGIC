@@ -149,7 +149,7 @@ public class EntityCrystalSkills extends EntityCreature {
 	}
 	public void feedback(String message) {
 		for (EntityPlayer player : this.world.playerEntities) {
-			if (player.getDistance(this) > 16) {
+			if (player.getDistance(this) < 16) {
 				player.sendMessage(new TextComponentString("<" + this.getName() + "> " + message));
 			}
 		}

@@ -58,7 +58,8 @@ public class EntityRhodonite extends EntityFusionGem {
 		ArrayList<Integer> skinColors = new ArrayList<Integer>();
 		skinColors.add(EntityRhodonite.SKIN_COLOR_BEGIN);
 		skinColors.add(EntityRhodonite.SKIN_COLOR_END);
-		return Colors.arbiLerp(skinColors);	}
+		return Colors.arbiLerp(skinColors);
+	}
 	
 	@Override
 	protected int generateHairStyle() {

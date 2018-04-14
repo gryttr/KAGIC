@@ -35,11 +35,12 @@ public class GetFacet extends Speak<EntityPeridot> {
 	}
 	@Override
 	public boolean proceed(EntityPeridot gem) {
-		return true;
+		return super.proceed(gem);
 	}
 	@Override
 	public void init(EntityPeridot gem) {
-		gem.feedback("We are in Facet" + Integer.toString(Math.abs((int)(gem.posX+gem.posZ)/48),36).toUpperCase() + " at the moment.");
+		gem.feedback("We are in Facet " + Integer.toString((int)(Math.abs(((gem.posX/16)+(gem.posZ/16)))/3),36).toUpperCase() + " at the moment.");
+		this.isAllowedToRun = false;
 	}
 	@Override
 	public String toString() {

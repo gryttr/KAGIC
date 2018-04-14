@@ -59,6 +59,7 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class EntityPeridot extends EntityGem implements IInventoryChangedListener, INpc {
@@ -262,17 +263,23 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 						else if (this.isFarmer()) {
 							for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
 								ItemStack itemstack = this.gemStorage.getStackInSlot(i);
-								this.setCanPickUpLoot(false);
 								this.dropTimer = 0;
-								if (itemstack.getItem() == Items.WHEAT || itemstack.getItem() instanceof ItemFood) {
+								if (itemstack.getItem() instanceof IPlantable) {
+									if (itemstack.getItem() instanceof ItemFood) {
+										ItemStack newstack = itemstack.splitStack(itemstack.getCount() - 8);
+										this.gemStorage.setInventorySlotContents(i, itemstack);
+										this.harvest.addItem(newstack);
+									}
+								}
+								else {
 									this.gemStorage.setInventorySlotContents(i, ItemStack.EMPTY);
 									this.harvest.addItem(itemstack);
 								}
-								else if (itemstack.getCount() > 1) {
-									ItemStack newstack = itemstack.splitStack(itemstack.getCount() - 8);
-									this.gemStorage.setInventorySlotContents(i, itemstack);
-									this.harvest.addItem(newstack);
-								}
+								//else if (itemstack.getCount() > 1) {
+								//	ItemStack newstack = itemstack.splitStack(itemstack.getCount() - 8);
+								//	this.gemStorage.setInventorySlotContents(i, itemstack);
+								//	this.harvest.addItem(newstack);
+								//}
 							}
 							if (this.harvest.isEmpty()) {
 								player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_no_harvest").getUnformattedComponentText()));

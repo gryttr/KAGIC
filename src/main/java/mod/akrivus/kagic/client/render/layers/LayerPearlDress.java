@@ -24,8 +24,13 @@ public class LayerPearlDress implements LayerRenderer<EntityPearl> {
 			this.pearlRenderer.bindTexture(EntityPearl.PEARL_DRESS_STYLES.get(gem.getDressStyle()));
 			float[] afloat = EntitySheep.getDyeRgb(EnumDyeColor.values()[gem.getInsigniaColor()]);
 			GlStateManager.color(afloat[0], afloat[1], afloat[2]);
+			GlStateManager.enableNormalize();
+            GlStateManager.enableBlend();
+            GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			this.pearlModel.setModelAttributes(this.pearlRenderer.getMainModel());
 			this.pearlModel.render(gem, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+			GlStateManager.disableBlend();
+            GlStateManager.disableNormalize();
 		}
 	}
 	

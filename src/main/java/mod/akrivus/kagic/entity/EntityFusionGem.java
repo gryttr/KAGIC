@@ -237,6 +237,7 @@ public class EntityFusionGem  extends EntityGem {
 					EntityGem gem = this.gemTypes.get(i).getDeclaredConstructor(World.class).newInstance(this.world);
 					gem.readFromNBT(this.fusionGems.getCompoundTagAt(i));
 					gem.setPosition(this.posX, this.posY, this.posZ);
+					gem.setServitude(this.getServitude());
 					this.world.spawnEntity(gem);
 				} catch (Exception e) {
 					KAGIC.instance.chatInfoMessage("ERROR: could not properly unfuse gem. See game log for details.");

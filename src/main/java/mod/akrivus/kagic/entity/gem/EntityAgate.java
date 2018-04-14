@@ -116,35 +116,35 @@ public class EntityAgate extends EntityQuartzSoldier implements IAnimals {
     	case 0:
     		return 0xFFFFFF;
     	case 1:
-    		return 0xC6A68B;
+    		return 0xCB7226;
     	case 2:
-    		return 0xBF92D1;
+    		return 0xAE48D4;
     	case 3:
-    		return 0x657991;
+    		return 0x215493;
     	case 4:
-    		return 0xFCFCB0;
+    		return 0xFEFE4C;
     	case 5:
-    		return 0x7A9165;
+    		return 0x469300;
     	case 6:
-    		return 0xE5A0B7;
+    		return 0xE8759B;
     	case 7:
-    		return 0xB2B2B2;
+    		return 0x939393;
     	case 8:
-    		return 0x545454;
+    		return 0x8F8F8F;
     	case 9:
-    		return 0x7CA0B2;
+    		return 0x6699B3;
     	case 10:
-    		return 0x9579AD;
+    		return 0x7B3BAE;
     	case 11:
-    		return 0x808BB7;
+    		return 0x3B54BA;
     	case 12:
-    		return 0xB2763E;
+    		return 0x4E341B;
     	case 13:
-    		return 0x88B22C;
+    		return 0x4C6519;
     	case 14:
-    		return 0xB23939;
+    		return 0x963030;
     	case 15:
-    		return 0x4C4C4C;
+    		return 0x333333;
     	}
     	return 0x9367F8;
     }
@@ -191,7 +191,8 @@ public class EntityAgate extends EntityQuartzSoldier implements IAnimals {
     @Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
     	boolean holly = this.rand.nextInt(9) == 0 || this.getSpecial() == 1;
-        if (holly) {
+        this.itemDataToGemData(this.dataManager.get(COLOR));
+    	if (holly) {
         	this.setCustomNameTag(new TextComponentTranslation("entity.kagic.agate_16.name").getUnformattedComponentText());
         	this.setGemPlacement(GemPlacements.BACK_OF_HEAD.id);
         	this.setGemCut(GemCuts.TEARDROP.id);

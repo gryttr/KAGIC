@@ -62,6 +62,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
 	public static final ArrayList<ResourceLocation> PEARL_DRESS_STYLES = new ArrayList<ResourceLocation>();
 	private static final DataParameter<Integer> COLOR = EntityDataManager.<Integer>createKey(EntityPearl.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> HAIR_COLOR = EntityDataManager.<Integer>createKey(EntityPearl.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> VISOR_COLOR = EntityDataManager.<Integer>createKey(EntityPearl.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> DRESS_STYLE = EntityDataManager.<Integer>createKey(EntityPearl.class, DataSerializers.VARINT);
 	private static final DataParameter<Boolean> NAKED = EntityDataManager.<Boolean>createKey(EntityPearl.class, DataSerializers.BOOLEAN);
 	public String soulSong = "392935392935392939293929395";
@@ -107,6 +108,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
         // Register entity data.
         this.dataManager.register(COLOR, this.rand.nextInt(16));
         this.dataManager.register(HAIR_COLOR, this.dataManager.get(COLOR));
+        this.dataManager.register(VISOR_COLOR, this.dataManager.get(COLOR));
         this.dataManager.register(DRESS_STYLE, 1);
         this.dataManager.register(NAKED, false);
 	}
@@ -254,6 +256,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
 	public void writeEntityToNBT(NBTTagCompound compound) {
         compound.setInteger("color", this.getColor());
         compound.setInteger("hairColor", this.getHairColor());
+        compound.setInteger("visorColor", this.getVisorColor());
         compound.setInteger("dressStyle", this.getDressStyle());
         compound.setBoolean("naked", this.isNaked());
         compound.setString("song", this.soulSong);
@@ -276,6 +279,12 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
         else {
         	this.setHairColor(this.getColor());
         }
+        if (compound.hasKey("visorColor")) {
+        	this.setVisorColor(compound.getInteger("visorColor"));
+        }
+        else {
+        	this.setVisorColor(this.getColor());
+        }
         this.setDressStyle(compound.getInteger("dressStyle"));
         this.setNaked(compound.getBoolean("naked"));
         this.soulSong = compound.getString("song");
@@ -293,6 +302,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
     	livingdata = super.onInitialSpawn(difficulty, livingdata);
     	this.setGemCut(GemCuts.CABOCHON.id);
+    	this.itemDataToGemData(this.getColor());
     	this.setDressStyle(this.rand.nextInt(EntityPearl.PEARL_DRESS_STYLES.size()));
     	if (this.isDefective()) {
     		this.setHairColor(15 - this.getColor());
@@ -306,6 +316,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
     public void itemDataToGemData(int data) {
 		this.setColor(data);
 		this.setHairColor(data);
+		this.setVisorColor(data);
 		this.setInsigniaColor(data);
 		this.setUniformColor(data);
 		this.setGemColor(this.generateGemColor());
@@ -363,6 +374,26 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
 				        		}
 		    				}
 			        		return true;
+		    			}
+		    			else if (stack.getItem() == Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE)) {
+		    				if (player.isSneaking()) {
+		    					ItemStack newstack = new ItemStack(Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE));
+		    					Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE).setDamage(newstack, this.getVisorColor());
+		    					this.entityDropItem(newstack, 0.0F);
+		    					this.setHasVisor(false);
+		    				}
+		    				else {
+			    				if (this.hasVisor()) {
+			    					ItemStack newstack = new ItemStack(Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE));
+			    					Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE).setDamage(newstack, this.getVisorColor());
+			    					this.entityDropItem(newstack, 0.0F);
+			    				}
+			    				else {
+			    					this.setHasVisor(true);
+			    				}
+			    				this.setVisorColor(Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE).getMetadata(stack));
+			    				stack.shrink(1);
+		    				}
 		    			}
 		    			else if (stack.getItem() == Item.getItemFromBlock(Blocks.WOOL)) {
 		    				if (this.isNaked()) {
@@ -449,6 +480,12 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
 	}
 	public int getColor() {
 		return this.dataManager.get(COLOR);
+	}
+	public void setVisorColor(int color) {
+		this.dataManager.set(VISOR_COLOR, color);
+	}
+	public int getVisorColor() {
+		return this.dataManager.get(VISOR_COLOR);
 	}
 	
 	@Override

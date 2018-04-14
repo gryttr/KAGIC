@@ -7,6 +7,7 @@ import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
 import mod.akrivus.kagic.client.render.layers.LayerPearlDress;
 import mod.akrivus.kagic.client.render.layers.LayerPearlHair;
 import mod.akrivus.kagic.client.render.layers.LayerPearlItem;
+import mod.akrivus.kagic.client.render.layers.LayerPearlVisor;
 import mod.akrivus.kagic.client.render.layers.LayerSantaHat;
 import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
 import mod.akrivus.kagic.entity.gem.EntityEnderPearl;
@@ -26,6 +27,7 @@ public class RenderEnderPearl extends RenderGemBase<EntityEnderPearl> {
         this.addLayer(new LayerPearlItem(this));
         this.addLayer(new LayerPearlHair(this));
         this.addLayer(new LayerPearlDress(this));
+        this.addLayer(new LayerPearlVisor(this));
         this.addLayer(new LayerGemPlacement(this, "pearl", true));
         this.addLayer(new LayerDiamondGlow(this, "pearl"));
 		if (KAGIC.isBirthday()) {

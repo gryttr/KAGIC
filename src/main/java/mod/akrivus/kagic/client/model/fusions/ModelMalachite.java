@@ -269,13 +269,13 @@ public class ModelMalachite extends ModelGem {
 		float f9 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + ((float)Math.PI / 2F)) * 0.4F) * limbSwingAmount;
 		float f10 = Math.abs(MathHelper.sin(limbSwing * 0.6662F + ((float)Math.PI * 3F / 2F)) * 0.4F) * limbSwingAmount;
 		this.leg.rotateAngleY += f3;
-		this.leg_1.rotateAngleY += -f3;
+		this.leg_1.rotateAngleY += f3;
 		//this.spiderLeg3.rotateAngleY += f4;
 		//this.spiderLeg4.rotateAngleY += -f4;
 		//this.spiderLeg5.rotateAngleY += f5;
 		//this.spiderLeg6.rotateAngleY += -f5;
 		this.leg_2.rotateAngleY += f6;
-		this.leg_3.rotateAngleY += -f6;
+		this.leg_3.rotateAngleY += f6;
 		
 		this.leg.rotateAngleZ += f7;
 		this.leg_1.rotateAngleZ += -f7;
