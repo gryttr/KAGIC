@@ -171,10 +171,10 @@ public class ItemGem extends Item {
 		entity.isDead = false;
 		entity.setEntityInvulnerable(true);
 		entity.extinguish();
-		if (entity.getAge() > 600) {
+		if (entity.ticksExisted > 600) {
 			entity.setNoDespawn();
 		}
-		if (!this.isCracked && !entity.world.isRemote && entity.getAge() < 0) {
+		if (!this.isCracked && !entity.world.isRemote && entity.ticksExisted > 600) {
 			ItemStack stack = entity.getItem();
 			if (entity.getEntityWorld().getWorldTime() % 20 == 0 && stack.getItemDamage() > 0) {
 				stack.setItemDamage(Math.max(stack.getItemDamage() - 2, 0));
