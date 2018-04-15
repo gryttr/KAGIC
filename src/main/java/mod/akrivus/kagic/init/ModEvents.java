@@ -235,7 +235,6 @@ public class ModEvents {
 	}
 	@SubscribeEvent
 	public void onServerChat(ServerChatEvent e) {
-		System.out.println(ArrayUtils.toString(LinguisticsHelper.parseSentences(e.getMessage())));
 		EntityPlayer player = e.getPlayer();
 		List<Entity> list = player.world.<Entity>getEntitiesWithinAABB(Entity.class, e.getPlayer().getEntityBoundingBox().grow(64.0D, 16.0D, 64.0D));
 		for (Entity entity : list) {

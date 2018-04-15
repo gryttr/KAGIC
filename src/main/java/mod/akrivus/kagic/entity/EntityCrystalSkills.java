@@ -88,7 +88,9 @@ public class EntityCrystalSkills extends EntityCreature {
 		this.lastPlayerSpokenTo = player;
 		boolean canRunCommands = this.isSelected();
 		for (String name : this.getNames(new ArrayList<String>())) {
-			canRunCommands = Pattern.compile("\\b" + name.toLowerCase() + "\\b").matcher(message.toLowerCase()).find() || canRunCommands;
+			if (name != null) {
+				canRunCommands = Pattern.compile("\\b" + name.toLowerCase() + "\\b").matcher(message.toLowerCase()).find() || canRunCommands;
+			}
 		}
 		if (canRunCommands) {
 			for (Class<? extends SkillBase> skillClass : SKILLS) {
