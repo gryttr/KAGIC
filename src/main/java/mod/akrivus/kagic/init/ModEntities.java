@@ -377,10 +377,10 @@ public class ModEntities {
 		
 		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 2.99, "oreDiamond");
 		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 5.99, "blockDiamond");
-		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 0.11, "stoneGranite");
-		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 0.45, "stoneGranitePolished");
-		EntityZircon.ZIRCON_YIELDS.put(Blocks.MAGMA.getDefaultState(), 0.50);
-		EntityZircon.ZIRCON_YIELDS.put(Blocks.LAVA.getDefaultState(), 0.25);
+		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 0.22, "stoneGranite");
+		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 0.66, "stoneGranitePolished");
+		EntityZircon.ZIRCON_YIELDS.put(Blocks.MAGMA.getDefaultState(), 0.66);
+		EntityZircon.ZIRCON_YIELDS.put(Blocks.LAVA.getDefaultState(), 0.44);
 		ModEntities.registerWithOreDictionary(EntityZircon.ZIRCON_YIELDS, "Zircon", "Uranium");
 	}
 	

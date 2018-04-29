@@ -39,16 +39,24 @@ public class ItemTimeGlass extends Item {
 				}
 				else if (worldIn.rand.nextBoolean()) {
 					if (worldIn.isRaining()) {
-						worldIn.getWorldInfo().setCleanWeatherTime(worldIn.rand.nextInt(12000) + 1200);
+						worldIn.getWorldInfo().setCleanWeatherTime(worldIn.rand.nextInt(12000) + 12000);
 						worldIn.getWorldInfo().setThunderTime(0);
 						worldIn.getWorldInfo().setRainTime(0);
 						worldIn.getWorldInfo().setRaining(false);
 					}
 					else {
 						worldIn.getWorldInfo().setCleanWeatherTime(0);
-						worldIn.getWorldInfo().setThunderTime(worldIn.rand.nextInt(12000) + 1200);
-						worldIn.getWorldInfo().setRainTime(worldIn.rand.nextInt(12000) + 1200);
+						worldIn.getWorldInfo().setThunderTime(worldIn.rand.nextInt(12000) + 12000);
+						worldIn.getWorldInfo().setRainTime(worldIn.rand.nextInt(12000) + 12000);
 						worldIn.getWorldInfo().setRaining(true);
+					}
+				}
+				else if (worldIn.rand.nextBoolean()) {
+					if (worldIn.rand.nextBoolean()) {
+						worldIn.getWorldInfo().setWorldTime(worldIn.getWorldTime() + worldIn.rand.nextInt(12000) + 12000);
+					}
+					else {
+						worldIn.getWorldInfo().setWorldTime(worldIn.getWorldTime() - worldIn.rand.nextInt(12000) + 12000);
 					}
 				}
 				else {

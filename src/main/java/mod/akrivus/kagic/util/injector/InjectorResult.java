@@ -155,7 +155,10 @@ public class InjectorResult {
 									}
 									if (yield.containsKey(state)) {
 										double result = yield.get(state);
-										if (result < 1.98) {
+										if (result > 1.98) {
+											result *= Math.max(pressureFactor, 1.0);
+										}
+										else {
 											result *= depthFactor;
 										}
 										resultTable.put(gemClass, resultTable.get(gemClass) + result);
