@@ -309,9 +309,6 @@ public class EntityRoseQuartz extends EntityQuartzSoldier implements INpc {
 	/*********************************************************
 	 * Methods related to sounds.							*
 	 *********************************************************/
-	protected SoundEvent getAmbientSound() {
-		return ModSounds.ROSE_QUARTZ_LIVING;
-	}
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.ROSE_QUARTZ_HURT;
 	}

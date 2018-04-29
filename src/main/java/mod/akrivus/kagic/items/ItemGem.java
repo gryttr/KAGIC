@@ -138,9 +138,6 @@ public class ItemGem extends Item {
 	            	if (matcher.find()) {
 	            		newGem.itemDataToGemData(Integer.parseInt(matcher.group(1)));
 	            	}
-	            	else {
-	            		newGem.itemDataToGemData(0);
-	            	}
 		    		if (playerIn != null && !newGem.isDiamond && !(newGem instanceof EntityShardFusion) && !(newGem instanceof EntityCorruptedGem)) {
 		    			newGem.setOwnerId(EntityPlayer.getUUID(playerIn.getGameProfile()));
 		    			newGem.setLeader(playerIn);

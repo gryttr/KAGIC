@@ -424,27 +424,28 @@ public class EntityRuby extends EntityGem implements IAnimals {
 	 * Methods related to combat.                            *
 	 *********************************************************/
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.getTrueSource() instanceof EntityLivingBase && !this.isOwner((EntityLivingBase) source.getTrueSource())) {
-			if (source.isMagicDamage()) {
-				this.setAnger(this.getAnger() + 4 + (int)(amount / 2));
+		if (!this.world.isRemote) {
+			if (source.getTrueSource() instanceof EntityLivingBase && !this.isOwner((EntityLivingBase) source.getTrueSource())) {
+				if (source.isMagicDamage()) {
+					this.setAnger(this.getAnger() + 4 + (int)(amount / 2));
+				}
+				else {
+					this.setAnger(this.getAnger() + 1 + (int)(amount / 4));
+				}
 			}
-			else {
-				this.setAnger(this.getAnger() + 1 + (int)(amount / 4));
+			else if (source.isProjectile()) {
+				this.setAnger(this.getAnger() + 2 + (int)(amount / 3));
+			}
+			/*if (this.getAnger() > 3) {
+				if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
+	            	this.getOwner().addStat(ModAchievements.IM_AN_ETERNAL_FLAME);
+	            }
+			}*/
+			if (this.isDefective()) {
+				this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
+				this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
 			}
 		}
-		else if (source.isProjectile()) {
-			this.setAnger(this.getAnger() + 2 + (int)(amount / 3));
-		}
-		/*if (this.getAnger() > 3) {
-			if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
-            	this.getOwner().addStat(ModAchievements.IM_AN_ETERNAL_FLAME);
-            }
-		}*/
-		if (this.isDefective()) {
-			this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
-			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
-		}
-		this.setSpecial(this.rand.nextInt(6));
 		return super.attackEntityFrom(source, amount);
 	}
 	public boolean attackEntityAsMob(Entity entityIn) {
@@ -452,7 +453,7 @@ public class EntityRuby extends EntityGem implements IAnimals {
 		if (anger > 7) {
 			anger = 7;
 		}
-		if (this.rand.nextInt(8 - anger) == 1) {
+		if (this.rand.nextInt(8 - anger) == 0) {
 			entityIn.setFire(anger * 2 + 4);
 		}
 		return super.attackEntityAsMob(entityIn);

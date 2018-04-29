@@ -498,7 +498,10 @@
     },
     "entities.jasper.hurt": {
         "sounds": [
-            { "name": "kagic:entities/jasper/hurt1" }
+            { "name": "kagic:entities/jasper/hurt1" },
+			{ "name": "kagic:entities/jasper/hurt2" },
+			{ "name": "kagic:entities/jasper/hurt3" },
+			{ "name": "kagic:entities/jasper/hurt4" }
         ]
     },
     "entities.jasper.obey": {
@@ -508,12 +511,18 @@
     },
 	"entities.jasper.death": {
         "sounds": [
-            { "name": "kagic:entities/jasper/death1" }
+            { "name": "kagic:entities/jasper/death1" },
+			{ "name": "kagic:entities/jasper/death2" },
+			{ "name": "kagic:entities/jasper/death3" },
+			{ "name": "kagic:entities/jasper/death4" }
         ]
     },
     "entities.amethyst.hurt": {
         "sounds": [
-            { "name": "kagic:entities/amethyst/hurt1" }
+            { "name": "kagic:entities/amethyst/hurt1" },
+            { "name": "kagic:entities/amethyst/hurt2" },
+            { "name": "kagic:entities/amethyst/hurt3" },
+            { "name": "kagic:entities/amethyst/hurt4" }
         ]
     },
     "entities.amethyst.obey": {
@@ -526,15 +535,10 @@
     },
 	"entities.amethyst.death": {
         "sounds": [
-            { "name": "kagic:entities/amethyst/death1" }
-        ]
-    },
-    "entities.rose_quartz.living": {
-        "sounds": [
-            { "name": "kagic:entities/rose_quartz/living1" },
-			{ "name": "kagic:entities/rose_quartz/living2" },
-			{ "name": "kagic:entities/rose_quartz/living3" },
-			{ "name": "kagic:entities/rose_quartz/living4" }
+            { "name": "kagic:entities/amethyst/death1" },
+            { "name": "kagic:entities/amethyst/death2" },
+            { "name": "kagic:entities/amethyst/death3" },
+            { "name": "kagic:entities/amethyst/death4" }
         ]
     },
     "entities.rose_quartz.hurt": {
@@ -555,6 +559,27 @@
         "sounds": [
             { "name": "kagic:entities/rose_quartz/death1" },
 			{ "name": "kagic:entities/rose_quartz/death2" }
+        ]
+    },
+	"entities.carnelian.hurt": {
+        "sounds": [
+            { "name": "kagic:entities/carnelian/hurt1" },
+            { "name": "kagic:entities/carnelian/hurt2" },
+            { "name": "kagic:entities/carnelian/hurt3" },
+            { "name": "kagic:entities/carnelian/hurt4" }
+        ]
+    },
+    "entities.carnelian.obey": {
+        "sounds": [
+            { "name": "kagic:entities/carnelian/obey1" },
+			{ "name": "kagic:entities/carnelian/obey2" },
+			{ "name": "kagic:entities/carnelian/obey3" }
+        ]
+    },
+	"entities.carnelian.death": {
+        "sounds": [
+            { "name": "kagic:entities/carnelian/death1" },
+            { "name": "kagic:entities/carnelian/death2" }
         ]
     },
     "entities.lapis_lazuli.hurt": {

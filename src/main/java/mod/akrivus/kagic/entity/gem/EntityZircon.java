@@ -177,8 +177,8 @@ public class EntityZircon extends EntityGem implements INpc {
 			this.droppedCrackedGemItem = ModItems.CRACKED_GRAY_ZIRCON_GEM;
 			break;
 		case 8:
-			this.droppedGemItem = ModItems.SILVER_ZIRCON_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_SILVER_ZIRCON_GEM;
+			this.droppedGemItem = ModItems.LIGHT_GRAY_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_LIGHT_GRAY_ZIRCON_GEM;
 			break;
 		case 9:
 			this.droppedGemItem = ModItems.CYAN_ZIRCON_GEM;

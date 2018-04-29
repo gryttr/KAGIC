@@ -63,7 +63,7 @@ public class EntitySapphire extends EntityGem implements INpc {
 			4, 4, 4, 4,							//Yellow
 			6, 6, 6,							//Pink
 			10,	10,								//Purple
-			11, 11, 11, 11, 11,	11, 11, 11, 11, //Blue
+			11, 11, 11, 11, 11,	11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11,
 			13,	13,								//Green
 			15,									//Black
 			16, 16								//Paddy

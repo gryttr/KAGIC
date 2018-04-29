@@ -40,6 +40,7 @@ import mod.akrivus.kagic.entity.gem.EntityAquamarine;
 import mod.akrivus.kagic.entity.gem.EntityBismuth;
 import mod.akrivus.kagic.entity.gem.EntityBlueDiamond;
 import mod.akrivus.kagic.entity.gem.EntityCarnelian;
+import mod.akrivus.kagic.entity.gem.EntityCitrine;
 import mod.akrivus.kagic.entity.gem.EntityEnderPearl;
 import mod.akrivus.kagic.entity.gem.EntityHessonite;
 import mod.akrivus.kagic.entity.gem.EntityHoloPearl;
@@ -123,6 +124,7 @@ public class ModEntities {
 		registerGem("rutile", EntityRutile.class, 0xD2508C, 0x23020D, false);
 		registerGem("zircon", EntityZircon.class, 0x458FBE, 0x57C7CF, false);
 		registerGem("hessonite", EntityHessonite.class, 0xBE331C, 0xEDCC41, false);
+		//registerGem("citrine", EntityCitrine.class, 0xECF404, 0xEBFD64, false);
 		registerGem("ender_pearl", EntityEnderPearl.class, 0x000000, 0xFF00FF, false);
 		registerDiamond("yellow_diamond", EntityYellowDiamond.class);
 		registerDiamond("blue_diamond", EntityBlueDiamond.class);
@@ -322,6 +324,14 @@ public class ModEntities {
 		ModEntities.registerOreDictValue(EntityCarnelian.CARNELIAN_YIELDS, 5.99, "blockQuartz");
 		ModEntities.registerWithOreDictionary(EntityCarnelian.CARNELIAN_YIELDS, "Carnelian");
 		
+		ModEntities.registerOreDictValue(EntityCitrine.CITRINE_YIELDS, 1.99, "oreQuartz");
+		ModEntities.registerOreDictValue(EntityCitrine.CITRINE_YIELDS, 0.33, "stoneDiorite");
+		ModEntities.registerOreDictValue(EntityCitrine.CITRINE_YIELDS, 0.33, "stoneDioritePolished");
+		ModEntities.registerOreDictValue(EntityCitrine.CITRINE_YIELDS, 0.11, "stoneLimestone");
+		ModEntities.registerOreDictValue(EntityCitrine.CITRINE_YIELDS, 0.11, "stoneLimestonePolished");
+		ModEntities.registerOreDictValue(EntityCitrine.CITRINE_YIELDS, 5.99, "blockQuartz");
+		ModEntities.registerWithOreDictionary(EntityCitrine.CITRINE_YIELDS, "Citrine");
+		
 		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.88, "endstone");
 		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.11, "stoneLimestone");
 		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.11, "stoneLimestonePolished");
@@ -367,8 +377,8 @@ public class ModEntities {
 		
 		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 2.99, "oreDiamond");
 		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 5.99, "blockDiamond");
-		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 0.75, "stoneGranite");
-		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 0.99, "stoneGranitePolished");
+		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 0.11, "stoneGranite");
+		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 0.45, "stoneGranitePolished");
 		EntityZircon.ZIRCON_YIELDS.put(Blocks.MAGMA.getDefaultState(), 0.50);
 		EntityZircon.ZIRCON_YIELDS.put(Blocks.LAVA.getDefaultState(), 0.25);
 		ModEntities.registerWithOreDictionary(EntityZircon.ZIRCON_YIELDS, "Zircon", "Uranium");

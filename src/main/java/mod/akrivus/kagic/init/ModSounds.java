@@ -64,10 +64,12 @@ public class ModSounds {
 	public static final SoundEvent AMETHYST_HURT = new SoundEvent(new ResourceLocation("kagic:entities.amethyst.hurt"));
 	public static final SoundEvent AMETHYST_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.amethyst.obey"));
 	public static final SoundEvent AMETHYST_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.amethyst.death"));
-	public static final SoundEvent ROSE_QUARTZ_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.rose_quartz.living"));
 	public static final SoundEvent ROSE_QUARTZ_HURT = new SoundEvent(new ResourceLocation("kagic:entities.rose_quartz.hurt"));
 	public static final SoundEvent ROSE_QUARTZ_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.rose_quartz.obey"));
 	public static final SoundEvent ROSE_QUARTZ_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.rose_quartz.death"));
+	public static final SoundEvent CARNELIAN_HURT = new SoundEvent(new ResourceLocation("kagic:entities.carnelian.hurt"));
+	public static final SoundEvent CARNELIAN_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.carnelian.obey"));
+	public static final SoundEvent CARNELIAN_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.carnelian.death"));
 	public static final SoundEvent LAPIS_LAZULI_HURT = new SoundEvent(new ResourceLocation("kagic:entities.lapis_lazuli.hurt"));
 	public static final SoundEvent LAPIS_LAZULI_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.lapis_lazuli.obey"));
 	public static final SoundEvent LAPIS_LAZULI_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.lapis_lazuli.death"));
@@ -193,10 +195,12 @@ public class ModSounds {
 		registerSound(AMETHYST_HURT, new ResourceLocation("kagic:entities.amethyst.hurt"), event);
 		registerSound(AMETHYST_OBEY, new ResourceLocation("kagic:entities.amethyst.obey"), event);
 		registerSound(AMETHYST_DEATH, new ResourceLocation("kagic:entities.amethyst.death"), event);
-		registerSound(ROSE_QUARTZ_LIVING, new ResourceLocation("kagic:entities.rose_quartz.living"), event);
 		registerSound(ROSE_QUARTZ_HURT, new ResourceLocation("kagic:entities.rose_quartz.hurt"), event);
 		registerSound(ROSE_QUARTZ_OBEY, new ResourceLocation("kagic:entities.rose_quartz.obey"), event);
-		registerSound(ROSE_QUARTZ_DEATH, new ResourceLocation("kagic:entities.rose_quartz.death"), event);
+		registerSound(CARNELIAN_DEATH, new ResourceLocation("kagic:entities.rose_quartz.death"), event);
+		registerSound(CARNELIAN_HURT, new ResourceLocation("kagic:entities.carnelian.hurt"), event);
+		registerSound(CARNELIAN_OBEY, new ResourceLocation("kagic:entities.carnelian.obey"), event);
+		registerSound(ROSE_QUARTZ_DEATH, new ResourceLocation("kagic:entities.carnelian.death"), event);
 		registerSound(LAPIS_LAZULI_HURT, new ResourceLocation("kagic:entities.lapis_lazuli.hurt"), event);
 		registerSound(LAPIS_LAZULI_OBEY, new ResourceLocation("kagic:entities.lapis_lazuli.obey"), event);
 		registerSound(LAPIS_LAZULI_DEATH, new ResourceLocation("kagic:entities.lapis_lazuli.death"), event);

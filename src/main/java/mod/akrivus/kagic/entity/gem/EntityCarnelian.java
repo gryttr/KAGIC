@@ -268,13 +268,13 @@ public class EntityCarnelian extends EntityQuartzSoldier implements IAnimals {
 	 * Methods related to sound.                             *
 	 *********************************************************/
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return ModSounds.AMETHYST_HURT;
+		return ModSounds.CARNELIAN_HURT;
 	}
 	protected SoundEvent getObeySound() {
-		return ModSounds.AMETHYST_OBEY;
+		return ModSounds.CARNELIAN_OBEY;
 	}
 	protected SoundEvent getDeathSound() {
-		return ModSounds.AMETHYST_DEATH;
+		return ModSounds.CARNELIAN_DEATH;
 	}
 	
 	/*********************************************************
