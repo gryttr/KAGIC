@@ -1,6 +1,5 @@
 package mod.akrivus.kagic.client.model;
 
-import mod.akrivus.kagic.entity.customnpcs.EntityCustomDefectivePeridot;
 import mod.akrivus.kagic.entity.gem.EntityPeridot;
 import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.model.ModelRenderer;
@@ -106,13 +105,6 @@ public class ModelPeridot extends ModelGem {
 				this.bipedRightLeg = this.smallRightLeg;
 				this.bipedLeftLeg = this.smallLeftLeg;
 			}
-		}
-		else if (entity instanceof EntityCustomDefectivePeridot) {
-			this.bipedBody = this.smallBody;
-			this.bipedRightArm = this.smallRightArm;
-			this.bipedLeftArm = this.smallLeftArm;
-			this.bipedRightLeg = this.smallRightLeg;
-			this.bipedLeftLeg = this.smallLeftLeg;
 		}
 		else {
 			this.bipedBody = this.normalBody;

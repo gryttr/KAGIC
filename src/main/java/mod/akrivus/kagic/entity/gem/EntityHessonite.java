@@ -109,7 +109,7 @@ public class EntityHessonite extends EntityGem implements IAnimals {
 
 	@Override
 	public void onLivingUpdate() {
-		if (this.world.isRemote) {
+		if (this.world.isRemote && this.isPrimary()) {
 			for (int i = 0; i < 2; ++i) {
 				this.world.spawnParticle(EnumParticleTypes.CRIT, this.posX + (this.rand.nextDouble() - 0.5D) * (double) this.width, this.posY + this.rand.nextDouble() * (double) this.height - 0.25D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double) this.width, (this.rand.nextDouble() - 0.5D) * 2.0D, this.rand.nextDouble(), (this.rand.nextDouble() - 0.5D) * 2.0D);
 			}
