@@ -8,9 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.UUID;
-import java.util.regex.MatchResult;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
@@ -21,6 +18,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIFightWars;
 import mod.akrivus.kagic.entity.ai.EntityAIPredictFights;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.entity.gem.EntityBlueDiamond;
+import mod.akrivus.kagic.entity.gem.EntityPearl;
 import mod.akrivus.kagic.entity.gem.EntityYellowDiamond;
 import mod.akrivus.kagic.entity.gem.GemCuts;
 import mod.akrivus.kagic.entity.gem.GemPlacements;
@@ -72,7 +70,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemBow;
-import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemShield;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -639,7 +636,7 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 					if (this.isTamed()) {
 						if (player.isSneaking()) {
 							if (this.isOwner(player)) {
-								if (this.getHeldItemMainhand().getItem() == ModItems.COMMANDER_STAFF) {
+								if (this.getHeldItemMainhand().getItem() == ModItems.COMMANDER_STAFF || !(this instanceof EntityPearl)) {
 									this.entityDropItem(this.getHeldItemMainhand(), 0.0F);
 									this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
 									this.playObeySound();

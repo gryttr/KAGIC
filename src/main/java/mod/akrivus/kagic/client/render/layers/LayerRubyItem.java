@@ -19,7 +19,7 @@ public class LayerRubyItem implements LayerRenderer<EntityRuby> {
         this.livingEntityRenderer = livingEntityRendererIn;
     }
     public void doRenderLayer(EntityRuby entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        boolean flag = entitylivingbaseIn.getPrimaryHand() == EnumHandSide.RIGHT;
+        boolean flag = entitylivingbaseIn.getPrimaryHand() == EnumHandSide.LEFT;
         ItemStack mainHand = flag ? entitylivingbaseIn.getHeldItemOffhand() : entitylivingbaseIn.getHeldItemMainhand();
         ItemStack offHand = flag ? entitylivingbaseIn.getHeldItemMainhand() : entitylivingbaseIn.getHeldItemOffhand();
         if (!mainHand.isEmpty() || !offHand.isEmpty()) {
@@ -39,7 +39,7 @@ public class LayerRubyItem implements LayerRenderer<EntityRuby> {
             GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
             GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
             boolean flag = handSide == EnumHandSide.LEFT;
-            GlStateManager.translate((flag ? -1 : 1) / 16.0F, 0.125F, -0.5F);
+            GlStateManager.translate((float)(flag ? -1 : 1) / 16F, 0.125F, -0.5F);
             Minecraft.getMinecraft().getItemRenderer().renderItemSide(entity, stack, camera, flag);
             GlStateManager.popMatrix();
         }

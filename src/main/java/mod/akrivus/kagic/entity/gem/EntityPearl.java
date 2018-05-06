@@ -441,7 +441,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
     }
 	public void onInventoryChanged(IInventory inventory) {
 		ItemStack firstItem = this.gemStorage.getStackInSlot(0);
-		this.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, firstItem);
+		this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, firstItem);
 		/*if (firstItem.getItem() instanceof ItemSword) {
 			if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
             	this.getOwner().addStat(ModAchievements.RENEGADE_PEARL);
