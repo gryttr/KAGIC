@@ -2,8 +2,9 @@ package mod.akrivus.kagic.blocks;
 
 import java.util.Random;
 
-import mod.akrivus.kagic.init.ModCreativeTabs;
+import mod.akrivus.kagic.event.InjectionEvent;
 import mod.akrivus.kagic.init.ModBlocks;
+import mod.akrivus.kagic.init.ModCreativeTabs;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.util.injector.Injector;
@@ -32,6 +33,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -59,6 +61,8 @@ public class BlockInjector extends Block {
 		}
 		else if (this.isEquipped) {
 			int newPosY = this.calcDistance(worldIn, pos);
+			InjectionEvent e1 = new InjectionEvent(worldIn, pos, newPosY, true);
+			if (MinecraftForge.EVENT_BUS.post(e1)) return;
 			if (newPosY > 5) {
 				worldIn.setBlockState(new BlockPos(pos.getX(), newPosY, pos.getZ()), ModBlocks.GEM_SEED.getDefaultState());
 				worldIn.setBlockState(pos, ModBlocks.INJECTOR.getDefaultState().withProperty(FACING, worldIn.getBlockState(pos).getValue(FACING)));

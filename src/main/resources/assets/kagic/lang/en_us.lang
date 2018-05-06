@@ -455,7 +455,7 @@ item.record.underwater_temple.desc=Aivi & Surasshu - The Underwater Temple
 item.record.connie_bracelet.desc=Aivi & Surasshu - Love Like You
 
 itemGroup.good_gems=KAGIC (Gems)
-itemGroup.bad_gems=KAGIC (Corruptions & Shard Fusions)
+itemGroup.bad_gems=KAGIC (Corruptions)
 itemGroup.other=KAGIC (Items & Blocks)
 itemGroup.music=KAGIC (Music Discs)
 
@@ -717,3 +717,17 @@ death.attack.shatter.item=%1$s was shattered by %2$s using %3$s
 death.attack.laser=%1$s was barraged by lasers
 death.attack.laser.player=%1$s was barraged by lasers from %2$s
 death.attack.slag=%1$s was viciously torn apart and eaten by slags.
+
+kagic.config.title=Configure KAGIC
+kagic.general.notifyonupdates=Update notifications?
+kagic.general.usemetrics=Use metrics?
+kagic.general.cangemsmakesounds=Can gems make sounds?
+kagic.general.spawnmeteorrubies=Spawn Meteor Rubies?
+kagic.general.meteorrubyrate=One Meteor Ruby per how many days?
+kagic.general.instructinjectors=Instruct Injector setup?
+kagic.general.canrebel=Can gems rebel?
+kagic.general.displaynames=Display facet/cut gem names?
+kagic.general.kindergartenweight=Kindergarten biome weight:
+kagic.general.floatingpeaksweight=Floating Peaks biome weight:
+kagic.general.strawberrybattlefieldweight=Strawberry Battlefield biome weight:
+kagic.general.ruindimensions=Ruin dimensions:

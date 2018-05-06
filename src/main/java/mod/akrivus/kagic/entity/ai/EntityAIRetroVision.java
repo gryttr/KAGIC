@@ -1,10 +1,12 @@
 package mod.akrivus.kagic.entity.ai;
 
 import mod.akrivus.kagic.entity.gem.EntitySapphire;
+import mod.akrivus.kagic.event.RetroVisionEvent;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 public class EntityAIRetroVision extends EntityAIBase {
 	private final EntitySapphire gem;
@@ -23,6 +25,8 @@ public class EntityAIRetroVision extends EntityAIBase {
 	@Override
 	public void startExecuting() {
 		World world = this.gem.world;
+		RetroVisionEvent event = new RetroVisionEvent(this.gem, null);
+		if (MinecraftForge.EVENT_BUS.post(event)) return;
 		if (world.rand.nextInt(100) == 0 && world.rand.nextBoolean() && !this.lastMessage.equals("wallbreaker")) {
 			this.sendMessage("wallbreaker");
 		}

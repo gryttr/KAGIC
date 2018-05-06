@@ -50,11 +50,6 @@ public class ModSounds {
 	public static final SoundEvent PEARL_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.pearl.death"));
 	public static final SoundEvent PEARL_SING = new SoundEvent(new ResourceLocation("kagic:entities.pearl.sing"));
 	public static final SoundEvent PEARL_WEIRD = new SoundEvent(new ResourceLocation("kagic:entities.pearl.weird"));
-	public static final SoundEvent ENDER_PEARL_HURT = new SoundEvent(new ResourceLocation("kagic:entities.ender_pearl.hurt"));
-	public static final SoundEvent ENDER_PEARL_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.ender_pearl.obey"));
-	public static final SoundEvent ENDER_PEARL_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.ender_pearl.death"));
-	public static final SoundEvent ENDER_PEARL_SING = new SoundEvent(new ResourceLocation("kagic:entities.ender_pearl.sing"));
-	public static final SoundEvent ENDER_PEARL_WEIRD = new SoundEvent(new ResourceLocation("kagic:entities.ender_pearl.weird"));
 	public static final SoundEvent BISMUTH_HURT = new SoundEvent(new ResourceLocation("kagic:entities.bismuth.hurt"));
 	public static final SoundEvent BISMUTH_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.bismuth.obey"));
 	public static final SoundEvent BISMUTH_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.bismuth.death"));
@@ -181,11 +176,6 @@ public class ModSounds {
 		registerSound(PEARL_DEATH, new ResourceLocation("kagic:entities.pearl.death"), event);
 		registerSound(PEARL_SING, new ResourceLocation("kagic:entities.pearl.sing"), event);
 		registerSound(PEARL_WEIRD, new ResourceLocation("kagic:entities.pearl.weird"), event);
-		registerSound(ENDER_PEARL_HURT, new ResourceLocation("kagic:entities.ender_pearl.hurt"), event);
-		registerSound(ENDER_PEARL_OBEY, new ResourceLocation("kagic:entities.ender_pearl.obey"), event);
-		registerSound(ENDER_PEARL_DEATH, new ResourceLocation("kagic:entities.ender_pearl.death"), event);
-		registerSound(ENDER_PEARL_SING, new ResourceLocation("kagic:entities.ender_pearl.sing"), event);
-		registerSound(ENDER_PEARL_WEIRD, new ResourceLocation("kagic:entities.ender_pearl.weird"), event);
 		registerSound(BISMUTH_HURT, new ResourceLocation("kagic:entities.bismuth.hurt"), event);
 		registerSound(BISMUTH_OBEY, new ResourceLocation("kagic:entities.bismuth.obey"), event);
 		registerSound(BISMUTH_DEATH, new ResourceLocation("kagic:entities.bismuth.death"), event);

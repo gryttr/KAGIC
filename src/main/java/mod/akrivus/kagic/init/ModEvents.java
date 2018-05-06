@@ -68,13 +68,13 @@ public class ModEvents {
 		else {
 			e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§dKAGIC " + KAGIC.VERSION + "§f\"}, {\"text\":\" - \"}, {\"text\":\"§3[Discord]§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://discord.gg/MwEuu9x\"}}, {\"text\":\" | \"}, {\"text\":\"§e[Wiki]§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"http://kagic.wikia.com/\"}}]"));
 		}
-		/*else if (ModConfigs.notifyOnUpdates) {
+		if (ModConfigs.notifyOnUpdates) {
 			Update result = ModMetrics.checkForUpdates();
 			if (result != null && !KAGIC.VERSION.equals(result.getNewVersion())) {
 				e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§cKAGIC v" + result.getNewVersion() + " is out for Minecraft " + KAGIC.MCVERSION + "§f\"}]"));
 				e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§e§nDownload§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDownloadLink() + "\"}}, {\"text\":\" | \"}, {\"text\":\"§3§nDiscord§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDiscordLink() + "\"}}]"));
 			}
-		}*/
+		}
 	}
 	@SubscribeEvent
 	public void onEntitySpawn(EntityJoinWorldEvent e) {
@@ -211,10 +211,6 @@ public class ModEvents {
 					}, new LootCondition[0], "kagic")
 			}, new LootCondition[0], new RandomValueRange(1), new RandomValueRange(2), "kagic"));
 		}
-	}
-	@SubscribeEvent
-	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent e) {
-		ModConfigs.syncConfiguration();
 	}
 	@SubscribeEvent
 	public void onWorldLoad(WorldEvent.Load e) {

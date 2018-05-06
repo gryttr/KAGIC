@@ -6,6 +6,8 @@ import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntitySapphire;
+import mod.akrivus.kagic.event.FutureVisionEvent;
+import mod.akrivus.kagic.event.RetroVisionEvent;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.skills.Speak;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,9 +15,9 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemSword;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 public class TellFuture extends Speak<EntitySapphire> {
 	public TellFuture() {
@@ -40,6 +42,8 @@ public class TellFuture extends Speak<EntitySapphire> {
 	public void init(EntitySapphire gem) {
 		if (gem.isDefective()) {
 			World world = gem.world;
+			RetroVisionEvent event = new RetroVisionEvent(gem, this.commandingPlayer);
+			if (MinecraftForge.EVENT_BUS.post(event)) return;
 			if (world.rand.nextInt(100) == 0 && world.rand.nextBoolean()) {
 				this.sendMessage(gem, "wallbreaker");
 			}
@@ -84,6 +88,8 @@ public class TellFuture extends Speak<EntitySapphire> {
 		}
 		else {
 			World world = gem.world;
+			FutureVisionEvent event = new FutureVisionEvent(gem, this.commandingPlayer);
+			if (MinecraftForge.EVENT_BUS.post(event)) return;
 			boolean sent = false;
 			if (world.rand.nextInt(100) == 0 && world.rand.nextBoolean() && KAGIC.isBirthdayTomorrow()) {
 				this.sendMessage(gem, "birthday");

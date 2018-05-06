@@ -4,6 +4,7 @@ import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntitySapphire;
+import mod.akrivus.kagic.event.FutureVisionEvent;
 import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -14,6 +15,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 public class EntityAIFutureVision extends EntityAIBase {
 	private final EntitySapphire gem;
@@ -32,6 +34,8 @@ public class EntityAIFutureVision extends EntityAIBase {
 	@Override
 	public void startExecuting() {
 		World world = this.gem.world;
+		FutureVisionEvent event = new FutureVisionEvent(this.gem, null);
+		if (MinecraftForge.EVENT_BUS.post(event)) return;
 		if (world.rand.nextInt(100) == 0 && world.rand.nextBoolean() && KAGIC.isBirthdayTomorrow() /*&& !this.lastMessage.equals("birthday")*/) {
 			this.sendMessage("birthday");
 		}

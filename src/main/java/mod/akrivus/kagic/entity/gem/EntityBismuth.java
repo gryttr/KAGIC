@@ -9,6 +9,7 @@ import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.event.BismuthInteractEvent;
 import mod.akrivus.kagic.init.ModEnchantments;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
@@ -45,6 +46,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class EntityBismuth extends EntityGem implements IInventoryChangedListener, INpc {
@@ -149,7 +151,9 @@ public class EntityBismuth extends EntityGem implements IInventoryChangedListene
 						if (this.isCoreItem(stack)) {
 							return super.processInteract(player, hand);
 						}
-						else if (player.isSneaking() && !this.isDefective()) {
+						BismuthInteractEvent e1 = new BismuthInteractEvent(this, player, stack);
+						if (MinecraftForge.EVENT_BUS.post(e1)) return false;
+						if (player.isSneaking() && !this.isDefective()) {
 		            		this.openGUI(player);
 		            		this.playObeySound();
 		            		return true;

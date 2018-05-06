@@ -577,73 +577,71 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener,
      *********************************************************/
     public void onDeath(DamageSource cause) {
     	this.setCanPickUpLoot(false);
-    	if (!(this instanceof EntityEnderPearl) && (this.getSpecialSkin() == null || this.getSpecialSkin() != null && !this.getSpecialSkin().equals("crystal_gems"))) {
-	    	switch (this.getColor()) {
-	    	case 0:
-	    		this.droppedGemItem = ModItems.WHITE_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_WHITE_PEARL_GEM;
-	    		break;
-	    	case 1:
-	    		this.droppedGemItem = ModItems.ORANGE_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_ORANGE_PEARL_GEM;
-	    		break;
-	    	case 2:
-	    		this.droppedGemItem = ModItems.MAGENTA_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_MAGENTA_PEARL_GEM;
-	    		break;
-	    	case 3:
-	    		this.droppedGemItem = ModItems.LIGHT_BLUE_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_LIGHT_BLUE_PEARL_GEM;
-	    		break;
-	    	case 4:
-	    		this.droppedGemItem = ModItems.YELLOW_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_YELLOW_PEARL_GEM;
-	    		break;
-	    	case 5:
-	    		this.droppedGemItem = ModItems.LIME_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_LIME_PEARL_GEM;
-	    		break;
-	    	case 6:
-	    		this.droppedGemItem = ModItems.PINK_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_PINK_PEARL_GEM;
-	    		break;
-	    	case 7:
-	    		this.droppedGemItem = ModItems.GRAY_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_GRAY_PEARL_GEM;
-	    		break;
-	    	case 8:
-	    		this.droppedGemItem = ModItems.LIGHT_GRAY_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_LIGHT_GRAY_PEARL_GEM;
-	    		break;
-	    	case 9:
-	    		this.droppedGemItem = ModItems.CYAN_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_CYAN_PEARL_GEM;
-	    		break;
-	    	case 10:
-	    		this.droppedGemItem = ModItems.PURPLE_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_PURPLE_PEARL_GEM;
-	    		break;
-	    	case 11:
-	    		this.droppedGemItem = ModItems.BLUE_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_BLUE_PEARL_GEM;
-	    		break;
-	    	case 12:
-	    		this.droppedGemItem = ModItems.BROWN_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_BROWN_PEARL_GEM;
-	    		break;
-	    	case 13:
-	    		this.droppedGemItem = ModItems.GREEN_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_GREEN_PEARL_GEM;
-	    		break;
-	    	case 14:
-	    		this.droppedGemItem = ModItems.RED_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_RED_PEARL_GEM;
-	    		break;
-	    	case 15:
-	    		this.droppedGemItem = ModItems.BLACK_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_BLACK_PEARL_GEM;
-	    		break;
-	    	}
+    	switch (this.getColor()) {
+    	case 0:
+    		this.droppedGemItem = ModItems.WHITE_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_WHITE_PEARL_GEM;
+    		break;
+    	case 1:
+    		this.droppedGemItem = ModItems.ORANGE_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_ORANGE_PEARL_GEM;
+    		break;
+    	case 2:
+    		this.droppedGemItem = ModItems.MAGENTA_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_MAGENTA_PEARL_GEM;
+    		break;
+    	case 3:
+    		this.droppedGemItem = ModItems.LIGHT_BLUE_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_LIGHT_BLUE_PEARL_GEM;
+    		break;
+    	case 4:
+    		this.droppedGemItem = ModItems.YELLOW_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_YELLOW_PEARL_GEM;
+    		break;
+    	case 5:
+    		this.droppedGemItem = ModItems.LIME_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_LIME_PEARL_GEM;
+    		break;
+    	case 6:
+    		this.droppedGemItem = ModItems.PINK_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_PINK_PEARL_GEM;
+    		break;
+    	case 7:
+    		this.droppedGemItem = ModItems.GRAY_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_GRAY_PEARL_GEM;
+    		break;
+    	case 8:
+    		this.droppedGemItem = ModItems.LIGHT_GRAY_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_LIGHT_GRAY_PEARL_GEM;
+    		break;
+    	case 9:
+    		this.droppedGemItem = ModItems.CYAN_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_CYAN_PEARL_GEM;
+    		break;
+    	case 10:
+    		this.droppedGemItem = ModItems.PURPLE_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_PURPLE_PEARL_GEM;
+    		break;
+    	case 11:
+    		this.droppedGemItem = ModItems.BLUE_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_BLUE_PEARL_GEM;
+    		break;
+    	case 12:
+    		this.droppedGemItem = ModItems.BROWN_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_BROWN_PEARL_GEM;
+    		break;
+    	case 13:
+    		this.droppedGemItem = ModItems.GREEN_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_GREEN_PEARL_GEM;
+    		break;
+    	case 14:
+    		this.droppedGemItem = ModItems.RED_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_RED_PEARL_GEM;
+    		break;
+    	case 15:
+    		this.droppedGemItem = ModItems.BLACK_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_BLACK_PEARL_GEM;
+    		break;
     	}
     	super.onDeath(cause);
     }

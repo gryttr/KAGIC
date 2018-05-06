@@ -4,6 +4,12 @@ import java.util.HashMap;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.EntitySlag;
+import mod.akrivus.kagic.event.CruxCheckEvent;
+import mod.akrivus.kagic.event.DrainBlockEvent;
+import mod.akrivus.kagic.event.GemSpawnEvent;
+import mod.akrivus.kagic.event.PostInjectionEvent;
+import mod.akrivus.kagic.event.PreInjectionEvent;
+import mod.akrivus.kagic.event.SlagSpawnEvent;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModEntities;
@@ -21,6 +27,7 @@ import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class InjectorResult {
@@ -30,9 +37,14 @@ public class InjectorResult {
 	private final boolean createSlags;
 	private final boolean isPrimary;
 	private final ExitHole exitHole;
+	private boolean stale;
 	
 	private static final float drainedPercentage = 0.75F;
 	
+	public InjectorResult() {
+		this(null, null, 0, false, false, null);
+		this.stale = true;
+	}
 	public InjectorResult(EntityGem gem, BlockPos pos, double defectiveRate, boolean createSlags, boolean isPrimary, ExitHole exitHole) {
 		this.gem = gem;
 		this.position = pos;
@@ -63,41 +75,47 @@ public class InjectorResult {
 		return this.exitHole;
 	}
 	public void generate(World world) {
-		if (this.canCreateSlags()) {
-			int totalSlags = world.rand.nextInt(9) + 1;
-			for (int i = 0; i <= totalSlags; ++i) {
-				boolean failed = true;
-				int attempts = 0;
-				while (failed && attempts < 10) {
-					BlockPos spawn = this.getPosition().add(world.rand.nextInt(9), 0, world.rand.nextInt(9));
-					ChunkPos c = world.getChunkFromBlockCoords(spawn).getPos();
-					failed = !world.isAirBlock(spawn);
-					if (!failed) {
-						EntitySlag slag = new EntitySlag(world);
-						slag.setPosition(spawn.getX(), spawn.getY(), spawn.getZ());
-						slag.setVariant(Math.abs((c.x + c.z) % ModEntities.MINERALS.size()));
-						world.spawnEntity(slag);
-						slag.onInitialSpawn(world.getDifficultyForLocation(spawn), null);
-					}
-					else {
-						++attempts;
+		if (!this.stale) { 
+			if (this.canCreateSlags()) {
+				int totalSlags = world.rand.nextInt(9) + 1;
+				for (int i = 0; i <= totalSlags; ++i) {
+					boolean failed = true;
+					int attempts = 0;
+					while (failed && attempts < 10) {
+						BlockPos spawn = this.getPosition().add(world.rand.nextInt(9), 0, world.rand.nextInt(9));
+						ChunkPos c = world.getChunkFromBlockCoords(spawn).getPos();
+						failed = !world.isAirBlock(spawn);
+						if (!failed) {
+							
+							EntitySlag slag = new EntitySlag(world);
+							slag.setPosition(spawn.getX(), spawn.getY(), spawn.getZ());
+							slag.setVariant(Math.abs((c.x + c.z) % ModEntities.MINERALS.size()));
+							SlagSpawnEvent e1 = new SlagSpawnEvent(world, spawn, slag);
+							if (!MinecraftForge.EVENT_BUS.post(e1)) {
+								world.spawnEntity(slag);
+								slag.onInitialSpawn(world.getDifficultyForLocation(spawn), null);
+							}
+						}
+						else {
+							++attempts;
+						}
 					}
 				}
+				world.destroyBlock(this.position, false);
 			}
-			world.destroyBlock(this.position, false);
-		}
-		else {
-			if (this.exitHole != null) {
-				this.exitHole.emerge(world);
+			else {
+				if (this.exitHole != null) {
+					this.exitHole.emerge(world);
+				}
+				if (this.gem.world.rand.nextFloat() < this.defectiveRate) {
+					this.gem.setDefective(true);
+				}
+				else if (this.exitHole.createRockMelt()) {
+					this.gem.setPrimary(true);
+				}
+				world.spawnEntity(this.gem);
+				this.gem.onInitialSpawn(world.getDifficultyForLocation(this.getPosition()), null);
 			}
-			if (this.gem.world.rand.nextFloat() < this.defectiveRate) {
-				this.gem.setDefective(true);
-			}
-			else if (this.exitHole.createRockMelt()) {
-				this.gem.setPrimary(true);
-			}
-			world.spawnEntity(this.gem);
-			this.gem.onInitialSpawn(world.getDifficultyForLocation(this.getPosition()), null);
 		}
 	}
 
@@ -108,7 +126,10 @@ public class InjectorResult {
 		float drainedCount = 0F;
 		float baseMinerals = 0F;
 		boolean drainedChecked = false;
-		System.out.println("############# BEGIN ###############");
+		
+		// Pre-Injection event, can be used to cancel an injection.
+		PreInjectionEvent e1 = new PreInjectionEvent(world, pos, drain);
+		if (MinecraftForge.EVENT_BUS.post(e1)) return new InjectorResult();
 		for (String gemType : ModEntities.GEMS.keySet()) {
 			Class<EntityGem> gemClass = null;
 			HashMap<IBlockState, Double> yield = null;
@@ -149,6 +170,8 @@ public class InjectorResult {
 							for (int z = -4; z <= 4; ++z) {
 								BlockPos ore = pos.add(x, y, z);
 								IBlockState state = world.getBlockState(ore);
+								CruxCheckEvent e2 = new CruxCheckEvent(world, pos, ore, state, gemClass);
+								if (MinecraftForge.EVENT_BUS.post(e2)) continue;
 								try {
 									if (!resultTable.containsKey(gemClass)) {
 										resultTable.put(gemClass, 0.0);
@@ -200,14 +223,14 @@ public class InjectorResult {
 					defectivity.put(gemClass, Math.max(0.0, defectivityRate * defectivityMultiplier));
 					resultTable.put(gemClass, resultTable.get(gemClass));
 					friction.put(gemClass, frictionFactor * pressureFactor);
-					System.out.println(gemType + " | RESULT = " + resultTable.get(gemClass) + " | DEF = " + defectivity.get(gemClass) + " | FRI = " + friction.get(gemClass) + " | DEP = " + depthFactor);
 				}
 				catch (Exception e) {
-					System.out.println(gemType + " | RESULT = error");
 					e.printStackTrace();
 				}
 			}
 		}
+		PostInjectionEvent e3 = new PostInjectionEvent(world, pos, defectivity, resultTable, friction);
+		if (MinecraftForge.EVENT_BUS.post(e3)) return new InjectorResult();
 		boolean canSpawnGem = false;
 		Class<? extends EntityGem> mostLikelyGem = null;
 		double highestYield = 0.0;
@@ -253,6 +276,8 @@ public class InjectorResult {
 				canSpawnGem = false;
 			}
 		}
+		GemSpawnEvent e4 = new GemSpawnEvent(world, pos, gemSpawned, mineralSpawned, canSpawnGem, drainedCount, baseMinerals, highestYield);
+		if (MinecraftForge.EVENT_BUS.post(e4)) return new InjectorResult();
 		ExitHole exitHole = null;
 		if (drain && gemSpawned != null) {
 			Double gemFriction = friction.get(gemSpawned.getClass());
@@ -282,6 +307,8 @@ public class InjectorResult {
 		IBlockState state = world.getBlockState(ore);
 		Block block = state.getBlock();
 		
+		DrainBlockEvent e1 = new DrainBlockEvent(world, ore, state, block);
+		if (MinecraftForge.EVENT_BUS.post(e1)) return;
 		if (block instanceof BlockBush) {
 			if (world.rand.nextInt(3) == 0) {
 				world.setBlockState(ore, ModBlocks.DRAIN_LILY.getDefaultState());

@@ -1,12 +1,10 @@
 package mod.akrivus.kagic.client.render.layers;
 
-import mod.akrivus.kagic.client.render.RenderEnderPearl;
 import mod.akrivus.kagic.entity.gem.EntityPearl;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.entity.EntityList;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;

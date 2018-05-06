@@ -16,7 +16,10 @@ import net.minecraft.item.Item;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.config.Config;
+import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -55,6 +58,13 @@ public class CommonProxy {
 	
 	public void registerBlockColors() {
 		
+	}
+	
+	@SubscribeEvent
+	public static void changeConfigs(ConfigChangedEvent.OnConfigChangedEvent event) {
+		if (event.getModID().equals(KAGIC.MODID)) {
+			ConfigManager.sync(KAGIC.MODID, Config.Type.INSTANCE);
+		}
 	}
 	
 	public void openWarpPadSelectionGUI(LinkedHashMap<BlockPos, WarpPadDataEntry> padData, int x, int y, int z) {

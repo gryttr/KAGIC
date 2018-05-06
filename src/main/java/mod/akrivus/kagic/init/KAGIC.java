@@ -29,7 +29,6 @@ import mod.akrivus.kagic.skills.pack.DumpChestsBismuth;
 import mod.akrivus.kagic.skills.pack.DumpChestsLapis;
 import mod.akrivus.kagic.skills.pack.DumpChestsPearl;
 import mod.akrivus.kagic.skills.pack.DumpChestsPeridot;
-import mod.akrivus.kagic.skills.pack.EnderPearlWarp;
 import mod.akrivus.kagic.skills.pack.FetchChestsBismuth;
 import mod.akrivus.kagic.skills.pack.FetchChestsPearl;
 import mod.akrivus.kagic.skills.pack.Follow;
@@ -98,7 +97,7 @@ import opennlp.tools.postag.POSTaggerME;
 import opennlp.tools.sentdetect.SentenceDetectorME;
 import opennlp.tools.sentdetect.SentenceModel;
 
-@Mod(modid = KAGIC.MODID, version = KAGIC.VERSION, acceptedMinecraftVersions = KAGIC.MCVERSION, guiFactory = "mod.akrivus.kagic.client.gui.GuiFactory")
+@Mod(modid = KAGIC.MODID, version = KAGIC.VERSION, acceptedMinecraftVersions = KAGIC.MCVERSION)
 public class KAGIC {
     public static final String MODID = "kagic";
     public static final String VERSION = "@version";
@@ -128,7 +127,6 @@ public class KAGIC {
     public void preInit(FMLPreInitializationEvent e) {
     	logger = e.getModLog();
         //ModBiomes.register();
-        ModConfigs.register(e);
         //ModDimensions.register();
         KAGICSmeltingRecipes.register();
 		KTPacketHandler.registerMessages(KAGIC.MODID);
@@ -190,7 +188,6 @@ public class KAGIC {
 		KAGIC.addSkill(DumpChestsLapis.class);
 		KAGIC.addSkill(DumpChestsPearl.class);
 		KAGIC.addSkill(DumpChestsPeridot.class);
-		KAGIC.addSkill(EnderPearlWarp.class);
 		KAGIC.addSkill(FetchChestsBismuth.class);
 		KAGIC.addSkill(FetchChestsPearl.class);
 		KAGIC.addSkill(Follow.class);

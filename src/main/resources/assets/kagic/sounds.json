@@ -432,50 +432,6 @@
 			{ "name": "kagic:entities/pearl/weird9" }
         ]
     },
-    "entities.ender_pearl.hurt": {
-        "sounds": [
-            { "name": "kagic:entities/ender_pearl/hurt1" },
-			{ "name": "kagic:entities/ender_pearl/hurt2" },
-			{ "name": "kagic:entities/ender_pearl/hurt3" },
-			{ "name": "kagic:entities/ender_pearl/hurt4" },
-			{ "name": "kagic:entities/ender_pearl/hurt5" }
-        ]
-    },
-    "entities.ender_pearl.obey": {
-        "sounds": [
-            { "name": "kagic:entities/ender_pearl/obey1" },
-			{ "name": "kagic:entities/ender_pearl/obey2" },
-			{ "name": "kagic:entities/ender_pearl/obey3" },
-			{ "name": "kagic:entities/ender_pearl/obey4" }
-        ]
-    },
-	"entities.ender_pearl.death": {
-        "sounds": [
-            { "name": "kagic:entities/ender_pearl/death1" },
-			{ "name": "kagic:entities/ender_pearl/death2" },
-			{ "name": "kagic:entities/ender_pearl/death3" },
-			{ "name": "kagic:entities/ender_pearl/death4" },
-			{ "name": "kagic:entities/ender_pearl/death5" }
-        ]
-    },
-    "entities.ender_pearl.sing": {
-    	"sounds": [
-            { "name": "kagic:entities/ender_pearl/note1" }
-        ]
-    },
-	"entities.ender_pearl.weird": {
-        "sounds": [
-            { "name": "kagic:entities/ender_pearl/weird1" },
-			{ "name": "kagic:entities/ender_pearl/weird2" },
-			{ "name": "kagic:entities/ender_pearl/weird3" },
-			{ "name": "kagic:entities/ender_pearl/weird4" },
-			{ "name": "kagic:entities/ender_pearl/weird5" },
-			{ "name": "kagic:entities/ender_pearl/weird6" },
-			{ "name": "kagic:entities/ender_pearl/weird7" },
-			{ "name": "kagic:entities/ender_pearl/weird8" },
-			{ "name": "kagic:entities/ender_pearl/weird9" }
-        ]
-    },
     "entities.bismuth.hurt": {
         "sounds": [
             { "name": "kagic:entities/bismuth/hurt1" },

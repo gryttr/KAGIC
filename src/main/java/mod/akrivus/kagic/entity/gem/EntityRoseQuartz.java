@@ -56,7 +56,7 @@ public class EntityRoseQuartz extends EntityQuartzSoldier implements INpc {
 	private BlockPos lastSurgeLocation;
 	private int regenTicks = 0;
 
-	private static HashMap<Item, Item> ROSE_RECIPES = new HashMap<Item, Item>();
+	public static HashMap<Item, Item> ROSE_RECIPES = new HashMap<Item, Item>();
 	static {
 		ROSE_RECIPES.put(Items.POISONOUS_POTATO, Items.POTATO);
 		ROSE_RECIPES.put(Items.ROTTEN_FLESH, Items.LEATHER);
