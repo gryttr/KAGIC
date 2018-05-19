@@ -26,8 +26,8 @@ public class RenderRuby extends RenderGemBase<EntityRuby> {
         this.addLayer(new LayerSkin(this));
         this.addLayer(new LayerUniform(this));
         this.addLayer(new LayerInsignia(this));
-        this.addLayer(new LayerHair(this));
         this.addLayer(new LayerVisor(this));
+        this.addLayer(new LayerHair(this));
         this.addLayer(new LayerGemPlacement(this));
         this.addLayer(new LayerFusionPlacement(this));
 		if (KAGIC.isBirthday()) {

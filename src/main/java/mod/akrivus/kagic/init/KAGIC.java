@@ -57,6 +57,7 @@ import mod.akrivus.kagic.skills.pack.SingSong;
 import mod.akrivus.kagic.skills.pack.Stop;
 import mod.akrivus.kagic.skills.pack.TameCats;
 import mod.akrivus.kagic.skills.pack.TameDogs;
+import mod.akrivus.kagic.skills.pack.TameHorses;
 import mod.akrivus.kagic.skills.pack.TameParrots;
 import mod.akrivus.kagic.skills.pack.TellFuture;
 import mod.akrivus.kagic.skills.pack.TellFutureGarnet;
@@ -216,6 +217,7 @@ public class KAGIC {
 		KAGIC.addSkill(Stop.class);
 		KAGIC.addSkill(TameCats.class);
 		KAGIC.addSkill(TameDogs.class);
+		KAGIC.addSkill(TameHorses.class);
 		KAGIC.addSkill(TameParrots.class);
 		KAGIC.addSkill(TellFuture.class);
 		KAGIC.addSkill(TellFutureGarnet.class);

@@ -31,7 +31,7 @@ public class EntityAIFollowPlayer extends EntityAIBase {
         }
         return this.player != null;
     }
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return this.player != null && !this.human.getNavigator().noPath();
     }
     public void startExecuting() {

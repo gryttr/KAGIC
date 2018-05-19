@@ -14,6 +14,7 @@ import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIPickUpItems;
 import mod.akrivus.kagic.entity.ai.EntityAIProtectionFuse;
+import mod.akrivus.kagic.entity.ai.EntityAIRideHorses;
 import mod.akrivus.kagic.entity.ai.EntityAIRubyFuse;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
@@ -21,11 +22,9 @@ import mod.akrivus.kagic.entity.gem.fusion.EntityGarnet;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRhodonite;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
-import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.crash.CrashReport;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -52,7 +51,6 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
@@ -78,6 +76,7 @@ public class EntityRuby extends EntityGem implements IAnimals {
 	public static final double RUBY_DEPTH_THRESHOLD = 0;
 	private static final DataParameter<Integer> ANGER = EntityDataManager.<Integer>createKey(EntityRuby.class, DataSerializers.VARINT);
 	private int angerTicks = 0;
+	public boolean fusing = false;
 	
 	private static final int SKIN_COLOR_BEGIN = 0xE0316F; 
 	private static final int SKIN_COLOR_MID = 0xE52C5C; 
@@ -142,6 +141,7 @@ public class EntityRuby extends EntityGem implements IAnimals {
         
         // Other entity AIs.
 		this.tasks.addTask(2, new EntityAIPickUpItems(this, 1.0D));
+		this.tasks.addTask(2, new EntityAIRideHorses(this, 1.0D));
         this.tasks.addTask(3, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
         this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntitySapphire.class, EntityGarnet.class, 16D));
         this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntityPearl.class, EntityRhodonite.class, 16D));
@@ -321,13 +321,16 @@ public class EntityRuby extends EntityGem implements IAnimals {
 	public boolean canFuseWith(EntityRuby other) {
 		if (this.canFuse() && other.canFuse() && this.getServitude() == other.getServitude() && this.getGemPlacement() != other.getGemPlacement()) {
 			if ((this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwnerId().equals(other.getOwnerId())) || this.getServitude() != EntityGem.SERVE_HUMAN) {
-				if (this.wantsToFuse && other.wantsToFuse) {
+				if (this.getAttackingEntity() != null && this.getAttackingEntity().equals(other.getAttackingEntity())) {
 					return true;
 				}
-				if ((this.getAttackingEntity() != null && this.getAttackingEntity().equals(other.getAttackingEntity())) || (this.getAttackTarget() != null && this.getAttackTarget().equals(other.getAttackTarget()))) {
+				if (this.getAttackTarget() != null && this.getAttackTarget().equals(other.getAttackTarget())) {
 					return true;
 				}
-				if ((this.getHealth() / this.getMaxHealth() <= 0.5 || other.getHealth() / other.getMaxHealth() <= 0.5) && this.getHealth() > 0.0f && other.getHealth() > 0.0f) {
+				else if ((this.getHealth() + other.getHealth()) < this.getMaxHealth() + other.getMaxHealth()) {
+					return true;
+				}
+				else if (this.wantsToFuse && other.wantsToFuse) {
 					return true;
 				}
 			}

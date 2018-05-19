@@ -1,6 +1,5 @@
 package mod.akrivus.kagic.tileentity;
 
-import mod.akrivus.kagic.blocks.BlockAnalogInjector;
 import mod.akrivus.kagic.blocks.BlockInjector;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModItems;
@@ -56,7 +55,7 @@ public class TileEntityIncubator extends TileEntityLockableLoot implements ITick
 			}
 			if (containsBase) {
 				if (this.world.getBlockState(this.pos.down()).getBlock() == ModBlocks.ANALOG_INJECTOR) {
-					this.world.setBlockState(this.pos.down(), ModBlocks.EQUIPPED_ANALOG_INJECTOR.getDefaultState().withProperty(BlockAnalogInjector.FACING, this.world.getBlockState(this.pos.down()).getValue(BlockAnalogInjector.FACING)));	
+					this.world.setBlockState(this.pos.down(), ModBlocks.EQUIPPED_ANALOG_INJECTOR.getDefaultState().withProperty(BlockInjector.FACING, this.world.getBlockState(this.pos.down()).getValue(BlockInjector.FACING)));	
 				}
 				else if (this.world.getBlockState(this.pos.down()).getBlock() == ModBlocks.INJECTOR) {
 					this.world.setBlockState(this.pos.down(), ModBlocks.EQUIPPED_INJECTOR.getDefaultState().withProperty(BlockInjector.FACING, this.world.getBlockState(this.pos.down()).getValue(BlockInjector.FACING)));

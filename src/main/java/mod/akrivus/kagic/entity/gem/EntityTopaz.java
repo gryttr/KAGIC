@@ -250,7 +250,7 @@ public class EntityTopaz extends EntityGem implements INpc {
 		if (!this.world.isRemote) {
 			for (int i = 0; i < this.heldEntities.size(); ++i) {
 				EntityLivingBase entity = this.heldEntities.get(i);
-				if (entity != null && (entity.isEntityAlive() || entity.getDistanceSq(this) < 16)) {
+				if (entity != null && entity.isEntityAlive() && entity.getDistanceSq(this) < 16) {
 					double[] offset = new double[] {0, this.height, 0};
 					if (this.isFusion()) {
 						switch (i) {
@@ -314,7 +314,7 @@ public class EntityTopaz extends EntityGem implements INpc {
 					entity.motionY = 0;
 					entity.motionZ = 0;
 				}
-				else if (this.isFusion()) {
+				else {
 					this.heldEntities.remove(i);
 					--i;
 				}

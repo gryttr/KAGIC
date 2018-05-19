@@ -44,8 +44,6 @@ import mod.akrivus.kagic.entity.gem.fusion.EntityMalachite;
 import mod.akrivus.kagic.entity.gem.fusion.EntityOpal;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRainbowQuartz;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRhodonite;
-import mod.akrivus.kagic.entity.humans.EntityConnie;
-import mod.akrivus.kagic.entity.humans.EntitySteven;
 import mod.akrivus.kagic.entity.pepo.EntityCactus;
 import mod.akrivus.kagic.entity.pepo.EntityMelon;
 import mod.akrivus.kagic.entity.pepo.EntityPumpkin;
@@ -130,8 +128,6 @@ public class ModEntities {
 		registerMob("cactus", EntityCactus.class, 0x138622, 0xD9DB9F);
 		registerMob("strawberry", EntityStrawberry.class, 0xEF4B69, 0x80855A);
 		registerMob("slag", EntitySlag.class, 0xFFFFFF, 0x00FF5D);
-		registerMob("steven", EntitySteven.class, 0xFD6270, 0xFFD248);
-		registerMob("connie", EntityConnie.class, 0x99D3CD, 0xAF4E3D);
 		registerEntity("roaming_eye", EntityRoamingEye.class);
 		registerEntity("laser", EntityLaser.class);
 		

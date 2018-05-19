@@ -2,7 +2,7 @@
     "forge_marker": 1,
     "defaults": {
         "textures": {
-            "front": "kagic:blocks/injector_side",
+            "front": "kagic:blocks/analog_injector_front",
             "side": "kagic:blocks/injector_side",
             "base": "kagic:blocks/injector_base",
             "top": "kagic:blocks/injector_top",

@@ -40,10 +40,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockInjector extends Block {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	protected final boolean isEquipped;
-	public BlockInjector(boolean isEquipped) {
+	protected final boolean analog;
+	public BlockInjector(boolean isEquipped, boolean analog) {
 		super(Material.GLASS, MapColor.MAGENTA);
-		this.setUnlocalizedName("injector");
+		this.setUnlocalizedName(analog ? "analog_injector": "injector");
 		this.isEquipped = isEquipped;
+		this.analog = analog;
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		if (this.isEquipped) {
 			this.setLightLevel(0.5F);
@@ -60,7 +62,13 @@ public class BlockInjector extends Block {
 			Injector.tellNearbyPlayers(worldIn, pos, "injector_missing_drill", true);
 		}
 		else if (this.isEquipped) {
-			int newPosY = this.calcDistance(worldIn, pos);
+			int newPosY = 0;
+			if (this.analog) {
+				newPosY = this.calcDistanceUsingRedstoneSignals(worldIn, pos);
+			}
+			else {
+				newPosY = this.calcDistanceAutomatically(worldIn, pos);
+			}
 			InjectionEvent e1 = new InjectionEvent(worldIn, pos, newPosY, true);
 			if (MinecraftForge.EVENT_BUS.post(e1)) return;
 			if (newPosY > 5) {
@@ -107,25 +115,45 @@ public class BlockInjector extends Block {
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (!worldIn.isRemote) {
 			ItemStack heldItem = playerIn.getHeldItem(hand);
-			if (this.isEquipped && heldItem.isEmpty()) {
-				worldIn.playSound(null, pos, ModSounds.BLOCK_INJECTOR_OPEN, SoundCategory.BLOCKS, 0.3F, 1.0F);
-	    		worldIn.setBlockState(pos, ModBlocks.INJECTOR.getDefaultState().withProperty(FACING, worldIn.getBlockState(pos).getValue(FACING)));
-	    		EntityItem activatedBase = new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.ACTIVATED_GEM_BASE));
-	    		worldIn.spawnEntity(activatedBase);
-	    	}
-	    	else  if (!this.isEquipped) {
-	    		if (heldItem.getItem() == ModItems.ACTIVATED_GEM_BASE) {
-	    			worldIn.setBlockState(pos, ModBlocks.EQUIPPED_INJECTOR.getDefaultState().withProperty(FACING, worldIn.getBlockState(pos).getValue(FACING)));
-	    			worldIn.playSound(null, pos, ModSounds.BLOCK_INJECTOR_CLOSE, SoundCategory.BLOCKS, 0.3F, 1.0F);
-	    			if (!playerIn.capabilities.isCreativeMode) {
-	    				heldItem.splitStack(1);
-	    			}
-	    			Injector.onGemBasePlacement(worldIn, pos);
-	    		}
-	    	}
-	    	if (heldItem.getItem() instanceof ItemBlock) {
-	    		return false;
-	    	}
+			if (playerIn.isSneaking()) {
+				if (this.analog) {
+					if (!this.isEquipped) {
+						worldIn.setBlockState(pos, ModBlocks.INJECTOR.getDefaultState().withProperty(FACING, worldIn.getBlockState(pos).getValue(FACING)));
+					}
+				}
+				else {
+					if (!this.isEquipped) {
+						worldIn.setBlockState(pos, ModBlocks.ANALOG_INJECTOR.getDefaultState().withProperty(FACING, worldIn.getBlockState(pos).getValue(FACING)));
+					}
+				}
+			}
+			else {
+				IBlockState unequippedState = ModBlocks.INJECTOR.getDefaultState();
+				IBlockState equippedState = ModBlocks.EQUIPPED_INJECTOR.getDefaultState();
+				if (this.analog) {
+					unequippedState = ModBlocks.ANALOG_INJECTOR.getDefaultState();
+					equippedState = ModBlocks.EQUIPPED_ANALOG_INJECTOR.getDefaultState();
+				}
+				if (this.isEquipped && heldItem.isEmpty()) {
+					worldIn.playSound(null, pos, ModSounds.BLOCK_INJECTOR_OPEN, SoundCategory.BLOCKS, 0.3F, 1.0F);
+		    		worldIn.setBlockState(pos, unequippedState.withProperty(FACING, worldIn.getBlockState(pos).getValue(FACING)));
+		    		EntityItem activatedBase = new EntityItem(worldIn, pos.getX(), pos.getY() + 1, pos.getZ(), new ItemStack(ModItems.ACTIVATED_GEM_BASE));
+		    		worldIn.spawnEntity(activatedBase);
+		    	}
+		    	else  if (!this.isEquipped) {
+		    		if (heldItem.getItem() == ModItems.ACTIVATED_GEM_BASE) {
+		    			worldIn.setBlockState(pos, equippedState.withProperty(FACING, worldIn.getBlockState(pos).getValue(FACING)));
+		    			worldIn.playSound(null, pos, ModSounds.BLOCK_INJECTOR_CLOSE, SoundCategory.BLOCKS, 0.3F, 1.0F);
+		    			if (!playerIn.capabilities.isCreativeMode) {
+		    				heldItem.splitStack(1);
+		    			}
+		    			Injector.onGemBasePlacement(worldIn, pos);
+		    		}
+		    	}
+		    	if (heldItem.getItem() instanceof ItemBlock) {
+		    		return false;
+		    	}
+			}
 		}
         return true;
     }
@@ -136,8 +164,22 @@ public class BlockInjector extends Block {
 			this.injectGemSeed(worldIn, pos);
         }
     }
-	
-	public int calcDistance(World worldIn, BlockPos pos) {
+	public int calcDistanceUsingRedstoneSignals(World worldIn, BlockPos pos) {
+		int totalPower = 6;
+		totalPower += worldIn.getBlockState(pos.north()).getWeakPower(worldIn, pos.north(), EnumFacing.NORTH);
+		totalPower += worldIn.getBlockState(pos.south()).getWeakPower(worldIn, pos.south(), EnumFacing.SOUTH);
+		totalPower += worldIn.getBlockState(pos.east()).getWeakPower(worldIn, pos.east(), EnumFacing.EAST);
+		totalPower += worldIn.getBlockState(pos.west()).getWeakPower(worldIn, pos.west(), EnumFacing.WEST);
+		BlockPos newp = pos.down(totalPower);
+		if (newp.getY() < 5 || worldIn.getBlockState(newp).getBlock() == Blocks.BEDROCK) {
+			totalPower -= (5 - newp.getY());
+		}
+		if (worldIn.getBlockState(newp).getBlock() == ModBlocks.GEM_SEED) {
+			totalPower += 256;
+		}
+		return pos.getY() - totalPower;
+    }
+	public int calcDistanceAutomatically(World worldIn, BlockPos pos) {
     	int bestDepth = -1;
     	int worstDepth = 5;
 		for (bestDepth = pos.down(6).getY(); bestDepth > worstDepth; --bestDepth) {

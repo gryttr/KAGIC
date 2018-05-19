@@ -17,7 +17,7 @@ public class TameDogs extends Speak<EntityGem> {
 		}));
 		this.TRIGGER_NOUNS = new ArrayList<String>(Arrays.asList(new String[] { 
 			"wolf",
-			"woves",
+			"wolves",
 			"dogs",
 			"dog",
 			"puppy",

@@ -32,7 +32,7 @@ public class EntityAIExtinguishEntities extends EntityAIBase {
         }
         return this.target != null;
     }
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return this.target != null && this.target.isBurning() && !this.follower.getNavigator().noPath();
     }
     public void startExecuting() {

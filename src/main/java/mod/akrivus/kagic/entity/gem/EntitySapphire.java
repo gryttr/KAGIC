@@ -124,9 +124,10 @@ public class EntitySapphire extends EntityGem implements INpc {
 	@Override
 	public void itemDataToGemData(int data) {
 		this.setSpecial(data);
-		this.setGemColor(this.generateGemColor());
-		this.setSkinColor(this.generateSkinColor());
+		this.setCustomNameTag(new TextComponentTranslation("entity.kagic.sapphire_" + this.getSpecial() + ".name").getUnformattedComponentText());
 		this.setHairColor(this.getSkinColor());
+		this.setSkinColor(this.generateSkinColor());
+		this.setGemColor(this.generateGemColor());
 		if (data == 16) {
 			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.sapphire_16.name").getUnformattedComponentText());
 			this.setHairColor(0xF9D5BD);

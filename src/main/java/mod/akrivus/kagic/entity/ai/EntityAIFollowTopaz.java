@@ -32,7 +32,7 @@ public class EntityAIFollowTopaz extends EntityAIBase {
         }
         return this.gem != null;
     }
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return this.gem != null && !this.follower.getNavigator().noPath();
     }
     public void startExecuting() {

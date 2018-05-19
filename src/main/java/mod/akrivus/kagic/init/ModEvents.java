@@ -168,16 +168,13 @@ public class ModEvents {
 					new LootEntryItem(ModItems.INACTIVE_GEM_BASE, 3, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(2))
 					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(Item.getItemFromBlock(ModBlocks.ANALOG_INJECTOR), 2, 1, new LootFunction[] {
-							new SetCount(new LootCondition[0], new RandomValueRange(1))
-					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(Item.getItemFromBlock(ModBlocks.INJECTOR), 2, 1, new LootFunction[] {
+					new LootEntryItem(Item.getItemFromBlock(ModBlocks.INJECTOR), 3, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
 					new LootEntryItem(Item.getItemFromBlock(ModBlocks.GEM_DRILL), 3, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic"),
-					new LootEntryItem(Item.getItemFromBlock(ModBlocks.INCUBATOR), 4, 1, new LootFunction[] {
+					new LootEntryItem(Item.getItemFromBlock(ModBlocks.INCUBATOR), 3, 1, new LootFunction[] {
 							new SetCount(new LootCondition[0], new RandomValueRange(1))
 					}, new LootCondition[0], "kagic")
 			}, new LootCondition[0], new RandomValueRange(1), new RandomValueRange(2), "kagic"));

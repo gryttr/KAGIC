@@ -310,11 +310,7 @@ public class InjectorResult {
 		DrainBlockEvent e1 = new DrainBlockEvent(world, ore, state, block);
 		if (MinecraftForge.EVENT_BUS.post(e1)) return;
 		if (block instanceof BlockBush) {
-			if (world.rand.nextInt(3) == 0) {
-				world.setBlockState(ore, ModBlocks.DRAIN_LILY.getDefaultState());
-			} else {
-				world.destroyBlock(ore, false);
-			}
+			world.destroyBlock(ore, false);
 			return;
 		} else if (block == Blocks.BEDROCK) {
 			return;

@@ -1,6 +1,5 @@
 package mod.akrivus.kagic.init;
 
-import mod.akrivus.kagic.blocks.BlockAnalogInjector;
 import mod.akrivus.kagic.blocks.BlockDrainedGravel;
 import mod.akrivus.kagic.blocks.BlockGalaxyPadCore;
 import mod.akrivus.kagic.blocks.BlockGemDrill;
@@ -9,7 +8,6 @@ import mod.akrivus.kagic.blocks.BlockGiantStrawberry;
 import mod.akrivus.kagic.blocks.BlockGiantStrawberryStem;
 import mod.akrivus.kagic.blocks.BlockIncubator;
 import mod.akrivus.kagic.blocks.BlockInjector;
-import mod.akrivus.kagic.blocks.BlockDrainLily;
 import mod.akrivus.kagic.blocks.BlockPinkSandstone;
 import mod.akrivus.kagic.blocks.BlockPinkSandstoneDoubleSlab;
 import mod.akrivus.kagic.blocks.BlockPinkSandstoneSlab;
@@ -54,10 +52,10 @@ public class ModBlocks {
 	public static final BlockGemSeed GEM_SEED = new BlockGemSeed();
 	public static final ItemBlock GEM_SEED_BLOCK = new ItemBlock(GEM_SEED);
 	public static final BlockGemDrill GEM_DRILL = new BlockGemDrill();
-	public static final BlockInjector INJECTOR = new BlockInjector(false);
-	public static final BlockInjector EQUIPPED_INJECTOR = new BlockInjector(true);
-	public static final BlockAnalogInjector ANALOG_INJECTOR = new BlockAnalogInjector(false);
-	public static final BlockAnalogInjector EQUIPPED_ANALOG_INJECTOR = new BlockAnalogInjector(true);
+	public static final BlockInjector INJECTOR = new BlockInjector(false, false);
+	public static final BlockInjector EQUIPPED_INJECTOR = new BlockInjector(true, false);
+	public static final BlockInjector ANALOG_INJECTOR = new BlockInjector(false, true);
+	public static final BlockInjector EQUIPPED_ANALOG_INJECTOR = new BlockInjector(true, true);
 	public static final BlockIncubator INCUBATOR = new BlockIncubator();
 	public static final BlockVarying DRAINED_BLOCK = new BlockVarying("drained_block", 1, 40, 1);
 	public static final BlockVarying DRAINED_BLOCK_2 = new BlockVarying("drained_block_2", 1, 40, 1);
@@ -76,7 +74,6 @@ public class ModBlocks {
 	public static final BlockPinkSandstoneDoubleSlab PINK_SANDSTONE_DOUBLE_SLAB = new BlockPinkSandstoneDoubleSlab();
 	public static final BlockGiantStrawberry GIANT_STRAWBERRY = new BlockGiantStrawberry();
 	public static final BlockGiantStrawberryStem GIANT_STRAWBERRY_STEM = new BlockGiantStrawberryStem(GIANT_STRAWBERRY);
-	public static final BlockDrainLily DRAIN_LILY = new BlockDrainLily();
 	
 	public static final Fluid FLUID_ROSE_TEARS = new Fluid("rose_tears", new ResourceLocation("kagic:blocks/rose_tears_still"), new ResourceLocation("kagic:blocks/rose_tears_flowing"));
 	public static BlockRoseTears ROSE_TEARS;
@@ -106,7 +103,6 @@ public class ModBlocks {
 		registerBlock(PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_double_slab"), event);
 		registerBlock(GIANT_STRAWBERRY, new ResourceLocation("kagic:giant_strawberry_block"), event);
 		registerBlock(GIANT_STRAWBERRY_STEM, new ResourceLocation("kagic:giant_strawberry_stem"), event);
-		registerBlock(DRAIN_LILY, new ResourceLocation("kagic:drain_lily"), event);
 		
 		registerFluid(FLUID_ROSE_TEARS);
 		ROSE_TEARS = new BlockRoseTears(FLUID_ROSE_TEARS, Material.WATER);
@@ -148,7 +144,6 @@ public class ModBlocks {
 		registerBlockItem(WAVY_PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:wavy_pink_sandstone_stairs"), event);		
 		registerBlockItemSlab(PINK_SANDSTONE_SLAB, PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_slab"), event);		
 		registerBlockItem(GIANT_STRAWBERRY, new ResourceLocation("kagic:giant_strawberry_block"), event, "blockGiantStrawberry");
-		registerBlockItem(DRAIN_LILY, new ResourceLocation("kagic:drain_lily"), event);
 	}
 	
 	public static void registerBlockItem(Block block, ResourceLocation location, RegistryEvent.Register<Item> event) {
