@@ -38,6 +38,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -136,6 +137,12 @@ public class EntityZircon extends EntityGem implements INpc {
 		this.setUniformColor(data);
 		this.setSkinColor(this.generateSkinColor());
 		this.setGemColor(this.generateGemColor());
+		if (data == 14) {
+			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.zircon_14.name").getUnformattedComponentText());
+		}
+		else {
+			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.zircon.name").getUnformattedComponentText());
+		}
 	}
 	
 	/*********************************************************

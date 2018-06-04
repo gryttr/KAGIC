@@ -119,7 +119,7 @@ entity.kagic.zircon_10.name=Purple Zircon
 entity.kagic.zircon_11.name=Blue Zircon
 entity.kagic.zircon_12.name=Brown Zircon
 entity.kagic.zircon_13.name=Green Zircon
-entity.kagic.zircon_14.name=Red Zircon
+entity.kagic.zircon_14.name=Jacinth
 entity.kagic.zircon_15.name=Black Zircon
 entity.kagic.slag.name=Slag
 entity.kagic.slag.super=Super Slag
@@ -275,7 +275,7 @@ item.zircon_10_gem.name=Purple Zircon Gem
 item.zircon_11_gem.name=Blue Zircon Gem
 item.zircon_12_gem.name=Brown Zircon Gem
 item.zircon_13_gem.name=Green Zircon Gem
-item.zircon_14_gem.name=Red Zircon Gem
+item.zircon_14_gem.name=Jacinth Gem
 item.zircon_15_gem.name=Black Zircon Gem
 
 item.cracked_ruby_gem.name=Cracked Ruby Gem
@@ -367,7 +367,7 @@ item.cracked_zircon_10_gem.name=Cracked Purple Zircon Gem
 item.cracked_zircon_11_gem.name=Cracked Blue Zircon Gem
 item.cracked_zircon_12_gem.name=Cracked Brown Zircon Gem
 item.cracked_zircon_13_gem.name=Cracked Green Zircon Gem
-item.cracked_zircon_14_gem.name=Cracked Red Zircon Gem
+item.cracked_zircon_14_gem.name=Cracked Jacinth Gem
 item.cracked_zircon_15_gem.name=Cracked Black Zircon Gem
 
 item.handbody_gem.name=Shard Fusion Gem
