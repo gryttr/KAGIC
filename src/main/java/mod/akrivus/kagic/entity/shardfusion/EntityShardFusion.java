@@ -7,11 +7,10 @@ import com.google.common.base.Predicate;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
-import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -20,7 +19,6 @@ import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -48,8 +46,8 @@ public class EntityShardFusion extends EntityGem {
 		this.targetTasks.addTask(1, new EntityAIDiamondHurtByTarget(this));
 		this.targetTasks.addTask(2, new EntityAIDiamondHurtTarget(this));
 		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false, new Class[0]));
-		this.targetTasks.addTask(4, new EntityAINearestAttackableTarget<EntityLiving>(this, EntityLiving.class, 10, true, false, new Predicate<EntityLiving>() {
-			public boolean apply(EntityLiving input) {
+		this.targetTasks.addTask(4, new EntityAINearestAttackableTarget<EntityLivingBase>(this, EntityLivingBase.class, 10, true, false, new Predicate<EntityLivingBase>() {
+			public boolean apply(EntityLivingBase input) {
 				return input != null && !(input instanceof EntityShardFusion);
 			}
 		}));
@@ -84,7 +82,6 @@ public class EntityShardFusion extends EntityGem {
 	
 	@Override
 	public boolean spokenTo(EntityPlayer player, String message) {
-		player.sendMessage(new TextComponentTranslation("command.kagic.does_not_understand", this.getName()));
 		return false;
 	}
 	

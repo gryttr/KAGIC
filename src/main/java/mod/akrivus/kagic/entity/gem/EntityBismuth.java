@@ -63,7 +63,7 @@ public class EntityBismuth extends EntityGem implements IInventoryChangedListene
 	
 	public EntityBismuth(World worldIn) {
 		super(worldIn);
-		this.nativeColor = 10;
+		this.nativeColor = 7;
 		this.isImmuneToFire = true;
 		this.initGemStorage();
 		this.setSize(0.9F, 2.3F);

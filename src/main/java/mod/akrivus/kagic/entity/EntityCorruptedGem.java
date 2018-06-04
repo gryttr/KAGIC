@@ -91,7 +91,6 @@ public class EntityCorruptedGem extends EntityGem {
 	
 	@Override
 	public boolean spokenTo(EntityPlayer player, String message) {
-		player.sendMessage(new TextComponentTranslation("command.kagic.does_not_understand_corrupted", this.getName()));
 		return false;
 	}
 	

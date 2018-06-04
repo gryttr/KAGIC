@@ -444,7 +444,7 @@ public class EntityRuby extends EntityGem implements IAnimals {
 	            	this.getOwner().addStat(ModAchievements.IM_AN_ETERNAL_FLAME);
 	            }
 			}*/
-			if (this.isDefective()) {
+			if (this.isDefective() && this.ticksExisted < 20) {
 				this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
 				this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
 			}
@@ -499,14 +499,14 @@ public class EntityRuby extends EntityGem implements IAnimals {
         this.world.spawnEntity(arrow);
     }
 	public void jump() {
-		if (this.isDefective() && !this.world.isRemote) {
+		if (this.isDefective() && !this.world.isRemote && this.ticksExisted < 20) {
 			this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
 		}
 		super.jump();
 	}
 	public void fall(float distance, float damageMultiplier) {
-		if (this.isDefective()) {
+		if (this.isDefective() && this.ticksExisted < 20) {
 			this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
 		}

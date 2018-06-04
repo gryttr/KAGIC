@@ -1,5 +1,6 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import mod.akrivus.kagic.entity.EntityGem;
@@ -17,6 +18,7 @@ import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.skills.SkillBase;
 import mod.akrivus.kagic.util.flying.EntityFlyHelper;
 import mod.akrivus.kagic.util.flying.PathNavigateFlying;
+import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.MoverType;
@@ -43,6 +45,11 @@ public class EntityAquamarine extends EntityGem implements IAnimals {
 	public static final double AQUAMARINE_DEFECTIVITY_MULTIPLIER = 1;
 	public static final double AQUAMARINE_DEPTH_THRESHOLD = 0;
 	public static final HashMap<Integer, ResourceLocation> AQUAMARINE_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
+	public static final int SKIN_COLOR_BEGIN = 0x8BFFFE;
+	public static final int SKIN_COLOR_END = 0x3AE2E4;
+	private static final int NUM_HAIRSTYLES = 1;
+	public static final int HAIR_COLOR_BEGIN = 0x13A9DF;
+	public static final int HAIR_COLOR_END = 0x137EDF;
 	public boolean wantsToScan;
 	private int lastScanTime;
 	public EntityAquamarine(World worldIn) {
@@ -198,6 +205,30 @@ public class EntityAquamarine extends EntityGem implements IAnimals {
     public boolean isOnLadder() {
         return false;
     }
+    
+    /*********************************************************
+	 * Methods related to rendering.                         *
+	 *********************************************************/
+	@Override
+	protected int generateSkinColor() {
+		ArrayList<Integer> skinColors = new ArrayList<Integer>();
+		skinColors.add(EntityAquamarine.SKIN_COLOR_BEGIN);
+		skinColors.add(EntityAquamarine.SKIN_COLOR_END);
+		return Colors.arbiLerp(skinColors);
+	}
+	
+	@Override
+	protected int generateHairStyle() {
+		return this.rand.nextInt(EntityAquamarine.NUM_HAIRSTYLES);
+	}
+	
+	@Override
+	protected int generateHairColor() {
+		ArrayList<Integer> hairColors = new ArrayList<Integer>();
+		hairColors.add(EntityAquamarine.HAIR_COLOR_BEGIN);
+		hairColors.add(EntityAquamarine.HAIR_COLOR_END);
+		return Colors.arbiLerp(hairColors);
+	}
 	
 	/*********************************************************
      * Methods related to entity sounds.                     *

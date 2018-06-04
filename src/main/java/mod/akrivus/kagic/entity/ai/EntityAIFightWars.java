@@ -28,6 +28,7 @@ public class EntityAIFightWars extends EntityAITarget {
 		        	else if (possibleTarget instanceof EntityPlayer) {
 		        		canFight = !this.gem.isOwnedBy(possibleTarget);
 		        	}
+		        	canFight = canFight && this.gem != possibleTarget;
 		            if (canFight) {
 		                double newDistance = this.gem.getDistanceSq(possibleTarget);
 		                if (newDistance <= distance) {

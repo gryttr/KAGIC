@@ -42,6 +42,7 @@ public class KAGICWorldGenerator implements IWorldGenerator {
 		this.ruins.add(new MaskIsland("mask_island"));
 		this.ruins.add(new SeaShrine("sea_shrine"));
 		this.ruins.add(new AncientSkyArena("large_arena"));
+		this.ruinDimensions.add(0);
 		for (String dimS : ModConfigs.ruinDimensions.split(",")) {
 			Integer dim = Integer.getInteger(dimS);
 			if (dim != null) {

@@ -6,6 +6,7 @@ import java.util.Calendar;
 import org.apache.logging.log4j.Logger;
 
 import mod.akrivus.kagic.client.gui.KTGUIProxy;
+import mod.akrivus.kagic.command.CommandDestroyGem;
 import mod.akrivus.kagic.command.CommandMeteorRuby;
 import mod.akrivus.kagic.command.CommandScanGems;
 import mod.akrivus.kagic.command.CommandSpawnGems;
@@ -236,6 +237,7 @@ public class KAGIC {
 	    		x.printStackTrace();
 	    	}
     	}*/
+    	e.registerServerCommand(new CommandDestroyGem());
     	e.registerServerCommand(new CommandMeteorRuby());
 		e.registerServerCommand(new CommandSpawnGems());
 		e.registerServerCommand(new CommandScanGems());

@@ -124,18 +124,20 @@ public class EntitySapphire extends EntityGem implements INpc {
 	@Override
 	public void itemDataToGemData(int data) {
 		this.setSpecial(data);
-		this.setCustomNameTag(new TextComponentTranslation("entity.kagic.sapphire_" + this.getSpecial() + ".name").getUnformattedComponentText());
-		this.setHairColor(this.getSkinColor());
-		this.setSkinColor(this.generateSkinColor());
-		this.setGemColor(this.generateGemColor());
 		if (data == 16) {
 			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.sapphire_16.name").getUnformattedComponentText());
 			this.setHairColor(0xF9D5BD);
+			this.setSkinColor(this.generateSkinColor());
+			this.setGemColor(this.generateGemColor());
 			this.setUniformColor(1);
 			this.nativeColor = 1;
 			this.setInsigniaColor(1);
 		}
 		else {
+			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.sapphire_" + this.getSpecial() + ".name").getUnformattedComponentText());
+			this.setHairColor(data == 11 ? 0xB9F5FC : this.getSkinColor());
+			this.setSkinColor(this.generateSkinColor());
+			this.setGemColor(this.generateGemColor());
 			this.setUniformColor(data);
 			this.nativeColor = data;
 			this.setInsigniaColor(data);
@@ -147,34 +149,16 @@ public class EntitySapphire extends EntityGem implements INpc {
 		switch (this.getSpecial()) {
     	case 0:
     		return 0xFFFFFF;
-    	case 1:
-    		return 0xCB7226;
-    	case 2:
-    		return 0xAE48D4;
-    	case 3:
-    		return 0x215493;
     	case 4:
     		return 0xFEFE4C;
-    	case 5:
-    		return 0x469300;
     	case 6:
     		return 0xE8759B;
-    	case 7:
-    		return 0x939393;
-    	case 8:
-    		return 0x8F8F8F;
-    	case 9:
-    		return 0x6699B3;
     	case 10:
     		return 0x7B3BAE;
     	case 11:
     		return 0x3B54BA;
-    	case 12:
-    		return 0x4E341B;
     	case 13:
     		return 0x4C6519;
-    	case 14:
-    		return 0x963030;
     	case 15:
     		return 0x333333;
     	}
@@ -390,7 +374,10 @@ public class EntitySapphire extends EntityGem implements INpc {
 	protected int generateSkinColor() {
 		int colorIndex = this.getSpecial();
 		int colorValue = 0;
-		if (this.getSpecial() < 16) {
+		if (this.getSpecial() == 11) {
+			colorValue = 0x7298EB;
+		}
+		else if (this.getSpecial() < 16) {
 			EnumDyeColor color = EnumDyeColor.values()[colorIndex];
 			try {
 				colorValue = ReflectionHelper.getPrivateValue(EnumDyeColor.class, color, "colorValue", "field_193351_w", "w");
