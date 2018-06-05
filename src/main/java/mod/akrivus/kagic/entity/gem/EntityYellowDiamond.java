@@ -41,7 +41,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityYellowDiamond extends EntityGem {
-	public static final HashMap<Block, Double> YELLOW_DIAMOND_YIELDS = new HashMap<Block, Double>();
 	private BossInfoServer healthBar = new BossInfoServer(this.getDisplayName(), BossInfo.Color.YELLOW, BossInfo.Overlay.PROGRESS);
 	private int lastSpecialAttack = 0;
 	private int lastRecruitAttack = 0;

@@ -2,22 +2,28 @@ package mod.akrivus.kagic.entity.gem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
+import mod.akrivus.kagic.entity.ai.EntityAIExtinguishEntities;
+import mod.akrivus.kagic.entity.ai.EntityAIExtinguishFires;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
+import mod.akrivus.kagic.entity.ai.EntityAIGoToWater;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.entity.ai.EntityAITillFarmland;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.BlockFarmland;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.INpc;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -31,33 +37,56 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.IInventoryChangedListener;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootContext;
+import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class EntityLapisLazuli extends EntityGem {
+public class EntityLapisLazuli extends EntityGem implements IInventoryChangedListener, INpc {
 	public static final HashMap<IBlockState, Double> LAPIS_LAZULI_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double LAPIS_LAZULI_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double LAPIS_LAZULI_DEPTH_THRESHOLD = 72;
 	public static final HashMap<Integer, ResourceLocation> LAPIS_LAZULI_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	public int ticksFlying = 0;
+	public boolean atWater = false;
+	public InventoryBasic harvest;
+	public InvWrapper harvestHandler;
+	private int harvestTimer = 0;
 
 	private static final int SKIN_COLOR_BEGIN = 0x4FEEFB;
-	private static final int SKIN_COLOR_END = 0x4FEEFB;
+	private static final int SKIN_COLOR_END = 0x5EC2FA;
 	private static final int NUM_HAIRSTYLES = 1;
-	private static final int HAIR_COLOR_BEGIN = 0x1B6AD6;
-	private static final int HAIR_COLOR_END = 0x1B6AD6;
+	private static final int HAIR_COLOR_BEGIN = 0x1B69D5;
+	private static final int HAIR_COLOR_END = 0x4D4CBA;
 	
 	public EntityLapisLazuli(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 11;
 		this.setSize(0.6F, 1.9F);
+		this.setPathPriority(PathNodeType.WATER, -1.0F);
+		this.initGemStorage();
 		this.visorChanceReciprocal = 20;
 		
 		//Define valid gem cuts and placements
@@ -77,8 +106,13 @@ public class EntityLapisLazuli extends EntityGem {
 			}
         }, 6.0F, 1.0D, 1.2D));
 		this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
+        this.tasks.addTask(1, new EntityAICommandGems(this, 0.6D));
         this.tasks.addTask(3, new EntityAIOpenDoor(this, true));
+        this.tasks.addTask(3, new EntityAIExtinguishFires(this, 0.6D, 8));
         this.tasks.addTask(4, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
+        this.tasks.addTask(4, new EntityAIExtinguishEntities(this, 1.2D));
+        this.tasks.addTask(4, new EntityAITillFarmland(this, 0.6D));
+        this.tasks.addTask(4, new EntityAIGoToWater(this, 0.6D));
         this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
         this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
         this.tasks.addTask(6, new EntityAIStandGuard(this, 0.6D));
@@ -96,8 +130,8 @@ public class EntityLapisLazuli extends EntityGem {
 	}
 
 	@Override
-	public float[] getGemColor() {
-    	return new float[] { 30F / 255F, 143F / 255F, 244F / 255F };
+	protected int generateGemColor() {
+    	return 0x1E8FF4;
     }
 
 	@Override
@@ -123,10 +157,64 @@ public class EntityLapisLazuli extends EntityGem {
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
         return super.onInitialSpawn(difficulty, livingdata);
     }
+	@Override
+	public void writeEntityToNBT(NBTTagCompound compound) {
+		NBTTagList nbttaglist = new NBTTagList();
+		for (int i = 0; i < this.harvest.getSizeInventory(); ++i) {
+			ItemStack itemstack = this.harvest.getStackInSlot(i);
+			NBTTagCompound nbttagcompound = new NBTTagCompound();
+			nbttagcompound.setByte("slot", (byte) i);
+			itemstack.writeToNBT(nbttagcompound);
+			nbttaglist.appendTag(nbttagcompound);
+		}
+		compound.setTag("harvestItems", nbttaglist);
+		compound.setInteger("harvestTimer", this.harvestTimer);
+		super.writeEntityToNBT(compound);
+	}
+	
+	@Override
+	public void readEntityFromNBT(NBTTagCompound compound) {
+		this.initGemStorage();
+		NBTTagList nbttaglist = compound.getTagList("harvestItems", 10);
+		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
+			NBTTagCompound nbttagcompound = nbttaglist.getCompoundTagAt(i);
+			int j = nbttagcompound.getByte("slot") & 255;
+			if (j >= 0 && j < this.harvest.getSizeInventory()) {
+				this.harvest.setInventorySlotContents(j, new ItemStack(nbttagcompound));
+			}
+		}
+		this.harvestTimer = compound.getInteger("harvestTimer");
+		super.readEntityFromNBT(compound);
+	}
 
 	/*********************************************************
 	 * Methods related to interaction.                       *
 	 *********************************************************/
+	public boolean alternateInteract(EntityPlayer player) {
+		if (!this.world.isRemote) {
+			if (this.isTamed()) {
+				if (this.isOwner(player)) {
+					if (this.isFarmer() || this.isAngler()) {
+						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
+						this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+						return true;
+					}
+					else if (this.isPrimary()) {
+						this.world.getWorldInfo().setCleanWeatherTime(0);
+			    		this.world.getWorldInfo().setRainTime(1200);
+			    		this.world.getWorldInfo().setThunderTime(1200);
+			    		this.world.getWorldInfo().setRaining(true);
+			    		return true;
+					}
+				}
+				else {
+					player.sendMessage(new TextComponentTranslation("command.kagic.does_not_serve_you", this.getName()));
+					return true;
+				}
+			}
+		}
+		return super.alternateInteract(player);
+	}
 	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
@@ -137,7 +225,7 @@ public class EntityLapisLazuli extends EntityGem {
 						if (this.isCoreItem(stack)) {
 							return super.processInteract(player, hand);
 						}
-						else if (stack.getItem() instanceof ItemHoe || stack.isEmpty() && this.isFarmer()) {
+						else if (stack.getItem() instanceof ItemHoe || stack.getItem() instanceof ItemFishingRod) {
 		        			boolean toolChanged = true;
 							if (!this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqualIgnoreDurability(stack)) {
 								this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
@@ -154,6 +242,17 @@ public class EntityLapisLazuli extends EntityGem {
 		        			}
 							return true;
 		        		}
+						else if (this.isAngler()) {
+							if (this.harvest.isEmpty()) {
+								player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.lapis_no_harvest").getUnformattedComponentText()));
+							}
+							else {
+								player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.lapis_harvest").getUnformattedComponentText()));
+							}
+							this.playObeySound();
+							this.openGUI(player);
+							return true;
+						}
 						else if (!this.isDefective()){
 							player.rotationYaw = this.rotationYaw;
 					        player.rotationPitch = this.rotationPitch;
@@ -215,15 +314,7 @@ public class EntityLapisLazuli extends EntityGem {
             forward = ((EntityLivingBase) entity).moveForward;
             strafe = ((EntityLivingBase) entity).moveStrafing;
             if (this.canPassengerSteer()) {
-                if (this.isInWater()) {
-                	this.moveRelative(strafe, up, 0.91F, 0.02F);
-                	this.motionY = forward / 10;
-                    this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-                    this.motionX *= 0.800000011920929D;
-                    this.motionY *= 0.800000011920929D;
-                    this.motionZ *= 0.800000011920929D;
-                }
-                else if (this.isInLava()) {
+                if (this.isInLava()) {
                 	this.moveRelative(strafe, up, 0.91F, 0.02F);
                 	this.motionY = forward / 10;
                     this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
@@ -270,15 +361,35 @@ public class EntityLapisLazuli extends EntityGem {
 	public boolean isFarmer() {
 		return this.isTamed() && this.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemHoe;
 	}
+	public boolean isAngler() {
+		return this.isTamed() && this.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemFishingRod;
+	}
 	
-	private boolean hasWater(World worldIn, BlockPos pos) {
-        for (BlockPos.MutableBlockPos blockpos$mutableblockpos : BlockPos.getAllInBoxMutable(pos.add(-4, 0, -4), pos.add(4, 1, 4))) {
-            if (worldIn.getBlockState(blockpos$mutableblockpos).getMaterial() == Material.WATER) {
-                return worldIn.isAirBlock(pos.up());
-            }
-        }
-        return false;
-    }
+	@Override
+	public void onInventoryChanged(IInventory inventory) {
+		this.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, this.harvest.getStackInSlot(0));
+	}
+	
+	public void openGUI(EntityPlayer playerEntity) {
+		if (!this.world.isRemote && this.isTamed()) {
+			this.harvest.setCustomName(new TextComponentTranslation("command.kagic.lapis_inventory", this.getName()).getUnformattedComponentText());
+			playerEntity.displayGUIChest(this.harvest);
+		}
+	}
+	
+	private void initGemStorage() {
+		InventoryBasic harvest = this.harvest;
+		this.harvest = new InventoryBasic("harvest", true, 36);
+		if (harvest != null) {
+			harvest.removeInventoryChangeListener(this);
+			for (int i = 0; i < this.harvest.getSizeInventory(); ++i) {
+				ItemStack itemstack = harvest.getStackInSlot(i);
+				this.harvest.setInventorySlotContents(i, itemstack.copy());
+			}
+		}
+		this.harvest.addInventoryChangeListener(this);
+		this.harvestHandler = new InvWrapper(this.harvest);
+	}
 	
 	/*********************************************************
 	 * Methods related to living.                            *
@@ -291,18 +402,46 @@ public class EntityLapisLazuli extends EntityGem {
 		else {
 			this.ticksFlying = 0;
 		}
-		if (this.isFarmer() && this.ticksExisted % 20 == 0) {
-	        for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(this.getPosition().add(-2, -2, -2), this.getPosition().add(2, -1, 2))) {
-                IBlockState iblockstate = this.world.getBlockState(pos);
-                if (iblockstate.getBlock() == Blocks.FARMLAND && iblockstate.getValue(BlockFarmland.MOISTURE) < 7) {
-                    this.world.setBlockState(pos, iblockstate.withProperty(BlockFarmland.MOISTURE, 7), 2);
-                }
-                else if ((iblockstate.getBlock() == Blocks.DIRT || iblockstate.getBlock() == Blocks.GRASS) && this.hasWater(this.world, pos)) {
-                	this.world.setBlockState(pos, Blocks.FARMLAND.getDefaultState().withProperty(BlockFarmland.MOISTURE, 7), 2);
-                	this.world.playSound(null, this.getPosition(), SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
+		if (this.isAngler() && this.atWater && this.ticksExisted % (this.rand.nextInt(1000) + 200) == 0) {
+			LootTable table = this.world.getLootTableManager().getLootTableFromLocation(LootTableList.GAMEPLAY_FISHING);
+			int luck = 0;
+			for (PotionEffect effect : this.getActivePotionEffects()) {
+				if (effect.getPotion() == MobEffects.UNLUCK) {
+					luck -= effect.getAmplifier();
+				}
+				else if (effect.getPotion() == MobEffects.LUCK) {
+					luck += effect.getAmplifier();
+				}
+			}
+			LootContext context = new LootContext.Builder(this.world.getMinecraftServer().getWorld(this.dimension)).withLuck(luck).build();
+			List<ItemStack> stacks = table.generateLootForPools(this.rand, context);
+			this.harvest.addItem(stacks.get(this.rand.nextInt(stacks.size())));
+			for (int i = 0; i < 5; ++i) {
+				this.world.spawnParticle(EnumParticleTypes.WATER_DROP, this.posX + this.rand.nextFloat(), this.posY + this.rand.nextFloat(), this.posX + this.rand.nextFloat(), this.rand.nextFloat(), this.rand.nextFloat(), this.rand.nextFloat());
+			}
+		}
+		else if (this.isFarmer() && this.ticksExisted % 20 == 0) {
+			for (BlockPos.MutableBlockPos pos : BlockPos.getAllInBoxMutable(this.getPosition().add(-2, -2, -2), this.getPosition().add(2, -1, 2))) {
+				IBlockState iblockstate = this.world.getBlockState(pos);
+		        if (iblockstate.getBlock() == Blocks.FARMLAND && iblockstate.getValue(BlockFarmland.MOISTURE) < 7) {
+		            this.world.setBlockState(pos, iblockstate.withProperty(BlockFarmland.MOISTURE, 7), 2);
+		        }
+			}
+		}
+		if (this.isTamed()) {
+            if (!this.world.isRemote && !this.isDefective()) {
+                List<EntityPlayer> list = this.world.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().grow(2.0D, 2.0D, 2.0D));
+                for (EntityPlayer entity : list) {
+                    if (entity.isWet() && this.isOwnedBy(entity) && !entity.isCreative()) {
+                        for (int i = 0; i < 2; ++i) {
+                            if (this.world.getBlockState(entity.getPosition().add(0, i, 0)).getBlock() == Blocks.WATER) {
+                            	this.world.setBlockToAir(entity.getPosition().add(0, i, 0));
+                            }
+                        }
+                    }
                 }
             }
-		}
+        }
 		super.onLivingUpdate();
 	}
 	
@@ -330,6 +469,24 @@ public class EntityLapisLazuli extends EntityGem {
     protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) {
 		if (!this.isBeingRidden()) {
 			super.updateFallState(y, onGroundIn, state, pos);
+			if (this.isTamed()) {
+				if (!this.world.isRemote && !this.isDefective()) {
+					List<EntityPlayer> list = this.world.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().grow(2.0D, 2.0D, 2.0D));
+					for (EntityPlayer entity : list) {
+						if (this.isOwnedBy(entity) && !entity.isCreative()) {
+							int blocksThatAreAir = 0;
+							for (int i = -4; i < 0; ++i) {
+								if (this.world.isAirBlock(entity.getPosition().add(0, i, 0))) {
+									++blocksThatAreAir;
+								}
+							}
+							if (blocksThatAreAir == 4) {
+								entity.startRiding(this);
+							}
+						}
+			        }
+				}
+			}
 		}
 	}
 	

@@ -90,8 +90,7 @@ public class EntityCorruptedGem extends EntityGem {
 	}
 	
 	@Override
-	public boolean onSpokenTo(EntityPlayer player, String message) {
-		player.sendMessage(new TextComponentTranslation("command.kagic.does_not_understand_corrupted", this.getName()));
+	public boolean spokenTo(EntityPlayer player, String message) {
 		return false;
 	}
 	
@@ -130,5 +129,10 @@ public class EntityCorruptedGem extends EntityGem {
 	@Override
 	public int getMaxSpawnedInChunk() {
 		return 1;
+	}
+	
+	@Override
+	public String generateSpecificName(BlockPos pos) {
+		return "Corrupted";
 	}
 }

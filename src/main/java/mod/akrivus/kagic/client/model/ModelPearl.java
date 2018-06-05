@@ -38,6 +38,7 @@ public class ModelPearl extends ModelGem {
 		this.bipedLeftArm = new ModelRenderer(this, 0, 16);
 		this.bipedLeftArm.addBox(-2F, 0F, -1F, 2, 12, 2);
 		this.bipedLeftArm.setRotationPoint(0F, 0F, 0F);
+		this.bipedLeftArm.mirror = true;
 		// Right leg.
 		this.bipedRightLeg = new ModelRenderer(this, 28, 16);
 		this.bipedRightLeg.addBox(1F, 0F, -1F, 2, 12, 2);

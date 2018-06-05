@@ -117,14 +117,16 @@ public class ModelQuartz extends ModelGem {
 	public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float p_78086_2_, float p_78086_3_, float partialTickTime) {
 		this.rightArmPose = ModelBiped.ArmPose.EMPTY;
 		this.leftArmPose = ModelBiped.ArmPose.EMPTY;
-		
-		ItemStack itemstack = entitylivingbaseIn.getHeldItem(EnumHand.MAIN_HAND);
-		if (itemstack != null && itemstack.getItem() == Items.BOW && ((EntityGem) entitylivingbaseIn).isSwingingArms()) {
-			if (entitylivingbaseIn.getPrimaryHand() == EnumHandSide.RIGHT) {
-				this.rightArmPose = ModelBiped.ArmPose.BOW_AND_ARROW;
-			}
-			else {
-				this.leftArmPose = ModelBiped.ArmPose.BOW_AND_ARROW;
+		if (entitylivingbaseIn instanceof EntityGem) {
+			ItemStack itemstack = entitylivingbaseIn.getHeldItem(EnumHand.MAIN_HAND);
+			EntityGem gem = (EntityGem) entitylivingbaseIn;
+			if (itemstack != null && itemstack.getItem() == Items.BOW && gem.isSwingingArms()) {
+				if (entitylivingbaseIn.getPrimaryHand() == EnumHandSide.RIGHT) {
+					this.rightArmPose = ModelBiped.ArmPose.BOW_AND_ARROW;
+				}
+				else {
+					this.leftArmPose = ModelBiped.ArmPose.BOW_AND_ARROW;
+				}
 			}
 		}
 		super.setLivingAnimations(entitylivingbaseIn, p_78086_2_, p_78086_3_, partialTickTime);

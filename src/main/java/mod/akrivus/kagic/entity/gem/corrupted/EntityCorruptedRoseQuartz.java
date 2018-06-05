@@ -54,8 +54,8 @@ public class EntityCorruptedRoseQuartz extends EntityCorruptedGem {
 	 * Methods related to rendering.						 *
 	 *********************************************************/
 	@Override
-	public float[] getGemColor() {
-		return new float[] { 255F / 255F, 162F / 255F, 230F / 255F };
+	protected int generateGemColor() {
+		return 0xFFA2E6;
 	}
 
 	@Override

@@ -1,28 +1,32 @@
 package mod.akrivus.kagic.entity.ai;
 
-import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
+import mod.akrivus.kagic.entity.gem.EntitySapphire;
+import mod.akrivus.kagic.event.RetroVisionEvent;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 public class EntityAIRetroVision extends EntityAIBase {
-	private final EntityPadparadscha gem;
+	private final EntitySapphire gem;
 	private long lastPrediction;
 	private String lastMessage = "";
-	public EntityAIRetroVision(EntityPadparadscha gem) {
+	public EntityAIRetroVision(EntitySapphire gem) {
 		this.gem = gem;
 		this.setMutexBits(0);
 	}
 	
 	@Override
 	public boolean shouldExecute() {
-		return this.gem.getOwner() != null && this.gem.getOwner().getDistance(this.gem) < 16 && this.gem.world.getTotalWorldTime() - this.lastPrediction > 200 + this.gem.world.rand.nextInt(200);
+		return this.gem.isDefective() && this.gem.getOwner() != null && this.gem.getOwner().getDistance(this.gem) < 16 && this.gem.world.getTotalWorldTime() - this.lastPrediction > 200 + this.gem.world.rand.nextInt(200);
 	}
 	
 	@Override
 	public void startExecuting() {
 		World world = this.gem.world;
+		RetroVisionEvent event = new RetroVisionEvent(this.gem, null);
+		if (MinecraftForge.EVENT_BUS.post(event)) return;
 		if (world.rand.nextInt(100) == 0 && world.rand.nextBoolean() && !this.lastMessage.equals("wallbreaker")) {
 			this.sendMessage("wallbreaker");
 		}
@@ -36,8 +40,8 @@ public class EntityAIRetroVision extends EntityAIBase {
 			this.sendMessage("water");
 		}
 		else if (world.isRaining() && !this.lastMessage.equals("rain")) {
-			if (world.canSnowAt(this.gem.getPosition(), false)) {
-				this.sendMessage("snow");
+			if (!world.canSnowAt(this.gem.getPosition(), false)) {
+				this.sendMessage("rain");
 			}
 		}
 		else if (world.isRaining() && !this.lastMessage.equals("snow")) {

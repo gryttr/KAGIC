@@ -43,14 +43,14 @@ public class ModelGarnet extends ModelGem {
 
 		this.bipedLeftArm = new ModelRenderer(this, 40, 0);
 		this.bipedLeftArm.setRotationPoint(2.5F, -2.2F, 0.0F);
-		this.bipedLeftArm.addBox(0.0F, -1.5F, -2.0F, 4, 4, 4, 0.0F);
+		this.bipedLeftArm.addBox(0.0F, -1.5F, -2.0F, 4, 4, 4, 0.0F); // blue
 		this.arm_left = new ModelRenderer(this, 54, 6);
 		this.arm_left.setRotationPoint(2.3F, 1.0F, 0.0F);
 		this.arm_left.addBox(-1.0F, 0.0F, -1.0F, 2, 13, 2, 0.0F);
 		this.setRotateAngle(arm_left, 0.0F, 0.0F, -0.2617993877991494F);
 		this.bipedRightArm = new ModelRenderer(this, 24, 0);
 		this.bipedRightArm.setRotationPoint(-2.5F, -2.2F, 0.0F);
-		this.bipedRightArm.addBox(-4.0F, -1.5F, -2.0F, 4, 4, 4, 0.0F);
+		this.bipedRightArm.addBox(-4.0F, -1.5F, -2.0F, 4, 4, 4, 0.0F); //pink
 		this.arm_right = new ModelRenderer(this, 24, 36);
 		this.arm_right.setRotationPoint(-2.3F, 1.0F, 0.0F);
 		this.arm_right.addBox(-1.0F, 0.0F, -1.0F, 2, 13, 2, 0.0F);

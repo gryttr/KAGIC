@@ -41,7 +41,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
 public class EntityBlueDiamond extends EntityGem {
-	public static final HashMap<Block, Double> BLUE_DIAMOND_YIELDS = new HashMap<Block, Double>();
 	private static final DataParameter<Boolean> HOODED = EntityDataManager.<Boolean>createKey(EntityBlueDiamond.class, DataSerializers.BOOLEAN);
 	private BossInfoServer healthBar = new BossInfoServer(this.getDisplayName(), BossInfo.Color.BLUE, BossInfo.Overlay.PROGRESS);
 	private int hoodTimer = 0;

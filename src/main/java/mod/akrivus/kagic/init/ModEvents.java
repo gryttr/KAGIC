@@ -3,20 +3,30 @@ package mod.akrivus.kagic.init;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import com.google.common.base.Predicate;
 
+import mod.akrivus.kagic.entity.EntityCrystalSkills;
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAIFollowTopaz;
 import mod.akrivus.kagic.entity.gem.EntityAgate;
+import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
+import mod.akrivus.kagic.entity.gem.EntityPearl;
 import mod.akrivus.kagic.entity.gem.EntityRuby;
 import mod.akrivus.kagic.entity.gem.EntityRutile;
+import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import mod.akrivus.kagic.init.ModMetrics.Update;
+import mod.akrivus.kagic.linguistics.LinguisticsHelper;
 import mod.akrivus.kagic.server.SpaceStuff;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
@@ -24,6 +34,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.storage.loot.LootEntry;
 import net.minecraft.world.storage.loot.LootEntryItem;
 import net.minecraft.world.storage.loot.LootPool;
@@ -36,9 +48,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ModEvents {
@@ -46,23 +60,27 @@ public class ModEvents {
 		MinecraftForge.EVENT_BUS.register(new ModEvents());
 	}
 	@SubscribeEvent
-	public void onEntitySpawn(EntityJoinWorldEvent e) {
-		if (e.getEntity() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) e.getEntity();
-			if (e.getEntity().world.isRemote) {
-				if (KAGIC.DEVELOPER) {
-					player.sendMessage(new TextComponentString("You are playing KAGIC " + KAGIC.VERSION + " in DEVELOPER mode."));
-					player.sendMessage(new TextComponentString("Note that some features may be removed!"));
-				}
-				else if (ModConfigs.notifyOnUpdates) {
-					Update result = ModMetrics.checkForUpdates();
-					if (result != null && !KAGIC.VERSION.equals(result.getNewVersion())) {
-						player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§cKAGIC v" + result.getNewVersion() + " is out for Minecraft " + KAGIC.MCVERSION + "§f\"}]"));
-						player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§e§nDownload§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDownloadLink() + "\"}}, {\"text\":\" | \"}, {\"text\":\"§3§nDiscord§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDiscordLink() + "\"}}]"));
-					}
-				}
-				//player.addStat(ModAchievements.INSTALLED_KAGIC);
+	public void onPlayerLoggedIn(PlayerLoggedInEvent e) {
+		if (KAGIC.DEVELOPER) {
+			e.player.sendMessage(new TextComponentString("You are playing KAGIC " + KAGIC.VERSION + " in DEVELOPER mode."));
+			e.player.sendMessage(new TextComponentString("Note that some features may be removed!"));
+		}
+		else {
+			e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§dKAGIC " + KAGIC.VERSION + "§f\"}, {\"text\":\" - \"}, {\"text\":\"§3[Discord]§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://discord.gg/MwEuu9x\"}}, {\"text\":\" | \"}, {\"text\":\"§e[Wiki]§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"http://kagic.wikia.com/\"}}]"));
+		}
+		if (ModConfigs.notifyOnUpdates) {
+			Update result = ModMetrics.checkForUpdates();
+			if (result != null && !KAGIC.VERSION.equals(result.getNewVersion())) {
+				e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§cKAGIC v" + result.getNewVersion() + " is out for Minecraft " + KAGIC.MCVERSION + "§f\"}]"));
+				e.player.sendMessage(ITextComponent.Serializer.jsonToComponent("[{\"text\":\"§e§nDownload§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDownloadLink() + "\"}}, {\"text\":\" | \"}, {\"text\":\"§3§nDiscord§r§f\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"" +  result.getDiscordLink() + "\"}}]"));
 			}
+		}
+	}
+	@SubscribeEvent
+	public void onEntitySpawn(EntityJoinWorldEvent e) {
+		if (e.getEntity() instanceof EntityPadparadscha) {
+			EntityPadparadscha paddy = (EntityPadparadscha) e.getEntity();
+			e.getWorld().spawnEntity(EntitySapphire.convertFrom(paddy));
 		}
 		if (e.getEntity() instanceof EntityMob) {
 			EntityMob mob = (EntityMob) e.getEntity();
@@ -73,7 +91,15 @@ public class ModEvents {
 		            }
 		        }));
 			}
-			mob.tasks.addTask(1, new EntityAIAvoidEntity<EntityAgate>(mob, EntityAgate.class, 6.0F, 1.0D, 1.2D));
+			mob.tasks.addTask(1, new EntityAIAvoidEntity<EntityAgate>(mob, EntityAgate.class, new Predicate<EntityAgate>() {
+				public boolean apply(EntityAgate input) {
+					return !input.isDefective();
+				}
+			}, 6.0F, 1.0D, 1.2D));
+		}
+		if (e.getEntity() instanceof EntityAnimal) {
+			EntityAnimal animal = (EntityAnimal) e.getEntity();
+			animal.targetTasks.addTask(3, new EntityAIFollowTopaz(animal, 0.9D));
 		}
 		else if (e.getEntity() instanceof EntityGolem) {
 			EntityGolem golem = (EntityGolem) e.getEntity();
@@ -82,6 +108,18 @@ public class ModEvents {
 	                return input.getServitude() > EntityGem.SERVE_HUMAN;
 	            }
 	        }));
+		}
+	}
+	@SubscribeEvent
+	public void onLivingHurt(LivingHurtEvent e) {
+		if (e.getEntity() instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) e.getEntity();
+			if (!e.getEntity().world.isRemote) {
+				List<EntityPearl> list = player.world.<EntityPearl>getEntitiesWithinAABB(EntityPearl.class, player.getEntityBoundingBox().grow(8.0D, 4.0D, 8.0D));
+				for (EntityPearl entity : list) {
+					entity.sendMessage(new TextComponentTranslation("command.kagic.pearl_warning", player.getName()));
+		        }
+			}
 		}
 	}
 	@SubscribeEvent
@@ -172,10 +210,6 @@ public class ModEvents {
 		}
 	}
 	@SubscribeEvent
-	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent e) {
-		ModConfigs.syncConfiguration();
-	}
-	@SubscribeEvent
 	public void onWorldLoad(WorldEvent.Load e) {
 		if (!e.getWorld().isRemote) {
 			try {
@@ -185,7 +219,6 @@ public class ModEvents {
 				ex.printStackTrace();
 			}
 		}
-		//ModMetrics.sendMetrics();
 	}
 	@SubscribeEvent
 	public void onWorldSave(WorldEvent.Save e) {
@@ -195,13 +228,16 @@ public class ModEvents {
 	}
 	@SubscribeEvent
 	public void onServerChat(ServerChatEvent e) {
-		List<EntityGem> list = e.getPlayer().world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, e.getPlayer().getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
-		for (EntityGem gem : list) {
-        	boolean obeyed = gem.onSpokenTo(e.getPlayer(), e.getMessage());
-            if (obeyed) {
-            	gem.playObeySound();
-            	e.setCanceled(true);
-            }
+		EntityPlayer player = e.getPlayer();
+		List<Entity> list = player.world.<Entity>getEntitiesWithinAABB(Entity.class, e.getPlayer().getEntityBoundingBox().grow(64.0D, 16.0D, 64.0D));
+		for (Entity entity : list) {
+			if (entity instanceof EntityCrystalSkills) {
+				EntityCrystalSkills gem = (EntityCrystalSkills) entity;
+	    		boolean result = gem.spokenTo(player, e.getMessage());
+	    		if (result) {
+	    			e.getComponent().getStyle().setColor(TextFormatting.YELLOW);
+	    		}
+			}
         }
 	}
 }

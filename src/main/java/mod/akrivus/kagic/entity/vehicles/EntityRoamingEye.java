@@ -121,11 +121,11 @@ public class EntityRoamingEye extends EntityLiving {
             if (this.canPassengerSteer()) {
 				if (this.isHovering() || this.onGround) {
 					super.travel(strafe, up, 0.0F);
-		            this.moveRelative(strafe, 0.0F, 0.0F, 0.0f);
+		            this.moveRelative(strafe, 0.0F, 0.0F, 0.0F);
 		        }
             	else {
-            		super.travel(strafe, up, 1.0F);
-            		this.moveRelative(strafe, up, 1.0f, 0.1f);
+            		super.travel(strafe, up, 0.5F);
+            		this.moveRelative(strafe, up, 0.5F, 0.1F);
             	}
 				this.motionY = forward / 6;
 				this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);

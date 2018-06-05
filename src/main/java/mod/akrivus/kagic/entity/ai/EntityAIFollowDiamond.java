@@ -21,7 +21,7 @@ public class EntityAIFollowDiamond extends EntityAIBase {
     }
     public boolean shouldExecute() {
         EntityLivingBase owner = this.getDiamond();
-        if (owner == null || (owner instanceof EntityPlayer && ((EntityPlayer) owner).isSpectator()) || this.theGem.isSitting() || this.theGem.isAttacking) {
+        if (owner == null || (owner instanceof EntityPlayer && ((EntityPlayer) owner).isSpectator()) || owner.isInvisible() || this.theGem.isSitting() || this.theGem.isAttacking) {
         	return false;
         }
         else {
@@ -65,6 +65,13 @@ public class EntityAIFollowDiamond extends EntityAIBase {
     public EntityLivingBase getDiamond() {
     	int servitude = this.theGem.getServitude();
     	if (servitude == EntityGem.SERVE_HUMAN) {
+    		if (this.theGem.followingGem) {
+	    		for (EntityGem gem : this.theGem.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, this.theGem.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D))) {
+	    			if (!this.theGem.equals(gem) && this.theGem.isOwner(gem) && this.theGem.getInsigniaColor() == gem.getInsigniaColor()) {
+	    				return gem;
+	    			}
+	    		}
+    		}
     		return this.theGem.getLeaderEntity();
     	}
     	else if (servitude == EntityGem.SERVE_YELLOW_DIAMOND) {

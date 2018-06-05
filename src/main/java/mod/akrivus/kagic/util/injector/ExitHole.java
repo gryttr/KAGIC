@@ -3,10 +3,11 @@ package mod.akrivus.kagic.util.injector;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-import mod.akrivus.kagic.init.KAGIC;
+import mod.akrivus.kagic.event.ExitHoleEvent;
 import mod.akrivus.kagic.init.ModBlocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 public class ExitHole {
 	private final BlockPos[] blocks;
@@ -29,6 +30,8 @@ public class ExitHole {
 	}
 	public void emerge(World world) {
 		for (BlockPos block : this.blocks) {
+			ExitHoleEvent e1 = new ExitHoleEvent(world, block);
+			if (MinecraftForge.EVENT_BUS.post(e1)) return;
 			world.destroyBlock(block, false);
 			InjectorResult.drainBlock(world, this.xDirection ? block.north() : block.east());
 			InjectorResult.drainBlock(world, this.xDirection ? block.south() : block.west());

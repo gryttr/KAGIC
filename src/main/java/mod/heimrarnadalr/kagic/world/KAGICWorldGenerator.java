@@ -1,8 +1,6 @@
 package mod.heimrarnadalr.kagic.world;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 import mod.akrivus.kagic.init.ModConfigs;
@@ -13,7 +11,6 @@ import mod.heimrarnadalr.kagic.world.structure.DesertWarpPad;
 import mod.heimrarnadalr.kagic.world.structure.GalaxyWarp;
 import mod.heimrarnadalr.kagic.world.structure.GiantWeapon;
 import mod.heimrarnadalr.kagic.world.structure.MaskIsland;
-import mod.heimrarnadalr.kagic.world.structure.PinkSandstoneTest;
 import mod.heimrarnadalr.kagic.world.structure.PyramidTemple;
 import mod.heimrarnadalr.kagic.world.structure.RoseFountain;
 import mod.heimrarnadalr.kagic.world.structure.RuinStructure;
@@ -26,7 +23,6 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import scala.actors.threadpool.Arrays;
 
 public class KAGICWorldGenerator implements IWorldGenerator {
 	private ArrayList<RuinStructure> ruins = new ArrayList<RuinStructure>();
@@ -46,8 +42,12 @@ public class KAGICWorldGenerator implements IWorldGenerator {
 		this.ruins.add(new MaskIsland("mask_island"));
 		this.ruins.add(new SeaShrine("sea_shrine"));
 		this.ruins.add(new AncientSkyArena("large_arena"));
-		for (int dim : ModConfigs.ruinDimensions.getIntList()) {
-			this.ruinDimensions.add(dim);
+		this.ruinDimensions.add(0);
+		for (String dimS : ModConfigs.ruinDimensions.split(",")) {
+			Integer dim = Integer.getInteger(dimS);
+			if (dim != null) {
+				this.ruinDimensions.add(dim.intValue());
+			}
 		}
 	}
 	

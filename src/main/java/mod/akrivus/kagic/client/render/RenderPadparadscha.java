@@ -1,40 +1,17 @@
 package mod.akrivus.kagic.client.render;
 
-import mod.akrivus.kagic.client.model.ModelSapphire;
-import mod.akrivus.kagic.client.render.layers.LayerBirthdayHat;
-import mod.akrivus.kagic.client.render.layers.LayerGemPlacement;
-import mod.akrivus.kagic.client.render.layers.LayerSantaHat;
-import mod.akrivus.kagic.client.render.layers.LayerVisor;
-import mod.akrivus.kagic.client.render.layers.LayerWitchHat;
+import mod.akrivus.kagic.client.model.ModelNothing;
 import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
-import mod.akrivus.kagic.entity.gem.EntitySapphire;
-import mod.akrivus.kagic.init.KAGIC;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderPadparadscha extends RenderGemBase<EntityPadparadscha> {
 	public RenderPadparadscha() {
-        super(Minecraft.getMinecraft().getRenderManager(), new ModelSapphire(), 0.25F);
-        this.addLayer(new LayerVisor(this));
-        this.addLayer(new LayerGemPlacement(this));
-		if (KAGIC.isBirthday()) {
-			this.addLayer(new LayerBirthdayHat(this));
-		} else if (KAGIC.isHalloween()) {
-			this.addLayer(new LayerWitchHat(this));
-		} else if (KAGIC.isChristmas()) {
-			this.addLayer(new LayerSantaHat(this));
-		}
-    }
-
-	@Override
-	protected void preRenderCallback(EntityPadparadscha gem, float partialTickTime) {
-		GlStateManager.scale(0.85F, 0.85F, 0.85F);
+        super(Minecraft.getMinecraft().getRenderManager(), new ModelNothing(), 0.25F);
 	}
 
 	@Override
 	protected ResourceLocation getEntityTexture(EntityPadparadscha entity) {
-		return new ResourceLocation("kagic:textures/entities/padparadscha/padparadscha.png");
+		return new ResourceLocation("kagic:textures/entities/sapphire/sapphire.png");
 	}
 }

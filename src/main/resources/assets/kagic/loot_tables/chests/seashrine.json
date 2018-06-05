@@ -99,6 +99,11 @@
                             }
                         }
                     ]
+                },
+                {
+                    "type": "item",
+                    "name": "kagic:time_glass",
+                    "weight": 1
                 }
 			]
 		}

@@ -8,11 +8,13 @@ import javax.annotation.Nullable;
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIPickUpItems;
 import mod.akrivus.kagic.entity.ai.EntityAIProtectionFuse;
+import mod.akrivus.kagic.entity.ai.EntityAIRideHorses;
 import mod.akrivus.kagic.entity.ai.EntityAIRubyFuse;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
@@ -35,11 +37,11 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityTippedArrow;
 import net.minecraft.init.Blocks;
@@ -50,6 +52,7 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
@@ -67,10 +70,13 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
-public class EntityRuby extends EntityGem {
+public class EntityRuby extends EntityGem implements IAnimals {
 	public static final HashMap<IBlockState, Double> RUBY_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double RUBY_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double RUBY_DEPTH_THRESHOLD = 0;
 	private static final DataParameter<Integer> ANGER = EntityDataManager.<Integer>createKey(EntityRuby.class, DataSerializers.VARINT);
 	private int angerTicks = 0;
+	public boolean fusing = false;
 	
 	private static final int SKIN_COLOR_BEGIN = 0xE0316F; 
 	private static final int SKIN_COLOR_MID = 0xE52C5C; 
@@ -84,6 +90,7 @@ public class EntityRuby extends EntityGem {
 	
 	public EntityRuby(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 14;
 		this.setSize(0.7F, 1.2F);
 		this.isImmuneToFire = true;
 		this.isSoldier = true;
@@ -134,11 +141,12 @@ public class EntityRuby extends EntityGem {
         
         // Other entity AIs.
 		this.tasks.addTask(2, new EntityAIPickUpItems(this, 1.0D));
+		this.tasks.addTask(2, new EntityAIRideHorses(this, 1.0D));
         this.tasks.addTask(3, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
         this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntitySapphire.class, EntityGarnet.class, 16D));
-        this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntityPadparadscha.class, EntityGarnet.class, 16D));
         this.tasks.addTask(3, new EntityAIProtectionFuse(this, EntityPearl.class, EntityRhodonite.class, 16D));
         this.tasks.addTask(4, new EntityAIFollowDiamond(this, 1.0D));
+        this.tasks.addTask(4, new EntityAICommandGems(this, 0.6D));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
         this.tasks.addTask(6, new EntityAIRubyFuse(this, 1.0D));
 		this.tasks.addTask(7, new EntityAIStandGuard(this, 0.6D));
@@ -167,8 +175,8 @@ public class EntityRuby extends EntityGem {
         this.dataManager.register(ANGER, 0);
 	}
 
-    public float[] getGemColor() {
-    	return new float[] { 238F / 255F, 35F / 255F, 49F / 255F };
+    protected int generateGemColor() {
+    	return 0xEE2331;
     }
     public void convertGems(int placement) {
     	this.setGemCut(GemCuts.FACETED.id);
@@ -201,12 +209,12 @@ public class EntityRuby extends EntityGem {
 	 * Methods related to loading.                           *
 	 *********************************************************/
 	public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
         compound.setInteger("anger", this.getAnger());
+        super.writeEntityToNBT(compound);
     }
     public void readEntityFromNBT(NBTTagCompound compound) {
-        super.readEntityFromNBT(compound);
         this.setAnger(compound.getInteger("anger"));
+        super.readEntityFromNBT(compound);
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
     	this.setSpecial(this.rand.nextInt(6));
@@ -225,6 +233,7 @@ public class EntityRuby extends EntityGem {
     public void whenFused() {
     	//Everything that used to be here was moved to EntityRuby#fuse()
     	//because it doesn't need to be done 20 times a second
+    	// uhhhh yeah it does ;)
     	//this.setSize(0.7F * this.getFusionCount(), 1.35F * this.getFusionCount());
     }
     public boolean canPickupItem(Item itemIn) {
@@ -287,39 +296,41 @@ public class EntityRuby extends EntityGem {
     	super.alternateInteract(player);
     	return true;
     }
-    public boolean onSpokenTo(EntityPlayer player, String message) {
-    	boolean spokenTo = super.onSpokenTo(player, message);
-    	if (!spokenTo) {
-    		message = message.toLowerCase();
-    		if (this.isBeingCalledBy(player, message)) {
-    			this.getLookHelper().setLookPositionWithEntity(player, 30.0F, 30.0F);
-    			if (this.isOwner(player)) {
-    				if (this.isMatching("regex.kagic.fuse", message)) {
-    					this.wantsToFuse = true;
-    					return true;
-    				}
-    				else if (this.isMatching("regex.kagic.unfuse", message)) {
-    					this.wantsToFuse = false;
-    					if (this.isFusion()) {
-    						this.unfuse();
-    					}
-    					return true;
-    				}
-    			}
-    		}
-    	}
-    	return spokenTo;
+	@Override
+	public boolean processInteract(EntityPlayer player, EnumHand hand) {
+		if (!this.world.isRemote) {
+			if (hand == EnumHand.MAIN_HAND) {
+				if (this.isTamed() && this.isOwnedBy(player)) {
+					ItemStack stack = player.getHeldItemMainhand();
+					Item item = stack.getItem();
+					if (stack.getItem() == Items.BUCKET) {
+						this.entityDropItem(this.getHeldItemMainhand(), 0.0F);
+						this.setHeldItem(EnumHand.MAIN_HAND, stack);
+						return true;
+					}
+					else if (player.isSneaking() && this.getHeldItemMainhand().getItem() instanceof ItemBucket) {
+						this.entityDropItem(this.getHeldItemMainhand(), 0.0F);
+						this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+						return true;
+					}
+				}
+			}
+		}
+		return super.processInteract(player, hand);
     }
 	public boolean canFuseWith(EntityRuby other) {
 		if (this.canFuse() && other.canFuse() && this.getServitude() == other.getServitude() && this.getGemPlacement() != other.getGemPlacement()) {
 			if ((this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwnerId().equals(other.getOwnerId())) || this.getServitude() != EntityGem.SERVE_HUMAN) {
-				if (this.wantsToFuse && other.wantsToFuse) {
+				if (this.getAttackingEntity() != null && this.getAttackingEntity().equals(other.getAttackingEntity())) {
 					return true;
 				}
-				if ((this.getAttackingEntity() != null && this.getAttackingEntity().equals(other.getAttackingEntity())) || (this.getAttackTarget() != null && this.getAttackTarget().equals(other.getAttackTarget()))) {
+				if (this.getAttackTarget() != null && this.getAttackTarget().equals(other.getAttackTarget())) {
 					return true;
 				}
-				if ((this.getHealth() / this.getMaxHealth() <= 0.5 || other.getHealth() / other.getMaxHealth() <= 0.5) && this.getHealth() > 0.0f && other.getHealth() > 0.0f) {
+				else if ((this.getHealth() + other.getHealth()) < this.getMaxHealth() + other.getMaxHealth()) {
+					return true;
+				}
+				else if (this.wantsToFuse && other.wantsToFuse) {
 					return true;
 				}
 			}
@@ -370,6 +381,7 @@ public class EntityRuby extends EntityGem {
     	ruby.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0F);
     	ruby.stepHeight = ruby.getFusionCount();
     	ruby.setHealth(ruby.getMaxHealth());
+    	ruby.setGemColor(this.getGemColor());
     	
     	ItemStack weapon = this.getHeldItem(EnumHand.MAIN_HAND);
     	if (weapon.getItem() == Items.AIR) {
@@ -415,27 +427,28 @@ public class EntityRuby extends EntityGem {
 	 * Methods related to combat.                            *
 	 *********************************************************/
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.getTrueSource() instanceof EntityLivingBase && !this.isOwner((EntityLivingBase) source.getTrueSource())) {
-			if (source.isMagicDamage()) {
-				this.setAnger(this.getAnger() + 4 + (int)(amount / 2));
+		if (!this.world.isRemote) {
+			if (source.getTrueSource() instanceof EntityLivingBase && !this.isOwner((EntityLivingBase) source.getTrueSource())) {
+				if (source.isMagicDamage()) {
+					this.setAnger(this.getAnger() + 4 + (int)(amount / 2));
+				}
+				else {
+					this.setAnger(this.getAnger() + 1 + (int)(amount / 4));
+				}
 			}
-			else {
-				this.setAnger(this.getAnger() + 1 + (int)(amount / 4));
+			else if (source.isProjectile()) {
+				this.setAnger(this.getAnger() + 2 + (int)(amount / 3));
+			}
+			/*if (this.getAnger() > 3) {
+				if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
+	            	this.getOwner().addStat(ModAchievements.IM_AN_ETERNAL_FLAME);
+	            }
+			}*/
+			if (this.isDefective() && this.ticksExisted < 20) {
+				this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
+				this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
 			}
 		}
-		else if (source.isProjectile()) {
-			this.setAnger(this.getAnger() + 2 + (int)(amount / 3));
-		}
-		/*if (this.getAnger() > 3) {
-			if (this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwner() != null) {
-            	this.getOwner().addStat(ModAchievements.IM_AN_ETERNAL_FLAME);
-            }
-		}*/
-		if (this.isDefective()) {
-			this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
-			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
-		}
-		this.setSpecial(this.rand.nextInt(6));
 		return super.attackEntityFrom(source, amount);
 	}
 	public boolean attackEntityAsMob(Entity entityIn) {
@@ -443,7 +456,7 @@ public class EntityRuby extends EntityGem {
 		if (anger > 7) {
 			anger = 7;
 		}
-		if (this.rand.nextInt(8 - anger) == 1) {
+		if (this.rand.nextInt(8 - anger) == 0) {
 			entityIn.setFire(anger * 2 + 4);
 		}
 		return super.attackEntityAsMob(entityIn);
@@ -486,14 +499,14 @@ public class EntityRuby extends EntityGem {
         this.world.spawnEntity(arrow);
     }
 	public void jump() {
-		if (this.isDefective()) {
+		if (this.isDefective() && !this.world.isRemote && this.ticksExisted < 20) {
 			this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
 		}
 		super.jump();
 	}
 	public void fall(float distance, float damageMultiplier) {
-		if (this.isDefective()) {
+		if (this.isDefective() && this.ticksExisted < 20) {
 			this.entityDropItem(this.getHeldItem(EnumHand.MAIN_HAND), 0.0F);
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
 		}

@@ -7,12 +7,7 @@ import java.util.List;
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
-import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
-import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
-import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
-import mod.akrivus.kagic.entity.ai.EntityAIStay;
-import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
@@ -22,27 +17,18 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -52,25 +38,28 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityCarnelian extends EntityQuartzSoldier {
+public class EntityCarnelian extends EntityQuartzSoldier implements IAnimals {
 	public static final HashMap<IBlockState, Double> CARNELIAN_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double CARNELIAN_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double CARNELIAN_DEPTH_THRESHOLD = 64;
 	public static final HashMap<Integer, ResourceLocation> CARNELIAN_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private static final DataParameter<Boolean> CHARGED = EntityDataManager.<Boolean>createKey(EntityCarnelian.class, DataSerializers.BOOLEAN);
 	private int charge_ticks = 0;
 	private int hit_count = 0;
 	
-	public static final int SKIN_COLOR_BEGIN = 0xF02D57;
+	public static final int SKIN_COLOR_BEGIN = 0xE1764D;
 	
 	public static final int SKIN_COLOR_END = 0xC5307D;
 	
 	private static final int NUM_HAIRSTYLES = 5;
 	
-	public static final int HAIR_COLOR_BEGIN = 0x7C0034;
+	public static final int HAIR_COLOR_BEGIN = 0xF24807;
 	
 	public static final int HAIR_COLOR_END = 0x4D0043;
 	
 	public EntityCarnelian(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 14;
 		this.isImmuneToFire = true;
 
 		//Define valid gem cuts and placements
@@ -132,8 +121,8 @@ public class EntityCarnelian extends EntityQuartzSoldier {
         this.dataManager.register(CHARGED, false);
 	}
 
-	public float[] getGemColor() {
-    	return new float[] { 244F / 255F, 55F / 255F, 74F / 255F };
+	protected int generateGemColor() {
+    	return 0xFF2D5D;
     }
 	public void convertGems(int placement) {
     	this.setGemCut(GemCuts.FACETED.id);
@@ -188,7 +177,7 @@ public class EntityCarnelian extends EntityQuartzSoldier {
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100.0D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(6.0D);
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.0D);
-        this.setSize(0.72F, 1.38F);
+        this.setSize(0.82F, 1.52F);
 	}
     
     /*********************************************************
@@ -279,13 +268,13 @@ public class EntityCarnelian extends EntityQuartzSoldier {
 	 * Methods related to sound.                             *
 	 *********************************************************/
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return ModSounds.AMETHYST_HURT;
+		return ModSounds.CARNELIAN_HURT;
 	}
 	protected SoundEvent getObeySound() {
-		return ModSounds.AMETHYST_OBEY;
+		return ModSounds.CARNELIAN_OBEY;
 	}
 	protected SoundEvent getDeathSound() {
-		return ModSounds.AMETHYST_DEATH;
+		return ModSounds.CARNELIAN_DEATH;
 	}
 	
 	/*********************************************************

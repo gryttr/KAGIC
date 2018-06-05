@@ -9,6 +9,9 @@
     "variants": {
         "normal": {
             "model": "kagic:gem_drill"
+        },
+        "inventory": {
+            "model": "kagic:gem_drill"
         }
     }
 }

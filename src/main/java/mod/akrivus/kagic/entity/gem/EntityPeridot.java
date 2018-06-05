@@ -8,17 +8,20 @@ import com.google.common.base.Predicate;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.EntitySlag;
 import mod.akrivus.kagic.entity.ai.EntityAIAlignGems;
+import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIHarvestFarmland;
 import mod.akrivus.kagic.entity.ai.EntityAIPickUpItems;
-import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
+import mod.akrivus.kagic.init.ModConfigs;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.akrivus.kagic.util.injector.InjectorResult;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.INpc;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -27,6 +30,7 @@ import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIOpenDoor;
+import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
@@ -41,6 +45,7 @@ import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSeedFood;
 import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
@@ -54,10 +59,13 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class EntityPeridot extends EntityGem implements IInventoryChangedListener {
+public class EntityPeridot extends EntityGem implements IInventoryChangedListener, INpc {
 	public static final HashMap<IBlockState, Double> PERIDOT_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double PERIDOT_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double PERIDOT_DEPTH_THRESHOLD = 72;
 	public InventoryBasic gemStorage;
 	public InvWrapper gemStorageHandler;
 	public InventoryBasic harvest;
@@ -76,6 +84,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	
 	public EntityPeridot(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 13;
 		this.setSize(0.7F, 1.9F);
 		this.initGemStorage();
 		this.seePastDoors();
@@ -99,15 +108,16 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 			}
 		}, 6.0F, 1.0D, 1.2D));
 		this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
-		this.tasks.addTask(3, new EntityAIOpenDoor(this, true));
+        this.tasks.addTask(1, new EntityAICommandGems(this, 0.6D));
+		this.tasks.addTask(2, new EntityAIOpenDoor(this, true));
+		this.tasks.addTask(3, new EntityAIPickUpItems(this, 0.9D));
 		this.tasks.addTask(4, new EntityAIAlignGems(this, 0.9D));
 		this.tasks.addTask(4, new EntityAIHarvestFarmland(this, 0.6D));
-		this.tasks.addTask(4, new EntityAIPickUpItems(this, 0.9D));
 		this.tasks.addTask(5, new EntityAIAttackMelee(this, 1.0D, true));
 		this.tasks.addTask(5, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
-		this.tasks.addTask(7, new EntityAIStandGuard(this, 0.6D));
+		this.tasks.addTask(7, new EntityAIWander(this, 0.6D));
 		this.tasks.addTask(8, new EntityAILookIdle(this));
 		
 		// Apply target AI.
@@ -123,8 +133,8 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	}
 	
 	@Override
-	public float[] getGemColor() {
-		return new float[] { 47F / 255F, 248F / 255F, 42F / 255F };
+	protected int generateGemColor() {
+		return 0x2FF82A;
 	}
 		
 	@Override
@@ -151,7 +161,6 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 
 	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
-		super.writeEntityToNBT(compound);
 		NBTTagList nbttaglist = new NBTTagList();
 		for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
 			ItemStack itemstack = this.gemStorage.getStackInSlot(i);
@@ -171,11 +180,11 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		}
 		compound.setTag("harvestItems", nbttaglist);
 		compound.setInteger("harvestTimer", this.harvestTimer);
+		super.writeEntityToNBT(compound);
 	}
 	
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
-		super.readEntityFromNBT(compound);
 		NBTTagList nbttaglist = compound.getTagList("items", 10);
 		this.initGemStorage();
 		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
@@ -194,6 +203,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 			}
 		}
 		this.harvestTimer = compound.getInteger("harvestTimer");
+		super.readEntityFromNBT(compound);
 	}
 	
 	public void whenDefective() {
@@ -203,6 +213,25 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	/*********************************************************
 	 * Methods related to interaction.					   *
 	 *********************************************************/
+	public boolean alternateInteract(EntityPlayer player) {
+		if (!this.world.isRemote) {
+			if (this.isTamed()) {
+				if (this.isOwner(player)) {
+					if (this.isFarmer()) {
+						this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
+						this.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+						this.setCanPickUpLoot(false);
+						return true;
+					}
+				}
+				else {
+					player.sendMessage(new TextComponentTranslation("command.kagic.does_not_serve_you", this.getName()));
+					return true;
+				}
+			}
+		}
+		return super.alternateInteract(player);
+	}
 	@Override
 	public boolean processInteract(EntityPlayer player, EnumHand hand) {
 		if (!this.world.isRemote) {
@@ -213,7 +242,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 						if (this.isCoreItem(stack)) {
 							return super.processInteract(player, hand);
 						}
-						else if (stack.getItem() instanceof ItemHoe || (stack.isEmpty() && this.isFarmer())) {
+						else if (stack.getItem() instanceof ItemHoe || stack.getItem() instanceof ItemPickaxe) {
 							boolean toolChanged = true;
 							if (!this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND).isItemEqualIgnoreDurability(stack)) {
 								this.entityDropItem(this.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND), 0.0F);
@@ -228,22 +257,29 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 									stack.shrink(1);
 								}
 							}
+							this.setCanPickUpLoot(true);
 							return true;
 						}
 						else if (this.isFarmer()) {
 							for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
 								ItemStack itemstack = this.gemStorage.getStackInSlot(i);
-								this.setCanPickUpLoot(false);
 								this.dropTimer = 0;
-								if (itemstack.getItem() == Items.WHEAT || itemstack.getItem() instanceof ItemFood) {
+								if (itemstack.getItem() instanceof IPlantable) {
+									if (itemstack.getItem() instanceof ItemFood) {
+										ItemStack newstack = itemstack.splitStack(itemstack.getCount() - 8);
+										this.gemStorage.setInventorySlotContents(i, itemstack);
+										this.harvest.addItem(newstack);
+									}
+								}
+								else {
 									this.gemStorage.setInventorySlotContents(i, ItemStack.EMPTY);
 									this.harvest.addItem(itemstack);
 								}
-								else if (itemstack.getCount() > 1) {
-									ItemStack newstack = itemstack.splitStack(itemstack.getCount() - 8);
-									this.gemStorage.setInventorySlotContents(i, itemstack);
-									this.harvest.addItem(newstack);
-								}
+								//else if (itemstack.getCount() > 1) {
+								//	ItemStack newstack = itemstack.splitStack(itemstack.getCount() - 8);
+								//	this.gemStorage.setInventorySlotContents(i, itemstack);
+								//	this.harvest.addItem(newstack);
+								//}
 							}
 							if (this.harvest.isEmpty()) {
 								player.sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_no_harvest").getUnformattedComponentText()));
@@ -272,33 +308,17 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 		}
 		return super.processInteract(player, hand);
 	}
-	
-	@Override
-	public boolean onSpokenTo(EntityPlayer player, String message) {
-		boolean spokenTo = super.onSpokenTo(player, message);
-		message = message.toLowerCase();
-		if (this.isBeingCalledBy(player, message)) {
-			this.getLookHelper().setLookPositionWithEntity(player, 30.0F, 30.0F);
-			if (this.isOwner(player)) {
-				if (this.isMatching("regex.kagic.harvest", message)) {
-					for (int i = 0; i < this.harvest.getSizeInventory(); ++i) {
-						if (player.inventory.getFirstEmptyStack() > -1) {
-							player.inventory.addItemStackToInventory(this.harvest.getStackInSlot(i));
-						}
-					}
-				}
-				this.playObeySound();
-			}
-		}
-		return spokenTo;
-	}
-	
 	public void checkSurroundings(World worldIn, BlockPos pos) {
 		if (!worldIn.isRemote) {
 			InjectorResult result = ((this.lastCheckPos != null && this.getDistanceSq(this.lastCheckPos) > 32.0F) || this.lastCheckPos == null || this.world.getTotalWorldTime() - this.lastCheckTime > 2400) ? InjectorResult.create(worldIn, pos, false) : this.lastResult;
 			String defectivity = Math.round(result.getDefectivity() * 100) + "%";
 			if (result.getGem() != null) {
-				this.getOwner().sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_find_gem", result.getName(), defectivity).getUnformattedComponentText()));
+				if (result.isPrimary()) {
+					this.getOwner().sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_find_prime_gem", result.getName()).getUnformattedComponentText()));
+				}
+				else {
+					this.getOwner().sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_find_gem", result.getName(), defectivity).getUnformattedComponentText()));
+				}
 			}
 			else {
 				this.getOwner().sendMessage(new TextComponentString("<" + this.getName() + "> " + new TextComponentTranslation("command.kagic.peridot_cant_find_gem").getUnformattedComponentText()));
@@ -314,7 +334,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	 *********************************************************/
 	@Override
 	public void onLivingUpdate() {
-		if ((!this.canPickUpLoot() && this.dropTimer > 40) && this.isFarmer()) {
+		if (!this.canPickUpLoot() && this.dropTimer > 40) {
 			this.setCanPickUpLoot(this.isFarmer());
 		}
 		if (this.isFarmer()) {
@@ -345,12 +365,19 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	
 	public void openGUI(EntityPlayer playerEntity) {
 		if (!this.world.isRemote && this.isTamed()) {
-			if (playerEntity.isSneaking()) {
-				this.gemStorage.setCustomName(new TextComponentTranslation("command.kagic.peridot_seeds", this.getName()).getUnformattedComponentText());
+			if (this.isFarmer()) {
+				if (playerEntity.isSneaking()) {
+					this.gemStorage.setCustomName(new TextComponentTranslation("command.kagic.peridot_seeds", this.getName()).getUnformattedComponentText());
+					playerEntity.displayGUIChest(this.gemStorage);
+				}
+				else {
+					this.harvest.setCustomName(new TextComponentTranslation("command.kagic.peridot_inventory", this.getName()).getUnformattedComponentText());
+					playerEntity.displayGUIChest(this.harvest);
+				}
+			}
+			else {
+				this.gemStorage.setCustomName(new TextComponentTranslation("command.kagic.peridot_mine_haul", this.getName()).getUnformattedComponentText());
 				playerEntity.displayGUIChest(this.gemStorage);
-			} else {
-				this.harvest.setCustomName(new TextComponentTranslation("command.kagic.peridot_inventory", this.getName()).getUnformattedComponentText());
-				playerEntity.displayGUIChest(this.harvest);
 			}
 		}
 	}
@@ -384,7 +411,7 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	@Override
 	protected void updateEquipmentIfNeeded(EntityItem itementity) {
 		ItemStack itemstack = itementity.getItem();
-		if (this.canPickupItem(itemstack.getItem()) && this.isFarmer()) {
+		if (this.canPickupItem(itemstack.getItem())) {
 			ItemStack itemstack1 = this.gemStorage.addItem(itemstack);
 			if (itemstack1.isEmpty()) {
 				itementity.setDead();
@@ -396,7 +423,10 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	}
 	
 	public boolean canPickupItem(Item itemIn) {
-		return this.isFarmer() && (itemIn instanceof ItemSeeds || itemIn instanceof ItemSeedFood || itemIn instanceof ItemFood || itemIn == Items.WHEAT);
+		if (this.isFarmer()) {
+			return itemIn instanceof ItemSeeds || itemIn instanceof ItemSeedFood || itemIn instanceof ItemFood || itemIn == Items.WHEAT;
+		}
+		return false;
 	}
 	
 	public boolean isFarmer() {
@@ -410,6 +440,28 @@ public class EntityPeridot extends EntityGem implements IInventoryChangedListene
 	public void onStruckByLightning(EntityLightningBolt lightningBolt) {
 		if (!this.world.isRemote && !this.isDead) {
 			this.dropItem(ModItems.RECORD_LITTLE_PERIDOT, 1);
+		}
+	}
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		return super.attackEntityFrom(source, amount);
+	}
+	public boolean attackEntityAsMob(Entity entityIn) {
+		if (this.isTraitor() && entityIn instanceof EntityPlayer) {
+			this.sayClod();
+			return false;
+		}
+		else {
+			return super.attackEntityAsMob(entityIn);
+		}
+	}
+	public void sayClod() {
+		this.playHurtSound(DamageSource.GENERIC);
+		if (this.getServitude() == EntityGem.SERVE_REBELLION) {
+			this.sendMessage("command.kagic.peridot_rebel");
+		}
+		else {
+			int index = this.rand.nextInt(20);
+			this.sendMessage("command.kagic.peridot_scream_" + index);
 		}
 	}
 

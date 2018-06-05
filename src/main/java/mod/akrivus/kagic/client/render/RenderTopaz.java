@@ -28,9 +28,9 @@ public class RenderTopaz extends RenderGemBase<EntityTopaz> {
         this.addLayer(new LayerUniform(this));
         this.addLayer(new LayerInsignia(this));
         this.addLayer(new LayerHair(this));
+        this.addLayer(new LayerVisor(this));
         this.addLayer(new LayerGemPlacement(this));
         this.addLayer(new LayerFusionPlacement(this));
-        this.addLayer(new LayerVisor(this));
 		if (KAGIC.isBirthday()) {
 			this.addLayer(new LayerBirthdayHat(this));
 		} else if (KAGIC.isHalloween()) {

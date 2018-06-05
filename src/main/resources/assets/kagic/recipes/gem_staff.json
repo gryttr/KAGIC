@@ -3,9 +3,9 @@
     "item": "kagic:gem_staff"
   },
   "pattern": [
-    "  b",
+    "  d",
     " b ",
-    "d  "
+    "b  "
   ],
   "type": "minecraft:crafting_shaped",
   "key": {

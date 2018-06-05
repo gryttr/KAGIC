@@ -68,6 +68,13 @@ public class EntityAIDiamondHurtTarget extends EntityAITarget {
     public EntityLivingBase getDiamond() {
     	int servitude = this.gem.getServitude();
     	if (servitude == EntityGem.SERVE_HUMAN) {
+    		if (this.gem.getLeaderEntity() == null) {
+	    		for (EntityGem gem : this.gem.world.<EntityGem>getEntitiesWithinAABB(EntityGem.class, this.gem.getEntityBoundingBox().grow(24.0D, 8.0D, 24.0D))) {
+	    			if (!this.gem.equals(gem) && this.gem.isOwner(gem) && this.gem.getInsigniaColor() == gem.getInsigniaColor()) {
+	    				return gem;
+	    			}
+	    		}
+    		}
     		return this.gem.getLeaderEntity();
     	}
     	else if (servitude == EntityGem.SERVE_YELLOW_DIAMOND) {

@@ -11,7 +11,6 @@ import mod.akrivus.kagic.entity.EntityCorruptedGem;
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.EntityLaser;
 import mod.akrivus.kagic.entity.EntitySlag;
-import mod.akrivus.kagic.entity.EntitySteven;
 import mod.akrivus.kagic.entity.gem.EntityAgate;
 import mod.akrivus.kagic.entity.gem.EntityAmethyst;
 import mod.akrivus.kagic.entity.gem.EntityAquamarine;
@@ -48,12 +47,12 @@ import mod.akrivus.kagic.entity.gem.fusion.EntityRhodonite;
 import mod.akrivus.kagic.entity.pepo.EntityCactus;
 import mod.akrivus.kagic.entity.pepo.EntityMelon;
 import mod.akrivus.kagic.entity.pepo.EntityPumpkin;
+import mod.akrivus.kagic.entity.pepo.EntityStrawberry;
 import mod.akrivus.kagic.entity.shardfusion.EntityFootArm;
 import mod.akrivus.kagic.entity.shardfusion.EntityHandBody;
 import mod.akrivus.kagic.entity.shardfusion.EntityMouthTorso;
 import mod.akrivus.kagic.entity.vehicles.EntityRoamingEye;
 import net.minecraft.block.BlockRotatedPillar;
-import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.crash.CrashReport;
@@ -65,20 +64,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.BiomeManager.BiomeEntry;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.OreDictionary.OreRegisterEvent;
 
 public class ModEntities {
 	public static final HashMap<String, Class<? extends EntityGem>> GEMS = new HashMap<String, Class<? extends EntityGem>>();
@@ -89,7 +83,6 @@ public class ModEntities {
 	public static void register() {
 		registerGem("ruby", EntityRuby.class, 0xE52C5C, 0x3A0015, true);
 		registerGem("sapphire", EntitySapphire.class, 0xBAF5FD, 0x7298EC, false);
-		registerGem("padparadscha", EntityPadparadscha.class, 0xFF8065, 0xFFB3A4, false);
 		registerGem("pearl", EntityPearl.class, 0xFCCCB1, 0x92EAD9, true);
 		registerGem("bismuth", EntityBismuth.class, 0x91A8CF, 0x9C5867, false);
 		registerGem("peridot", EntityPeridot.class, 0x98FF72, 0x13BA54, true);
@@ -106,6 +99,9 @@ public class ModEntities {
 		registerGem("hessonite", EntityHessonite.class, 0xBE331C, 0xEDCC41, false);
 		registerDiamond("yellow_diamond", EntityYellowDiamond.class);
 		registerDiamond("blue_diamond", EntityBlueDiamond.class);
+		
+		// removed gem, still needs to be registered though
+		registerDiamond("padparadscha", EntityPadparadscha.class);
 		
 		registerDiamond("handbody", EntityHandBody.class);
 		registerDiamond("footarm", EntityFootArm.class);
@@ -130,10 +126,11 @@ public class ModEntities {
 		registerMob("melon", EntityMelon.class, 0xB5B128, 0x5A671A);
 		registerMob("pumpkin", EntityPumpkin.class, 0xD58116, 0x744E03);
 		registerMob("cactus", EntityCactus.class, 0x138622, 0xD9DB9F);
+		registerMob("strawberry", EntityStrawberry.class, 0xEF4B69, 0x80855A);
 		registerMob("slag", EntitySlag.class, 0xFFFFFF, 0x00FF5D);
-		registerMob("steven", EntitySteven.class, 0xFD6270, 0xFFD248);
 		registerEntity("roaming_eye", EntityRoamingEye.class);
 		registerEntity("laser", EntityLaser.class);
+		
 		//registerGemYields();
 		registerGemAddons();
 	}
@@ -144,10 +141,10 @@ public class ModEntities {
 		EntityRuby.RUBY_YIELDS.put(Blocks.MAGMA.getDefaultState(), 0.77);
 		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.99, "netherrack");
 		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.99, "oreRedstone");
-		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.99, "stoneGranite");
-		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.99, "stoneGranitePolished");
+		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.11, "stoneGranite");
+		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.44, "stoneGranitePolished");
 		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.11, "stoneMarble");
-		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.11, "stoneMarblePolished");
+		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.44, "stoneMarblePolished");
 		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 5.99, "blockRedstone");
 		ModEntities.registerWithOreDictionary(EntityRuby.RUBY_YIELDS, "Ruby", "Corundum", "Bauxite", "Cinnabar", "Chromite", "Chromium");
 		ModEntities.registerOreDictValue(EntityRuby.RUBY_YIELDS, 0.33, "oreAluminum");
@@ -157,7 +154,7 @@ public class ModEntities {
 
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.ICE.getDefaultState(), 0.99);
 		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.11, "stoneMarble");
-		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.11, "stoneMarblePolished");
+		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.44, "stoneMarblePolished");
 		ModEntities.registerOreDictValue(EntitySapphire.SAPPHIRE_YIELDS, 0.22, "oreIron");
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.PACKED_ICE.getDefaultState(), 0.99);
 		EntitySapphire.SAPPHIRE_YIELDS.put(Blocks.SNOW.getDefaultState(), 0.77);
@@ -199,9 +196,9 @@ public class ModEntities {
 		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.99, "oreDiamond");
 		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.99, "oreGold");
 		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 5.99, "blockGold");
-		ModEntities.registerWithOreDictionary(EntityBismuth.BISMUTH_YIELDS, "Bismuth", "Galena", "Platinum", "Tungsten", "Silver");
-		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.33, "oreCopper");
-		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.33, "oreTin");
+		ModEntities.registerWithOreDictionary(EntityBismuth.BISMUTH_YIELDS, "Bismuth", "Silver");
+		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.11, "oreCopper");
+		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.11, "oreTin");
 		ModEntities.registerOreDictValue(EntityBismuth.BISMUTH_YIELDS, 0.33, "oreLead");
 
 		ModEntities.registerOreDictValue(EntityPeridot.PERIDOT_YIELDS, 0.99, "endstone");
@@ -268,7 +265,7 @@ public class ModEntities {
 		ModEntities.registerOreDictValue(EntityCarnelian.CARNELIAN_YIELDS, 5.99, "blockQuartz");
 		ModEntities.registerWithOreDictionary(EntityCarnelian.CARNELIAN_YIELDS, "Carnelian");
 		
-		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.82, "endstone");
+		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.88, "endstone");
 		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.11, "stoneLimestone");
 		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.11, "stoneLimestonePolished");
 		ModEntities.registerOreDictValue(EntityAgate.AGATE_YIELDS, 0.99, "obsidian");
@@ -285,10 +282,9 @@ public class ModEntities {
 		EntityAquamarine.AQUAMARINE_YIELDS.put(Blocks.WATER.getDefaultState(), 0.11);
 		ModEntities.registerWithOreDictionary(EntityAquamarine.AQUAMARINE_YIELDS, "Aquamarine", "Beryl", "GoldenBeryl", "Emerald", "Heliodor", "Morganite");
 		
-		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 0.33, "stoneAndesite");
-		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 0.33, "stoneAndesitePolished");
 		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 0.11, "oreIron");
 		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 0.55, "blockIron");
+		ModEntities.registerOreDictValue(EntityHessonite.HESSONITE_YIELDS, 0.99, "endstone");
 		EntityHessonite.HESSONITE_YIELDS.put(Blocks.BONE_BLOCK.getDefaultState().withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.X), 0.99);
 		EntityHessonite.HESSONITE_YIELDS.put(Blocks.BONE_BLOCK.getDefaultState().withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Y), 0.99);
 		EntityHessonite.HESSONITE_YIELDS.put(Blocks.BONE_BLOCK.getDefaultState().withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Z), 0.99);
@@ -300,8 +296,8 @@ public class ModEntities {
 		ModEntities.registerOreDictValue(EntityTopaz.TOPAZ_YIELDS, 0.22, "endstone");
 		ModEntities.registerOreDictValue(EntityTopaz.TOPAZ_YIELDS, 0.99, "glowstone");
 		ModEntities.registerOreDictValue(EntityTopaz.TOPAZ_YIELDS, 0.45, "oreGold");
-		ModEntities.registerOreDictValue(EntityTopaz.TOPAZ_YIELDS, 0.99, "stoneGranite");
-		ModEntities.registerOreDictValue(EntityTopaz.TOPAZ_YIELDS, 1.99, "stoneGranitePolished");
+		ModEntities.registerOreDictValue(EntityTopaz.TOPAZ_YIELDS, 0.11, "stoneGranite");
+		ModEntities.registerOreDictValue(EntityTopaz.TOPAZ_YIELDS, 0.22, "stoneGranitePolished");
 		ModEntities.registerWithOreDictionary(EntityTopaz.TOPAZ_YIELDS, "Topaz", "BlueTopaz", "Sulfur");
 		
 		ModEntities.registerOreDictValue(EntityRutile.RUTILE_YIELDS, 0.99, "glowstone");
@@ -312,9 +308,13 @@ public class ModEntities {
 		ModEntities.registerWithOreDictionary(EntityRutile.RUTILE_YIELDS, "Rutile", "Apatite");
 		ModEntities.registerOreDictValue(EntityRutile.RUTILE_YIELDS, 0.99, "oreTitanium");
 		
-		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 1.99, "oreDiamond");
+		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 2.99, "oreDiamond");
 		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 5.99, "blockDiamond");
-		ModEntities.registerWithOreDictionary(EntityZircon.ZIRCON_YIELDS, "Zircon");
+		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 0.22, "stoneGranite");
+		ModEntities.registerOreDictValue(EntityZircon.ZIRCON_YIELDS, 0.66, "stoneGranitePolished");
+		EntityZircon.ZIRCON_YIELDS.put(Blocks.MAGMA.getDefaultState(), 0.66);
+		EntityZircon.ZIRCON_YIELDS.put(Blocks.LAVA.getDefaultState(), 0.44);
+		ModEntities.registerWithOreDictionary(EntityZircon.ZIRCON_YIELDS, "Zircon", "Uranium");
 	}
 	
 	public static void registerWithOreDictionary(HashMap<IBlockState, Double> yields, String... keys) {
@@ -374,6 +374,7 @@ public class ModEntities {
 		EntityPearl.PEARL_HAIR_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/hair/yellow.png"));
 		EntityPearl.PEARL_DRESS_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/dress/dumpy.png"));
 		EntityPearl.PEARL_DRESS_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/dress/flower.png"));
+		EntityPearl.PEARL_DRESS_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/dress/hijab.png"));
 		EntityPearl.PEARL_DRESS_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/dress/jumpsuit.png"));
 		EntityPearl.PEARL_DRESS_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/dress/leather.png"));
 		EntityPearl.PEARL_DRESS_STYLES.add(new ResourceLocation("kagic:textures/entities/pearl/dress/legacy.png"));
@@ -531,6 +532,35 @@ public class ModEntities {
 		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
 			try {
 				Class<Render<? extends T>> render = (Class<Render<? extends T>>) KAGIC.class.getClassLoader().loadClass("mod/akrivus/kagic/client/render/" + entity.getName().replaceAll(".+?Entity", "Render"));
+				if (GENERATE_FACTORIES_INSTEAD_OF_INSTANCES) {
+					IRenderFactory<T> factory = null;
+	                try {
+	                    MethodHandles.Lookup lookup = MethodHandles.lookup();
+	                    MethodHandle constructor = lookup.findConstructor(render, MethodType.methodType(void.class, String.class));
+	                    MethodType type = constructor.type().changeReturnType(IRenderFactory.class);
+	                    factory = (IRenderFactory<T>) LambdaMetafactory.metafactory(lookup, "getInstance", MethodType.methodType(IRenderFactory.class), type, constructor, type).getTarget().invokeExact();
+	                }
+	                catch (Throwable t) {
+	                	CrashReport.makeCrashReport(t, "Something went wrong registering an entity.");
+	                }
+	                RenderingRegistry.registerEntityRenderingHandler(entity, factory);
+				}
+				else {
+					RenderingRegistry.registerEntityRenderingHandler(entity, render.newInstance());
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		++currentID;
+	}
+	@SuppressWarnings({ "unchecked" })
+	public static <T extends Entity> void registerCustomEntity(String name, Class<T> entity) {
+		EntityRegistry.registerModEntity(new ResourceLocation("kagic:kagic.custom_" + name), entity, "kagic.custom_" + name, currentID, KAGIC.instance, 256, 1, true);
+		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+			try {
+				Class<Render<? extends T>> render = (Class<Render<? extends T>>) KAGIC.class.getClassLoader().loadClass("mod/akrivus/kagic/client/render/customnpcs/" + entity.getName().replaceAll(".+?Entity", "Render"));
 				if (GENERATE_FACTORIES_INSTEAD_OF_INSTANCES) {
 					IRenderFactory<T> factory = null;
 	                try {

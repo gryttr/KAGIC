@@ -1,25 +1,35 @@
 package mod.akrivus.kagic.entity.gem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAIAttackAquamarine;
+import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
+import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
+import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
+import mod.akrivus.kagic.entity.ai.EntityAIParalyzeEnemies;
 import mod.akrivus.kagic.entity.ai.EntityAIScan;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.akrivus.kagic.util.flying.EntityFlyHelper;
 import mod.akrivus.kagic.util.flying.PathNavigateFlying;
+import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.pathfinding.PathNavigate;
 import net.minecraft.util.DamageSource;
@@ -30,13 +40,21 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityAquamarine extends EntityGem {
+public class EntityAquamarine extends EntityGem implements IAnimals {
 	public static final HashMap<IBlockState, Double> AQUAMARINE_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double AQUAMARINE_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double AQUAMARINE_DEPTH_THRESHOLD = 0;
 	public static final HashMap<Integer, ResourceLocation> AQUAMARINE_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
+	public static final int SKIN_COLOR_BEGIN = 0x8BFFFE;
+	public static final int SKIN_COLOR_END = 0x3AE2E4;
+	private static final int NUM_HAIRSTYLES = 1;
+	public static final int HAIR_COLOR_BEGIN = 0x13A9DF;
+	public static final int HAIR_COLOR_END = 0x137EDF;
 	public boolean wantsToScan;
 	private int lastScanTime;
 	public EntityAquamarine(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 11;
 		this.moveHelper = new EntityFlyHelper(this);
 		this.setSize(0.4F, 0.8F);
 		this.seePastDoors();
@@ -55,14 +73,19 @@ public class EntityAquamarine extends EntityGem {
 		// Apply entity AI.
 		this.stayAI = new EntityAIStay(this);
         this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
+        this.tasks.addTask(1, new EntityAICommandGems(this, 0.6D));
         this.tasks.addTask(2, new EntityAIScan(this));
         this.tasks.addTask(3, new EntityAIOpenDoor(this, true));
-        this.tasks.addTask(3, new EntityAIAttackMelee(this, 1.0D, true));
-        this.tasks.addTask(3, new EntityAIMoveTowardsTarget(this, 0.414D, 32.0F));
-        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
-        this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
-        this.tasks.addTask(5, new EntityAIStandGuard(this, 0.6D));
-        this.tasks.addTask(6, new EntityAILookIdle(this));
+        this.tasks.addTask(3, new EntityAIAttackAquamarine(this, 1.0D));
+        this.tasks.addTask(4, new EntityAIParalyzeEnemies(this));
+        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
+        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
+        this.tasks.addTask(6, new EntityAIStandGuard(this, 0.6D));
+        this.tasks.addTask(7, new EntityAILookIdle(this));
+        
+        this.targetTasks.addTask(1, new EntityAIDiamondHurtByTarget(this));
+		this.targetTasks.addTask(2, new EntityAIDiamondHurtTarget(this));
+		this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, false, new Class[0]));
         
         // Apply entity attributes.
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
@@ -75,8 +98,8 @@ public class EntityAquamarine extends EntityGem {
         return new PathNavigateFlying(this, worldIn);
     }
 
-	public float[] getGemColor() {
-    	return new float[] { 127F / 255F, 253F / 255F, 240F / 255F };
+	protected int generateGemColor() {
+    	return 0x4FFCE7;
     }
 	public void convertGems(int placement) {
     	this.setGemCut(GemCuts.TINY.id);
@@ -92,6 +115,16 @@ public class EntityAquamarine extends EntityGem {
     		break;
     	}
     }
+	
+	public void setDefective(boolean defective) {
+		super.setDefective(defective);
+		if (defective) {
+			this.moveHelper = new EntityMoveHelper(this);
+		}
+		else {
+			this.moveHelper = new EntityFlyHelper(this);
+		}
+	}
 	
 	/*********************************************************
      * Methods related to entity interaction.                *
@@ -172,6 +205,30 @@ public class EntityAquamarine extends EntityGem {
     public boolean isOnLadder() {
         return false;
     }
+    
+    /*********************************************************
+	 * Methods related to rendering.                         *
+	 *********************************************************/
+	@Override
+	protected int generateSkinColor() {
+		ArrayList<Integer> skinColors = new ArrayList<Integer>();
+		skinColors.add(EntityAquamarine.SKIN_COLOR_BEGIN);
+		skinColors.add(EntityAquamarine.SKIN_COLOR_END);
+		return Colors.arbiLerp(skinColors);
+	}
+	
+	@Override
+	protected int generateHairStyle() {
+		return this.rand.nextInt(EntityAquamarine.NUM_HAIRSTYLES);
+	}
+	
+	@Override
+	protected int generateHairColor() {
+		ArrayList<Integer> hairColors = new ArrayList<Integer>();
+		hairColors.add(EntityAquamarine.HAIR_COLOR_BEGIN);
+		hairColors.add(EntityAquamarine.HAIR_COLOR_END);
+		return Colors.arbiLerp(hairColors);
+	}
 	
 	/*********************************************************
      * Methods related to entity sounds.                     *

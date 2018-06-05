@@ -18,8 +18,10 @@ import mod.akrivus.kagic.entity.gem.fusion.EntityOpal;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,6 +36,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -57,8 +60,10 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityAmethyst extends EntityQuartzSoldier {
+public class EntityAmethyst extends EntityQuartzSoldier implements IAnimals {
 	public static final HashMap<IBlockState, Double> AMETHYST_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double AMETHYST_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double AMETHYST_DEPTH_THRESHHOLD = 72;
 	public static final HashMap<Integer, ResourceLocation> AMETHYST_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private static final DataParameter<Boolean> CHARGED = EntityDataManager.<Boolean>createKey(EntityAmethyst.class, DataSerializers.BOOLEAN);
 	
@@ -91,6 +96,7 @@ public class EntityAmethyst extends EntityQuartzSoldier {
 	
 	public EntityAmethyst(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 8;
 		
 		//Define valid gem cuts and placements
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BACK_OF_HEAD);
@@ -143,21 +149,21 @@ public class EntityAmethyst extends EntityQuartzSoldier {
     }
 	
 	public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
         compound.setBoolean("charged", this.dataManager.get(CHARGED).booleanValue());
         compound.setInteger("charge_ticks", this.charge_ticks);
         compound.setInteger("hit_count", this.hit_count);
+        super.writeEntityToNBT(compound);
     }
     public void readEntityFromNBT(NBTTagCompound compound) {
-        super.readEntityFromNBT(compound);
         this.dataManager.set(CHARGED, compound.getBoolean("charged"));
         this.charge_ticks = compound.getInteger("charge_ticks");
         this.hit_count = compound.getInteger("hit_count");
+        super.readEntityFromNBT(compound);
     }
 
     @Override
-    public float[] getGemColor() {
-    	return new float[] { 220F / 255F, 100F / 255F, 253F / 255F };
+    protected int generateGemColor() {
+    	return 0xDC64FD;
     }
     
     @Override
@@ -195,7 +201,7 @@ public class EntityAmethyst extends EntityQuartzSoldier {
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(50.0D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
         this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(0.0D);
-        this.setSize(0.72F, 1.38F);
+        this.setSize(0.82F, 1.48F);
 	}
 	
     /*********************************************************

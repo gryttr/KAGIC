@@ -13,13 +13,14 @@ public class ModSounds {
 	public static final SoundEvent RECORD_YELLOW_DIAMOND = new SoundEvent(new ResourceLocation("kagic:records.yellow_diamond"));
 	public static final SoundEvent RECORD_BLUE_DIAMOND = new SoundEvent(new ResourceLocation("kagic:records.blue_diamond"));
 	public static final SoundEvent RECORD_WHATS_THE_USE_OF_FEELING_BLUE = new SoundEvent(new ResourceLocation("kagic:records.whats_the_use_of_feeling_blue"));
-
+	public static final SoundEvent RECORD_LOVE_LIKE_YOU = new SoundEvent(new ResourceLocation("kagic:records.love_like_you"));
+	
 	public static final SoundEvent RECORD_HEAVEN_BEETLE = new SoundEvent(new ResourceLocation("kagic:records.heaven_beetle"));
 	public static final SoundEvent RECORD_DEFECTIVE = new SoundEvent(new ResourceLocation("kagic:records.defective"));
 	public static final SoundEvent RECORD_GEM_SHARDS = new SoundEvent(new ResourceLocation("kagic:records.gem_shards"));
 	public static final SoundEvent RECORD_HEART_OF_THE_PYRAMID = new SoundEvent(new ResourceLocation("kagic:records.pyramid"));
 	public static final SoundEvent RECORD_UNDERWATER_TEMPLE = new SoundEvent(new ResourceLocation("kagic:records.underwater_temple"));
-
+	
 	public static final SoundEvent BLOCK_GEM_SEED_HATCH = new SoundEvent(new ResourceLocation("kagic:blocks.gem_seed_hatch"));
 	public static final SoundEvent BLOCK_INJECTOR_OPEN = new SoundEvent(new ResourceLocation("kagic:blocks.injector_open"));
 	public static final SoundEvent BLOCK_INJECTOR_CLOSE = new SoundEvent(new ResourceLocation("kagic:blocks.injector_close"));
@@ -47,6 +48,8 @@ public class ModSounds {
 	public static final SoundEvent PEARL_HURT = new SoundEvent(new ResourceLocation("kagic:entities.pearl.hurt"));
 	public static final SoundEvent PEARL_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.pearl.obey"));
 	public static final SoundEvent PEARL_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.pearl.death"));
+	public static final SoundEvent PEARL_SING = new SoundEvent(new ResourceLocation("kagic:entities.pearl.sing"));
+	public static final SoundEvent PEARL_WEIRD = new SoundEvent(new ResourceLocation("kagic:entities.pearl.weird"));
 	public static final SoundEvent BISMUTH_HURT = new SoundEvent(new ResourceLocation("kagic:entities.bismuth.hurt"));
 	public static final SoundEvent BISMUTH_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.bismuth.obey"));
 	public static final SoundEvent BISMUTH_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.bismuth.death"));
@@ -56,10 +59,12 @@ public class ModSounds {
 	public static final SoundEvent AMETHYST_HURT = new SoundEvent(new ResourceLocation("kagic:entities.amethyst.hurt"));
 	public static final SoundEvent AMETHYST_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.amethyst.obey"));
 	public static final SoundEvent AMETHYST_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.amethyst.death"));
-	public static final SoundEvent ROSE_QUARTZ_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.rose_quartz.living"));
 	public static final SoundEvent ROSE_QUARTZ_HURT = new SoundEvent(new ResourceLocation("kagic:entities.rose_quartz.hurt"));
 	public static final SoundEvent ROSE_QUARTZ_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.rose_quartz.obey"));
 	public static final SoundEvent ROSE_QUARTZ_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.rose_quartz.death"));
+	public static final SoundEvent CARNELIAN_HURT = new SoundEvent(new ResourceLocation("kagic:entities.carnelian.hurt"));
+	public static final SoundEvent CARNELIAN_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.carnelian.obey"));
+	public static final SoundEvent CARNELIAN_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.carnelian.death"));
 	public static final SoundEvent LAPIS_LAZULI_HURT = new SoundEvent(new ResourceLocation("kagic:entities.lapis_lazuli.hurt"));
 	public static final SoundEvent LAPIS_LAZULI_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.lapis_lazuli.obey"));
 	public static final SoundEvent LAPIS_LAZULI_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.lapis_lazuli.death"));
@@ -106,6 +111,18 @@ public class ModSounds {
 	public static final SoundEvent ZIRCON_HURT = new SoundEvent(new ResourceLocation("kagic:entities.zircon.hurt"));
 	public static final SoundEvent ZIRCON_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.zircon.obey"));
 	
+	public static final SoundEvent STEVEN_HELLO = new SoundEvent(new ResourceLocation("kagic:entities.steven.hello"));
+	public static final SoundEvent STEVEN_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.steven.living"));
+	public static final SoundEvent STEVEN_HURT = new SoundEvent(new ResourceLocation("kagic:entities.steven.hurt"));
+	public static final SoundEvent STEVEN_PROTECT = new SoundEvent(new ResourceLocation("kagic:entities.steven.protect"));
+	public static final SoundEvent STEVEN_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.steven.death"));
+	public static final SoundEvent STEVEN_SNEEZE = new SoundEvent(new ResourceLocation("kagic:entities.steven.sneeze"));
+	public static final SoundEvent CONNIE_HELLO = new SoundEvent(new ResourceLocation("kagic:entities.connie.hello"));
+	public static final SoundEvent CONNIE_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.connie.living"));
+	public static final SoundEvent CONNIE_HURT = new SoundEvent(new ResourceLocation("kagic:entities.connie.hurt"));
+	public static final SoundEvent CONNIE_PROTECT = new SoundEvent(new ResourceLocation("kagic:entities.connie.protect"));
+	public static final SoundEvent CONNIE_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.connie.death"));
+	
 	public static final SoundEvent CORRUPTED_QUARTZ_AMBIENT = new SoundEvent(new ResourceLocation("kagic:entities.corrupted_quartz.living"));
 	public static final SoundEvent CORRUPTED_QUARTZ_HURT = new SoundEvent(new ResourceLocation("kagic:entities.corrupted_quartz.hurt"));
 	public static final SoundEvent CORRUPTED_QUARTZ_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.corrupted_quartz.death"));
@@ -113,8 +130,10 @@ public class ModSounds {
 	public static final SoundEvent TONGUE_MONSTER_HURT = new SoundEvent(new ResourceLocation("kagic:entities.tongue_monster.hurt"));
 	public static final SoundEvent TONGUE_MONSTER_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.tongue_monster.death"));
 	
-	public static final SoundEvent WARP_PAD = new SoundEvent(new ResourceLocation(KAGIC.MODID, "warp_pad"));
+	public static final SoundEvent WARP_PAD = new SoundEvent(new ResourceLocation("kagic:blocks.warp_pad"));
 	
+	public static final SoundEvent[] JAM_BUDS_SONG_PARTS = new SoundEvent[40];
+		
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
 		registerSound(RECORD_LITTLE_PERIDOT, new ResourceLocation("kagic:records.little_peridot"), event);
 		registerSound(RECORD_ROSES_FOUNTAIN, new ResourceLocation("kagic:records.roses_fountain"), event);
@@ -128,6 +147,7 @@ public class ModSounds {
 		registerSound(RECORD_DEFECTIVE, new ResourceLocation("kagic:records.defective"), event);
 		registerSound(RECORD_GEM_SHARDS, new ResourceLocation("kagic:records.gem_shards"), event);
 		registerSound(RECORD_HEART_OF_THE_PYRAMID, new ResourceLocation("kagic:records.pyramid"), event);
+		registerSound(RECORD_LOVE_LIKE_YOU, new ResourceLocation("kagic:records.love_like_you"), event);
 		registerSound(BLOCK_GEM_SEED_HATCH, new ResourceLocation("kagic:blocks.gem_seed_hatch"), event);
 		registerSound(BLOCK_INJECTOR_OPEN, new ResourceLocation("kagic:blocks.injector_open"), event);
 		registerSound(BLOCK_INJECTOR_CLOSE, new ResourceLocation("kagic:blocks.injector_close"), event);
@@ -154,6 +174,8 @@ public class ModSounds {
 		registerSound(PEARL_HURT, new ResourceLocation("kagic:entities.pearl.hurt"), event);
 		registerSound(PEARL_OBEY, new ResourceLocation("kagic:entities.pearl.obey"), event);
 		registerSound(PEARL_DEATH, new ResourceLocation("kagic:entities.pearl.death"), event);
+		registerSound(PEARL_SING, new ResourceLocation("kagic:entities.pearl.sing"), event);
+		registerSound(PEARL_WEIRD, new ResourceLocation("kagic:entities.pearl.weird"), event);
 		registerSound(BISMUTH_HURT, new ResourceLocation("kagic:entities.bismuth.hurt"), event);
 		registerSound(BISMUTH_OBEY, new ResourceLocation("kagic:entities.bismuth.obey"), event);
 		registerSound(BISMUTH_DEATH, new ResourceLocation("kagic:entities.bismuth.death"), event);
@@ -163,10 +185,12 @@ public class ModSounds {
 		registerSound(AMETHYST_HURT, new ResourceLocation("kagic:entities.amethyst.hurt"), event);
 		registerSound(AMETHYST_OBEY, new ResourceLocation("kagic:entities.amethyst.obey"), event);
 		registerSound(AMETHYST_DEATH, new ResourceLocation("kagic:entities.amethyst.death"), event);
-		registerSound(ROSE_QUARTZ_LIVING, new ResourceLocation("kagic:entities.rose_quartz.living"), event);
 		registerSound(ROSE_QUARTZ_HURT, new ResourceLocation("kagic:entities.rose_quartz.hurt"), event);
 		registerSound(ROSE_QUARTZ_OBEY, new ResourceLocation("kagic:entities.rose_quartz.obey"), event);
-		registerSound(ROSE_QUARTZ_DEATH, new ResourceLocation("kagic:entities.rose_quartz.death"), event);
+		registerSound(CARNELIAN_DEATH, new ResourceLocation("kagic:entities.rose_quartz.death"), event);
+		registerSound(CARNELIAN_HURT, new ResourceLocation("kagic:entities.carnelian.hurt"), event);
+		registerSound(CARNELIAN_OBEY, new ResourceLocation("kagic:entities.carnelian.obey"), event);
+		registerSound(ROSE_QUARTZ_DEATH, new ResourceLocation("kagic:entities.carnelian.death"), event);
 		registerSound(LAPIS_LAZULI_HURT, new ResourceLocation("kagic:entities.lapis_lazuli.hurt"), event);
 		registerSound(LAPIS_LAZULI_OBEY, new ResourceLocation("kagic:entities.lapis_lazuli.obey"), event);
 		registerSound(LAPIS_LAZULI_DEATH, new ResourceLocation("kagic:entities.lapis_lazuli.death"), event);
@@ -212,6 +236,17 @@ public class ModSounds {
 		registerSound(ZIRCON_DEATH, new ResourceLocation("kagic:entities.zircon.death"), event);
 		registerSound(ZIRCON_HURT, new ResourceLocation("kagic:entities.zircon.hurt"), event);
 		registerSound(ZIRCON_OBEY, new ResourceLocation("kagic:entities.zircon.obey"), event);
+		registerSound(STEVEN_HELLO, new ResourceLocation("kagic:entities.steven.hello"), event);
+		registerSound(STEVEN_LIVING, new ResourceLocation("kagic:entities.steven.living"), event);
+		registerSound(STEVEN_HURT, new ResourceLocation("kagic:entities.steven.hurt"), event);
+		registerSound(STEVEN_PROTECT, new ResourceLocation("kagic:entities.steven.protect"), event);
+		registerSound(STEVEN_DEATH, new ResourceLocation("kagic:entities.steven.death"), event);
+		registerSound(STEVEN_SNEEZE, new ResourceLocation("kagic:entities.steven.sneeze"), event);
+		registerSound(CONNIE_HELLO, new ResourceLocation("kagic:entities.connie.hello"), event);
+		registerSound(CONNIE_LIVING, new ResourceLocation("kagic:entities.connie.living"), event);
+		registerSound(CONNIE_HURT, new ResourceLocation("kagic:entities.connie.hurt"), event);
+		registerSound(CONNIE_PROTECT, new ResourceLocation("kagic:entities.connie.protect"), event);
+		registerSound(CONNIE_DEATH, new ResourceLocation("kagic:entities.connie.death"), event);
 		registerSound(CORRUPTED_QUARTZ_AMBIENT, new ResourceLocation("kagic:entities.corrupted_quartz.living"), event);
 		registerSound(CORRUPTED_QUARTZ_HURT, new ResourceLocation("kagic:entities.corrupted_quartz.hurt"), event);
 		registerSound(CORRUPTED_QUARTZ_DEATH, new ResourceLocation("kagic:entities.corrupted_quartz.death"), event);
@@ -219,6 +254,10 @@ public class ModSounds {
 		registerSound(TONGUE_MONSTER_HURT, new ResourceLocation("kagic:entities.tongue_monster.hurt"), event);
 		registerSound(TONGUE_MONSTER_DEATH, new ResourceLocation("kagic:entities.tongue_monster.death"), event);
 		registerSound(WARP_PAD, new ResourceLocation(KAGIC.MODID, "warp_pad"), event);
+		for (int i = 0; i < JAM_BUDS_SONG_PARTS.length; ++i) {
+			int part = i + 1; JAM_BUDS_SONG_PARTS[i] = new SoundEvent(new ResourceLocation("kagic:songs.jam_buds_" + part));
+			registerSound(JAM_BUDS_SONG_PARTS[i], new ResourceLocation("kagic:songs.jam_buds_" + part), event);
+		}
 	}
 	
 	private static void registerSound(SoundEvent sound, ResourceLocation location, RegistryEvent.Register<SoundEvent> event) {

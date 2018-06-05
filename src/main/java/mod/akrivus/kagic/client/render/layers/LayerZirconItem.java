@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHandSide;
 import net.minecraftforge.fml.relauncher.Side;
@@ -37,18 +38,33 @@ public class LayerZirconItem implements LayerRenderer<EntityZircon> {
     
     private void renderHeldItem(EntityLivingBase entity, ItemStack stack, ItemCameraTransforms.TransformType camera, EnumHandSide handSide) {
         if (!stack.isEmpty()) {
-            GlStateManager.pushMatrix();
-            if (entity.isSneaking()) {
-                GlStateManager.translate(0.0F, 0.2F, 0.0F);
+            if (stack.getItem() instanceof ItemEnchantedBook) { 
+	        	GlStateManager.pushMatrix();
+	            if (entity.isSneaking()) {
+	                GlStateManager.translate(0.0F, 0.2F, 0.0F);
+	            }
+	            this.setSide(handSide);
+	            GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
+	            GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
+	            GlStateManager.rotate(210.0F, 0.0F, 0.0F, 1.0F);
+	            boolean lefty = handSide == EnumHandSide.LEFT;
+	            GlStateManager.translate(0.725F, -0.7, lefty ? .5F : 0.0F);
+	            Minecraft.getMinecraft().getItemRenderer().renderItemSide(entity, stack, camera, lefty);
+	            GlStateManager.popMatrix();
             }
-            this.setSide(handSide);
-            GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
-            GlStateManager.rotate(210.0F, 0.0F, 0.0F, 1.0F);
-            boolean lefty = handSide == EnumHandSide.LEFT;
-            GlStateManager.translate(0.725F, -0.7, lefty ? .5F : 0.0F);
-            Minecraft.getMinecraft().getItemRenderer().renderItemSide(entity, stack, camera, lefty);
-            GlStateManager.popMatrix();
+            else {
+            	GlStateManager.pushMatrix();
+    			if (entity.isSneaking()) {
+    				GlStateManager.translate(0.0F, 0.2F, 0.0F);
+    			}
+    			this.setSide(handSide);
+    			GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
+    			GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
+    			boolean flag = handSide == EnumHandSide.LEFT;
+    			GlStateManager.translate((float)(flag ? -1 : 1) / 16.0F, 0.125F, -0.7F);
+    			Minecraft.getMinecraft().getItemRenderer().renderItemSide(entity, stack, camera, flag);
+    			GlStateManager.popMatrix();
+            }
         }
     }
     

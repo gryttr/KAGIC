@@ -2,8 +2,6 @@ package mod.akrivus.kagic.entity.gem.fusion;
 
 import mod.akrivus.kagic.entity.EntityFusionGem;
 import mod.akrivus.kagic.entity.EntityGem;
-import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
-import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.world.World;
 
@@ -38,10 +36,6 @@ public class EntityRainbowQuartz extends EntityFusionGem {
 	/*********************************************************
 	 * Methods related to rendering.						 *
 	 *********************************************************/
-	@Override
-	public float[] getGemColor() {
-		return new float[] { 1F, 1F, 1F };
-	}
 	
 	@Override
 	protected int generateSkinColor() {

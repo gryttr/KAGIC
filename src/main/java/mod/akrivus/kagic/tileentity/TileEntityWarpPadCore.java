@@ -190,7 +190,7 @@ public class TileEntityWarpPadCore extends TileEntity implements ITickable {
 		for (int i = -1; i <= 1; ++i) {
 			for (int j = 1; j <= clearanceHeight; ++j) {
 				for (int k = -1; k <= 1; ++k) {
-					if (!this.world.isAirBlock(this.pos.add(i, j, k))) {
+					if (this.world.isSideSolid(this.pos.add(i, j, k), EnumFacing.UP)) {
 						return false;
 					}
 				}

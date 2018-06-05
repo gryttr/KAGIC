@@ -64,6 +64,11 @@
             { "name": "kagic:records/underwater_temple", "stream": true }
         ]
     },
+    "records.love_like_you": {
+        "sounds": [
+            { "name": "kagic:records/love_like_you", "stream": true }
+        ]
+    },
     "blocks.gem_seed_hatch": {
         "sounds": [
             { "name": "kagic:blocks/gem_seed_hatch" }
@@ -307,6 +312,24 @@
 			{ "name": "kagic:entities/pearl/death5" }
         ]
     },
+    "entities.pearl.sing": {
+    	"sounds": [
+            { "name": "kagic:entities/pearl/note1" }
+        ]
+    },
+	"entities.pearl.weird": {
+        "sounds": [
+            { "name": "kagic:entities/pearl/weird1" },
+			{ "name": "kagic:entities/pearl/weird2" },
+			{ "name": "kagic:entities/pearl/weird3" },
+			{ "name": "kagic:entities/pearl/weird4" },
+			{ "name": "kagic:entities/pearl/weird5" },
+			{ "name": "kagic:entities/pearl/weird6" },
+			{ "name": "kagic:entities/pearl/weird7" },
+			{ "name": "kagic:entities/pearl/weird8" },
+			{ "name": "kagic:entities/pearl/weird9" }
+        ]
+    },
     "entities.bismuth.hurt": {
         "sounds": [
             { "name": "kagic:entities/bismuth/hurt1" },
@@ -329,7 +352,10 @@
     },
     "entities.jasper.hurt": {
         "sounds": [
-            { "name": "kagic:entities/jasper/hurt1" }
+            { "name": "kagic:entities/jasper/hurt1" },
+			{ "name": "kagic:entities/jasper/hurt2" },
+			{ "name": "kagic:entities/jasper/hurt3" },
+			{ "name": "kagic:entities/jasper/hurt4" }
         ]
     },
     "entities.jasper.obey": {
@@ -339,12 +365,18 @@
     },
 	"entities.jasper.death": {
         "sounds": [
-            { "name": "kagic:entities/jasper/death1" }
+            { "name": "kagic:entities/jasper/death1" },
+			{ "name": "kagic:entities/jasper/death2" },
+			{ "name": "kagic:entities/jasper/death3" },
+			{ "name": "kagic:entities/jasper/death4" }
         ]
     },
     "entities.amethyst.hurt": {
         "sounds": [
-            { "name": "kagic:entities/amethyst/hurt1" }
+            { "name": "kagic:entities/amethyst/hurt1" },
+            { "name": "kagic:entities/amethyst/hurt2" },
+            { "name": "kagic:entities/amethyst/hurt3" },
+            { "name": "kagic:entities/amethyst/hurt4" }
         ]
     },
     "entities.amethyst.obey": {
@@ -357,15 +389,10 @@
     },
 	"entities.amethyst.death": {
         "sounds": [
-            { "name": "kagic:entities/amethyst/death1" }
-        ]
-    },
-    "entities.rose_quartz.living": {
-        "sounds": [
-            { "name": "kagic:entities/rose_quartz/living1" },
-			{ "name": "kagic:entities/rose_quartz/living2" },
-			{ "name": "kagic:entities/rose_quartz/living3" },
-			{ "name": "kagic:entities/rose_quartz/living4" }
+            { "name": "kagic:entities/amethyst/death1" },
+            { "name": "kagic:entities/amethyst/death2" },
+            { "name": "kagic:entities/amethyst/death3" },
+            { "name": "kagic:entities/amethyst/death4" }
         ]
     },
     "entities.rose_quartz.hurt": {
@@ -386,6 +413,27 @@
         "sounds": [
             { "name": "kagic:entities/rose_quartz/death1" },
 			{ "name": "kagic:entities/rose_quartz/death2" }
+        ]
+    },
+	"entities.carnelian.hurt": {
+        "sounds": [
+            { "name": "kagic:entities/carnelian/hurt1" },
+            { "name": "kagic:entities/carnelian/hurt2" },
+            { "name": "kagic:entities/carnelian/hurt3" },
+            { "name": "kagic:entities/carnelian/hurt4" }
+        ]
+    },
+    "entities.carnelian.obey": {
+        "sounds": [
+            { "name": "kagic:entities/carnelian/obey1" },
+			{ "name": "kagic:entities/carnelian/obey2" },
+			{ "name": "kagic:entities/carnelian/obey3" }
+        ]
+    },
+	"entities.carnelian.death": {
+        "sounds": [
+            { "name": "kagic:entities/carnelian/death1" },
+            { "name": "kagic:entities/carnelian/death2" }
         ]
     },
     "entities.lapis_lazuli.hurt": {
@@ -743,7 +791,7 @@
             { "name": "kagic:entities/tongue_monster/death1" }
         ]
     },
-    "warp_pad": {
+    "blocks.warp_pad": {
         "category": "block",
         "subtitle": "kagic.subtitle.warp_pad",
         "sounds": [ 

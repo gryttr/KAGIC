@@ -3,7 +3,10 @@ package mod.akrivus.kagic.items;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import mod.akrivus.kagic.init.ModCreativeTabs;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -39,9 +42,10 @@ public class ItemLiberationContract extends Item {
 		return EnumActionResult.SUCCESS;
 	}
 	
+	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, EntityPlayer par2EntityPlayer, List<String> par2List, boolean info) {
-		par2List.add("\u00a7a" + (this.getOwner(stack) == null ? new TextComponentTranslation("command.kagic.right_click_to_sign").getUnformattedComponentText() : new TextComponentTranslation("command.kagic.signed").getUnformattedComponentText()));
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		tooltip.add("\u00a7a" + (this.getOwner(stack) == null ? new TextComponentTranslation("command.kagic.right_click_to_sign").getUnformattedComponentText() : new TextComponentTranslation("command.kagic.signed").getUnformattedComponentText()));
 	}
 	
 	public UUID getOwner(ItemStack stack) {

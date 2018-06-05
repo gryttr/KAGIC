@@ -1,4 +1,12 @@
 {
+	"parent": "block/block",
+    "display": {
+        "gui": {
+            "rotation": [ 30, 270, 0 ],
+            "translation": [ 0, -2, 0 ],
+            "scale": [ 0.625, 0.625, 0.625 ]
+        }
+    },
     "elements": [
         {
             "from": [ 6.0, 10.0, 11.0 ], 

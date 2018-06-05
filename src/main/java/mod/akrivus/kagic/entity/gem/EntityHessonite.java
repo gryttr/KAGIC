@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
@@ -15,9 +16,11 @@ import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
+import mod.akrivus.kagic.skills.SkillBase;
 import mod.heimrarnadalr.kagic.util.Colors;
 import mod.heimrarnadalr.kagic.util.GemPlayerLoot;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -29,6 +32,7 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -45,8 +49,10 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class EntityHessonite extends EntityGem {
+public class EntityHessonite extends EntityGem implements IAnimals {
 	public static final HashMap<IBlockState, Double> HESSONITE_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double HESSONITE_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double HESSONITE_DEPTH_THRESHOLD = 32;
 	
 	private static final int SKIN_COLOR_BEGIN = 0xF0A100;
 	private static final int SKIN_COLOR_END = 0xF0A100;
@@ -60,7 +66,7 @@ public class EntityHessonite extends EntityGem {
 
 	public EntityHessonite(World world) {
 		super(world);
-
+		this.nativeColor = 14;
 		this.setSize(0.9F, 2.3F);
 		this.isSoldier = true;
 		this.visorChanceReciprocal = 1;
@@ -75,6 +81,7 @@ public class EntityHessonite extends EntityGem {
 		// Apply entity AI
 		this.stayAI = new EntityAIStay(this);
 		this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
+        this.tasks.addTask(1, new EntityAICommandGems(this, 0.6D));
 		this.tasks.addTask(2, new EntityAISitStill(this, 1.0D));
 		this.tasks.addTask(3, new EntityAIScareMobs(this));
 		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
@@ -101,20 +108,12 @@ public class EntityHessonite extends EntityGem {
 	}
 
 	@Override
-	public float[] getGemColor() {
-		return new float[] { 255F / 255F, 255F / 255F, 255F / 255F };
-	}
-
-	@Override
-	public void onLivingUpdate()
-	{
-		/*if (this.world.isRemote)
-		{
-			for (int i = 0; i < 2; ++i)
-			{
-				this.world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - 0.25D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, (this.rand.nextDouble() - 0.5D) * 2.0D, -this.rand.nextDouble(), (this.rand.nextDouble() - 0.5D) * 2.0D);
+	public void onLivingUpdate() {
+		if (this.world.isRemote && this.isPrimary()) {
+			for (int i = 0; i < 2; ++i) {
+				this.world.spawnParticle(EnumParticleTypes.CRIT, this.posX + (this.rand.nextDouble() - 0.5D) * (double) this.width, this.posY + this.rand.nextDouble() * (double) this.height - 0.25D, this.posZ + (this.rand.nextDouble() - 0.5D) * (double) this.width, (this.rand.nextDouble() - 0.5D) * 2.0D, this.rand.nextDouble(), (this.rand.nextDouble() - 0.5D) * 2.0D);
 			}
-		}*/
+		}
 		super.onLivingUpdate();
 	}
 

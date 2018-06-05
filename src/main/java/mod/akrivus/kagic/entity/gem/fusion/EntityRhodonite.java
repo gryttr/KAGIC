@@ -49,16 +49,17 @@ public class EntityRhodonite extends EntityFusionGem {
 	 * Methods related to rendering.                         *
 	 *********************************************************/
 	@Override
-	public float[] getGemColor() {
-		return new float[] { 120F/ 255F, 93F / 255F, 145F / 255F };
-	}
+	protected int generateGemColor() {
+    	return 0x785D91;
+    }
 
 	@Override
 	protected int generateSkinColor() {
 		ArrayList<Integer> skinColors = new ArrayList<Integer>();
 		skinColors.add(EntityRhodonite.SKIN_COLOR_BEGIN);
 		skinColors.add(EntityRhodonite.SKIN_COLOR_END);
-		return Colors.arbiLerp(skinColors);	}
+		return Colors.arbiLerp(skinColors);
+	}
 	
 	@Override
 	protected int generateHairStyle() {

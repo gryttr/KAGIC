@@ -21,19 +21,22 @@ public class EntityAIFightWars extends EntityAITarget {
 	        double distance = Double.MAX_VALUE;
 	        for (EntityLivingBase possibleTarget : list) {
 	        	boolean canFight = false;
-	        	if (possibleTarget instanceof EntityGem) {
-	        		canFight = !this.gem.isOwnedBySamePeople(((EntityGem) possibleTarget)) && ((EntityGem) possibleTarget).isTamed();
+	        	if (this.gem != possibleTarget) {
+		        	if (possibleTarget instanceof EntityGem) {
+		        		canFight = !this.gem.isOwnedBySamePeople(((EntityGem) possibleTarget)) && ((EntityGem) possibleTarget).isTamed();
+		        	}
+		        	else if (possibleTarget instanceof EntityPlayer) {
+		        		canFight = !this.gem.isOwnedBy(possibleTarget);
+		        	}
+		        	canFight = canFight && this.gem != possibleTarget;
+		            if (canFight) {
+		                double newDistance = this.gem.getDistanceSq(possibleTarget);
+		                if (newDistance <= distance) {
+		                    distance = newDistance;
+		                    this.target = possibleTarget;
+		                }
+		            }
 	        	}
-	        	else if (possibleTarget instanceof EntityPlayer) {
-	        		canFight = !this.gem.isOwnedBy(possibleTarget);
-	        	}
-	            if (canFight) {
-	                double newDistance = this.gem.getDistanceSq(possibleTarget);
-	                if (newDistance <= distance) {
-	                    distance = newDistance;
-	                    this.target = possibleTarget;
-	                }
-	            }
 	        }
 	    	return this.target != null;
     	}

@@ -12,9 +12,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ModCreativeTabs extends CreativeTabs {
-	public static final CreativeTabs CREATIVE_TAB_GEMS = new ModCreativeTabs("gems", 0);
-	public static final CreativeTabs CREATIVE_TAB_OTHER = new ModCreativeTabs("other", 1);
-	public static final CreativeTabs CREATIVE_TAB_MUSIC = new ModCreativeTabs("music", 2);
+	public static final CreativeTabs CREATIVE_TAB_GOOD_GEMS = new ModCreativeTabs("good_gems", 0);
+	public static final CreativeTabs CREATIVE_TAB_BAD_GEMS = new ModCreativeTabs("bad_gems", 1);
+	public static final CreativeTabs CREATIVE_TAB_OTHER = new ModCreativeTabs("other", 2);
+	public static final CreativeTabs CREATIVE_TAB_MUSIC = new ModCreativeTabs("music", 3);
 	private final int id;
 	
 	public ModCreativeTabs(String label, int id) {
@@ -28,8 +29,10 @@ public class ModCreativeTabs extends CreativeTabs {
 		case 0:
 			return new ItemStack(ModItems.YELLOW_DIAMOND_GEM);
 		case 1:
-			return new ItemStack(ModItems.GEM_STAFF);
+			return new ItemStack(ModItems.CRACKED_YELLOW_DIAMOND_GEM);
 		case 2:
+			return new ItemStack(ModItems.GEM_STAFF);
+		case 3:
 			return new ItemStack(ModItems.RECORD_LAPIS_FLIGHT);
 		}
 		return new ItemStack(ModItems.CRACKED_YELLOW_DIAMOND_GEM);
@@ -41,7 +44,7 @@ public class ModCreativeTabs extends CreativeTabs {
 		super.displayAllRelevantItems(items);
 		if (this == ModCreativeTabs.CREATIVE_TAB_OTHER) {
 			items.add(FluidUtil.getFilledBucket(new FluidStack(ModBlocks.FLUID_ROSE_TEARS, 1000)));
-		} else if (this == ModCreativeTabs.CREATIVE_TAB_GEMS) {
+		} else if (this == ModCreativeTabs.CREATIVE_TAB_GOOD_GEMS) {
 			ItemStack candyCaneGem = null, crackedCandyCaneGem = null;
 			for (ItemStack stack : items) {
 				if (stack.getItem() == ModItems.CANDY_CANE_JASPER_GEM) {

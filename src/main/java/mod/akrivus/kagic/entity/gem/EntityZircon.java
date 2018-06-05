@@ -7,6 +7,7 @@ import java.util.Map;
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
@@ -19,6 +20,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.INpc;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -26,7 +28,6 @@ import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -37,12 +38,15 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-public class EntityZircon extends EntityGem {
+public class EntityZircon extends EntityGem implements INpc {
 	public static final HashMap<IBlockState, Double> ZIRCON_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double ZIRCON_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double ZIRCON_DEPTH_THRESHOLD = 16;
 	public static final ArrayList<ResourceLocation> ZIRCON_HAIR_STYLES = new ArrayList<ResourceLocation>();
 	public EntityZircon(World worldIn) {
 		super(worldIn);
@@ -66,6 +70,7 @@ public class EntityZircon extends EntityGem {
 			}
 		}, 6.0F, 1.0D, 1.2D));
 		this.tasks.addTask(1, new EntityAIFollowDiamond(this, 1.0D));
+        this.tasks.addTask(1, new EntityAICommandGems(this, 0.6D));
 		this.tasks.addTask(3, new EntityAIOpenDoor(this, true));
 		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
 		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
@@ -80,28 +85,64 @@ public class EntityZircon extends EntityGem {
 		this.droppedCrackedGemItem = ModItems.CRACKED_ZIRCON_GEM;
 	}
 
-	public float[] getGemColor() {
-		switch (this.getSpecial()) {
-		case 0:
-			return EntitySheep.getDyeRgb(EnumDyeColor.values()[this.getInsigniaColor()]);
-		case 1:	
-			return new float[] { 7F / 255F, 68F / 255F, 100F / 255F };
-		}
-		return new float[] { 7F / 255F, 68F / 255F, 100F / 255F };
+	protected int generateGemColor() {
+		switch (this.getInsigniaColor()) {
+    	case 0:
+    		return 0xFFFFFF;
+    	case 1:
+    		return 0xCB7226;
+    	case 2:
+    		return 0xAE48D4;
+    	case 3:
+    		return 0x215493;
+    	case 4:
+    		return 0xFEFE4C;
+    	case 5:
+    		return 0x469300;
+    	case 6:
+    		return 0xE8759B;
+    	case 7:
+    		return 0x939393;
+    	case 8:
+    		return 0x8F8F8F;
+    	case 9:
+    		return 0x6699B3;
+    	case 10:
+    		return 0x7B3BAE;
+    	case 11:
+    		return 0x3B54BA;
+    	case 12:
+    		return 0x4E341B;
+    	case 13:
+    		return 0x4C6519;
+    	case 14:
+    		return 0x963030;
+    	case 15:
+    		return 0x333333;
+    	}
+		return 0x074464;
 	}
 	
 	@Override
 	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		this.setInsigniaColor(this.rand.nextInt(16));
-		this.setUniformColor(this.getInsigniaColor());
+		int color = this.rand.nextInt(16);
+		this.itemDataToGemData(color);
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
 	
 	@Override
 	public void itemDataToGemData(int data) {
 		this.setInsigniaColor(data);
+		this.nativeColor = this.getInsigniaColor();
 		this.setUniformColor(data);
 		this.setSkinColor(this.generateSkinColor());
+		this.setGemColor(this.generateGemColor());
+		if (data == 14) {
+			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.zircon_14.name").getUnformattedComponentText());
+		}
+		else {
+			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.zircon.name").getUnformattedComponentText());
+		}
 	}
 	
 	/*********************************************************
@@ -143,8 +184,8 @@ public class EntityZircon extends EntityGem {
 			this.droppedCrackedGemItem = ModItems.CRACKED_GRAY_ZIRCON_GEM;
 			break;
 		case 8:
-			this.droppedGemItem = ModItems.SILVER_ZIRCON_GEM;
-			this.droppedCrackedGemItem = ModItems.CRACKED_SILVER_ZIRCON_GEM;
+			this.droppedGemItem = ModItems.LIGHT_GRAY_ZIRCON_GEM;
+			this.droppedCrackedGemItem = ModItems.CRACKED_LIGHT_GRAY_ZIRCON_GEM;
 			break;
 		case 9:
 			this.droppedGemItem = ModItems.CYAN_ZIRCON_GEM;

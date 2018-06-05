@@ -5,10 +5,7 @@ import java.util.List;
 
 import mod.akrivus.kagic.entity.EntityFusionGem;
 import mod.akrivus.kagic.entity.EntityGem;
-import mod.akrivus.kagic.entity.gem.EntityAmethyst;
 import mod.akrivus.kagic.entity.gem.EntityJasper;
-import mod.akrivus.kagic.entity.gem.EntityPadparadscha;
-import mod.akrivus.kagic.entity.gem.EntitySapphire;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.entity.IEntityLivingData;
@@ -127,8 +124,8 @@ public class EntityMalachite extends EntityFusionGem {
 	 * Methods related to entity rendering.                  *
 	 *********************************************************/
 	@Override
-	public float[] getGemColor() {
-		return new float[] { 54F / 255F, 193F / 255F, 110F / 255F };
+	protected int generateGemColor() {
+    	return 0x36C16E;
     }
 
 	@Override

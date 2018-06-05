@@ -8,16 +8,12 @@ import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.EntityPepo;
-import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
-import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
-import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIProtectionFuse;
-import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRainbowQuartz;
 import mod.akrivus.kagic.entity.pepo.EntityCactus;
 import mod.akrivus.kagic.entity.pepo.EntityMelon;
 import mod.akrivus.kagic.entity.pepo.EntityPumpkin;
-import mod.akrivus.kagic.init.KAGIC;
+import mod.akrivus.kagic.entity.pepo.EntityStrawberry;
 import mod.akrivus.kagic.init.ModBlocks;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
@@ -26,23 +22,19 @@ import mod.heimrarnadalr.kagic.util.Colors;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.INpc;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -56,31 +48,34 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
-public class EntityRoseQuartz extends EntityQuartzSoldier {
+public class EntityRoseQuartz extends EntityQuartzSoldier implements INpc {
 	public static final HashMap<IBlockState, Double> ROSE_QUARTZ_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double ROSE_QUARTZ_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double ROSE_QUARTZ_DEPTH_THRESHOLD = 72;
 	public static final HashMap<Integer, ResourceLocation> ROSE_QUARTZ_HAIR_STYLES = new HashMap<Integer, ResourceLocation>();
 	private BlockPos lastSurgeLocation;
 	private int regenTicks = 0;
 
-	private static HashMap<Item, Item> ROSE_RECIPES = new HashMap<Item, Item>();
+	public static HashMap<Item, Item> ROSE_RECIPES = new HashMap<Item, Item>();
 	static {
 		ROSE_RECIPES.put(Items.POISONOUS_POTATO, Items.POTATO);
 		ROSE_RECIPES.put(Items.ROTTEN_FLESH, Items.LEATHER);
 		ROSE_RECIPES.put(Items.WHEAT, Items.BREAD);
 	}
 	
-	public static final int SKIN_COLOR_BEGIN = 0xFEDED3;
+	public static final int SKIN_COLOR_BEGIN = 0xFDDAC9;
 	
-	public static final int SKIN_COLOR_END = 0xFEDED3;
+	public static final int SKIN_COLOR_END = 0xFDDCCB;
 	
 	private static final int NUM_HAIRSTYLES = 1;
 	
 	public static final int HAIR_COLOR_BEGIN = 0xFDAECB;
 	
-	public static final int HAIR_COLOR_END = 0xE99CBE;
+	public static final int HAIR_COLOR_END = 0xFF5EEC;
 	
 	public EntityRoseQuartz(World worldIn) {
 		super(worldIn);
+		this.nativeColor = 2;
 		
 		//Define valid gem cuts and placements
 		this.setCutPlacement(GemCuts.FACETED, GemPlacements.BACK_OF_HEAD);
@@ -121,8 +116,8 @@ public class EntityRoseQuartz extends EntityQuartzSoldier {
 		this.droppedCrackedGemItem = ModItems.CRACKED_ROSE_QUARTZ_GEM;
 	}
 
-	public float[] getGemColor() {
-		return new float[] { 255F / 255F, 162F / 255F, 230F / 255F };
+	protected int generateGemColor() {
+		return 0xFFA2E6;
 	}
 	public void convertGems(int placement) {
 		this.setGemCut(GemCuts.FACETED.id);
@@ -245,6 +240,14 @@ public class EntityRoseQuartz extends EntityQuartzSoldier {
 						this.world.spawnEntity(pepo);
 						pepo.setMaster(this);
 					}
+					else if (state.getBlock() == ModBlocks.GIANT_STRAWBERRY) {
+						this.world.destroyBlock(pos, false);
+						EntityStrawberry pepo = new EntityStrawberry(this.world);
+						pepo.setPosition(pos.getX(), pos.getY(), pos.getZ());
+						pepo.setHealth(pepo.getMaxHealth());
+						this.world.spawnEntity(pepo);
+						pepo.setMaster(this);
+					}
 				}
 			}
 			List<EntityPepo> list = this.world.<EntityPepo>getEntitiesWithinAABB(EntityPepo.class, this.getEntityBoundingBox().grow(16.0D, 4.0D, 16.0D));
@@ -306,9 +309,6 @@ public class EntityRoseQuartz extends EntityQuartzSoldier {
 	/*********************************************************
 	 * Methods related to sounds.							*
 	 *********************************************************/
-	protected SoundEvent getAmbientSound() {
-		return ModSounds.ROSE_QUARTZ_LIVING;
-	}
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return ModSounds.ROSE_QUARTZ_HURT;
 	}

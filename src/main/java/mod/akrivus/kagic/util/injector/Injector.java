@@ -107,6 +107,6 @@ public class Injector {
 	}
 	
 	public static boolean isInjectorBlock(Block block) {
-		return block == ModBlocks.GEM_DRILL || block == ModBlocks.INJECTOR || block == ModBlocks.EQUIPPED_INJECTOR || block == ModBlocks.INCUBATOR;
+		return block == ModBlocks.GEM_DRILL || block == ModBlocks.INJECTOR || block == ModBlocks.EQUIPPED_INJECTOR || block == ModBlocks.ANALOG_INJECTOR || block == ModBlocks.EQUIPPED_ANALOG_INJECTOR || block == ModBlocks.INCUBATOR;
 	}
 }

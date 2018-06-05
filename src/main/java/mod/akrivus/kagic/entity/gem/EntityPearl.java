@@ -7,19 +7,19 @@ import java.util.List;
 import com.google.common.base.Predicate;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.akrivus.kagic.entity.ai.EntityAICommandGems;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtByTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIDiamondHurtTarget;
 import mod.akrivus.kagic.entity.ai.EntityAIFollowDiamond;
 import mod.akrivus.kagic.entity.ai.EntityAIPickUpItems;
 import mod.akrivus.kagic.entity.ai.EntityAISitStill;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
-import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
+import net.minecraft.entity.INpc;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -30,7 +30,6 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -39,7 +38,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.IInventoryChangedListener;
 import net.minecraft.inventory.InventoryBasic;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -51,20 +49,23 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.oredict.DyeUtils;
 
-public class EntityPearl extends EntityGem implements IInventoryChangedListener {
+public class EntityPearl extends EntityGem implements IInventoryChangedListener, INpc {
 	public static final HashMap<IBlockState, Double> PEARL_YIELDS = new HashMap<IBlockState, Double>();
+	public static final double PEARL_DEFECTIVITY_MULTIPLIER = 1;
+	public static final double PEARL_DEPTH_THRESHOLD = 0;
 	public static final ArrayList<ResourceLocation> PEARL_HAIR_STYLES = new ArrayList<ResourceLocation>();
 	public static final ArrayList<ResourceLocation> PEARL_DRESS_STYLES = new ArrayList<ResourceLocation>();
 	private static final DataParameter<Integer> COLOR = EntityDataManager.<Integer>createKey(EntityPearl.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> HAIR_COLOR = EntityDataManager.<Integer>createKey(EntityPearl.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> VISOR_COLOR = EntityDataManager.<Integer>createKey(EntityPearl.class, DataSerializers.VARINT);
 	private static final DataParameter<Integer> DRESS_STYLE = EntityDataManager.<Integer>createKey(EntityPearl.class, DataSerializers.VARINT);
 	private static final DataParameter<Boolean> NAKED = EntityDataManager.<Boolean>createKey(EntityPearl.class, DataSerializers.BOOLEAN);
+	public String soulSong = "392935392935392939293929395";
 	public InventoryBasic gemStorage;
 	public InvWrapper gemStorageHandler;
 	
@@ -73,6 +74,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 		this.setSize(0.6F, 1.9F);
 		this.initGemStorage();
 		this.seePastDoors();
+		this.soulSong = Integer.toString(this.rand.nextInt(999998999) + 1000);
 		
 		//Define valid gem cuts and placements
 		this.setCutPlacement(GemCuts.CABOCHON, GemPlacements.BACK_OF_HEAD);
@@ -89,6 +91,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 			}
         }, 6.0F, 1.0D, 1.2D));
 		this.tasks.addTask(1, new EntityAIPickUpItems(this, 0.9D));
+        this.tasks.addTask(1, new EntityAICommandGems(this, 0.6D));
 		this.tasks.addTask(2, new EntityAIFollowDiamond(this, 1.0D));
         this.tasks.addTask(4, new EntityAIOpenDoor(this, true));
         this.tasks.addTask(5, new EntityAISitStill(this, 1.0D));
@@ -105,17 +108,123 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
         // Register entity data.
         this.dataManager.register(COLOR, this.rand.nextInt(16));
         this.dataManager.register(HAIR_COLOR, this.dataManager.get(COLOR));
+        this.dataManager.register(VISOR_COLOR, this.dataManager.get(COLOR));
         this.dataManager.register(DRESS_STYLE, 1);
         this.dataManager.register(NAKED, false);
 	}
 
-	public float[] getGemColor() {
-		float[] gemColor = EntitySheep.getDyeRgb(EnumDyeColor.values()[this.getColor()]).clone();
-		for (int i = 0; i < gemColor.length; ++i) {
-			gemColor[i] += 0.5f;
-		}
-		return gemColor;
+	@Override
+	public int generateGemColor() {
+		switch (this.getColor()) {
+    	case 0:
+    		return 0xFFFFFF;
+    	case 1:
+    		return 0xC6A68B;
+    	case 2:
+    		return 0xBF92D1;
+    	case 3:
+    		return 0x657991;
+    	case 4:
+    		return 0xFCFCB0;
+    	case 5:
+    		return 0x7A9165;
+    	case 6:
+    		return 0xE5A0B7;
+    	case 7:
+    		return 0xB2B2B2;
+    	case 8:
+    		return 0x545454;
+    	case 9:
+    		return 0x7CA0B2;
+    	case 10:
+    		return 0x9579AD;
+    	case 11:
+    		return 0x808BB7;
+    	case 12:
+    		return 0xB2763E;
+    	case 13:
+    		return 0x88B22C;
+    	case 14:
+    		return 0xB23939;
+    	case 15:
+    		return 0x4C4C4C;
+    	}
+		return 0xFFFFFF;
     }
+	public int generateSkinColor() {
+		switch (this.getColor()) {
+    	case 0:
+    		return 0xE9ECEC;
+    	case 1:
+    		return 0xED975A;
+    	case 2:
+    		return 0xBC7CB8;
+    	case 3:
+    		return 0x7BC1D8;
+    	case 4:
+    		return 0xF7D571;
+    	case 5:
+    		return 0x89B750;
+    	case 6:
+    		return 0xEAD3DA;
+    	case 7:
+    		return 0x7F8B91;
+    	case 8:
+    		return 0xD8D8CD;
+    	case 9:
+    		return 0x63D2D8;
+    	case 10:
+    		return 0x8C5DAA;
+    	case 11:
+    		return 0x63669B;
+    	case 12:
+    		return 0xBC7643;
+    	case 13:
+    		return 0x8EB72D;
+    	case 14:
+    		return 0xED9693;
+    	case 15:
+    		return 0x333333;
+    	}
+		return 0xFFFFFF;
+	}
+	public int generateHairColor() {
+		switch (this.getHairColor()) {
+    	case 0:
+    		return 0xFFFFFF;
+    	case 1:
+    		return 0xFF7200;
+    	case 2:
+    		return 0xAE00FF;
+    	case 3:
+    		return 0xB2D6FF;
+    	case 4:
+    		return 0xF9F900;
+    	case 5:
+    		return 0xD7FFB2;
+    	case 6:
+    		return 0xFFB2CB;
+    	case 7:
+    		return 0xD8D8D8;
+    	case 8:
+    		return 0xAFAFAF;
+    	case 9:
+    		return 0xB2E6FF;
+    	case 10:
+    		return 0xC07CFF;
+    	case 11:
+    		return 0xB2C1FF;
+    	case 12:
+    		return 0xCC8547;
+    	case 13:
+    		return 0xC5FF3F;
+    	case 14:
+    		return 0xFF5454;
+    	case 15:
+    		return 0x000000;
+    	}
+		return 0xFFFFFF;
+	}
 	public void convertGems(int placement) {
     	this.setGemCut(GemCuts.CABOCHON.id);
     	switch (placement) {
@@ -145,11 +254,12 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 	 * Methods related to loading.                           *
 	 *********************************************************/
 	public void writeEntityToNBT(NBTTagCompound compound) {
-        super.writeEntityToNBT(compound);
         compound.setInteger("color", this.getColor());
         compound.setInteger("hairColor", this.getHairColor());
+        compound.setInteger("visorColor", this.getVisorColor());
         compound.setInteger("dressStyle", this.getDressStyle());
         compound.setBoolean("naked", this.isNaked());
+        compound.setString("song", this.soulSong);
         NBTTagList nbttaglist = new NBTTagList();
         for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
             ItemStack itemstack = this.gemStorage.getStackInSlot(i);
@@ -159,9 +269,9 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
             nbttaglist.appendTag(nbttagcompound);
         }
         compound.setTag("items", nbttaglist);
+        super.writeEntityToNBT(compound);
 	}
     public void readEntityFromNBT(NBTTagCompound compound) {
-        super.readEntityFromNBT(compound);
         this.setColor(compound.getInteger("color"));
         if (compound.hasKey("hairColor")) {
         	this.setHairColor(compound.getInteger("hairColor"));
@@ -169,8 +279,15 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
         else {
         	this.setHairColor(this.getColor());
         }
+        if (compound.hasKey("visorColor")) {
+        	this.setVisorColor(compound.getInteger("visorColor"));
+        }
+        else {
+        	this.setVisorColor(this.getColor());
+        }
         this.setDressStyle(compound.getInteger("dressStyle"));
         this.setNaked(compound.getBoolean("naked"));
+        this.soulSong = compound.getString("song");
         NBTTagList nbttaglist = compound.getTagList("items", 10);
         this.initGemStorage();
         for (int i = 0; i < nbttaglist.tagCount(); ++i) {
@@ -180,17 +297,30 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
                 this.gemStorage.setInventorySlotContents(j, new ItemStack(nbttagcompound));
             }
         }
+        super.readEntityFromNBT(compound);
     }
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
     	livingdata = super.onInitialSpawn(difficulty, livingdata);
     	this.setGemCut(GemCuts.CABOCHON.id);
-    	this.setHairColor(this.getColor());
+    	this.itemDataToGemData(this.getColor());
+    	this.setDressStyle(this.rand.nextInt(EntityPearl.PEARL_DRESS_STYLES.size()));
+    	if (this.isDefective()) {
+    		this.setHairColor(15 - this.getColor());
+    	}
+    	else {
+    		this.setHairColor(this.getColor());
+    	}
+    	this.nativeColor = this.getColor();
         return livingdata;
     }
     public void itemDataToGemData(int data) {
 		this.setColor(data);
 		this.setHairColor(data);
+		this.setVisorColor(data);
 		this.setInsigniaColor(data);
+		this.setUniformColor(data);
+		this.setGemColor(this.generateGemColor());
+		this.nativeColor = this.getColor();
 	}
     protected int generateHairStyle() {
     	return this.rand.nextInt(EntityPearl.PEARL_HAIR_STYLES.size());
@@ -209,7 +339,7 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 		    			if (stack.getItem() == Items.SHEARS) {
 		    				if (player.isSneaking()) {
 		    					if (!this.isNaked()) {
-		    						this.playHurtSound(DamageSource.MAGIC);
+		    						this.playSound(this.getWeirdSound(), this.getSoundVolume(), this.getSoundPitch());
 		    						this.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, this.getSoundVolume(), this.getSoundPitch());
 		    						this.entityDropItem(new ItemStack(Item.getItemFromBlock(Blocks.WOOL), 1, this.getInsigniaColor()), 0.0F);
 		    						this.setNaked(true);
@@ -244,6 +374,28 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 				        		}
 		    				}
 			        		return true;
+		    			}
+		    			else if (stack.getItem() == Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE)) {
+		    				if (player.isSneaking()) {
+		    					if (this.hasVisor()) {
+			    					ItemStack newstack = new ItemStack(Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE));
+			    					Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE).setDamage(newstack, this.getVisorColor());
+			    					this.entityDropItem(newstack, 0.0F);
+			    					this.setHasVisor(false);
+		    					}
+		    				}
+		    				else {
+			    				if (this.hasVisor()) {
+			    					ItemStack newstack = new ItemStack(Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE));
+			    					Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE).setDamage(newstack, this.getVisorColor());
+			    					this.entityDropItem(newstack, 0.0F);
+			    				}
+			    				else {
+			    					this.setHasVisor(true);
+			    				}
+			    				this.setVisorColor(Item.getItemFromBlock(Blocks.STAINED_GLASS_PANE).getMetadata(stack));
+			    				stack.shrink(1);
+		    				}
 		    			}
 		    			else if (stack.getItem() == Item.getItemFromBlock(Blocks.WOOL)) {
 		    				if (this.isNaked()) {
@@ -287,78 +439,6 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 		}
 		return super.processInteract(player, hand);
     }
-	public boolean onSpokenTo(EntityPlayer player, String message) {
-    	boolean spokenTo = super.onSpokenTo(player, message);
-    	boolean found = false;
-    	message = message.toLowerCase();
-    	if (this.isBeingCalledBy(player, message)) {
-			this.getLookHelper().setLookPositionWithEntity(player, 30.0F, 30.0F);
-			if (this.isOwner(player)) {
-				if (this.isMatching("regex.kagic.give", message)) {
-					ArrayList<String> args = this.getArgsFrom("regex.kagic.give", message);
-					if (args.size() > 0) {
-						for (int i = 0; i < this.gemStorage.getSizeInventory(); ++i) {
-							if (this.gemStorage.getStackInSlot(i).getDisplayName().toLowerCase().equals(args.get(0)) && player.inventory.getFirstEmptyStack() > -1) {
-								player.inventory.addItemStackToInventory(this.gemStorage.getStackInSlot(i));
-								found = true;
-							}
-						}
-					}
-					if (found) {
-						this.playObeySound();
-					}
-					return found;
-				} else if (this.isMatching("regex.kagic.take", message)) {
-					this.gemStorage.addItem(player.getHeldItemMainhand());
-					this.playObeySound();
-					return true;
-				} /*else if (this.isMatching("regex.kagic.train", message)) {
-					this.spawnHoloPearl();
-					this.talkTo(player, new TextComponentTranslation("notify.kagic.train").getUnformattedComponentText());
-					this.playObeySound();
-					return true;
-				} */else if (this.isDefective()) {
-					if (this.isMatching("regex.kagic.kill", message)) {
-						ArrayList<String> args = this.getArgsFrom("regex.kagic.kill", message);
-						if (args.size() > 0) {
-							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
-							double distance = Double.MAX_VALUE;
-							for (EntityLivingBase base : list) {
-								double newDistance = this.getDistanceSq(base);
-				                if (newDistance <= distance && base.getName().toLowerCase().contains(args.get(0)) && this.shouldAttackEntity(this, base)) {
-				                	this.setRevengeTarget(base);
-				                    distance = newDistance;
-				                }
-					        }
-						}
-						return this.getRevengeTarget() != null;
-					}
-		    		else if (this.isMatching("regex.kagic.help", message)) {
-		    			ArrayList<String> args = this.getArgsFrom("regex.kagic.help", message);
-						if (args.size() > 0) {
-							List<EntityLivingBase> list = this.world.<EntityLivingBase>getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(48.0D, 16.0D, 48.0D));
-							double distance = Double.MAX_VALUE;
-							for (EntityLivingBase base : list) {
-								double newDistance = this.getDistanceSq(base);
-				                if (newDistance <= distance && base.getName().toLowerCase().contains(args.get(0)) && this.shouldAttackEntity(this, base)) {
-				                	this.getNavigator().tryMoveToEntityLiving(base, 1.0);
-				                	this.setRevengeTarget(base.getAttackingEntity());
-				                    distance = newDistance;
-				                }
-					        }
-						}
-						return this.getAttackTarget() != null;
-					}
-					else if (this.isMatching("regex.kagic.retreat", message)) {
-						boolean retreated = this.getAttackTarget() != null;
-						this.setAttackTarget(null);
-						return retreated;
-					}
-				}
-			}
-    	}
-    	return spokenTo;
-    }
 	public void onInventoryChanged(IInventory inventory) {
 		ItemStack firstItem = this.gemStorage.getStackInSlot(0);
 		this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, firstItem);
@@ -398,9 +478,16 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 	
 	public void setColor(int color) {
 		this.dataManager.set(COLOR, color);
+		this.setGemColor(this.generateGemColor());
 	}
 	public int getColor() {
 		return this.dataManager.get(COLOR);
+	}
+	public void setVisorColor(int color) {
+		this.dataManager.set(VISOR_COLOR, color);
+	}
+	public int getVisorColor() {
+		return this.dataManager.get(VISOR_COLOR);
 	}
 	
 	@Override
@@ -461,14 +548,16 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 		if (!this.canPickUpLoot()) {
 			this.setCanPickUpLoot(this.isTamed());
 		}
-		/*
-		if (!this.world.isRemote) {
-			if (this.getRevengeTarget() != null) {
-				KAGIC.instance.chatInfoMessage("Revenge target is " + this.getRevengeTarget());
-			} else {
-				KAGIC.instance.chatInfoMessage("Revenge target is null");
-			}
-		}*/
+		if (!this.world.isRemote && this.ticksExisted % 20 == 0) {
+			List<EntityPlayer> list = this.world.<EntityPlayer>getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().grow(Math.cos(this.rotationYaw), 2.0D, Math.sin(this.rotationYaw)));
+			for (EntityPlayer entity : list) {
+				if (this.isOwnedBy(entity)) {
+					if (entity.isSneaking()) {
+						this.playSound(this.getWeirdSound(), this.getSoundVolume(), this.getSoundPitch());
+					}
+				}
+	        }
+		}
 		super.onLivingUpdate();
 	}
 	
@@ -488,77 +577,71 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
      *********************************************************/
     public void onDeath(DamageSource cause) {
     	this.setCanPickUpLoot(false);
-    	if (this.getSpecialSkin() == null || this.getSpecialSkin() != null && !this.getSpecialSkin().equals("crystal_gems")) {
-	    	switch (this.getColor()) {
-	    	case 0:
-	    		this.droppedGemItem = ModItems.WHITE_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_WHITE_PEARL_GEM;
-	    		break;
-	    	case 1:
-	    		this.droppedGemItem = ModItems.ORANGE_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_ORANGE_PEARL_GEM;
-	    		break;
-	    	case 2:
-	    		this.droppedGemItem = ModItems.MAGENTA_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_MAGENTA_PEARL_GEM;
-	    		break;
-	    	case 3:
-	    		this.droppedGemItem = ModItems.LIGHT_BLUE_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_LIGHT_BLUE_PEARL_GEM;
-	    		break;
-	    	case 4:
-	    		this.droppedGemItem = ModItems.YELLOW_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_YELLOW_PEARL_GEM;
-	    		break;
-	    	case 5:
-	    		this.droppedGemItem = ModItems.LIME_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_LIME_PEARL_GEM;
-	    		break;
-	    	case 6:
-	    		this.droppedGemItem = ModItems.PINK_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_PINK_PEARL_GEM;
-	    		break;
-	    	case 7:
-	    		this.droppedGemItem = ModItems.GRAY_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_GRAY_PEARL_GEM;
-	    		break;
-	    	case 8:
-	    		this.droppedGemItem = ModItems.LIGHT_GRAY_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_LIGHT_GRAY_PEARL_GEM;
-	    		break;
-	    	case 9:
-	    		this.droppedGemItem = ModItems.CYAN_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_CYAN_PEARL_GEM;
-	    		break;
-	    	case 10:
-	    		this.droppedGemItem = ModItems.PURPLE_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_PURPLE_PEARL_GEM;
-	    		break;
-	    	case 11:
-	    		this.droppedGemItem = ModItems.BLUE_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_BLUE_PEARL_GEM;
-	    		break;
-	    	case 12:
-	    		this.droppedGemItem = ModItems.BROWN_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_BROWN_PEARL_GEM;
-	    		break;
-	    	case 13:
-	    		this.droppedGemItem = ModItems.GREEN_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_GREEN_PEARL_GEM;
-	    		break;
-	    	case 14:
-	    		this.droppedGemItem = ModItems.RED_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_RED_PEARL_GEM;
-	    		break;
-	    	case 15:
-	    		this.droppedGemItem = ModItems.BLACK_PEARL_GEM;
-	    		this.droppedCrackedGemItem = ModItems.CRACKED_BLACK_PEARL_GEM;
-	    		break;
-	    	}
-    	}
-    	else {
-    		this.droppedGemItem = ModItems.PEARL_GEM;
-    		this.droppedCrackedGemItem = ModItems.CRACKED_PEARL_GEM;
+    	switch (this.getColor()) {
+    	case 0:
+    		this.droppedGemItem = ModItems.WHITE_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_WHITE_PEARL_GEM;
+    		break;
+    	case 1:
+    		this.droppedGemItem = ModItems.ORANGE_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_ORANGE_PEARL_GEM;
+    		break;
+    	case 2:
+    		this.droppedGemItem = ModItems.MAGENTA_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_MAGENTA_PEARL_GEM;
+    		break;
+    	case 3:
+    		this.droppedGemItem = ModItems.LIGHT_BLUE_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_LIGHT_BLUE_PEARL_GEM;
+    		break;
+    	case 4:
+    		this.droppedGemItem = ModItems.YELLOW_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_YELLOW_PEARL_GEM;
+    		break;
+    	case 5:
+    		this.droppedGemItem = ModItems.LIME_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_LIME_PEARL_GEM;
+    		break;
+    	case 6:
+    		this.droppedGemItem = ModItems.PINK_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_PINK_PEARL_GEM;
+    		break;
+    	case 7:
+    		this.droppedGemItem = ModItems.GRAY_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_GRAY_PEARL_GEM;
+    		break;
+    	case 8:
+    		this.droppedGemItem = ModItems.LIGHT_GRAY_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_LIGHT_GRAY_PEARL_GEM;
+    		break;
+    	case 9:
+    		this.droppedGemItem = ModItems.CYAN_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_CYAN_PEARL_GEM;
+    		break;
+    	case 10:
+    		this.droppedGemItem = ModItems.PURPLE_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_PURPLE_PEARL_GEM;
+    		break;
+    	case 11:
+    		this.droppedGemItem = ModItems.BLUE_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_BLUE_PEARL_GEM;
+    		break;
+    	case 12:
+    		this.droppedGemItem = ModItems.BROWN_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_BROWN_PEARL_GEM;
+    		break;
+    	case 13:
+    		this.droppedGemItem = ModItems.GREEN_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_GREEN_PEARL_GEM;
+    		break;
+    	case 14:
+    		this.droppedGemItem = ModItems.RED_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_RED_PEARL_GEM;
+    		break;
+    	case 15:
+    		this.droppedGemItem = ModItems.BLACK_PEARL_GEM;
+    		this.droppedCrackedGemItem = ModItems.CRACKED_BLACK_PEARL_GEM;
+    		break;
     	}
     	super.onDeath(cause);
     }
@@ -593,10 +676,43 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 		}
 		if (this.isDefective()) {
 			slots -= 9;
-		}else if (this.isPrimary()) {
+		}
+		else if (this.isPrimary()) {
 			slots += 9;
 		}
 		return slots;
+	}
+	public int playNote(int tone) {
+		return this.playNote(tone, ModSounds.PEARL_SING);
+	}
+	public int playNote(int tone, SoundEvent sound) {
+		// 2 = half note
+		// 7 = half rest
+		// 0 = whole note
+		// 5 = whole rest
+		switch (tone) {
+		case 0:
+			this.playSound(sound, 20.0F, this.pitch * 1.0F);
+		case 5:
+			return 5;
+		case 1:
+			this.playSound(sound, 20.0F, this.pitch * 1.5F);
+		case 6:
+			return 4;
+		case 2:
+			this.playSound(sound, 20.0F, this.pitch * 2.0F);
+		case 7:
+			return 3;
+		case 3:
+			this.playSound(sound, 20.0F, this.pitch * 2.5F);
+		case 8:
+			return 2;
+		case 4:
+			this.playSound(sound, 2.0F, this.pitch * 3.0F);
+		case 9:
+			return 1;
+		}
+		return 6;
 	}
 	
 	/*********************************************************
@@ -610,5 +726,8 @@ public class EntityPearl extends EntityGem implements IInventoryChangedListener 
 	}
 	protected SoundEvent getDeathSound() {
 		return ModSounds.PEARL_DEATH;
+	}
+	protected SoundEvent getWeirdSound() {
+		return ModSounds.PEARL_WEIRD;
 	}
 }

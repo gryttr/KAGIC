@@ -31,7 +31,7 @@ public class LayerInsignia implements LayerRenderer<EntityGem> {
 	public void doRenderLayer(EntityGem gem, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		this.gemRenderer.bindTexture(this.getTexture(gem));
 		float[] insigniaColor = EntitySheep.getDyeRgb(EnumDyeColor.values()[gem.getInsigniaColor()]);
-		GlStateManager.color(insigniaColor[0] * 2, insigniaColor[1] * 2, insigniaColor[2] * 2/*, 0.99f*/);
+		GlStateManager.color(insigniaColor[0], insigniaColor[1], insigniaColor[2]/*, 0.99f*/);
 		//GlStateManager.enableBlend();
 		//GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		this.gemModel.setModelAttributes(this.gemRenderer.getMainModel());

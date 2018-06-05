@@ -16,18 +16,12 @@ import mod.akrivus.kagic.blocks.BlockRockMelt;
 import mod.akrivus.kagic.blocks.BlockRoseTears;
 import mod.akrivus.kagic.blocks.BlockVarying;
 import mod.akrivus.kagic.blocks.BlockWarpPadCore;
-import mod.akrivus.kagic.client.model.FluidModelMapper;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSandStone;
 import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStaticLiquid;
-import net.minecraft.block.BlockStem;
 import net.minecraft.block.material.EnumPushReaction;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
@@ -36,8 +30,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fluids.BlockFluidClassic;
-import net.minecraftforge.fluids.BlockFluidFinite;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -60,8 +52,10 @@ public class ModBlocks {
 	public static final BlockGemSeed GEM_SEED = new BlockGemSeed();
 	public static final ItemBlock GEM_SEED_BLOCK = new ItemBlock(GEM_SEED);
 	public static final BlockGemDrill GEM_DRILL = new BlockGemDrill();
-	public static final BlockInjector INJECTOR = new BlockInjector(false);
-	public static final BlockInjector EQUIPPED_INJECTOR = new BlockInjector(true);
+	public static final BlockInjector INJECTOR = new BlockInjector(false, false);
+	public static final BlockInjector EQUIPPED_INJECTOR = new BlockInjector(true, false);
+	public static final BlockInjector ANALOG_INJECTOR = new BlockInjector(false, true);
+	public static final BlockInjector EQUIPPED_ANALOG_INJECTOR = new BlockInjector(true, true);
 	public static final BlockIncubator INCUBATOR = new BlockIncubator();
 	public static final BlockVarying DRAINED_BLOCK = new BlockVarying("drained_block", 1, 40, 1);
 	public static final BlockVarying DRAINED_BLOCK_2 = new BlockVarying("drained_block_2", 1, 40, 1);
@@ -89,6 +83,8 @@ public class ModBlocks {
 		registerBlock(GEM_DRILL, new ResourceLocation("kagic:gem_drill"), event);
 		registerBlock(INJECTOR, new ResourceLocation("kagic:injector"), event);
 		registerBlock(EQUIPPED_INJECTOR, new ResourceLocation("kagic:equipped_injector"), event);
+		registerBlock(ANALOG_INJECTOR, new ResourceLocation("kagic:analog_injector"), event);
+		registerBlock(EQUIPPED_ANALOG_INJECTOR, new ResourceLocation("kagic:equipped_analog_injector"), event);
 		registerBlock(INCUBATOR, new ResourceLocation("kagic:incubator"), event);
 		registerBlock(DRAINED_BLOCK, new ResourceLocation("kagic:drained_block"), event);
 		registerBlock(DRAINED_BLOCK_2, new ResourceLocation("kagic:drained_block_2"), event);
@@ -107,7 +103,7 @@ public class ModBlocks {
 		registerBlock(PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_double_slab"), event);
 		registerBlock(GIANT_STRAWBERRY, new ResourceLocation("kagic:giant_strawberry_block"), event);
 		registerBlock(GIANT_STRAWBERRY_STEM, new ResourceLocation("kagic:giant_strawberry_stem"), event);
-
+		
 		registerFluid(FLUID_ROSE_TEARS);
 		ROSE_TEARS = new BlockRoseTears(FLUID_ROSE_TEARS, Material.WATER);
 		registerBlock(ROSE_TEARS, new ResourceLocation("kagic:rose_tears"), event);
@@ -130,6 +126,8 @@ public class ModBlocks {
 		registerBlockItem(GEM_DRILL, new ResourceLocation("kagic:gem_drill"), event);
 		registerBlockItem(INJECTOR, new ResourceLocation("kagic:injector"), event);
 		registerBlockItem(EQUIPPED_INJECTOR, new ResourceLocation("kagic:equipped_injector"), event);
+		registerBlockItem(ANALOG_INJECTOR, new ResourceLocation("kagic:analog_injector"), event);
+		registerBlockItem(EQUIPPED_ANALOG_INJECTOR, new ResourceLocation("kagic:equipped_analog_injector"), event);
 		registerBlockItem(INCUBATOR, new ResourceLocation("kagic:incubator"), event);
 		registerBlockItem(DRAINED_BLOCK, new ResourceLocation("kagic:drained_block"), event, "stoneDrained");
 		registerBlockItem(DRAINED_BLOCK_2, new ResourceLocation("kagic:drained_block_2"), event, "stoneDrained");

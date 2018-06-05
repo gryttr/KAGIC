@@ -6,6 +6,7 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -59,17 +60,36 @@ public class ModelRuby extends ModelGem {
 	    super.setRotationAngles(limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor, entityIn);
 	}
 	public void setLivingAnimations(EntityLivingBase entitylivingbaseIn, float p_78086_2_, float p_78086_3_, float partialTickTime) {
-        this.rightArmPose = ModelBiped.ArmPose.EMPTY;
-        this.leftArmPose = ModelBiped.ArmPose.EMPTY;
-        ItemStack itemstack = entitylivingbaseIn.getHeldItem(EnumHand.MAIN_HAND);
-        if (itemstack != null && itemstack.getItem() == Items.BOW && ((EntityGem) entitylivingbaseIn).isSwingingArms()) {
-            if (entitylivingbaseIn.getPrimaryHand() == EnumHandSide.RIGHT) {
-                this.rightArmPose = ModelBiped.ArmPose.BOW_AND_ARROW;
-            }
-            else {
-                this.leftArmPose = ModelBiped.ArmPose.BOW_AND_ARROW;
-            }
-        }
-        super.setLivingAnimations(entitylivingbaseIn, p_78086_2_, p_78086_3_, partialTickTime);
-    }
+		this.rightArmPose = ModelBiped.ArmPose.EMPTY;
+		this.leftArmPose = ModelBiped.ArmPose.EMPTY;
+		if (entitylivingbaseIn instanceof EntityGem) {
+			ItemStack itemstack = entitylivingbaseIn.getHeldItem(EnumHand.MAIN_HAND);
+			EntityGem gem = (EntityGem) entitylivingbaseIn;
+			if (itemstack != null && itemstack.getItem() == Items.BOW && gem.isSwingingArms()) {
+				if (entitylivingbaseIn.getPrimaryHand() == EnumHandSide.RIGHT) {
+					this.rightArmPose = ModelBiped.ArmPose.BOW_AND_ARROW;
+				}
+				else {
+					this.leftArmPose = ModelBiped.ArmPose.BOW_AND_ARROW;
+				}
+			}
+			if (gem.getRidingEntity() instanceof AbstractHorse) {
+				this.bipedRightLeg.offsetX = 0.1F;
+				this.bipedRightLeg.offsetY = 0.33F;
+				this.bipedRightLeg.offsetZ = 0.3F;
+				this.bipedLeftLeg.offsetX = -0.1F;
+				this.bipedLeftLeg.offsetY = 0.33F;
+				this.bipedLeftLeg.offsetZ = 0.3F;
+			}
+			else {
+				this.bipedRightLeg.offsetX = 0.0F;
+				this.bipedRightLeg.offsetY = 0.0F;
+				this.bipedRightLeg.offsetZ = 0.0F;
+				this.bipedLeftLeg.offsetX = 0.0F;
+				this.bipedLeftLeg.offsetY = 0.0F;
+				this.bipedLeftLeg.offsetZ = 0.0F;
+			}
+		}
+		super.setLivingAnimations(entitylivingbaseIn, p_78086_2_, p_78086_3_, partialTickTime);
+	}
 }
