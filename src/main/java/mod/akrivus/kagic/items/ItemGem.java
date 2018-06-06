@@ -11,6 +11,7 @@ import mod.akrivus.kagic.entity.EntityGem;
 import mod.akrivus.kagic.entity.gem.EntityRuby;
 import mod.akrivus.kagic.entity.shardfusion.EntityShardFusion;
 import mod.akrivus.kagic.init.ModBlocks;
+import mod.akrivus.kagic.init.ModConfigs;
 import mod.akrivus.kagic.init.ModCreativeTabs;
 import mod.akrivus.kagic.init.ModEntities;
 import mod.akrivus.kagic.init.ModItems;
@@ -74,7 +75,7 @@ public class ItemGem extends Item {
 					tooltip.add(name);
 				}
 			}
-			if (tag.hasKey("specificName")) {
+			if (tag.hasKey("specificName") && ModConfigs.displayNames) {
 				String name = tag.getString("specificName");
 				if (!name.isEmpty()) {
 					tooltip.add(name);
@@ -134,6 +135,7 @@ public class ItemGem extends Item {
 		    	}
 		    	catch (Exception e) {
 		    		Matcher matcher = Pattern.compile("_(\\d+)_").matcher(this.getUnlocalizedName());
+					newGem.setPosition(blockpos.getX() + 0.5, blockpos.getY() + 1.0, blockpos.getZ() + 0.5);
 	            	newGem.onInitialSpawn(worldIn.getDifficultyForLocation(blockpos), null);
 	            	if (matcher.find()) {
 	            		newGem.itemDataToGemData(Integer.parseInt(matcher.group(1)));

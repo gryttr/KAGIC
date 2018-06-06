@@ -488,6 +488,9 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 				}
 		}
 		this.pitch = 0.7F + (this.rand.nextFloat() / 2);
+		if (ModConfigs.displayNames) {
+			this.setSpecificName(this.generateSpecificName(this.getPosition()));
+		}
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
 
@@ -547,9 +550,6 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 			}
 		}
 		else {
-			if (this.getSpecificName() == "") {
-				this.setSpecificName(this.generateSpecificName(this.getPosition()));
-			}
 			if (this.world.getDifficulty() == EnumDifficulty.PEACEFUL && this.getAttackTarget() instanceof EntityPlayer) {
 				this.setAttackTarget(null);
 			}

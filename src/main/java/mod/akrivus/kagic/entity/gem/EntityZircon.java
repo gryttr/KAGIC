@@ -139,8 +139,7 @@ public class EntityZircon extends EntityGem implements INpc {
 		this.setGemColor(this.generateGemColor());
 		if (data == 14) {
 			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.zircon_14.name").getUnformattedComponentText());
-		}
-		else {
+		} else {
 			this.setCustomNameTag(new TextComponentTranslation("entity.kagic.zircon.name").getUnformattedComponentText());
 		}
 	}
