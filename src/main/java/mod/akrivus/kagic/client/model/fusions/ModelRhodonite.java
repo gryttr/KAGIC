@@ -67,10 +67,10 @@ public class ModelRhodonite extends ModelGem {
 		this.bipedBody.addBox(-4.0F, -3.0F, -3.0F, 8, 6, 6, 0.0F);
 		this.waist = new ModelRenderer(this, 28, 0);
 		this.waist.setRotationPoint(0.0F, 2.0F, 0.0F);
-		this.waist.addBox(-2.5F, 0.0F, -2.0F, 6, 4, 4, 0.0F);
+		this.waist.addBox(-3F, 0.0F, -2.0F, 6, 4, 4, 0.0F);
 
 		this.bipedLeftLeg = new ModelRenderer(this, 44, 28);
-		this.bipedLeftLeg.setRotationPoint(0.0F, 3.4F, 0.0F);
+		this.bipedLeftLeg.setRotationPoint(0.0F, 3.5F, 0.0F);
 		this.bipedLeftLeg.addBox(0.0F, 0.0F, -2.5F, 4, 9, 4, 0.0F);
 		this.bipedRightLeg = new ModelRenderer(this, 40, 15);
 		this.bipedRightLeg.setRotationPoint(0.0F, 3.5F, 0.0F);
