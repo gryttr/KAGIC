@@ -450,6 +450,7 @@ itemGroup.music=KAGIC (Music Discs)
 enchantment.breaking_point.name=Breaking Point
 enchantment.fair_fight.name=Destabilize
 
+tile.analog_injector.name=Analog Injector
 tile.gem_drill.name=Gem Drill
 tile.gem_seed.name=Gem Seed
 tile.injector.name=Injector
