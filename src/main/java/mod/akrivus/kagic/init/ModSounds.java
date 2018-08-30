@@ -36,6 +36,7 @@ public class ModSounds {
 	public static final SoundEvent RUBY_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.ruby.obey"));
 	public static final SoundEvent RUBY_DEATH = new SoundEvent(new ResourceLocation("kagic:entities.ruby.death"));
 	public static final SoundEvent RUBY_EXPLODE = new SoundEvent(new ResourceLocation("kagic:entities.ruby.explode"));
+	public static final SoundEvent RUBY_COMBINE = new SoundEvent(new ResourceLocation("kagic:entities.ruby.combine"));
 	public static final SoundEvent SAPPHIRE_LIVING = new SoundEvent(new ResourceLocation("kagic:entities.sapphire.living"));
 	public static final SoundEvent SAPPHIRE_HURT = new SoundEvent(new ResourceLocation("kagic:entities.sapphire.hurt"));
 	public static final SoundEvent SAPPHIRE_OBEY = new SoundEvent(new ResourceLocation("kagic:entities.sapphire.obey"));
@@ -162,6 +163,7 @@ public class ModSounds {
 		registerSound(RUBY_OBEY, new ResourceLocation("kagic:entities.ruby.obey"), event);
 		registerSound(RUBY_DEATH, new ResourceLocation("kagic:entities.ruby.death"), event);
 		registerSound(RUBY_EXPLODE, new ResourceLocation("kagic:entities.ruby.explode"), event);
+		registerSound(RUBY_COMBINE, new ResourceLocation("kagic.entities.ruby.combine"), event);
 		registerSound(SAPPHIRE_LIVING, new ResourceLocation("kagic:entities.sapphire.living"), event);
 		registerSound(SAPPHIRE_HURT, new ResourceLocation("kagic:entities.sapphire.hurt"), event);
 		registerSound(SAPPHIRE_OBEY, new ResourceLocation("kagic:entities.sapphire.obey"), event);

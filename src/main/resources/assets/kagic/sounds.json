@@ -146,7 +146,6 @@
         "sounds": [
             { "name": "kagic:entities/ruby/hurt1" },
 			{ "name": "kagic:entities/ruby/hurt2" },
-			{ "name": "kagic:entities/ruby/hurt3" },
 			{ "name": "kagic:entities/ruby/hurt4" },
 			{ "name": "kagic:entities/ruby/hurt5" },
 			{ "name": "kagic:entities/ruby/hurt6" },
@@ -179,6 +178,11 @@
     	"sounds": [
     		{ "name": "kagic:entities/ruby/explode1" }
     	]
+    },
+    "entities.ruby.combine": {
+        "sounds": [
+            { "name": "kagic:entities/ruby/hurt3" }
+        ]
     },
     "entities.sapphire.living": {
         "sounds": [

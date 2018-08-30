@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
 
-public class LayerGemPlacement implements LayerRenderer<EntityGem> {
+public class LayerGemPlacement extends GemLayer implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
 	private final String name;
@@ -56,20 +56,6 @@ public class LayerGemPlacement implements LayerRenderer<EntityGem> {
 	public ResourceLocation getTexture(EntityGem gem) {
 		ResourceLocation loc = EntityList.getKey(gem);
 		return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/gems/" + gem.getGemPlacement().id + "_" + gem.getGemCut().id + ".png");
-	}
-	
-	public String getName(EntityGem gem) {
-		if (this.name == null) {
-			ResourceLocation loc = EntityList.getKey(gem);
-			if (loc.getResourceDomain().equals("kagic")) {
-		        return loc.getResourcePath().replaceFirst("kagic.", "");
-			}
-			else {
-		        return loc.getResourcePath();
-			}
-		} else {
-			return this.name;
-		}
 	}
 	
 	@Override

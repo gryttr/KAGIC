@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
 
-public class LayerSkin implements LayerRenderer<EntityGem> {
+public class LayerSkin extends GemLayer implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
 	private float offset;
@@ -50,20 +50,6 @@ public class LayerSkin implements LayerRenderer<EntityGem> {
 	public ResourceLocation getTexture(EntityGem gem) {
 		ResourceLocation loc = EntityList.getKey(gem);
 		return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/skin.png");
-	}
-	
-	public String getName(EntityGem gem) {
-		if (this.name != null) {
-			return this.name;
-		} else {
-			ResourceLocation loc = EntityList.getKey(gem);
-			if (loc.getResourceDomain().equals("kagic")) {
-		        return loc.getResourcePath().replaceFirst("kagic.", "");
-			}
-			else {
-		        return loc.getResourcePath();
-			}
-		}
 	}
 	
 	@Override

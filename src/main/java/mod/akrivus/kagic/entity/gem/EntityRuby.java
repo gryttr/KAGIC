@@ -20,6 +20,8 @@ import mod.akrivus.kagic.entity.ai.EntityAIStandGuard;
 import mod.akrivus.kagic.entity.ai.EntityAIStay;
 import mod.akrivus.kagic.entity.gem.fusion.EntityGarnet;
 import mod.akrivus.kagic.entity.gem.fusion.EntityRhodonite;
+import mod.akrivus.kagic.entity.gem.fusion.EntityRubyFusion;
+import mod.akrivus.kagic.init.KAGIC;
 import mod.akrivus.kagic.init.ModItems;
 import mod.akrivus.kagic.init.ModSounds;
 import mod.heimrarnadalr.kagic.util.Colors;
@@ -77,6 +79,7 @@ public class EntityRuby extends EntityGem implements IAnimals {
 	private static final DataParameter<Integer> ANGER = EntityDataManager.<Integer>createKey(EntityRuby.class, DataSerializers.VARINT);
 	private int angerTicks = 0;
 	public boolean fusing = false;
+	private EntityRuby fusionTarget = null;
 	
 	private static final int SKIN_COLOR_BEGIN = 0xE0316F; 
 	private static final int SKIN_COLOR_MID = 0xE52C5C; 
@@ -148,7 +151,7 @@ public class EntityRuby extends EntityGem implements IAnimals {
         this.tasks.addTask(4, new EntityAIFollowDiamond(this, 1.0D));
         this.tasks.addTask(4, new EntityAICommandGems(this, 0.6D));
         this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.0D));
-        this.tasks.addTask(6, new EntityAIRubyFuse(this, 1.0D));
+        this.tasks.addTask(6, new EntityAIRubyFuse(this, 1.0D, 16D));
 		this.tasks.addTask(7, new EntityAIStandGuard(this, 0.6D));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 16.0F));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityMob.class, 16.0F));
@@ -281,18 +284,18 @@ public class EntityRuby extends EntityGem implements IAnimals {
 		if (this.ticksExisted % 10 + this.rand.nextInt(50) == 0) {
 			this.setSpecial(this.rand.nextInt(6));
 		}
+		
 		if (this.isFusion()) {
-			if (this.canFuse()) {
-				this.whenFused();
-			}
-			else {
-				this.unfuse();
-			}
+			this.unfuse();
 		}
+		if (this.fusionTarget != null && this.fusionTarget.isDead) {
+			this.fusionTarget = null;
+		}
+		
 		super.onLivingUpdate();
 	}
 	public boolean alternateInteract(EntityPlayer player) {
-    	this.wantsToFuse = true;
+    	//this.wantsToFuse = true;
     	super.alternateInteract(player);
     	return true;
     }
@@ -318,25 +321,16 @@ public class EntityRuby extends EntityGem implements IAnimals {
 		}
 		return super.processInteract(player, hand);
     }
+	
 	public boolean canFuseWith(EntityRuby other) {
-		if (this.canFuse() && other.canFuse() && this.getServitude() == other.getServitude() && this.getGemPlacement() != other.getGemPlacement()) {
-			if ((this.getServitude() == EntityGem.SERVE_HUMAN && this.getOwnerId().equals(other.getOwnerId())) || this.getServitude() != EntityGem.SERVE_HUMAN) {
-				if (this.getAttackingEntity() != null && this.getAttackingEntity().equals(other.getAttackingEntity())) {
-					return true;
-				}
-				if (this.getAttackTarget() != null && this.getAttackTarget().equals(other.getAttackTarget())) {
-					return true;
-				}
-				else if ((this.getHealth() + other.getHealth()) < this.getMaxHealth() + other.getMaxHealth()) {
-					return true;
-				}
-				else if (this.wantsToFuse && other.wantsToFuse) {
-					return true;
-				}
-			}
-		}
-		return false;
+		return this.canFuse() && other.canFuse() 
+			&& this.getServitude() == other.getServitude() 
+			&& this.getGemPlacement() != other.getGemPlacement()
+			&& (this.fusionTarget == null || other.fusionTarget == null 
+				|| this.fusionTarget == other.fusionTarget
+				|| this.fusionTarget == other || this == other.fusionTarget);
 	}
+	
 	public EntityRuby fuse(EntityRuby other) {
 		EntityRuby ruby = new EntityRuby(this.world);
 		if (this.isFusion()) {
@@ -398,6 +392,16 @@ public class EntityRuby extends EntityGem implements IAnimals {
      	return ruby;
 	}
 	
+	public void setFusionTarget(EntityRuby target) {
+		if (target != this) {
+			this.fusionTarget = target;
+		}
+	}
+	
+	public EntityRuby getFusionTarget() {
+		return this.fusionTarget;
+	}
+	
 	public void setAttackTarget(@Nullable EntityLivingBase entitylivingbaseIn) {
 		super.setAttackTarget(entitylivingbaseIn);
 	}
@@ -426,6 +430,8 @@ public class EntityRuby extends EntityGem implements IAnimals {
 	/*********************************************************
 	 * Methods related to combat.                            *
 	 *********************************************************/
+	//This is when we get attacked by something
+	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (!this.world.isRemote) {
 			if (source.getTrueSource() instanceof EntityLivingBase && !this.isOwner((EntityLivingBase) source.getTrueSource())) {
@@ -451,6 +457,9 @@ public class EntityRuby extends EntityGem implements IAnimals {
 		}
 		return super.attackEntityFrom(source, amount);
 	}
+	
+	//This is when we do a melee attack
+	@Override
 	public boolean attackEntityAsMob(Entity entityIn) {
 		int anger = this.getAnger();
 		if (anger > 7) {
@@ -461,6 +470,9 @@ public class EntityRuby extends EntityGem implements IAnimals {
 		}
 		return super.attackEntityAsMob(entityIn);
 	}
+	
+	//This is when we do a ranged attack
+	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
 		EntityTippedArrow arrow = new EntityTippedArrow(this.world, this);
 		double distanceFromTargetX = target.posX - this.posX;

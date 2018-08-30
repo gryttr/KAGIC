@@ -2096,25 +2096,39 @@ public class EntityGem extends EntityCrystalSkills implements IEntityOwnable, IR
 	/*********************************************************
 	 * Methods related to entity sound.					  *
 	 *********************************************************/
+	@Override
+	public float getSoundVolume() {
+		return super.getSoundVolume();
+	}
+	
+	@Override
 	public float getSoundPitch() {
 		return this.pitch;
 	}
+	
+	@Override
 	public int getTalkInterval() {
 		return 200;
 	}
+	
 	protected SoundEvent getObeySound() {
 		return null;
 	}
+	
 	public void playObeySound() {
 		if (this.getObeySound() != null) {
 			this.playSound(this.getObeySound(), this.getSoundVolume(), this.getSoundPitch());
 		}
 	}
+	
+	@Override
 	public void playLivingSound() {
 		if (ModConfigs.canGemsMakeSounds && this.canTalk) {
 			super.playLivingSound();
 		}
 	}
+	
+	@Override
 	public void playHurtSound(DamageSource source) {
 		if (ModConfigs.canGemsMakeSounds) {
 			super.playHurtSound(source);

@@ -163,6 +163,7 @@ public class EntityFusionGem  extends EntityGem {
 		float pitch = this.pitch;
 		IEntityLivingData data = super.onInitialSpawn(difficulty, livingdata);
 		this.pitch = pitch;
+		this.setAdjustedSize();
 		return data;
 	}
 	
@@ -214,7 +215,6 @@ public class EntityFusionGem  extends EntityGem {
 		if (gem.isPrimary()) {
 			this.setPrimeCount(this.getPrimeCount() + 1);
 		}
-		this.setAdjustedSize();
 		
 		this.setFusionCount(this.getFusionCount() + 1);
 		this.setFusionPlacements(this.generateFusionPlacements());
@@ -236,7 +236,7 @@ public class EntityFusionGem  extends EntityGem {
 				try {
 					EntityGem gem = this.gemTypes.get(i).getDeclaredConstructor(World.class).newInstance(this.world);
 					gem.readFromNBT(this.fusionGems.getCompoundTagAt(i));
-					gem.setPosition(this.posX, this.posY, this.posZ);
+					gem.setPosition(this.posX + (this.rand.nextDouble() - 0.5D) * this.width / 2, this.posY + this.rand.nextDouble() * (this.height - gem.height), this.posZ + (this.rand.nextDouble() - 0.5D) * this.width / 2);
 					gem.setServitude(this.getServitude());
 					this.world.spawnEntity(gem);
 				} catch (Exception e) {
@@ -348,6 +348,10 @@ public class EntityFusionGem  extends EntityGem {
 	}
 	
 	public float getSizeFactor() {
+		if (this.getFusionCount() == 0) {
+			return 0;
+		}
+		
 		float sizeMultiplier = this.getFusionCount() - this.getDefectiveCount() + this.getPrimeCount();
 		return sizeMultiplier / this.getFusionCount();
 	}

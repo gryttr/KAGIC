@@ -12,7 +12,7 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 
-public class LayerInsignia implements LayerRenderer<EntityGem> {
+public class LayerInsignia extends GemLayer implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
 	private final String name;
@@ -45,20 +45,6 @@ public class LayerInsignia implements LayerRenderer<EntityGem> {
 			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/insignia_" + gem.getGemPlacement().toString().toLowerCase() + ".png");
 		} else {
 			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/insignia.png");
-		}
-	}
-	
-	public String getName(EntityGem gem) {
-		if (this.name == null) {
-			ResourceLocation loc = EntityList.getKey(gem);
-			if (loc.getResourceDomain().equals("kagic")) {
-		        return loc.getResourcePath().replaceFirst("kagic.", "");
-			}
-			else {
-		        return loc.getResourcePath();
-			}
-		} else {
-			return this.name;
 		}
 	}
 	

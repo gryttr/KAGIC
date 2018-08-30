@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
 
-public class LayerHair implements LayerRenderer<EntityGem> {
+public class LayerHair extends GemLayer implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
 	private float offset;
@@ -52,20 +52,6 @@ public class LayerHair implements LayerRenderer<EntityGem> {
 			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/hair_" + gem.getGemPlacement().toString().toLowerCase() + ".png");
 		} else {
 			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/hair_" + gem.getHairStyle() + ".png");
-		}
-	}
-	
-	public String getName(EntityGem gem) {
-		if (this.name != null) {
-			return this.name;
-		} else {
-			ResourceLocation loc = EntityList.getKey(gem);
-			if (loc.getResourceDomain().equals("kagic")) {
-		        return loc.getResourcePath().replaceFirst("kagic.", "");
-			}
-			else {
-		        return loc.getResourcePath();
-			}
 		}
 	}
 	

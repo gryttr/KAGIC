@@ -12,7 +12,7 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 
-public class LayerUniform implements LayerRenderer<EntityGem> {
+public class LayerUniform extends GemLayer implements LayerRenderer<EntityGem> {
 	private final RenderLivingBase<?> gemRenderer;
 	private final ModelBase gemModel;
 	
@@ -35,16 +35,6 @@ public class LayerUniform implements LayerRenderer<EntityGem> {
 			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/uniform_" + gem.getGemPlacement().toString().toLowerCase() + ".png");
 		} else {
 			return new ResourceLocation(loc.getResourceDomain() + ":textures/entities/" + this.getName(gem) + "/uniform.png");
-		}
-	}
-	
-	public String getName(EntityGem gem) {
-		ResourceLocation loc = EntityList.getKey(gem);
-		if (loc.getResourceDomain().equals("kagic")) {
-	        return loc.getResourcePath().replaceFirst("kagic.", "");
-		}
-		else {
-	        return loc.getResourcePath();
 		}
 	}
 	
