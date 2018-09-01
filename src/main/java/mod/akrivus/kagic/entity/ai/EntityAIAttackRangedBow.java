@@ -1,6 +1,7 @@
 package mod.akrivus.kagic.entity.ai;
 
 import mod.akrivus.kagic.entity.EntityGem;
+import mod.heimrarnadalr.kagic.modcompat.CompatTConstruct;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.Items;
@@ -31,7 +32,9 @@ public class EntityAIAttackRangedBow extends EntityAIBase {
 	}
 	
 	public boolean isBowInMainhand() {
-		return !this.gem.getHeldItemMainhand().isEmpty() && this.gem.getHeldItemMainhand().getItem() == Items.BOW;
+		return !this.gem.getHeldItemMainhand().isEmpty() 
+				&& (this.gem.getHeldItemMainhand().getItem() == Items.BOW 
+				|| CompatTConstruct.isTinkersRangedWeapon(this.gem.getHeldItemMainhand().getItem()));
 	}
 	
 	@Override
