@@ -8,6 +8,8 @@ import mod.akrivus.kagic.blocks.BlockGiantStrawberry;
 import mod.akrivus.kagic.blocks.BlockGiantStrawberryStem;
 import mod.akrivus.kagic.blocks.BlockIncubator;
 import mod.akrivus.kagic.blocks.BlockInjector;
+import mod.akrivus.kagic.blocks.BlockMoonBlessedStone;
+import mod.akrivus.kagic.blocks.BlockMoonGoddessStatue;
 import mod.akrivus.kagic.blocks.BlockPinkSandstone;
 import mod.akrivus.kagic.blocks.BlockPinkSandstoneDoubleSlab;
 import mod.akrivus.kagic.blocks.BlockPinkSandstoneSlab;
@@ -74,6 +76,8 @@ public class ModBlocks {
 	public static final BlockPinkSandstoneDoubleSlab PINK_SANDSTONE_DOUBLE_SLAB = new BlockPinkSandstoneDoubleSlab();
 	public static final BlockGiantStrawberry GIANT_STRAWBERRY = new BlockGiantStrawberry();
 	public static final BlockGiantStrawberryStem GIANT_STRAWBERRY_STEM = new BlockGiantStrawberryStem(GIANT_STRAWBERRY);
+	public static final BlockMoonGoddessStatue MOON_GODDESS_STATUE = new BlockMoonGoddessStatue();
+	public static final BlockMoonBlessedStone MOON_BLESSED_STONE = new BlockMoonBlessedStone("moon_blessed_stone");
 	
 	public static final Fluid FLUID_ROSE_TEARS = new Fluid("rose_tears", new ResourceLocation("kagic:blocks/rose_tears_still"), new ResourceLocation("kagic:blocks/rose_tears_flowing"));
 	public static BlockRoseTears ROSE_TEARS;
@@ -103,6 +107,8 @@ public class ModBlocks {
 		registerBlock(PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_double_slab"), event);
 		registerBlock(GIANT_STRAWBERRY, new ResourceLocation("kagic:giant_strawberry_block"), event);
 		registerBlock(GIANT_STRAWBERRY_STEM, new ResourceLocation("kagic:giant_strawberry_stem"), event);
+		registerBlock(MOON_GODDESS_STATUE, new ResourceLocation("kagic:moon_goddess_statue"), event);
+		registerBlock(MOON_BLESSED_STONE, new ResourceLocation("kagic:moon_blessed_stone"), event);
 		
 		registerFluid(FLUID_ROSE_TEARS);
 		ROSE_TEARS = new BlockRoseTears(FLUID_ROSE_TEARS, Material.WATER);
@@ -144,6 +150,8 @@ public class ModBlocks {
 		registerBlockItem(WAVY_PINK_SANDSTONE_STAIRS, new ResourceLocation("kagic:wavy_pink_sandstone_stairs"), event);		
 		registerBlockItemSlab(PINK_SANDSTONE_SLAB, PINK_SANDSTONE_DOUBLE_SLAB, new ResourceLocation("kagic:pink_sandstone_slab"), event);		
 		registerBlockItem(GIANT_STRAWBERRY, new ResourceLocation("kagic:giant_strawberry_block"), event, "blockGiantStrawberry");
+		registerBlockItem(MOON_GODDESS_STATUE, new ResourceLocation("kagic:moon_goddess_statue"), event);
+		registerBlockItem(MOON_BLESSED_STONE, new ResourceLocation("kagic:moon_blessed_stone"), event);
 	}
 	
 	public static void registerBlockItem(Block block, ResourceLocation location, RegistryEvent.Register<Item> event) {

@@ -475,6 +475,8 @@ tile.pink_sandstone_stairs.name=Pink Sandstone Stairs
 tile.wavy_pink_sandstone_stairs.name=Wavy Pink Sandstone Stairs
 tile.pink_sandstone_slab.pink_sandstone.name=Pink Sandstone Slab
 tile.giant_strawberry.name=Giant Strawberry
+tile.moon_goddess_statue.name=Moon Goddess Statue
+tile.moon_blessed_stone.name=Moon Blessed Stone
 
 fluid.rose_tears=Healing Tears
 

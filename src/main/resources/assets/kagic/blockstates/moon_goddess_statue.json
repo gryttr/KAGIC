@@ -1,0 +1,13 @@
+{
+    "forge_marker":1,
+    "variants": {
+        "normal": { "model": "kagic:moon_goddess_statue" },
+        "inventory": { "model": "kagic:moon_goddess_statue" },
+        "facing": {
+            "north": { "model": "kagic:moon_goddess_statue", "y": 180 },
+            "south": {"model": "kagic:moon_goddess_statue" },
+            "west": {"model": "kagic:moon_goddess_statue", "y": 90},
+            "east": {"model": "kagic:moon_goddess_statue", "y": 270}
+        }
+    }
+}
