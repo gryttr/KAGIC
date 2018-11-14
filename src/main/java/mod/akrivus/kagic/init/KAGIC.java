@@ -290,11 +290,11 @@ public class KAGIC {
     }
     
     public static boolean isBirthday() {
-    	return KAGIC.isDayToday(1, 17) || KAGIC.isDayToday(10, 24) || KAGIC.isDayToday(10, 22);
+    	return KAGIC.isDayToday(1, 17) || KAGIC.isDayToday(8, 5) || KAGIC.isDayToday(10, 22);
     }
 
     public static boolean isBirthdayTomorrow() {
-    	return KAGIC.isDayToday(1, 16) || KAGIC.isDayToday(10, 23) || KAGIC.isDayToday(10, 21);
+    	return KAGIC.isDayToday(1, 16) || KAGIC.isDayToday(8, 4) || KAGIC.isDayToday(10, 21);
     }
 	public static void addSkill(Class<? extends SkillBase> skillToAdd) {
 		EntityCrystalSkills.SKILLS.add(skillToAdd);
